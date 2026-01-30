@@ -2,16 +2,17 @@
 
 ## Overview
 
-*Project description coming soon.*
+_Project description coming soon._
 
 ## Team Members
 
-- *To be added*
+- _To be added_
+- Sudhish whatever
 
 ## Getting Started
 
-*Setup instructions coming soon.*
+_Setup instructions coming soon._
 
 ## Build & Run
 
-*Build instructions coming soon.*
+_Build instructions coming soon._
