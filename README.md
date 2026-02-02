@@ -7,7 +7,7 @@
 ## Team Members
 
 - *To be added*
-
+- Nicholas Mamais
 ## Getting Started
 
 *Setup instructions coming soon.*
