@@ -40,7 +40,7 @@ dotnet run
 
 ### Development Team
 - Nicholas Mamais
-- *Team member 2*
+- Srinivas Sankaranarayanan
 - *Team member 3*
 - *Team member 4*
 - *Team member 5*
