@@ -130,8 +130,9 @@ public class Game1 : Game
         // - Debug info
 
         // Example: Draw credits/debug text
-        SpriteFont font = Texture2DStorage.GetDefaultFont();
-        _spriteBatch.DrawString(font, "Hollow Knight Clone - Team 1", new Vector2(50, _screenHeight - 50), Color.White);
+        //UNCOMMENT IF YOU ADD A FONT
+        //SpriteFont font = Texture2DStorage.GetDefaultFont();
+        //_spriteBatch.DrawString(font, "Hollow Knight Clone - Team 1", new Vector2(50, _screenHeight - 50), Color.White);
 
         _spriteBatch.End();
 

@@ -15,6 +15,12 @@ namespace HollowKnight.Storage
         // private static Texture2D enemySpriteSheet;
         // private static Texture2D itemSpriteSheet;
 
+        private static Texture2D knightSpriteSheet;
+
+        public static Texture2D GetKnightSpriteSheet()
+        {
+            return knightSpriteSheet;
+        }
         private static SpriteFont defaultFont;
 
         /// <summary>
@@ -26,7 +32,8 @@ namespace HollowKnight.Storage
             // playerSpriteSheet = content.Load<Texture2D>("sprites/player_sprite_sheet");
             // enemySpriteSheet = content.Load<Texture2D>("sprites/enemy_sprite_sheet");
 
-            defaultFont = content.Load<SpriteFont>("fonts/Credits");
+            knightSpriteSheet = content.Load<Texture2D>("sprites/HollowKnightSheet");
+            // defaultFont = content.Load<SpriteFont>("fonts/Credits");
         }
 
         // TODO: Add getter methods for each texture
@@ -35,9 +42,10 @@ namespace HollowKnight.Storage
         //     return playerSpriteSheet;
         // }
 
-        public static SpriteFont GetDefaultFont()
-        {
-            return defaultFont;
-        }
+        //UNCOMMENT IF YOU ADD A FONT
+        // public static SpriteFont GetDefaultFont()
+        // {
+        //     return defaultFont;
+        // }
     }
 }
