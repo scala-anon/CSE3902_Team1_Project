@@ -20,20 +20,21 @@ namespace HollowKnight.Factories
 
         private SpriteFont defaultFont;
 
-        private Dictionary<string, Rectangle> knightFrames;
+        private readonly Dictionary<string, Rectangle> knightSingleFrames;
+        private readonly Dictionary<string, Rectangle[]> knightAnimations;
+
         private static SpriteFactory instance = new SpriteFactory();
 
         public static SpriteFactory Instance
         {
-            get
-            {
-                return instance;
-            }
+            get { return instance; }
         }
 
         private SpriteFactory()
         {
-            knightFrames = new Dictionary<string, Rectangle>();
+            knightSingleFrames = new Dictionary<string, Rectangle>();
+
+            knightAnimations = new Dictionary<string, Rectangle[]>();
         }
 
         /// <summary>
@@ -51,34 +52,40 @@ namespace HollowKnight.Factories
 
         private void PopulateKnightFrames()
         {
-            knightFrames.Clear();
 
             // IDLE
-            knightFrames.Add("Knight_Idle", new Rectangle(23, 3, 35, 70));
+            knightSingleFrames.Add("Idle", new Rectangle(23, 3, 35, 70));
 
             // WALKING
-            knightFrames.Add("Walking_1", new Rectangle(101, 3, 42, 70));
-            knightFrames.Add("Walking_2", new Rectangle(183, 3, 41, 70));
-            knightFrames.Add("Walking_3", new Rectangle(259, 1, 43, 70));
-            knightFrames.Add("Walking_4", new Rectangle(342, 2, 43, 71));
-            knightFrames.Add("Walking_5", new Rectangle(415, 3, 49, 71));
-            knightFrames.Add("Walking_6", new Rectangle(493, 4, 49, 71));
-            knightFrames.Add("Walking_7", new Rectangle(578, 3, 41, 70));
-            knightFrames.Add("Walking_8", new Rectangle(660, 3, 41, 70));
+            knightAnimations.Add("Walking", new Rectangle[]
+            {
+                new Rectangle(101, 3, 42, 70),
+                new Rectangle(183, 3, 41, 70),
+                new Rectangle(259, 1, 43, 70),
+                new Rectangle(342, 2, 43, 71),
+                new Rectangle(415, 3, 49, 71),
+                new Rectangle(493, 4, 49, 71),
+                new Rectangle(578, 3, 41, 70),
+                new Rectangle(660, 3, 41, 70)
+            });
+
 
             // JUMPING
-            knightFrames.Add("Jumping_1", new Rectangle(20, 725, 41, 70));
-            knightFrames.Add("Jumping_2", new Rectangle(100, 725, 40, 70));
-            knightFrames.Add("Jumping_3", new Rectangle(174, 721, 46, 72));
-            knightFrames.Add("Jumping_4", new Rectangle(259, 719, 43, 71));
-            knightFrames.Add("Jumping_5", new Rectangle(337, 719, 44, 71));
-            knightFrames.Add("Jumping_6", new Rectangle(408, 722, 57, 71));
-            knightFrames.Add("Jumping_7", new Rectangle(488, 723, 58, 71));
-            knightFrames.Add("Jumping_8", new Rectangle(568, 723, 58, 71));
-            knightFrames.Add("Jumping_9", new Rectangle(660, 720, 44, 71));
-            knightFrames.Add("Jumping_10", new Rectangle(731, 723, 58, 71));
-            knightFrames.Add("Jumping_11", new Rectangle(811, 723, 58, 71));
-            knightFrames.Add("Jumping_12", new Rectangle(891, 723, 57, 71));
+            knightAnimations.Add("Jumping", new Rectangle[]
+            {
+                new Rectangle(20, 725, 41, 70),
+                new Rectangle(100, 725, 40, 70),
+                new Rectangle(174, 721, 46, 72),
+                new Rectangle(259, 719, 43, 71),
+                new Rectangle(337, 719, 44, 71),
+                new Rectangle(408, 722, 57, 71),
+                new Rectangle(488, 723, 58, 71),
+                new Rectangle(568, 723, 58, 71),
+                new Rectangle(660, 720, 44, 71),
+                new Rectangle(731, 723, 58, 71),
+                new Rectangle(811, 723, 58, 71),
+                new Rectangle(891, 723, 57, 71)
+            });
         }
 
         // =================================================================
@@ -87,24 +94,17 @@ namespace HollowKnight.Factories
 
         public ISprite CreateKnightIdleSprite(Vector2 position)
         {
-            Rectangle sourceRect = knightFrames["Knight_Idle"];
-            return new StaticSprite(knightSpriteSheet, sourceRect, position, 2.0f);
+            return new StaticSprite(knightSpriteSheet, knightSingleFrames["Idle"], position, 2.0f);
         }
 
         public ISprite CreateKnightWalkSprite(Vector2 position)
         {
-            Rectangle[] walkFrames = new Rectangle[]
-            {
-                knightFrames["Walking_1"],
-                knightFrames["Walking_2"],
-                knightFrames["Walking_3"],
-                knightFrames["Walking_4"],
-                knightFrames["Walking_5"],
-                knightFrames["Walking_6"],
-                knightFrames["Walking_7"],
-                knightFrames["Walking_8"],
-            };
-            return new AnimatedSprite(knightSpriteSheet, walkFrames, position, 0.1, 2.0f);
+            return new AnimatedSprite(knightSpriteSheet, knightAnimations["Walking"], position, 0.1, 2.0f);
+        }
+
+        public ISprite CreateKnightJumpSprite(Vector2 position)
+        {
+            return new AnimatedSprite(knightSpriteSheet, knightAnimations["Jumping"], position, 0.1, 2.0f);
         }
         // Example: Player sprite factory methods
         // public ISprite CreatePlayerIdleSprite(Vector2 position)
