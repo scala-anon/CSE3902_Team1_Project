@@ -41,7 +41,7 @@ dotnet run
 ### Development Team
 - Nicholas Mamais
 - *Team member 2*
-- *Team member 3*
+- Zachary Verley
 - *Team member 4*
 - *Team member 5*
 
