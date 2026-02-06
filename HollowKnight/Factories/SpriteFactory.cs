@@ -82,6 +82,19 @@ namespace HollowKnight.Factories
         /// <summary>
         /// Create a text sprite using the default font.
         /// </summary>
+        /// 
+        
+        public ISprite createEnivromentSprite(Vector2 position, int screenWidth)
+        {
+            Rectangle[] frames = new Rectangle[]
+            {
+                new Rectangle (),
+                new Rectangle (),
+
+            };
+            return new StaticSprite(spritesheet, frames, position, screenWidth);
+        }
+
         public ISprite CreateTextSprite(string text, Vector2 position, Color color)
         {
             return new TextSprite(defaultFont, text, position, color);

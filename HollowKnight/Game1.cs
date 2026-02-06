@@ -22,6 +22,7 @@ public class Game1 : Game
     private ISprite _currentSprite;
     private List<IController> _controllerList;
 
+    private ISprite[] enviromentSprites;
     private int _screenWidth;
     private int _screenHeight;
 
@@ -57,6 +58,14 @@ public class Game1 : Game
         // Vector2 playerStart = new Vector2(_screenWidth / 2, _screenHeight / 2);
         // ISprite playerSprite = SpriteFactory.Instance.CreatePlayerIdleSprite(playerStart);
         // _currentSprite = playerSprite;
+
+        ISprite[] enviromentSprites = new ISprite[5];
+        ISprite object_1 = SpriteFactory.Instance.createObject1Sprite(_position, _screenWidth);
+        enviromentSprites[0] = object_1;
+        /// Initialize other 4 or 5 objects (Do we want to have an easier way to create these with parameters???)
+
+
+
 
         // Setup keyboard controller
         KeyboardController keyboard = new KeyboardController();
@@ -123,6 +132,8 @@ public class Game1 : Game
         // Draw current sprite
         _currentSprite?.Draw(_spriteBatch);
 
+        enviromentSprites[0].Draw(_spriteBatch); // Initially draw first sprite in array
+        
         // TODO: Draw your game elements here
         // - Background layers
         // - Game objects
