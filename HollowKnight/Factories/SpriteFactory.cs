@@ -84,7 +84,7 @@ namespace HollowKnight.Factories
         /// </summary>
         /// 
         
-        public ISprite createEnivromentSprite(Vector2 position, int screenWidth)
+        public ISprite createEnivromentSprite(string spriteSheet, Vector2 position, int screenWidth)
         {
             Rectangle[] frames = new Rectangle[]
             {

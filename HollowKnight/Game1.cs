@@ -22,7 +22,7 @@ public class Game1 : Game
     private ISprite _currentSprite;
     private List<IController> _controllerList;
 
-    private ISprite[] enviromentSprites;
+    private IObjects[] enviromentSprites;
     private int _screenWidth;
     private int _screenHeight;
 
@@ -78,6 +78,13 @@ public class Game1 : Game
         MouseController mouse = new MouseController(_screenWidth, _screenHeight, this);
         mouse.RegisterRightClickCommand(new QuitCommand(this));
         _controllerList.Add(mouse);
+    }
+
+
+    public void getEnviromentSprites()
+    {
+        IObjects[] enviromentSprites = new IObjects[5];
+
     }
 
     /// <summary>
