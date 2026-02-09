@@ -50,6 +50,13 @@
 /processorParam:TextureFormat=Color
 /build:sprites/EnemySpriteSheet.png
 
+#begin sprites/knight-atlas.xml
+/copy:sprites/knight-atlas.xml
+
+#begin sprites/enemy-atlas.xml
+/copy:sprites/enemy-atlas.xml
+
+
 #begin fonts/Credits.spritefont
 #/importer:FontDescriptionImporter
 #/processor:FontDescriptionProcessor
