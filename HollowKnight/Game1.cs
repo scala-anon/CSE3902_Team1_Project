@@ -48,7 +48,7 @@ public class Game1 : Game
 
         // Load all textures and initialize the sprite factory
         Texture2DStorage.LoadAllTextures(Content);
-        SpriteFactory.Instance.LoadAllTextures();
+        SpriteFactory.Instance.LoadAllTextures(Content);
 
         _screenWidth = _graphics.PreferredBackBufferWidth;
         _screenHeight = _graphics.PreferredBackBufferHeight;
