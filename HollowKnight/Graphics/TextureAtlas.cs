@@ -47,8 +47,7 @@ namespace HollowKnight.Graphics
 		}
 
 		/// <summary>
-		/// Gets all animation frames matching a prefix (e.g. "Walking" finds "Walking_0",
-		"Walking_1", ...).
+		/// Gets all animation frames matching a prefix (e.g. "Walking" finds "Walking_0", "Walking_1", ...).
 			/// Returns the source rectangles as an array for use with AnimatedSprite.
 			/// </summary>
 			public Rectangle[] GetAnimationFrames(string prefix)
