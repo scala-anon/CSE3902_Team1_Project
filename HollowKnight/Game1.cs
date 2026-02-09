@@ -5,7 +5,7 @@ using HollowKnight.Interfaces;
 using HollowKnight.Controllers;
 using HollowKnight.Commands;
 using HollowKnight.Factories;
-using HollowKnight.Storage;
+
 using System.Collections.Generic;
 
 namespace HollowKnight;
@@ -47,7 +47,6 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         // Load all textures and initialize the sprite factory
-        Texture2DStorage.LoadAllTextures(Content);
         SpriteFactory.Instance.LoadAllTextures(Content);
 
         _screenWidth = _graphics.PreferredBackBufferWidth;
@@ -131,7 +130,7 @@ public class Game1 : Game
 
         // Example: Draw credits/debug text
         //UNCOMMENT IF YOU ADD A FONT
-        //SpriteFont font = Texture2DStorage.GetDefaultFont();
+        //SpriteFont font = Content.Load<SpriteFont>("fonts/Credits");
         //_spriteBatch.DrawString(font, "Hollow Knight Clone - Team 1", new Vector2(50, _screenHeight - 50), Color.White);
 
         _spriteBatch.End();
