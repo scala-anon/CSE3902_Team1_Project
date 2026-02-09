@@ -7,6 +7,7 @@ using HollowKnight.Commands;
 using HollowKnight.Factories;
 using HollowKnight.Storage;
 using System.Collections.Generic;
+using HollowKnight.Player;
 
 namespace HollowKnight;
 
@@ -18,12 +19,13 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
-    // TODO: Replace with your game's sprite management
-    private ISprite _currentSprite;
     private List<IController> _controllerList;
 
     private int _screenWidth;
     private int _screenHeight;
+
+    private TheKnight _knight;
+    private Texture2D _knightSprite;
 
     public Game1()
     {
@@ -53,6 +55,9 @@ public class Game1 : Game
         _screenWidth = _graphics.PreferredBackBufferWidth;
         _screenHeight = _graphics.PreferredBackBufferHeight;
 
+        _knightSprite = Content.Load<Texture2D>("knight"); 
+        _knight = new TheKnight(_knightSprite, new Vector2(100, 400));
+
         // TODO: Create your game sprites using the factory
         // Vector2 playerStart = new Vector2(_screenWidth / 2, _screenHeight / 2);
         // ISprite playerSprite = SpriteFactory.Instance.CreatePlayerIdleSprite(playerStart);
@@ -63,6 +68,16 @@ public class Game1 : Game
         // TODO: Register your game commands
         // keyboard.RegisterCommand(Keys.Escape, new QuitCommand(this));
         // keyboard.RegisterCommand(Keys.Space, new JumpCommand(player));
+        keyboard.RegisterHeldCommand(Keys.A, new PlayerMoveLeftCommand(_knight));
+        keyboard.RegisterHeldCommand(Keys.D, new PlayerMoveRightCommand(_knight));
+
+        keyboard.RegisterReleasedCommand(Keys.A, new PlayerStopMovingHorizontalCommand(_knight));
+        keyboard.RegisterReleasedCommand(Keys.D, new PlayerStopMovingHorizontalCommand(_knight));
+
+        keyboard.RegisterPressedCommand(Keys.Space, new PlayerJumpCommand(_knight));
+        keyboard.RegisterPressedCommand(Keys.X, new PlayerAttackCommand(_knight));
+
+        keyboard.RegisterPressedCommand(Keys.Escape, new QuitCommand(this));
         _controllerList.Add(keyboard);
 
         // Setup mouse controller (optional)
@@ -70,30 +85,6 @@ public class Game1 : Game
         mouse.RegisterRightClickCommand(new QuitCommand(this));
         _controllerList.Add(mouse);
     }
-
-    /// <summary>
-    /// Set the currently displayed sprite, preserving position.
-    /// </summary>
-    public void SetSprite(ISprite sprite)
-    {
-        if (_currentSprite != null)
-        {
-            Vector2 currentPosition = _currentSprite.GetPosition();
-            sprite.SetPosition(currentPosition);
-        }
-        _currentSprite = sprite;
-    }
-
-    public Vector2 GetCurrentSpritePosition()
-    {
-        return _currentSprite?.GetPosition() ?? Vector2.Zero;
-    }
-
-    public void SetCurrentSpritePosition(Vector2 position)
-    {
-        _currentSprite?.SetPosition(position);
-    }
-
     protected override void Update(GameTime gameTime)
     {
         // Update all controllers
@@ -108,7 +99,7 @@ public class Game1 : Game
         // - Collision detection
         // - Game state management
 
-        _currentSprite?.Update(gameTime);
+        _knight.Update(gameTime);
 
         base.Update(gameTime);
     }
@@ -121,7 +112,7 @@ public class Game1 : Game
         _spriteBatch.Begin();
 
         // Draw current sprite
-        _currentSprite?.Draw(_spriteBatch);
+        _knight.Draw(_spriteBatch);
 
         // TODO: Draw your game elements here
         // - Background layers
