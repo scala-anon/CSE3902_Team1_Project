@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas>
+	<Texture>sprites/HollowKnightSheet</Texture>
+	<Regions>
+		<!-- Single frames -->
+		<Region name="Idle" x="23" y="3" width="35" height="70" />
+		<Region name="Took_Damage" x="2416" y="3999" width="125" height="94" />
+
+		<!-- Walking frames --> 
+		<Region name="Walking_0" x="101" y="3" width="42" height="70" />
+		<Region name="Walking_1" x="183" y="3" width="41" height="70" />
+		<Region name="Walking_2" x="259" y="1" width="43" height="70" />
+		<Region name="Walking_3" x="342" y="2" width="43" height="71" />
+		<Region name="Walking_4" x="415" y="3" width="49" height="71" />
+		<Region name="Walking_5" x="493" y="4" width="49" height="71" />
+		<Region name="Walking_6" x="578" y="3" width="41" height="70" />
+		<Region name="Walking_7" x="660" y="3" width="41" height="70" />
+
+		<!-- Jumping/Freefalling frames -->
+		<Region name="Jumping_0" x="20" y="725" width="41" height="70" />
+		<Region name="Jumping_1" x="100" y="725" width="40" height="70" />
+		<Region name="Jumping_2" x="174" y="721" width="46" height="72" />
+		<Region name="Jumping_3" x="259" y="719" width="43" height="71" />
+		<Region name="Jumping_4" x="337" y="719" width="44" height="71" />
+		<Region name="Jumping_5" x="408" y="722" width="57" height="71" />
+		<Region name="Jumping_6" x="488" y="723" width="58" height="71" />
+		<Region name="Jumping_7" x="568" y="723" width="58" height="71" />
+		<Region name="Jumping_8" x="660" y="720" width="44" height="71" />
+		<Region name="Jumping_9" x="731" y="723" width="58" height="71" />
+		<Region name="Jumping_10" x="811" y="723" width="58" height="71" />
+		<Region name="Jumping_11" x="891" y="723" width="57" height="71" />
+
+
+	</Regions>
+</TextureAtlas>
