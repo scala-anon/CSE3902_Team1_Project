@@ -18,6 +18,8 @@ namespace HollowKnight.Factories
         private readonly Dictionary<string, Rectangle> knightSingleFrames;
         private readonly Dictionary<string, Rectangle[]> knightAnimations;
 
+        private readonly Dictionary<string, Rectangle> crawlidSingleFrames;
+        private readonly Dictionary<string, Rectangle[]> crawlidAnimations;
         private readonly Dictionary<string, Rectangle> vengeflySingleFrames;
         private readonly Dictionary<string, Rectangle[]> vengeflyAnimations;
 
@@ -32,6 +34,9 @@ namespace HollowKnight.Factories
         {
             knightSingleFrames = new Dictionary<string, Rectangle>();
             knightAnimations = new Dictionary<string, Rectangle[]>();
+
+            crawlidSingleFrames = new Dictionary<string, Rectangle>();
+            crawlidAnimations = new Dictionary<string, Rectangle[]>();
 
             vengeflySingleFrames = new Dictionary<string, Rectangle>();
             vengeflyAnimations = new Dictionary<string, Rectangle[]>();
@@ -50,6 +55,13 @@ namespace HollowKnight.Factories
             // Load enemy atlas from XML
             TextureAtlas enemyAtlas = TextureAtlas.FromFile(content, "sprites/enemy-atlas.xml");
             enemySpriteSheet = enemyAtlas.Texture;
+
+
+            //so I'm dumb i think we need to change naming convention or something....
+            crawlidAnimations.Add("Idle", enemyAtlas.GetAnimationFrames("Idle"));
+            crawlidAnimations.Add("Turning", enemyAtlas.GetAnimationFrames("Turning"));
+            crawlidAnimations.Add("DeathAir", enemyAtlas.GetAnimationFrames("DeathAir"));
+            crawlidAnimations.Add("DeathLand", enemyAtlas.GetAnimationFrames("DeathLand"));
 
             vengeflyAnimations.Add("Idle", enemyAtlas.GetAnimationFrames("Idle"));
             vengeflyAnimations.Add("Turning", enemyAtlas.GetAnimationFrames("Turning"));
