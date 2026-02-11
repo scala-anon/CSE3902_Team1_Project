@@ -12,7 +12,7 @@ namespace HollowKnight.Factories
     {
         private Texture2D knightSpriteSheet;
         private Texture2D enemySpriteSheet;
-
+        private Texture2D platformSpriteSheet;
         private SpriteFont defaultFont;
 
         private readonly Dictionary<string, Rectangle> knightSingleFrames;
@@ -23,6 +23,7 @@ namespace HollowKnight.Factories
         private readonly Dictionary<string, Rectangle> vengeflySingleFrames;
         private readonly Dictionary<string, Rectangle[]> vengeflyAnimations;
 
+        private readonly Dictionary<string,Rectangle> platformFrames;
         private static SpriteFactory instance = new SpriteFactory();
 
         public static SpriteFactory Instance
@@ -40,6 +41,8 @@ namespace HollowKnight.Factories
 
             vengeflySingleFrames = new Dictionary<string, Rectangle>();
             vengeflyAnimations = new Dictionary<string, Rectangle[]>();
+
+            platformFrames = new Dictionary<string, Rectangle>();
         }
 
         public void LoadAllTextures(ContentManager content)
@@ -55,6 +58,11 @@ namespace HollowKnight.Factories
             // Load enemy atlas from XML
             TextureAtlas enemyAtlas = TextureAtlas.FromFile(content, "sprites/enemy-atlas.xml");
             enemySpriteSheet = enemyAtlas.Texture;
+
+            TextureAtlas platformAtlas = TextureAtlas.FromFile(content, "sprites/platform-atlas.xml");
+            platformFrames.Add("Spike", platformAtlas.GetRegion("Spike").SourceRectangle);
+            platformFrames.Add("Path", platformAtlas.GetRegion("Path").SourceRectangle);
+            
 
 
             //so I'm dumb i think we need to change naming convention or something....
@@ -76,6 +84,16 @@ namespace HollowKnight.Factories
         public ISprite CreateKnightIdleSprite(Vector2 position)
         {
             return new StaticSprite(knightSpriteSheet, knightSingleFrames["Idle"], position, 2.0f);
+        }
+
+        public ISprite CreatePathSprite(Vector2 position)
+        {
+            return new StaticSprite(platformSpriteSheet, platformFrames["Path"], position, 2.0f);
+        }
+
+          public ISprite CreateSpikeSprite(Vector2 position)
+        {
+            return new StaticSprite(platformSpriteSheet, platformFrames["Spike"], position, 2.0f);
         }
 
         public ISprite CreateKnightWalkSprite(Vector2 position)
@@ -138,5 +156,7 @@ namespace HollowKnight.Factories
         {
             return new TextSprite(defaultFont, text, position, color);
         }
+
+      
     }
 }

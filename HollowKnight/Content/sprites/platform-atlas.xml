@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas>
+	<Texture>sprites/platformSpritesheet</Texture>
+	<Regions>
+		<!-- Single frames -->
+		<Region name="UpperSpikes" x="3" y="0" width="229" height="130" />
+        <Region name="BottomSpike" x="93" y="301" width="166" height="94" />
+		<Region name="LongPath" x="265" y="223" width="1060" height="83" />
+        <Region name="LongPath2" x="265" y="364" width="937" height="144" />
+        <Region name="ledge" x="2311" y="53" width="119" height="45" />
+        <Region name="lamp" x="2481" y="99" width="45" height="108" />
+        <Region name="spikes" x="2311" y="105" width="137" height="99" />
+        <Region name="stonePath" x="2311" y="209" width="342" height="42" />
+	</Reigions>
+</TextureAtlas>
