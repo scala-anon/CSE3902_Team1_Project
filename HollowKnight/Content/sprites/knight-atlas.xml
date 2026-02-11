@@ -4,29 +4,53 @@
 	<Regions>
 		<!-- Single frames -->
 		<Region name="Idle" x="23" y="3" width="35" height="70" />
+		<Region name="Took_Damage" x="2416" y="3999" width="125" height="94" />
 
 		<!-- Walking frames --> 
 		<Region name="Walking_0" x="101" y="3" width="42" height="70" />
 		<Region name="Walking_1" x="183" y="3" width="41" height="70" />
-          	<Region name="Walking_2" x="259" y="1" width="43" height="70" />
-          	<Region name="Walking_3" x="342" y="2" width="43" height="71" />
-          	<Region name="Walking_4" x="415" y="3" width="49" height="71" />
-          	<Region name="Walking_5" x="493" y="4" width="49" height="71" />
-          	<Region name="Walking_6" x="578" y="3" width="41" height="70" />
-          	<Region name="Walking_7" x="660" y="3" width="41" height="70" />
+		<Region name="Walking_2" x="259" y="1" width="43" height="70" />
+		<Region name="Walking_3" x="342" y="2" width="43" height="71" />
+		<Region name="Walking_4" x="415" y="3" width="49" height="71" />
+		<Region name="Walking_5" x="493" y="4" width="49" height="71" />
+		<Region name="Walking_6" x="578" y="3" width="41" height="70" />
+		<Region name="Walking_7" x="660" y="3" width="41" height="70" />
 
-          	<!-- Jumping frames -->
-          	<Region name="Jumping_0" x="20" y="725" width="41" height="70" />
-          	<Region name="Jumping_1" x="100" y="725" width="40" height="70" />
-          	<Region name="Jumping_2" x="174" y="721" width="46" height="72" />
-          	<Region name="Jumping_3" x="259" y="719" width="43" height="71" />
-          	<Region name="Jumping_4" x="337" y="719" width="44" height="71" />
-          	<Region name="Jumping_5" x="408" y="722" width="57" height="71" />
-          	<Region name="Jumping_6" x="488" y="723" width="58" height="71" />
-          	<Region name="Jumping_7" x="568" y="723" width="58" height="71" />
-          	<Region name="Jumping_8" x="660" y="720" width="44" height="71" />
-          	<Region name="Jumping_9" x="731" y="723" width="58" height="71" />
-          	<Region name="Jumping_10" x="811" y="723" width="58" height="71" />
-          	<Region name="Jumping_11" x="891" y="723" width="57" height="71" />
-	</Reigions>
+		<!-- Jumping/Freefalling frames -->
+		<Region name="Jumping_0" x="20" y="725" width="41" height="70" />
+		<Region name="Jumping_1" x="100" y="725" width="40" height="70" />
+		<Region name="Jumping_2" x="174" y="721" width="46" height="72" />
+		<Region name="Jumping_3" x="259" y="719" width="43" height="71" />
+		<Region name="Jumping_4" x="337" y="719" width="44" height="71" />
+		<Region name="Jumping_5" x="408" y="722" width="57" height="71" />
+		<Region name="Jumping_6" x="488" y="723" width="58" height="71" />
+		<Region name="Jumping_7" x="568" y="723" width="58" height="71" />
+		<Region name="Jumping_8" x="660" y="720" width="44" height="71" />
+		<Region name="Jumping_9" x="731" y="723" width="58" height="71" />
+		<Region name="Jumping_10" x="811" y="723" width="58" height="71" />
+		<Region name="Jumping_11" x="891" y="723" width="57" height="71" />
+
+		<!--Side Attacking frames-->
+		<Region name="SideAttack_0" x="1623" y="2956" width="128" height="54" />
+		<Region name="SideAttack_1" x="1674" y="3418" width="120" height="125" />
+		<Region name="SideAttack_2" x="2350" y="3464" width="86" height="126" />
+
+		<!--Upward Attacking frames-->
+		<Region name="UpwardAttack_0" x="2918" y="2439" width="71" height="120" />
+		<Region name="UpwardAttack_1" x="2726" y="2416" width="96" height="96" />
+		<Region name="UpwardAttack_2" x="4000" y="387" width="73" height="96" />
+		<Region name="UpwardAttack_3" x="3984" y="282" width="79" height="97" />
+
+		<!--Downward Attacking frames-->
+		<Region name="DownAttack_0" x="2245" y="3595" width="118" height="103" />
+		<Region name="DownAttack_1" x="1973" y="3176" width="110" height="124" />
+		<Region name="DownAttack_2" x="2498" y="3612" width="121" height="82" />
+
+		<!--Spirit Cast frames-->
+		<Region name="Spell_Cast_0" x="3533" y="71" width="70" height="113" />
+		<Region name="Spell_Cast_1" x="3610" y="70" width="73" height="114" />
+		<Region name="Spell_Cast_2" x="2883" y="2247" width="127" height="74" />
+		<Region name="Spell_Cast_3" x="2821" y="2330" width="123" height="75" />
+
+	</Regions>
 </TextureAtlas>
