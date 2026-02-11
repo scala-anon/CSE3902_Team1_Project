@@ -58,16 +58,16 @@ namespace HollowKnight.Factories
 
 
             //so I'm dumb i think we need to change naming convention or something....
-            crawlidAnimations.Add("Idle", enemyAtlas.GetAnimationFrames("Idle"));
-            crawlidAnimations.Add("Turning", enemyAtlas.GetAnimationFrames("Turning"));
-            crawlidAnimations.Add("DeathAir", enemyAtlas.GetAnimationFrames("DeathAir"));
-            crawlidAnimations.Add("DeathLand", enemyAtlas.GetAnimationFrames("DeathLand"));
+            crawlidAnimations.Add("Idle", enemyAtlas.GetAnimationFrames("Crawlid_Idle"));
+            crawlidAnimations.Add("Turning", enemyAtlas.GetAnimationFrames("Crawlid_Turning"));
+            crawlidAnimations.Add("DeathAir", enemyAtlas.GetAnimationFrames("Crawlid_Death_Air"));
+            crawlidAnimations.Add("DeathLand", enemyAtlas.GetAnimationFrames("Crawlid_Death_Land"));
 
-            vengeflyAnimations.Add("Idle", enemyAtlas.GetAnimationFrames("Idle"));
-            vengeflyAnimations.Add("Turning", enemyAtlas.GetAnimationFrames("Turning"));
-            vengeflyAnimations.Add("Startle", enemyAtlas.GetAnimationFrames("Startle"));
-            vengeflyAnimations.Add("Chase", enemyAtlas.GetAnimationFrames("Chase"));
-            vengeflyAnimations.Add("Death", enemyAtlas.GetAnimationFrames("Death"));
+            vengeflyAnimations.Add("Idle", enemyAtlas.GetAnimationFrames("Vengefly_Idle"));
+            vengeflyAnimations.Add("Turning", enemyAtlas.GetAnimationFrames("Vengefly_Turning"));
+            vengeflyAnimations.Add("Startle", enemyAtlas.GetAnimationFrames("Vengefly_Startle"));
+            vengeflyAnimations.Add("Chase", enemyAtlas.GetAnimationFrames("Vengefly_Chase"));
+            vengeflyAnimations.Add("Death", enemyAtlas.GetAnimationFrames("Vengefly_Death"));
 
             // defaultFont = content.Load<SpriteFont>("fonts/Credits");
         }
@@ -91,27 +91,47 @@ namespace HollowKnight.Factories
         //Vengefly factory methods
         public ISprite CreateVengeflyIdleSprite(Vector2 position)
         {
-            return new AnimatedSprite(enemySpriteSheet, vengeflyAnimations["Idle"], position, 0.1, 2.0f);
+            return new AnimatedSprite(enemySpriteSheet, vengeflyAnimations["Vengefly_Idle"], position, 0.1, 2.0f);
         }
 
         public ISprite CreateVengeflyTurningSprite(Vector2 position)
         {
-            return new AnimatedSprite(enemySpriteSheet, vengeflyAnimations["Turning"], position, 0.1, 2.0f);
+            return new AnimatedSprite(enemySpriteSheet, vengeflyAnimations["Vengefly_Turning"], position, 0.1, 2.0f);
         }
 
         public ISprite CreateVengeflyStartleSprite(Vector2 position)
         {
-            return new AnimatedSprite(enemySpriteSheet, vengeflyAnimations["Startle"], position, 0.1, 2.0f);
+            return new AnimatedSprite(enemySpriteSheet, vengeflyAnimations["Vengefly_Startle"], position, 0.1, 2.0f);
         }
 
         public ISprite CreateVengeflyChaseSprite(Vector2 position)
         {
-            return new AnimatedSprite(enemySpriteSheet, vengeflyAnimations["Chase"], position, 0.1, 2.0f);
+            return new AnimatedSprite(enemySpriteSheet, vengeflyAnimations["Vengefly_Chase"], position, 0.1, 2.0f);
         }
 
         public ISprite CreateVengeflyDeathSprite(Vector2 position)
         {
-            return new AnimatedSprite(enemySpriteSheet, vengeflyAnimations["Death"], position, 0.1, 2.0f);
+            return new AnimatedSprite(enemySpriteSheet, vengeflyAnimations["Vengefly_Death"], position, 0.1, 2.0f);
+        }
+
+        public ISprite CreateCrawlidIdleSprite(Vector2 position)
+        {
+            return new AnimatedSprite(enemySpriteSheet, crawlidAnimations["Crawlid_Idle"], position, 0.1, 2.0f);
+        }
+
+        public ISprite CreateCrawlidTurnSprite(Vector2 position)
+        {
+            return new AnimatedSprite(enemySpriteSheet, crawlidAnimations["Crawlid_Turn"], position, 0.1, 2.0f);
+        }
+
+        public ISprite CreateCrawlidDeathAirSprite(Vector2 position)
+        {
+            return new AnimatedSprite(enemySpriteSheet, crawlidAnimations["Crawlid_Death_Air"], position, 0.1, 2.0f);
+        }
+
+        public ISprite CreateCrawlidDeathLandSprite(Vector2 position)
+        {
+            return new AnimatedSprite(enemySpriteSheet, crawlidAnimations["Crawlid_Death_Land"], position, 0.1, 2.0f);
         }
 
         public ISprite CreateTextSprite(string text, Vector2 position, Color color)
