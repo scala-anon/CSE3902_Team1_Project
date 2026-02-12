@@ -2,9 +2,9 @@
 <TextureAtlas>
 	<Texture>sprites/HollowKnightSheet</Texture>
 	<Regions>
-		<!-- Single frames -->
-		<Region name="Idle" x="23" y="3" width="35" height="70" />
-		<Region name="Took_Damage" x="2416" y="3999" width="125" height="94" />
+		<!-- Single frames (IDLE is not actually a single frame, this will be updated soon)-->
+		<Region name="Idle" x="23" y="3" width="35" height="70" /> 
+		<Region name="Damaged" x="2416" y="3999" width="125" height="94" />
 
 		<!-- Walking frames --> 
 		<Region name="Walking_0" x="101" y="3" width="42" height="70" />

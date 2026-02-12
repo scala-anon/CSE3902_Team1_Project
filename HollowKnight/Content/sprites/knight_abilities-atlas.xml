@@ -20,10 +20,10 @@
 		<Region name="DownAttack_2" x="2498" y="3612" width="121" height="82" />
 
 		<!--Spirit Cast frames-->
-		<Region name="Spell_Cast_0" x="3533" y="71" width="70" height="113" />
-		<Region name="Spell_Cast_1" x="3610" y="70" width="73" height="114" />
-		<Region name="Spell_Cast_2" x="2883" y="2247" width="127" height="74" />
-		<Region name="Spell_Cast_3" x="2821" y="2330" width="123" height="75" />
+		<Region name="SpellCast_0" x="3533" y="71" width="70" height="113" />
+		<Region name="SpellCast_1" x="3610" y="70" width="73" height="114" />
+		<Region name="SpellCast_2" x="2883" y="2247" width="127" height="74" />
+		<Region name="SpellCast_3" x="2821" y="2330" width="123" height="75" />
 
     <!--Heal Prep frames-->
     <Region name="HealPrep_0" x="3298" y="2681" width="65" height="116" />
