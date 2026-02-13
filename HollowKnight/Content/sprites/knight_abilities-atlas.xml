@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas>
+	<Texture>sprites/KnightVarietySpriteSheet</Texture>
+	<Regions>
+
+		<!--Side Attacking frames-->
+		<Region name="SideAttack_0" x="1623" y="2956" width="128" height="54" />
+		<Region name="SideAttack_1" x="1674" y="3418" width="120" height="125" />
+		<Region name="SideAttack_2" x="2350" y="3464" width="86" height="126" />
+
+		<!--Upward Attacking frames-->
+		<Region name="UpwardAttack_0" x="2918" y="2439" width="71" height="120" />
+		<Region name="UpwardAttack_1" x="2726" y="2416" width="96" height="96" />
+		<Region name="UpwardAttack_2" x="4000" y="387" width="73" height="96" />
+		<Region name="UpwardAttack_3" x="3984" y="282" width="79" height="97" />
+
+		<!--Downward Attacking frames-->
+		<Region name="DownAttack_0" x="2245" y="3595" width="118" height="103" />
+		<Region name="DownAttack_1" x="1973" y="3176" width="110" height="124" />
+		<Region name="DownAttack_2" x="2498" y="3612" width="121" height="82" />
+
+		<!--Spirit Cast frames-->
+		<Region name="SpellCast_0" x="3533" y="71" width="70" height="113" />
+		<Region name="SpellCast_1" x="3610" y="70" width="73" height="114" />
+		<Region name="SpellCast_2" x="2883" y="2247" width="127" height="74" />
+		<Region name="SpellCast_3" x="2821" y="2330" width="123" height="75" />
+
+    <!--Heal Prep frames-->
+    <Region name="HealPrep_0" x="3298" y="2681" width="65" height="116" />
+    <Region name="HealPrep_1" x="3341" y="2049" width="69" height="115" />
+    <Region name="HealPrep_2" x="3864" y="692" width="115" height="69" />
+    <Region name="HealPrep_3" x="3814" y="767" width="115" height="72" />
+    <Region name="HealPrep_4" x="3976" y="208" width="116" height="67" />
+    <Region name="HealPrep_5" x="3876" y="385" width="115" height="69" />
+
+    <!--Heal Post frames-->
+    <Region name="HealPost_0" x="3029" y="2003" width="76" height="119" />
+    <Region name="HealPost_1" x="3114" y="2029" width="82" height="110" />
+    <Region name="HealPost_2" x="3153" y="1284" width="82" height="102" />
+    <Region name="HealPost_3" x="2947" y="1321" width="80" height="121" />
+    <Region name="HealPost_4" x="3207" y="2036" width="57" height="123" />
+
+	</Regions>
+</TextureAtlas>

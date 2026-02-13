@@ -48,19 +48,19 @@ namespace HollowKnight.Graphics
 
 		/// <summary>
 		/// Gets all animation frames matching a prefix (e.g. "Walking" finds "Walking_0", "Walking_1", ...).
-			/// Returns the source rectangles as an array for use with AnimatedSprite.
-			/// </summary>
-			public Rectangle[] GetAnimationFrames(string prefix)
+		/// Returns the source rectangles as an array for use with AnimatedSprite.
+		/// </summary>
+		public Rectangle[] GetAnimationFrames(string prefix)
+		{
+			List<Rectangle> frames = new List<Rectangle>();
+			int i = 0;
+			while (_regions.ContainsKey($"{prefix}_{i}"))
 			{
-				List<Rectangle> frames = new List<Rectangle>();
-				int i = 0;
-				while (_regions.ContainsKey($"{prefix}_{i}"))
-				{
-					frames.Add(_regions[$"{prefix}_{i}"].SourceRectangle);
-					i++;
-				}
-				return frames.ToArray();
+				frames.Add(_regions[$"{prefix}_{i}"].SourceRectangle);
+				i++;
 			}
+			return frames.ToArray();
+		}
 
 		public static TextureAtlas FromFile(ContentManager content, string fileName)
 		{

@@ -52,6 +52,9 @@ public class Game1 : Game
         _screenWidth = _graphics.PreferredBackBufferWidth;
         _screenHeight = _graphics.PreferredBackBufferHeight;
 
+        Vector2 centerPosition = new Vector2(_screenWidth / 2, _screenHeight / 2);
+        //_currentSprite = SpriteFactory.Instance.CreateSpiritCollisionSprite(centerPosition); // Using this line to test sprite animations
+
         // TODO: Create your game sprites using the factory
         // Vector2 playerStart = new Vector2(_screenWidth / 2, _screenHeight / 2);
         // ISprite playerSprite = SpriteFactory.Instance.CreatePlayerIdleSprite(playerStart);
