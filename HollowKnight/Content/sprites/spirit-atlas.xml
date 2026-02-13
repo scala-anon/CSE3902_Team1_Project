@@ -3,7 +3,7 @@
 	<Texture>sprites/SoulSpellsSpriteSheet</Texture>
 	<Regions>
 		<!--Inital Spirit Frame-->
-    <Region name="SoulSpirit_Initial" x="1166" y="969" width="98" height="111" />
+    <Region name="Soul_Spirit_Initial" x="1166" y="969" width="98" height="111" />
 
     <!--Moving Spirit Frames-->
     <Region name="MovingSpirit_0" x="1166" y="969" width="98" height="111" />

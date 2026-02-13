@@ -1,34 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextureAtlas>
-	<Texture>sprites/HollowKnightSheet</Texture>
+	<Texture>sprites/KnightVarietySpriteSheet</Texture>
 	<Regions>
 		<!-- Single frames (IDLE is not actually a single frame, this will be updated soon)-->
-		<Region name="Idle" x="23" y="3" width="35" height="70" /> 
-		<Region name="Damaged" x="2416" y="3999" width="125" height="94" />
+		<Region name="Idle" x="1000" y="50" width="64" height="138" />
+		<Region name="Damaged" x="2269" y="1634" width="95" height="123" />
 
-		<!-- Walking frames --> 
-		<Region name="Walking_0" x="101" y="3" width="42" height="70" />
-		<Region name="Walking_1" x="183" y="3" width="41" height="70" />
-		<Region name="Walking_2" x="259" y="1" width="43" height="70" />
-		<Region name="Walking_3" x="342" y="2" width="43" height="71" />
-		<Region name="Walking_4" x="415" y="3" width="49" height="71" />
-		<Region name="Walking_5" x="493" y="4" width="49" height="71" />
-		<Region name="Walking_6" x="578" y="3" width="41" height="70" />
-		<Region name="Walking_7" x="660" y="3" width="41" height="70" />
+		<Region name="Walking_0" x="1139" y="62" width="73" height="123" />
+		<Region name="Walking_1" x="1286" y="62" width="99" height="123" />
+		<Region name="Walking_2" x="1420" y="58" width="77" height="123" />
+		<Region name="Walking_3" x="1568" y="60" width="76" height="125" />
+		<Region name="Walking_4" x="1699" y="61" width="87" height="127" />
+		<Region name="Walking_5" x="1838" y="63" width="87" height="128" />
+		<Region name="Walking_6" x="1990" y="61" width="71" height="124" />
+		<Region name="Walking_7" x="2135" y="60" width="73" height="125" />
 
-		<!-- Jumping/Freefalling frames -->
-		<Region name="Jumping_0" x="20" y="725" width="41" height="70" />
-		<Region name="Jumping_1" x="100" y="725" width="40" height="70" />
-		<Region name="Jumping_2" x="174" y="721" width="46" height="72" />
-		<Region name="Jumping_3" x="259" y="719" width="43" height="71" />
-		<Region name="Jumping_4" x="337" y="719" width="44" height="71" />
-		<Region name="Jumping_5" x="408" y="722" width="57" height="71" />
-		<Region name="Jumping_6" x="488" y="723" width="58" height="71" />
-		<Region name="Jumping_7" x="568" y="723" width="58" height="71" />
-		<Region name="Jumping_8" x="660" y="720" width="44" height="71" />
-		<Region name="Jumping_9" x="731" y="723" width="58" height="71" />
-		<Region name="Jumping_10" x="811" y="723" width="58" height="71" />
-		<Region name="Jumping_11" x="891" y="723" width="57" height="71" />
+		<Region name="Jumping_0" x="995" y="1349" width="74" height="123" />
+		<Region name="Jumping_1" x="1137" y="1349" width="70" height="123" />
+		<Region name="Jumping_2" x="1269" y="1342" width="82" height="125" />
+		<Region name="Jumping_3" x="1419" y="1338" width="78" height="125" />
+		<Region name="Jumping_4" x="1561" y="1338" width="77" height="124" />
+		<Region name="Jumping_5" x="1687" y="1343" width="102" height="125" />
+		<Region name="Jumping_6" x="1825" y="1345" width="107" height="125" />
+		<Region name="Jumping_7" x="1972" y="1343" width="101" height="127" />
+		<Region name="Jumping_8" x="2137" y="1341" width="76" height="123" />
+		<Region name="Jumping_9" x="2264" y="1344" width="101" height="126" />
+		<Region name="Jumping_10" x="2405" y="1344" width="102" height="126" />
+		<Region name="Jumping_11" x="2548" y="1344" width="102" height="126" />
 
 
 	</Regions>

@@ -10,31 +10,34 @@ namespace HollowKnight.Factories
 {
     public class SpriteFactory
     {
+        private Texture2D knightVarietySheet;
         private Texture2D knightSpriteSheet;
+        private Texture2D knightAbilitiesSheet;
+
         private Texture2D enemySpriteSheet;
         private Texture2D platformSpriteSheet;
 
         private Texture2D spellsSpriteSheet;
 
-        private Texture2D knightAbilitiesSheet;
 
 
-        private SpriteFont defaultFont;
+        private SpriteFont defaultFont; //not used yet, will use later on
 
         private readonly Dictionary<string, Rectangle> knightSingleFrames;
         private readonly Dictionary<string, Rectangle[]> knightAnimations;
 
-        // private readonly Dictionary<string, Rectangle> crawlidSingleFrames;
+        //crawlid only has animations, no single frames
         private readonly Dictionary<string, Rectangle[]> crawlidAnimations;
 
-        private readonly Dictionary<string, Rectangle> platformFrames;
-
+        //vengefly only has animations, no single frames
         private readonly Dictionary<string, Rectangle[]> vengeflyAnimations;
-        // private readonly Dictionary<string, Rectangle> vengeflySingleFrames;
 
 
         private readonly Dictionary<string, Rectangle> spiritSingleFrames;
         private readonly Dictionary<string, Rectangle[]> spiritAnimations;
+
+        private readonly Dictionary<string, Rectangle> platformFrames;
+
 
         private static SpriteFactory instance = new SpriteFactory();
 
@@ -48,66 +51,66 @@ namespace HollowKnight.Factories
             knightSingleFrames = new Dictionary<string, Rectangle>();
             knightAnimations = new Dictionary<string, Rectangle[]>();
 
-            // crawlidSingleFrames = new Dictionary<string, Rectangle>();
             crawlidAnimations = new Dictionary<string, Rectangle[]>();
 
-            // vengeflySingleFrames = new Dictionary<string, Rectangle>();
             vengeflyAnimations = new Dictionary<string, Rectangle[]>();
 
-            platformFrames = new Dictionary<string, Rectangle>();
             spiritSingleFrames = new Dictionary<string, Rectangle>();
             spiritAnimations = new Dictionary<string, Rectangle[]>();
+
+            platformFrames = new Dictionary<string, Rectangle>();
+
         }
 
         public void LoadAllTextures(ContentManager content)
         {
-            // Load knight atlas from XML
+            //Loading Master Knight sheet
+            knightVarietySheet = content.Load<Texture2D>("sprites/KnightVarietySpriteSheet");
+
+            // Loading Atlases
             TextureAtlas knightAtlas = TextureAtlas.FromFile(content, "sprites/knight_movement-atlas.xml");
             TextureAtlas knightAttacksAtlas = TextureAtlas.FromFile(content, "sprites/knight_abilities-atlas.xml");
-            TextureAtlas knightSpiritAttacksAtlas = TextureAtlas.FromFile(content, "sprites/spirit-atlas.xml");
+            TextureAtlas SpiritAttacksAtlas = TextureAtlas.FromFile(content, "sprites/spirit-atlas.xml");
             TextureAtlas enemyAtlas = TextureAtlas.FromFile(content, "sprites/enemy-atlas.xml");
             TextureAtlas platformAtlas = TextureAtlas.FromFile(content, "sprites/platform-atlas.xml");
 
 
-            knightSpriteSheet = knightAtlas.Texture;
             enemySpriteSheet = enemyAtlas.Texture;
-            spellsSpriteSheet = knightSpiritAttacksAtlas.Texture;
-            knightAbilitiesSheet = knightAttacksAtlas.Texture;
             platformSpriteSheet = platformAtlas.Texture;
+            spellsSpriteSheet = SpiritAttacksAtlas.Texture;
 
-
+            //From knight_movement-atlas.xml
             knightSingleFrames.Add("Idle", knightAtlas.GetRegion("Idle").SourceRectangle);
             knightSingleFrames.Add("Damaged", knightAtlas.GetRegion("Damaged").SourceRectangle);
 
             knightAnimations.Add("Walking", knightAtlas.GetAnimationFrames("Walking"));
             knightAnimations.Add("Jumping", knightAtlas.GetAnimationFrames("Jumping"));
 
+            //From knight_abilities-atlas.xml
+            //Consists of attack animation and ability animations
             knightAnimations.Add("UpSlash", knightAttacksAtlas.GetAnimationFrames("UpSlash"));
             knightAnimations.Add("SideSlash", knightAttacksAtlas.GetAnimationFrames("SideSlash"));
             knightAnimations.Add("DownSlash", knightAttacksAtlas.GetAnimationFrames("DownSlash"));
             knightAnimations.Add("HealPrep", knightAttacksAtlas.GetAnimationFrames("HealPrep"));
             knightAnimations.Add("HealPost", knightAttacksAtlas.GetAnimationFrames("HealPost"));
+            knightAnimations.Add("SpiritCast", knightAttacksAtlas.GetAnimationFrames("SpiritCast"));
 
-            spiritSingleFrames.Add("SpellCast", knightSpiritAttacksAtlas.GetRegion("SoulSpirit_Initial").SourceRectangle); //Inital spirit frame
+            //From spirit-atlas.xml
+            spiritSingleFrames.Add("SpiritInitial", SpiritAttacksAtlas.GetRegion("Soul_Spirit_Initial").SourceRectangle);
+            spiritAnimations.Add("MovingSpirit", SpiritAttacksAtlas.GetAnimationFrames("MovingSpirit"));
+            spiritAnimations.Add("Pulse", SpiritAttacksAtlas.GetAnimationFrames("Pulse"));
+            spiritAnimations.Add("Collision", SpiritAttacksAtlas.GetAnimationFrames("Collision"));
 
-            spiritAnimations.Add("MovingSpirit", knightSpiritAttacksAtlas.GetAnimationFrames("MovingSpirit"));
-            spiritAnimations.Add("Pulse", knightSpiritAttacksAtlas.GetAnimationFrames("Pulse"));
-            spiritAnimations.Add("Collision", knightSpiritAttacksAtlas.GetAnimationFrames("Collision"));
-
-
-            // Load enemy atlas from XML
-            enemySpriteSheet = enemyAtlas.Texture;
-
+            // Load platform atlas from XML
             platformFrames.Add("Spike_Floor_1", platformAtlas.GetRegion("Spike_Floor_1").SourceRectangle);
             platformFrames.Add("Spike_Floor_2", platformAtlas.GetRegion("Spike_Floor_2").SourceRectangle);
             platformFrames.Add("Spike_Ceiling", platformAtlas.GetRegion("Spike_Ceiling").SourceRectangle);
-
             platformFrames.Add("Path_1", platformAtlas.GetRegion("Path_1").SourceRectangle);
             platformFrames.Add("Path_2", platformAtlas.GetRegion("Path_2").SourceRectangle);
             platformFrames.Add("Path_Stone_3", platformAtlas.GetRegion("Path_Stone_3").SourceRectangle);
             platformFrames.Add("Path_ledge", platformAtlas.GetRegion("Path_ledge").SourceRectangle);
 
-
+            // From enemy-atlas.xml
             crawlidAnimations.Add("Crawlid_Idle", enemyAtlas.GetAnimationFrames("Crawlid_Idle"));
             crawlidAnimations.Add("Crawlid_Turning", enemyAtlas.GetAnimationFrames("Crawlid_Turning"));
             crawlidAnimations.Add("Crawlid_Death_Air", enemyAtlas.GetAnimationFrames("Crawlid_Death_Air"));
@@ -119,15 +122,10 @@ namespace HollowKnight.Factories
             vengeflyAnimations.Add("Vengefly_Chase", enemyAtlas.GetAnimationFrames("Vengefly_Chase"));
             vengeflyAnimations.Add("Vengefly_Death", enemyAtlas.GetAnimationFrames("Vengefly_Death"));
 
-            // defaultFont = content.Load<SpriteFont>("fonts/Credits");
+            // defaultFont = content.Load<SpriteFont>("fonts/Credits"); //used later on
         }
 
-        //Knight factory methods
-        public ISprite CreateKnightIdleSprite(Vector2 position)
-        {
-            return new StaticSprite(knightSpriteSheet, knightSingleFrames["Idle"], position, 2.0f);
-        }
-
+        //Platform factory methods
         public ISprite CreatePath_1Sprite(Vector2 position)
         {
             return new StaticSprite(platformSpriteSheet, platformFrames["Path_1"], position, 2.0f);
@@ -147,7 +145,6 @@ namespace HollowKnight.Factories
         {
             return new StaticSprite(platformSpriteSheet, platformFrames["Path_ledge"], position, 2.0f);
         }
-
         public ISprite CreateSpikeSprite(Vector2 position)
         {
             return new StaticSprite(platformSpriteSheet, platformFrames["Spike_Floor_1"], position, 2.0f);
@@ -160,44 +157,56 @@ namespace HollowKnight.Factories
         {
             return new StaticSprite(platformSpriteSheet, platformFrames["Spike_Ceiling"], position, 2.0f);
         }
+
+
+        //Knight factory methods
+        public ISprite CreateKnightIdleSprite(Vector2 position)
+        {
+            return new StaticSprite(knightVarietySheet, knightSingleFrames["Idle"], position, 2.0f);
+        }
         public ISprite CreateKnightDamagedSprite(Vector2 position)
         {
-            return new StaticSprite(knightAbilitiesSheet, knightSingleFrames["Damaged"], position, 2.0f);
+            return new StaticSprite(knightVarietySheet, knightSingleFrames["Damaged"], position, 2.0f);
         }
-
         public ISprite CreateKnightWalkSprite(Vector2 position)
         {
-            return new AnimatedSprite(knightSpriteSheet, knightAnimations["Walking"], position, 0.1, 2.0f);
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["Walking"], position, 0.1, 2.0f);
         }
 
         public ISprite CreateKnightJumpSprite(Vector2 position)
         {
-            return new AnimatedSprite(knightSpriteSheet, knightAnimations["Jumping"], position, 0.1, 2.0f);
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["Jumping"], position, 0.1, 2.0f);
         }
 
         public ISprite CreateKnightUpSlashSprite(Vector2 position)
         {
-            return new AnimatedSprite(knightAbilitiesSheet, knightAnimations["UpSlash"], position, 0.1, 2.0f);
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["UpSlash"], position, 0.1, 2.0f);
         }
 
         public ISprite CreateKnightSideSlashSprite(Vector2 position)
         {
-            return new AnimatedSprite(knightAbilitiesSheet, knightAnimations["SideSlash"], position, 0.1, 2.0f);
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["SideSlash"], position, 0.1, 2.0f);
         }
 
         public ISprite CreateKnightDownSlashSprite(Vector2 position)
         {
-            return new AnimatedSprite(knightAbilitiesSheet, knightAnimations["DownSlash"], position, 0.1, 2.0f);
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["DownSlash"], position, 0.1, 2.0f);
         }
 
         public ISprite CreateKnightHealPrepSprite(Vector2 position)
         {
-            return new AnimatedSprite(knightAbilitiesSheet, knightAnimations["HealPrep"], position, 0.1, 2.0f);
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["HealPrep"], position, 0.1, 2.0f);
         }
         public ISprite CreateKnightHealPostSprite(Vector2 position)
         {
-            return new AnimatedSprite(knightAbilitiesSheet, knightAnimations["HealPost"], position, 0.1, 2.0f);
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["HealPost"], position, 0.1, 2.0f);
         }
+        public ISprite CreateSpiritCastSprite(Vector2 position)
+        {
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["SpiritCast"], position, 0.1, 2.0f);
+        }
+
+
 
         //Vengefly factory methods
         public ISprite CreateVengeflyIdleSprite(Vector2 position)
@@ -248,10 +257,11 @@ namespace HollowKnight.Factories
         }
 
 
+
         //Spirit factory methods
         public ISprite CreateSpiritInitialSprite(Vector2 position)
         {
-            return new StaticSprite(spellsSpriteSheet, spiritSingleFrames["SpellCast"], position, 2.0f);
+            return new StaticSprite(spellsSpriteSheet, spiritSingleFrames["SpiritInitial"], position, 2.0f);
         }
 
         public ISprite CreateSpiritMovingSprite(Vector2 position)
