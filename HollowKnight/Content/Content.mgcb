@@ -74,8 +74,8 @@
 /processorParam:TextureFormat=Color
 /build:sprites/SoulSpellsSpriteSheet.png
 
-#begin sprites/knight-atlas.xml
-/copy:sprites/knight-atlas.xml
+#begin sprites/knight_movement-atlas.xml
+/copy:sprites/knight_movement-atlas.xml
 
 #begin sprites/enemy-atlas.xml
 /copy:sprites/enemy-atlas.xml

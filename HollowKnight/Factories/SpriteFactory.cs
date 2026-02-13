@@ -40,7 +40,7 @@ namespace HollowKnight.Factories
         public void LoadAllTextures(ContentManager content)
         {
             // Load knight atlas from XML
-            TextureAtlas knightAtlas = TextureAtlas.FromFile(content, "sprites/knight-atlas.xml");
+            TextureAtlas knightAtlas = TextureAtlas.FromFile(content, "sprites/knight_movement-atlas.xml");
             knightSpriteSheet = knightAtlas.Texture;
 
             knightSingleFrames.Add("Idle", knightAtlas.GetRegion("Idle").SourceRectangle);

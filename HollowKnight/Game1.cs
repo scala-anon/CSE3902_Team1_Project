@@ -17,7 +17,9 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-
+    
+    private IEnemies vengefly_1;
+    private IEnemies[] Enemies = new IEnemies[2];
     // TODO: Replace with your game's sprite management
     private ISprite _currentSprite;
     private List<IController> _controllerList;
@@ -53,13 +55,20 @@ public class Game1 : Game
         _screenWidth = _graphics.PreferredBackBufferWidth;
         _screenHeight = _graphics.PreferredBackBufferHeight;
 
+
+        
+        
+        Enemies = loadEnemies();
+        
+        
+
         // TODO: Create your game sprites using the factory
         // Vector2 playerStart = new Vector2(_screenWidth / 2, _screenHeight / 2);
         // ISprite playerSprite = SpriteFactory.Instance.CreatePlayerIdleSprite(playerStart);
         // _currentSprite = playerSprite;
 
-        ISprite[] enviromentSprites = new ISprite[5];
-        ISprite object_1 = SpriteFactory.Instance.createObject1Sprite(_position, _screenWidth);
+       ISprite[] enviromentSprites = new ISprite[5];
+       ISprite object_1 = SpriteFactory.Instance.createObject1Sprite(_position, _screenWidth);
         enviromentSprites[0] = object_1;
         /// Initialize other 4 or 5 objects (Do we want to have an easier way to create these with parameters???)
 
@@ -80,6 +89,13 @@ public class Game1 : Game
     }
 
 
+    public IEnemies[] loadEnemies()
+    {
+        IEnemies[] temp = new IEnemies[2];
+        vengefly_1 = new Vengefly();
+        temp[0] = vengefly_1;
+        return temp;
+    }
     public void getEnviromentSprites()
     {
         IObjects[] enviromentSprites = new IObjects[5];
@@ -124,7 +140,8 @@ public class Game1 : Game
         // - Game state management
 
         _currentSprite?.Update(gameTime);
-
+        
+        Enemies[0].Update(gameTime);
         base.Update(gameTime);
     }
 
@@ -137,6 +154,8 @@ public class Game1 : Game
 
         // Draw current sprite
         _currentSprite?.Draw(_spriteBatch);
+
+        Enemies[0].Draw(_spriteBatch);
 
         enviromentSprites[0].Draw(_spriteBatch); // Initially draw first sprite in array
         
