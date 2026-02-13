@@ -74,6 +74,18 @@
 /processorParam:TextureFormat=Color
 /build:sprites/SoulSpellsSpriteSheet.png
 
+#begin sprites/platformSpritesheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:sprites/platformSpritesheet.png
+
 #begin sprites/knight_movement-atlas.xml
 /copy:sprites/knight_movement-atlas.xml
 
@@ -89,6 +101,8 @@
 #begin sprites/spirit-atlas.xml
 /copy:sprites/spirit-atlas.xml
 
+#begin sprites/platform-atlas.xml
+/copy:sprites/platform-atlas.xml
 
 #begin fonts/Credits.spritefont
 #/importer:FontDescriptionImporter

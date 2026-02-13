@@ -4,11 +4,11 @@
 	<Regions>
 		<!-- Single frames -->
 		<Region name="Spike_Ceiling" x="3" y="0" width="229" height="130" />
-        <Region name="Spike_Floor" x="93" y="301" width="166" height="94" />
+    <Region name="Spike_Floor_1" x="93" y="301" width="166" height="94" />
 		<Region name="Path_1" x="265" y="223" width="1060" height="83" />
-        <Region name="Path_2" x="265" y="364" width="937" height="144" />
-        <Region name="Path_ledge" x="2311" y="53" width="119" height="45" />
-        <Region name="Spike_Floor_2" x="2311" y="105" width="137" height="99" />
-        <Region name="Path_Stone_3" x="2311" y="209" width="342" height="42" />
-	</Reigions>
+		<Region name="Path_2" x="265" y="364" width="937" height="144" />
+		<Region name="Path_ledge" x="2311" y="53" width="119" height="45" />
+		<Region name="Spike_Floor_2" x="2311" y="105" width="137" height="99" />
+		<Region name="Path_Stone_3" x="2311" y="209" width="342" height="42" />
+	</Regions>
 </TextureAtlas>
