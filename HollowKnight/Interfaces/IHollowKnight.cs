@@ -9,8 +9,12 @@ namespace HollowKnight.Interfaces
         void Draw(SpriteBatch spriteBatch);
         void MoveRight();
         void MoveLeft();
+        void MoveUp();
+        void MoveDown();
         void Jump();
+        void TakeDamage();
         void StopMovingHorizontal();
+        void StopMovingVertical();
         void Attack();
     }
 }

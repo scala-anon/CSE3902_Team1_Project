@@ -1,17 +1,18 @@
 using HollowKnight.Interfaces;
+using HollowKnight.Player;
 
 namespace HollowKnight.Commands
 {
     public class PlayerAttackCommand : ICommand
     {
-        private IHollowKnight theKnight;
-        public PlayerAttackCommand(IHollowKnight theKnight)
+        private TheKnight _knight;
+        public PlayerAttackCommand(TheKnight knight)
         {
-            this.theKnight = theKnight;
+            _knight = knight;
         }
         public void Execute()
         {
-            theKnight.Attack();
+            _knight.Attack();
         }
     }
 }

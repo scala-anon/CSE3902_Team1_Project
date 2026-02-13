@@ -68,16 +68,54 @@ public class Game1 : Game
         // TODO: Register your game commands
         // keyboard.RegisterCommand(Keys.Escape, new QuitCommand(this));
         // keyboard.RegisterCommand(Keys.Space, new JumpCommand(player));
+
+        // Move Left
         keyboard.RegisterHeldCommand(Keys.A, new PlayerMoveLeftCommand(_knight));
+        keyboard.RegisterHeldCommand(Keys.Left, new PlayerMoveLeftCommand(_knight));
+
+        // Move Right
         keyboard.RegisterHeldCommand(Keys.D, new PlayerMoveRightCommand(_knight));
+        keyboard.RegisterHeldCommand(Keys.Right, new PlayerMoveRightCommand(_knight));
 
+        // Look Up
+        keyboard.RegisterHeldCommand(Keys.W, new PlayerMoveUpCommand(_knight));
+        keyboard.RegisterHeldCommand(Keys.Up, new PlayerMoveUpCommand(_knight));
+
+        // Look Down
+        keyboard.RegisterHeldCommand(Keys.S, new PlayerMoveDownCommand(_knight));
+        keyboard.RegisterHeldCommand(Keys.Down, new PlayerMoveDownCommand(_knight));
+
+
+        // Stop Horizontal Movement
         keyboard.RegisterReleasedCommand(Keys.A, new PlayerStopMovingHorizontalCommand(_knight));
+        keyboard.RegisterReleasedCommand(Keys.Left, new PlayerStopMovingHorizontalCommand(_knight));
         keyboard.RegisterReleasedCommand(Keys.D, new PlayerStopMovingHorizontalCommand(_knight));
+        keyboard.RegisterReleasedCommand(Keys.Right, new PlayerStopMovingHorizontalCommand(_knight));
 
+        // Stop Vertical Movement
+        keyboard.RegisterReleasedCommand(Keys.W, new PlayerStopMovingVerticalCommand(_knight));
+        keyboard.RegisterReleasedCommand(Keys.Up, new PlayerStopMovingVerticalCommand(_knight));
+        keyboard.RegisterReleasedCommand(Keys.S, new PlayerStopMovingVerticalCommand(_knight));
+        keyboard.RegisterReleasedCommand(Keys.Down, new PlayerStopMovingVerticalCommand(_knight));
+
+        // Attack
         keyboard.RegisterPressedCommand(Keys.Space, new PlayerJumpCommand(_knight));
-        keyboard.RegisterPressedCommand(Keys.X, new PlayerAttackCommand(_knight));
+        keyboard.RegisterPressedCommand(Keys.Z, new PlayerAttackCommand(_knight));
 
-        keyboard.RegisterPressedCommand(Keys.Escape, new QuitCommand(this));
+        // Player Items
+        keyboard.RegisterPressedCommand(Keys.D1, new PlayerUseItemCommand(_knight, 1));
+        keyboard.RegisterPressedCommand(Keys.D2, new PlayerUseItemCommand(_knight, 2));
+        keyboard.RegisterPressedCommand(Keys.D3, new PlayerUseItemCommand(_knight, 3));
+
+        // Cycle Items
+        keyboard.RegisterPressedCommand(Keys.U, new CycleItemPreviousCommand());
+        keyboard.RegisterPressedCommand(Keys.I, new CycleItemNextCommand());
+
+        // Player Taking Damage
+        keyboard.RegisterPressedCommand(Keys.E, new PlayerTakeDamageCommand(_knight));
+
+        // Quit Game
+        keyboard.RegisterPressedCommand(Keys.Q, new QuitCommand(this));
         _controllerList.Add(keyboard);
 
         // Setup mouse controller (optional)

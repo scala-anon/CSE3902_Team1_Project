@@ -1,0 +1,34 @@
+using System.Collections.Generic;
+
+namespace HollowKnight.Storage
+{
+    public static class ItemManager
+    {
+        private static int _currentIndex = 0;
+
+        // Placeholder list — replace with real items later
+        private static List<string> _items = new List<string>()
+        {
+            "Fireball",
+            "Boomerang",
+            "Bomb"
+        };
+
+        public static string CurrentItem => _items[_currentIndex];
+
+        public static void NextItem()
+        {
+            _currentIndex = (_currentIndex + 1) % _items.Count;
+        }
+
+        public static void PreviousItem()
+        {
+            _currentIndex = (_currentIndex - 1 + _items.Count) % _items.Count;
+        }
+
+        public static void Reset()
+        {
+            _currentIndex = 0;
+        }
+    }
+}

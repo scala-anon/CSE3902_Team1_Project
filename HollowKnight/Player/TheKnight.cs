@@ -15,8 +15,15 @@ namespace HollowKnight.Player
         private float moveSpeed = 200f;
         private float jumpSpeed = -350f;
         private float gravity = 900f;
-
         private bool isGrounded;
+
+
+        private bool isDamaged;
+        private double damagedTimer;
+        private double damagedDuration = 0.4;
+
+        private int currentItem;
+
 
         public TheKnight(Texture2D sprite, Vector2 position)
         {
@@ -45,10 +52,22 @@ namespace HollowKnight.Player
             {
                 isGrounded = false;
             }
+
+            if (isDamaged)
+            {
+                damagedTimer += gameTime.ElapsedGameTime.TotalSeconds;
+
+                if (damagedTimer >= damagedDuration)
+                {
+                    isDamaged = false;
+                    damagedTimer = 0;
+                }
+            }
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(sprite, position, Color.White);
+            Color tint = isDamaged ? Color.Red : Color.White;
+            spriteBatch.Draw(sprite, position, tint);
         }
         public void MoveRight()
         {
@@ -57,6 +76,25 @@ namespace HollowKnight.Player
         public void MoveLeft()
         {
             velocity.X = -moveSpeed;
+        }
+        public void MoveUp()
+        {
+            Console.WriteLine("Camera Move Up");
+        }
+        public void MoveDown()
+        {
+            Console.WriteLine("Camera Move Down");
+        }
+        public void TakeDamage()
+        {
+            Console.WriteLine("Knight took damage");
+            isDamaged = true;
+            damagedTimer = 0;
+        }
+        public void UseItem(int _itemNumber)
+        {
+            currentItem = _itemNumber;
+            Console.WriteLine($"Using item #{currentItem}");
         }
         public void Jump()
         {
@@ -69,6 +107,11 @@ namespace HollowKnight.Player
         public void StopMovingHorizontal()
         {
             velocity.X = 0;
+        }
+
+        public void StopMovingVertical()
+        {
+            velocity.Y = 0;
         }
         public void Attack()
         {

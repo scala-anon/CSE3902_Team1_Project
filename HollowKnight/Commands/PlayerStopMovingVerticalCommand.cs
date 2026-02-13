@@ -3,16 +3,16 @@ using HollowKnight.Player;
 
 namespace HollowKnight.Commands
 {
-    public class PlayerStopMovingHorizontalCommand : ICommand
+    public class PlayerStopMovingVerticalCommand : ICommand
     {
         private TheKnight _knight;
-        public PlayerStopMovingHorizontalCommand(TheKnight knight)
+        public PlayerStopMovingVerticalCommand(TheKnight knight)
         {
             _knight = knight;
         }
         public void Execute()
         {
-            _knight.StopMovingHorizontal();
+            _knight.StopMovingVertical();
         }
     }
 }

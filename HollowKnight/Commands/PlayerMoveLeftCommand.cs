@@ -1,17 +1,18 @@
 using HollowKnight.Interfaces;
+using HollowKnight.Player;
 
 namespace HollowKnight.Commands
 {
     public class PlayerMoveLeftCommand : ICommand
     {
-        private IHollowKnight theKnight;
-        public PlayerMoveLeftCommand(IHollowKnight theKnight)
+        private TheKnight _knight;
+        public PlayerMoveLeftCommand(TheKnight knight)
         {
-            this.theKnight = theKnight;
+            _knight = knight;
         }
         public void Execute()
         {
-            theKnight.MoveLeft();
+            _knight.MoveLeft();
         }
     }
 }
