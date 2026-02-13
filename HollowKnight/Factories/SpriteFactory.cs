@@ -12,6 +12,7 @@ namespace HollowKnight.Factories
     {
         private Texture2D knightSpriteSheet;
         private Texture2D enemySpriteSheet;
+        private Texture2D platformSpriteSheet;
 
         private Texture2D spellsSpriteSheet;
 
@@ -23,8 +24,12 @@ namespace HollowKnight.Factories
         private readonly Dictionary<string, Rectangle> knightSingleFrames;
         private readonly Dictionary<string, Rectangle[]> knightAnimations;
 
-        private readonly Dictionary<string, Rectangle> crawlidSingleFrames;
+        // private readonly Dictionary<string, Rectangle> crawlidSingleFrames;
         private readonly Dictionary<string, Rectangle[]> crawlidAnimations;
+        // private readonly Dictionary<string, Rectangle> vengeflySingleFrames;
+        private readonly Dictionary<string, Rectangle[]> vengeflyAnimations;
+
+        private readonly Dictionary<string,Rectangle> platformFrames;
 
         private readonly Dictionary<string, Rectangle> vengeflySingleFrames;
         private readonly Dictionary<string, Rectangle[]> vengeflyAnimations;
@@ -44,12 +49,13 @@ namespace HollowKnight.Factories
             knightSingleFrames = new Dictionary<string, Rectangle>();
             knightAnimations = new Dictionary<string, Rectangle[]>();
 
-            crawlidSingleFrames = new Dictionary<string, Rectangle>();
+            // crawlidSingleFrames = new Dictionary<string, Rectangle>();
             crawlidAnimations = new Dictionary<string, Rectangle[]>();
 
-            vengeflySingleFrames = new Dictionary<string, Rectangle>();
+            // vengeflySingleFrames = new Dictionary<string, Rectangle>();
             vengeflyAnimations = new Dictionary<string, Rectangle[]>();
 
+            platformFrames = new Dictionary<string, Rectangle>();
             spiritSingleFrames = new Dictionary<string, Rectangle>();
             spiritAnimations = new Dictionary<string, Rectangle[]>();
         }
@@ -90,6 +96,11 @@ namespace HollowKnight.Factories
             // Load enemy atlas from XML
             enemySpriteSheet = enemyAtlas.Texture;
 
+            TextureAtlas platformAtlas = TextureAtlas.FromFile(content, "sprites/platform-atlas.xml");
+            platformFrames.Add("Spike", platformAtlas.GetRegion("Spike").SourceRectangle);
+            platformFrames.Add("Path", platformAtlas.GetRegion("Path").SourceRectangle);
+            
+
 
             crawlidAnimations.Add("Idle", enemyAtlas.GetAnimationFrames("Crawlid_Idle"));
             crawlidAnimations.Add("Turning", enemyAtlas.GetAnimationFrames("Crawlid_Turning"));
@@ -111,6 +122,14 @@ namespace HollowKnight.Factories
             return new StaticSprite(knightSpriteSheet, knightSingleFrames["Idle"], position, 2.0f);
         }
 
+        public ISprite CreatePathSprite(Vector2 position)
+        {
+            return new StaticSprite(platformSpriteSheet, platformFrames["Path"], position, 2.0f);
+        }
+
+          public ISprite CreateSpikeSprite(Vector2 position)
+        {
+            return new StaticSprite(platformSpriteSheet, platformFrames["Spike"], position, 2.0f);
         public ISprite CreateKnightDamagedSprite(Vector2 position)
         {
             return new StaticSprite(knightAbilitiesSheet, knightSingleFrames["Damaged"], position, 2.0f);
