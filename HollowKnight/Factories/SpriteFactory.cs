@@ -18,9 +18,9 @@ namespace HollowKnight.Factories
         private readonly Dictionary<string, Rectangle> knightSingleFrames;
         private readonly Dictionary<string, Rectangle[]> knightAnimations;
 
-        private readonly Dictionary<string, Rectangle> crawlidSingleFrames;
+        // private readonly Dictionary<string, Rectangle> crawlidSingleFrames;
         private readonly Dictionary<string, Rectangle[]> crawlidAnimations;
-        private readonly Dictionary<string, Rectangle> vengeflySingleFrames;
+        // private readonly Dictionary<string, Rectangle> vengeflySingleFrames;
         private readonly Dictionary<string, Rectangle[]> vengeflyAnimations;
 
         private readonly Dictionary<string,Rectangle> platformFrames;
@@ -36,10 +36,10 @@ namespace HollowKnight.Factories
             knightSingleFrames = new Dictionary<string, Rectangle>();
             knightAnimations = new Dictionary<string, Rectangle[]>();
 
-            crawlidSingleFrames = new Dictionary<string, Rectangle>();
+            // crawlidSingleFrames = new Dictionary<string, Rectangle>();
             crawlidAnimations = new Dictionary<string, Rectangle[]>();
 
-            vengeflySingleFrames = new Dictionary<string, Rectangle>();
+            // vengeflySingleFrames = new Dictionary<string, Rectangle>();
             vengeflyAnimations = new Dictionary<string, Rectangle[]>();
 
             platformFrames = new Dictionary<string, Rectangle>();
@@ -157,6 +157,5 @@ namespace HollowKnight.Factories
             return new TextSprite(defaultFont, text, position, color);
         }
 
-      
     }
 }
