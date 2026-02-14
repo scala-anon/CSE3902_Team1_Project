@@ -9,6 +9,7 @@
     <Region name="MovingSpirit_0" x="225" y="67" width="201" height="98" />
     <Region name="MovingSpirit_1" x="440" y="66" width="236" height="96" />
     <Region name="MovingSpirit_2" x="700" y="73" width="257" height="95" />
+    <!--For game, the spirit might switch between 2 frames for long distances-->
 
     <!--Pulse Frames-->
     <Region name="Pulse_0" x="106" y="442" width="66" height="223" />
