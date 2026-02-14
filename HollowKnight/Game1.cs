@@ -66,8 +66,6 @@ public class Game1 : Game
         // Setup keyboard controller
         KeyboardController keyboard = new KeyboardController();
         // TODO: Register your game commands
-        // keyboard.RegisterCommand(Keys.Escape, new QuitCommand(this));
-        // keyboard.RegisterCommand(Keys.Space, new JumpCommand(player));
 
         // Move Left
         keyboard.RegisterHeldCommand(Keys.A, new PlayerMoveLeftCommand(_knight));
@@ -119,9 +117,9 @@ public class Game1 : Game
         _controllerList.Add(keyboard);
 
         // Setup mouse controller (optional)
-        MouseController mouse = new MouseController(_screenWidth, _screenHeight, this);
-        mouse.RegisterRightClickCommand(new QuitCommand(this));
-        _controllerList.Add(mouse);
+        // MouseController mouse = new MouseController(_screenWidth, _screenHeight, this);
+        // mouse.RegisterRightClickCommand(new QuitCommand(this));
+        // _controllerList.Add(mouse);
     }
     protected override void Update(GameTime gameTime)
     {
