@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas>
+	<Texture>sprites/KnightVarietySpriteSheet</Texture>
+	<Regions>
+
+		<!--Frames for healing (FOCUS ability)-->
+		<Region name="HealPrep_0" x="109" y="59" width="66" height="117" />
+		<Region name="HealPrep_1" x="207" y="66" width="72" height="114" />
+		<Region name="HealPrep_2" x="300" y="66" width="68" height="115" />
+		<Region name="HealPrep_3" x="396" y="72" width="72" height="112" />
+		<Region name="HealPrep_4" x="490" y="71" width="70" height="114" />
+		<Region name="HealPrep_5" x="603" y="70" width="70" height="115" />
+
+		<Region name="HealPost_0" x="92" y="242" width="77" height="119" />
+		<Region name="HealPost_1" x="195" y="251" width="83" height="112" />
+		<Region name="HealPost_2" x="317" y="253" width="83" height="102" />
+		<Region name="HealPost_3" x="430" y="246" width="76" height="121" />
+		<Region name="HealPost_4" x="552" y="244" width="58" height="124" />
+
+		<!--Frames for nail/sword attack-->
+		<Region name="SideSword_0" x="82" y="431" width="55" height="129" />
+		<Region name="SideSword_1" x="170" y="441" width="120" height="126" />
+		<Region name="SideSword_2" x="332" y="442" width="86" height="124" />
+
+		<Region name="UpSword_0" x="76" y="631" width="72" height="122" />
+		<Region name="UpSword_1" x="186" y="646" width="97" height="96" />
+		<Region name="UpSword_2" x="330" y="649" width="57" height="92" />
+		<Region name="UpSword_3" x="435" y="649" width="81" height="95" />
+
+		<Region name="DownSword_0" x="78" y="1060" width="101" height="117" />
+		<Region name="DownSword_1" x="202" y="1066" width="123" height="113" />
+		<Region name="DownSword_2" x="349" y="1058" width="81" height="123" />
+
+
+		<!--Frames for Soul Sprit Casting-->
+		<Region name="SpiritCast_0" x="87" y="870" width="71" height="113" />
+		<Region name="SpiritCast_1" x="187" y="873" width="74" height="115" />
+		<Region name="SpiritCast_2" x="285" y="866" width="76" height="125" />
+		<Region name="SpiritCast_3" x="403" y="867" width="77" height="125" />
+
+	</Regions>
+</TextureAtlas>
