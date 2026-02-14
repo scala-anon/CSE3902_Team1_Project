@@ -1,35 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextureAtlas>
-	<Texture>sprites/SoulSpellsSpriteSheet</Texture>
+	<Texture>sprites/SpellsSpriteSheet</Texture>
 	<Regions>
 		<!--Inital Spirit Frame-->
-    <Region name="Soul_Spirit_Initial" x="1166" y="969" width="98" height="111" />
+    <Region name="SpiritInitial" x="98" y="54" width="100" height="111" />
 
     <!--Moving Spirit Frames-->
-    <Region name="MovingSpirit_0" x="1166" y="969" width="98" height="111" />
-    <Region name="MovingSpirit_1" x="914" y="791" width="200" height="96" />
-    <Region name="MovingSpirit_2" x="381" y="747" width="237" height="94" />
-    <Region name="MovingSpirit_3" x="1090" y="1945" width="257" height="94" />
-    <Region name="MovingSpirit_4" x="1090" y="1945" width="257" height="94" />
-    <Region name="MovingSpirit_5" x="914" y="791" width="200" height="96" />
+    <Region name="MovingSpirit_0" x="225" y="67" width="201" height="98" />
+    <Region name="MovingSpirit_1" x="440" y="66" width="236" height="96" />
+    <Region name="MovingSpirit_2" x="700" y="73" width="257" height="95" />
 
-    <!--Pulse Animation from Knight-->
-    <Region name="Pulse_0" x="859" y="1843" width="226" height="70" />
-    <Region name="Pulse_1" x="833" y="11" width="241" height="156" />
-    <Region name="Pulse_2" x="252" y="1506" width="191" height="265" />
-    <Region name="Pulse_3" x="252" y="1506" width="191" height="265" />
-    <Region name="Pulse_4" x="247" y="1782" width="224" height="257" />
-    <Region name="Pulse_5" x="247" y="1782" width="224" height="257" />
-    <Region name="Pulse_6" x="559" y="6" width="267" height="163" />
-    <Region name="Pulse_7" x="248" y="1315" width="271" height="178" />
+    <!--Pulse Frames-->
+    <Region name="Pulse_0" x="106" y="442" width="66" height="223" />
+    <Region name="Pulse_1" x="212" y="435" width="159" height="238" />
+    <Region name="Pulse_2" x="395" y="425" width="194" height="267" />
+    <Region name="Pulse_3" x="662" y="430" width="183" height="261" />
+    <Region name="Pulse_4" x="855" y="429" width="168" height="270" />
+    <Region name="Pulse_5" x="1065" y="428" width="179" height="264" />
+    <Region name="Pulse_6" x="1287" y="470" width="94" height="174" />
 
-    <!--Spirit Collision Frames-->
-    <Region name="Collision_0" x="947" y="197" width="191" height="126" />
-    <Region name="Collision_1" x="383" y="858" width="143" height="188" />
-    <Region name="Collision_2" x="530" y="857" width="132" height="190" />
-    <Region name="Collision_3" x="781" y="521" width="185" height="127" />
-    <Region name="Collision_4" x="760" y="1067" width="174" height="80" />
-    <Region name="Collision_5" x="850" y="1438" width="173" height="94" />
+    <!--Collision Frames-->
+    <Region name="Collision_0" x="111" y="800" width="85" height="131" />
+    <Region name="Collision_1" x="228" y="793" width="104" height="150" />
+    <Region name="Collision_2" x="364" y="787" width="126" height="163" />
+    <Region name="Collision_3" x="504" y="790" width="131" height="190" />
+    <Region name="Collision_4" x="653" y="791" width="133" height="190" />
+    <Region name="Collision_5" x="812" y="793" width="130" height="186" />
+    <Region name="Collision_6" x="986" y="808" width="79" height="175" />
 		
 	</Regions>
 </TextureAtlas>

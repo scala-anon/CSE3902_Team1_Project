@@ -96,7 +96,7 @@ namespace HollowKnight.Factories
             knightAnimations.Add("SpiritCast", knightAttacksAtlas.GetAnimationFrames("SpiritCast"));
 
             //From spirit-atlas.xml
-            spiritSingleFrames.Add("SpiritInitial", SpiritAttacksAtlas.GetRegion("Soul_Spirit_Initial").SourceRectangle);
+            spiritSingleFrames.Add("SpiritInitial", SpiritAttacksAtlas.GetRegion("SpiritInitial").SourceRectangle);
             spiritAnimations.Add("MovingSpirit", SpiritAttacksAtlas.GetAnimationFrames("MovingSpirit"));
             spiritAnimations.Add("Pulse", SpiritAttacksAtlas.GetAnimationFrames("Pulse"));
             spiritAnimations.Add("Collision", SpiritAttacksAtlas.GetAnimationFrames("Collision"));
