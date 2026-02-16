@@ -44,7 +44,7 @@ _Screenshots coming soon_
 
 - Nicholas Mamais
 - _Team member 2_
-- _Team member 3_
+- Zachary Verley 
 - Sudhish Kumar Gopalakrishnan
 - _Team member 5_
 
