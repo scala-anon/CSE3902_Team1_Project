@@ -24,7 +24,7 @@ public class Game1 : Game
     private ISprite _currentSprite;
     private List<IController> _controllerList;
 
-    private IObjects[] enviromentSprites;
+   // private IObjects[] enviromentSprites;
     private int _screenWidth;
     private int _screenHeight;
 
@@ -67,9 +67,9 @@ public class Game1 : Game
         // ISprite playerSprite = SpriteFactory.Instance.CreatePlayerIdleSprite(playerStart);
         // _currentSprite = playerSprite;
 
-       ISprite[] enviromentSprites = new ISprite[5];
-       ISprite object_1 = SpriteFactory.Instance.createObject1Sprite(_position, _screenWidth);
-        enviromentSprites[0] = object_1;
+        //ISprite[] enviromentSprites = new ISprite[5];
+        //ISprite object_1 = SpriteFactory.Instance.createObject1Sprite(_position, _screenWidth);
+        //enviromentSprites[0] = object_1;
         /// Initialize other 4 or 5 objects (Do we want to have an easier way to create these with parameters???)
 
 
@@ -96,11 +96,10 @@ public class Game1 : Game
         temp[0] = vengefly_1;
         return temp;
     }
-    public void getEnviromentSprites()
-    {
-        IObjects[] enviromentSprites = new IObjects[5];
-
-    }
+   // public void getEnviromentSprites()
+   // {
+    //    IObjects[] enviromentSprites = new IObjects[5];
+  //  }
 
     /// <summary>
     /// Set the currently displayed sprite, preserving position.
@@ -157,7 +156,7 @@ public class Game1 : Game
 
         Enemies[0].Draw(_spriteBatch);
 
-        enviromentSprites[0].Draw(_spriteBatch); // Initially draw first sprite in array
+       // enviromentSprites[0].Draw(_spriteBatch); // Initially draw first sprite in array
         
         // TODO: Draw your game elements here
         // - Background layers
