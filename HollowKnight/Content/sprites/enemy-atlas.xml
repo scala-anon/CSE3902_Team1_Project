@@ -27,7 +27,7 @@
         <Region name="Vengefly_Turning_1" x="749" y="199" width="79" height="128" />
 
         <Region name="Vengefly_Startle_0" x="617" y="360" width="72" height="136" />
-        <Region name="Vegefly_Startle_1" x="759" y="358" width="132" height="104" />
+        <Region name="Vengefly_Startle_1" x="759" y="358" width="132" height="104" />
         <Region name="Vengefly_Startle_2" x="904" y="359" width="142" height="106" />
         <Region name="Vengefly_Startle_3" x="1070" y="401" width="101" height="106" />
 
