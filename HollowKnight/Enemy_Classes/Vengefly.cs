@@ -6,7 +6,7 @@ using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class Vengefly : IEnemies
+public class Vengefly : IEnemy
 {
     private int frameCounter = 0;
 
@@ -60,7 +60,7 @@ public class Vengefly : IEnemies
 
         //Start idle
 
-
+        //TODO impliment actuall state changes
         frameCounter++;
         if (frameCounter >= 500)
         {
