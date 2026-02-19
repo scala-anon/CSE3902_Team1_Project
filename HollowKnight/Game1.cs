@@ -56,7 +56,7 @@ public class Game1 : Game
         _screenHeight = _graphics.PreferredBackBufferHeight;
 
         Vector2 centerPosition = new Vector2(_screenWidth / 2, _screenHeight / 2);
-        _currentSprite = SpriteFactory.Instance.CreateKnightUpSwordSprite(centerPosition);
+        //_currentSprite = SpriteFactory.Instance.CreateKnightUpSwordSprite(centerPosition);
 
         
         
