@@ -11,8 +11,8 @@ namespace HollowKnight.Factories
     public class SpriteFactory
     {
         private Texture2D knightVarietySheet;
-        private Texture2D knightSpriteSheet;
-        private Texture2D knightAbilitiesSheet;
+        //private Texture2D knightSpriteSheet;
+        //private Texture2D knightAbilitiesSheet;
 
         private Texture2D enemySpriteSheet;
         private Texture2D platformSpriteSheet;
@@ -96,7 +96,7 @@ namespace HollowKnight.Factories
             knightAnimations.Add("SpiritCast", knightAttacksAtlas.GetAnimationFrames("SpiritCast"));
 
             //From spirit-atlas.xml
-            spiritSingleFrames.Add("SpiritInitial", SpiritAttacksAtlas.GetRegion("Soul_Spirit_Initial").SourceRectangle);
+            spiritSingleFrames.Add("SpiritInitial", SpiritAttacksAtlas.GetRegion("SpiritInitial").SourceRectangle);
             spiritAnimations.Add("MovingSpirit", SpiritAttacksAtlas.GetAnimationFrames("MovingSpirit"));
             spiritAnimations.Add("Pulse", SpiritAttacksAtlas.GetAnimationFrames("Pulse"));
             spiritAnimations.Add("Collision", SpiritAttacksAtlas.GetAnimationFrames("Collision"));
@@ -112,7 +112,7 @@ namespace HollowKnight.Factories
 
             // From enemy-atlas.xml
             crawlidAnimations.Add("Crawlid_Idle", enemyAtlas.GetAnimationFrames("Crawlid_Idle"));
-            crawlidAnimations.Add("Crawlid_Turning", enemyAtlas.GetAnimationFrames("Crawlid_Turning"));
+            crawlidAnimations.Add("Crawlid_Turn", enemyAtlas.GetAnimationFrames("Crawlid_Turn"));
             crawlidAnimations.Add("Crawlid_Death_Air", enemyAtlas.GetAnimationFrames("Crawlid_Death_Air"));
             crawlidAnimations.Add("Crawlid_Death_Land", enemyAtlas.GetAnimationFrames("Crawlid_Death_Land"));
 
@@ -178,17 +178,17 @@ namespace HollowKnight.Factories
             return new AnimatedSprite(knightVarietySheet, knightAnimations["Jumping"], position, 0.1, 1.0f);
         }
 
-        public ISprite CreateKnightUpSlashSprite(Vector2 position)
+        public ISprite CreateKnightUpSwordSprite(Vector2 position)
         {
             return new AnimatedSprite(knightVarietySheet, knightAnimations["UpSword"], position, 0.1, 1.0f);
         }
 
-        public ISprite CreateKnightSideSlashSprite(Vector2 position)
+        public ISprite CreateKnightSideSwordSprite(Vector2 position)
         {
             return new AnimatedSprite(knightVarietySheet, knightAnimations["SideSword"], position, 0.1, 1.0f);
         }
 
-        public ISprite CreateKnightDownSlashSprite(Vector2 position)
+        public ISprite CreateKnightDownSwordSprite(Vector2 position)
         {
             return new AnimatedSprite(knightVarietySheet, knightAnimations["DownSword"], position, 0.1, 1.0f);
         }

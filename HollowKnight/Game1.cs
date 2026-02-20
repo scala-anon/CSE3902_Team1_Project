@@ -6,6 +6,7 @@ using HollowKnight.Factories;
 using HollowKnight.Builders;
 using HollowKnight.Player;
 using System.Collections.Generic;
+using System.IO;
 
 namespace HollowKnight;
 
@@ -16,9 +17,15 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-
+    public int enemy_index = 0;
+    public int enviroment_index = 0;
+    private IEnemy[] Enemies = new IEnemy[2];
+    private IObject[] Objects = new IObject[7];
+    // TODO: Replace with your game's sprite management
+    private ISprite _currentSprite;
     private List<IController> _controllerList;
 
+   // private IObjects[] enviromentSprites;
     private int _screenWidth;
     private int _screenHeight;
 
@@ -52,14 +59,87 @@ public class Game1 : Game
         _screenHeight = _graphics.PreferredBackBufferHeight;
 
         Vector2 centerPosition = new Vector2(_screenWidth / 2, _screenHeight / 2);
+        //_currentSprite = SpriteFactory.Instance.CreateKnightUpSwordSprite(centerPosition);
+
+        
+        
+        loadEnemies();
+        loadEnviroment();
+        
+        
 
         var sprites = KnightSpriteBuilder.BuildKnightSprites(centerPosition);
         _knight = new TheKnight(sprites, centerPosition);
+
+        //ISprite[] enviromentSprites = new ISprite[5];
+        //ISprite object_1 = SpriteFactory.Instance.createObject1Sprite(_position, _screenWidth);
+        //enviromentSprites[0] = object_1;
+        /// Initialize other 4 or 5 objects (Do we want to have an easier way to create these with parameters???)
+
+
+
 
         // Setup keyboard controller
         KeyboardController keyboard = new KeyboardController();
         KeyboardBindings.BindGameplay(keyboard, _knight, this);
         _controllerList.Add(keyboard);
+        // TODO: Register your game commands
+        keyboard.RegisterCommand(Keys.P, new ChangeNextEnemyCommand(this));
+        keyboard.RegisterCommand(Keys.O, new ChangePreviousEnemyCommand(this));
+        keyboard.RegisterCommand(Keys.Y, new ChangeNextEnviromentCommand(this));
+        keyboard.RegisterCommand(Keys.T, new ChangePreviousEnviromentCommand(this));
+        // keyboard.RegisterCommand(Keys.Escape, new QuitCommand(this));
+        // keyboard.RegisterCommand(Keys.Space, new JumpCommand(player));
+        _controllerList.Add(keyboard);
+
+        // Setup mouse controller (optional)
+        MouseController mouse = new MouseController(_screenWidth, _screenHeight, this);
+        mouse.RegisterRightClickCommand(new QuitCommand(this));
+        _controllerList.Add(mouse);
+    }
+
+
+
+    public void loadEnviroment()
+    {
+        IObject Path_1 = new Path_1();
+        Objects[0] = Path_1;
+        IObject Path_2 = new Path_2();
+        Objects[1] = Path_2;
+        IObject Path_3 = new Path_3();
+        Objects[2] = Path_3;
+        IObject Path_Ledge = new Path_ledge();
+        Objects[3] = Path_Ledge;
+        IObject Spike = new Spike();
+        Objects[4] = Spike;
+        IObject FloorSpike = new FloorSpike();
+        Objects[5] = FloorSpike;
+        IObject CeilingSpike = new CeilingSpike();
+        Objects[6] = CeilingSpike;
+    }
+    public void loadEnemies()
+    {
+        IEnemy vengefly_1 = new Vengefly(new Vector2(0, 150));
+        Enemies[0] = vengefly_1;
+        IEnemy crawlid_1 = new Crawlid(new Vector2(0,150));
+        Enemies[1] = crawlid_1;
+    }
+   // public void getEnviromentSprites()
+   // {
+    //    IObjects[] enviromentSprites = new IObjects[5];
+  //  }
+
+    /// <summary>
+    /// Set the currently displayed sprite, preserving position.
+    /// </summary>
+    public void SetSprite(ISprite sprite)
+    {
+        if (_currentSprite != null)
+        {
+            Vector2 currentPosition = _currentSprite.GetPosition();
+            sprite.SetPosition(currentPosition);
+        }
+        _currentSprite = sprite;
     }
     protected override void Update(GameTime gameTime)
     {
@@ -77,6 +157,10 @@ public class Game1 : Game
 
         _knight.Update(gameTime);
 
+        _currentSprite?.Update(gameTime);
+        
+        Enemies[enemy_index].Update(gameTime);
+        Objects[enviroment_index].Update(gameTime);
         base.Update(gameTime);
     }
 
@@ -90,6 +174,12 @@ public class Game1 : Game
         // Draw current sprite
         _knight.Draw(_spriteBatch);
 
+    
+        Enemies[enemy_index].Draw(_spriteBatch);
+        Objects[enviroment_index].Draw(_spriteBatch);
+
+       // enviromentSprites[0].Draw(_spriteBatch); // Initially draw first sprite in array
+        
         // TODO: Draw your game elements here
         // - Background layers
         // - Game objects

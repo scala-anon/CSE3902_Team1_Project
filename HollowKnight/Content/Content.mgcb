@@ -62,7 +62,7 @@
 /processorParam:TextureFormat=Color
 /build:sprites/KnightVarietySpriteSheet.png
 
-#begin sprites/SoulSpellsSpriteSheet.png
+#begin sprites/SpellsSpriteSheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -72,7 +72,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/SoulSpellsSpriteSheet.png
+/build:sprites/SpellsSpriteSheet.png
 
 #begin sprites/platformSpritesheet.png
 /importer:TextureImporter
