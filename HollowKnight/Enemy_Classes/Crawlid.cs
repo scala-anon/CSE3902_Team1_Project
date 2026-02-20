@@ -53,7 +53,7 @@ public class Crawlid : IEnemy
         {
             state++;
             stateMachine.Update(_gameTime);
-            if (state == 3)
+            if (state == 4)
             {
                 state = 0;
             }

@@ -112,7 +112,7 @@ namespace HollowKnight.Factories
 
             // From enemy-atlas.xml
             crawlidAnimations.Add("Crawlid_Idle", enemyAtlas.GetAnimationFrames("Crawlid_Idle"));
-            crawlidAnimations.Add("Crawlid_Turning", enemyAtlas.GetAnimationFrames("Crawlid_Turning"));
+            crawlidAnimations.Add("Crawlid_Turn", enemyAtlas.GetAnimationFrames("Crawlid_Turn"));
             crawlidAnimations.Add("Crawlid_Death_Air", enemyAtlas.GetAnimationFrames("Crawlid_Death_Air"));
             crawlidAnimations.Add("Crawlid_Death_Land", enemyAtlas.GetAnimationFrames("Crawlid_Death_Land"));
 
