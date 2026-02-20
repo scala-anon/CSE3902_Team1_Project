@@ -3,16 +3,16 @@ using HollowKnight.Player;
 
 namespace HollowKnight.Commands
 {
-    public class PlayerAttackCommand : ICommand
+    public class PlayerSideSlashCommand : ICommand
     {
         private TheKnight _knight;
-        public PlayerAttackCommand(TheKnight knight)
+        public PlayerSideSlashCommand(TheKnight knight)
         {
             _knight = knight;
         }
         public void Execute()
         {
-            _knight.Attack();
+            _knight.SideSlash();
         }
     }
 }

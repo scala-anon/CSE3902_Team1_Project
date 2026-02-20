@@ -15,6 +15,8 @@ namespace HollowKnight.Interfaces
         void TakeDamage();
         void StopMovingHorizontal();
         void StopMovingVertical();
-        void Attack();
+        void SideSlash();
+        void UpSlash();
+        void DownSlash();
     }
 }

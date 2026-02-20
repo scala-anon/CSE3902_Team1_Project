@@ -1,0 +1,161 @@
+Game1.cs
+    1. Made Knight object with sprites dictionary and position as parameter.
+
+
+IHollowKnight.cs
+    The interface is used in making the TheKnight class.
+    Methods in the interface:
+        - Update(GameTime gameTime);
+        - Draw(SpriteBatch spriteBatch);
+        - MoveRight();
+        - MoveLeft();
+        - MoveUp();
+        - MoveDown();
+        - Jump();
+        - TakeDamage();
+        - StopMovingHorizontal();
+        - StopMovingVertical();
+        - SideSlash();
+        - UpSlash();
+        - DownSlash();
+        - StartHeal();
+        - CancelHeal();
+        - Update();
+
+
+KnightSpriteType.cs
+    Enumerates all the different type of sprites for TheKnight class.
+    Types of Sprites:
+        - Idle
+        - Walking
+        - Jumping 
+        - SideSlash
+        - UpSlash
+        - DownSlash
+        - Damaged
+        - HealPrep
+        - HealPost
+        - SpiritCast
+
+
+KnightSpriteBuilder.cs
+    Handles the creation and adding of the knight sprites into a dictionary which gets returned.
+    Uses the KnightSpriteType as the key in the dictionary.
+    Sprites created and stored in dictionary:
+        - Idle
+        - Walking
+        - Jumping 
+        - SideSlash
+        - UpSlash
+        - DownSlash
+        - Damaged
+        - HealPrep
+        - HealPost
+        - SpiritCast
+
+
+TheKnight.cs
+    Class implements methods from the IHollowKnight interface.
+    Methods implemented:
+        - Update(GameTime gameTime)
+            - Handles Knight's Jump
+            - Handles Knight's Damage
+            - Handles Knight's Attacks (SideSlash, UpSlash, DownSlash)
+            - Handles Knight's Healing
+            - Handles Changing Knight's sprites
+        - Draw(SpriteBatch spriteBatch)
+            - Uses Draw function on currentSprite 
+        - MoveRight()
+            - Cancels heal if ongoing
+            - Sets the knight's direction to right
+            - Changes velocity.X with Knight's moveSpeed
+        - MoveLeft()
+            - Cancels heal if ongoing
+            - Sets the knight's direction to left
+            - Changes velocity.X with Knight's -moveSpeed
+        - MoveUp()
+            - Not implemented yet, will handle camera up movement
+        - MoveDown()
+            - Not implemented yet, will handle camera down movement
+        - TakeDamage()
+            - Cancels heal if ongoing
+            - Decreases health by 1
+        - UseItem()
+            - Not implemented yet, will handle the current item selected
+        - Jump()
+            - Cancels heal if ongoing
+            - Handles Knight's Jump
+        - StopMovingHorizontal()
+            - Changes velocity.X to Zero
+        - StopMovingVertical()
+            - Changes velocity.Y to Zero
+        - SideSlash()
+            - Cancels heal if ongoing
+            - Changes attackType to SideSlash
+        - UpSlash()
+            - Cancels heal if ongoing
+            - Changes attackType to UpSlash
+        - DownSlash()
+            - Cancels heal if ongoing
+            - Changes attackType to DownSlash
+        - StartHeal()
+            - Checks to see if knight can heal 
+        - CancelHeal()
+            - Cancels ongoing healing
+        - UpdateHeal()
+            - Changes currentState to HealPrep
+            - Increments health by 1
+            - Changes currentState to HealPost
+
+
+Direction.cs
+    Used to set the direction of the knight when drawing sprites.
+    Enumerates:
+        - Left
+        - Right
+
+
+KeyboardBindings.cs
+    Handles the mapping of keys to the corresponding commands for the keyboard controller.
+    Keyboard Controller Binding:
+        I've added three types of commands:
+            - Held commands
+            - Pressed Commands
+            - Released Commands
+            - Combo Pressed Commands
+
+        Held Commands added:
+            - Player move Left
+            - Player move Right
+            - Player move Up
+            - Player move Down
+            - Player start healing
+
+        Released Commands added:
+            - Player stop horizontal movement
+            - Player stop vertical movement
+            - Player stop healing
+
+        Pressed Commands added:
+            - Player jump
+            - Player use items (1,2,3,...)
+            - Player cycle item next 
+            - Player cycle item previous 
+            - Player take damage
+            - Player quit game
+
+        Combo Commands added:
+            - Player side slash
+            - Player up slash
+            - Player down slash
+
+ItemManager.cs
+    Handles the inventory and the item currently selected by the Knight.
+    - List _items 
+        - List of all items in inventory
+    - NextItem()
+        - Increments the current index and access that item in _items list
+    - PreviousItem()
+        - Decrements the current indec and access that item in _items list
+    - Reset()
+        - Sets the current index to zero

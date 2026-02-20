@@ -18,17 +18,27 @@ namespace HollowKnight.Controllers
 
         private KeyboardState _previousState;
 
+        private class ComboPressedBinding
+        {
+            public Keys BaseKey;
+            public Keys? ModifierKey;
+            public ICommand Command; 
+        } 
+        private List<ComboPressedBinding> _comboPressedMappings;
+
         public KeyboardController()
         {
             _pressedMappings = new Dictionary<Keys, ICommand>();
             _heldMappings = new Dictionary<Keys, ICommand>();
             _releasedMappings = new Dictionary<Keys, ICommand>();
+            _comboPressedMappings = new List<ComboPressedBinding>();
             _previousState = Keyboard.GetState();
         }
 
         /// <summary>
         /// Register a command to execute when the specified key is pressed.
         /// </summary>
+        /// 
         public void RegisterPressedCommand(Keys key, ICommand command)
         {
             _pressedMappings[key] = command;
@@ -41,10 +51,52 @@ namespace HollowKnight.Controllers
         {
             _releasedMappings[key] = command;
         }
+        public void RegisterComboPressedCommand(Keys baseKey, Keys modifierKey, ICommand command)
+        {
+            _comboPressedMappings.Add(new ComboPressedBinding
+            {
+                BaseKey = baseKey,
+                ModifierKey = modifierKey,
+                Command = command
+            });
+        }
+        public void RegisterComboPressedCommand(Keys baseKey, ICommand command)
+        {
+            _comboPressedMappings.Add(new ComboPressedBinding
+            {
+                BaseKey = baseKey,
+                ModifierKey = null,
+                Command = command
+            });
+        }
 
         public void Update(GameTime gameTime)
         {
             KeyboardState currentState = Keyboard.GetState();
+
+            foreach (var binding in _comboPressedMappings)
+            {
+                bool basePressed = currentState.IsKeyDown(binding.BaseKey) && _previousState.IsKeyUp(binding.BaseKey);
+
+                if (!basePressed)
+                    continue;
+
+                if (binding.ModifierKey != null)
+                {
+                    if (currentState.IsKeyDown(binding.ModifierKey.Value))
+                    {
+                        binding.Command.Execute();
+                        _previousState = currentState;
+                        return;
+                    }
+                }
+                else
+                {
+                    binding.Command.Execute();
+                    _previousState = currentState;
+                    return;
+                }
+            }
 
             foreach (var mapping in _pressedMappings)
             {

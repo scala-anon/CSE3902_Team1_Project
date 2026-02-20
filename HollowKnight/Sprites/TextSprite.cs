@@ -37,7 +37,7 @@ namespace HollowKnight.Sprites
             // No update needed for static text
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, SpriteEffects effects)
         {
             spriteBatch.DrawString(_font, _text, _position, _color);
         }

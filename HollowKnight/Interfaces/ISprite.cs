@@ -19,7 +19,7 @@ namespace HollowKnight.Interfaces
         /// Draw the sprite to the screen.
         /// Called once per render frame.
         /// </summary>
-        void Draw(SpriteBatch spriteBatch);
+        void Draw(SpriteBatch spriteBatch, SpriteEffects effects);
 
         /// <summary>
         /// Reset sprite to initial state (position, animation frame, etc.)
