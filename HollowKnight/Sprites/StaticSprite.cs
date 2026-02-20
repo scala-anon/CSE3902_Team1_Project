@@ -47,7 +47,7 @@ namespace HollowKnight.Sprites
             _position = position;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, SpriteEffects effects)
         {
             spriteBatch.Draw(
                 _texture,
@@ -57,7 +57,7 @@ namespace HollowKnight.Sprites
                 0f,
                 Vector2.Zero,
                 _scale,
-                SpriteEffects.None,
+                effects,
                 0f
             );
         }

@@ -162,48 +162,48 @@ namespace HollowKnight.Factories
         //Knight factory methods
         public ISprite CreateKnightIdleSprite(Vector2 position)
         {
-            return new StaticSprite(knightVarietySheet, knightSingleFrames["Idle"], position, 2.0f);
+            return new StaticSprite(knightVarietySheet, knightSingleFrames["Idle"], position, 1.0f);
         }
         public ISprite CreateKnightDamagedSprite(Vector2 position)
         {
-            return new StaticSprite(knightVarietySheet, knightSingleFrames["Damaged"], position, 2.0f);
+            return new StaticSprite(knightVarietySheet, knightSingleFrames["Damaged"], position, 1.0f);
         }
         public ISprite CreateKnightWalkSprite(Vector2 position)
         {
-            return new AnimatedSprite(knightVarietySheet, knightAnimations["Walking"], position, 0.1, 2.0f);
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["Walking"], position, 0.1, 1.0f); 
         }
 
         public ISprite CreateKnightJumpSprite(Vector2 position)
         {
-            return new AnimatedSprite(knightVarietySheet, knightAnimations["Jumping"], position, 0.1, 2.0f);
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["Jumping"], position, 0.1, 1.0f);
         }
 
         public ISprite CreateKnightUpSwordSprite(Vector2 position)
         {
-            return new AnimatedSprite(knightVarietySheet, knightAnimations["UpSword"], position, 0.1, 2.0f);
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["UpSword"], position, 0.1, 1.0f);
         }
 
         public ISprite CreateKnightSideSwordSprite(Vector2 position)
         {
-            return new AnimatedSprite(knightVarietySheet, knightAnimations["SideSword"], position, 0.1, 2.0f);
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["SideSword"], position, 0.1, 1.0f);
         }
 
         public ISprite CreateKnightDownSwordSprite(Vector2 position)
         {
-            return new AnimatedSprite(knightVarietySheet, knightAnimations["DownSword"], position, 0.1, 2.0f);
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["DownSword"], position, 0.1, 1.0f);
         }
 
         public ISprite CreateKnightHealPrepSprite(Vector2 position)
         {
-            return new AnimatedSprite(knightVarietySheet, knightAnimations["HealPrep"], position, 0.1, 2.0f);
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["HealPrep"], position, 0.1, 1.0f);
         }
         public ISprite CreateKnightHealPostSprite(Vector2 position)
         {
-            return new AnimatedSprite(knightVarietySheet, knightAnimations["HealPost"], position, 0.1, 2.0f);
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["HealPost"], position, 0.1, 1.0f);
         }
         public ISprite CreateSpiritCastSprite(Vector2 position)
         {
-            return new AnimatedSprite(knightVarietySheet, knightAnimations["SpiritCast"], position, 0.1, 2.0f);
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["SpiritCast"], position, 0.1, 1.0f);
         }
 
 

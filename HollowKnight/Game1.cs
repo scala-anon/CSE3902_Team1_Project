@@ -1,11 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using HollowKnight.Interfaces;
 using HollowKnight.Controllers;
-using HollowKnight.Commands;
 using HollowKnight.Factories;
-
+using HollowKnight.Builders;
+using HollowKnight.Player;
 using System.Collections.Generic;
 using System.IO;
 
@@ -29,6 +28,8 @@ public class Game1 : Game
    // private IObjects[] enviromentSprites;
     private int _screenWidth;
     private int _screenHeight;
+
+    private TheKnight _knight;
 
     public Game1()
     {
@@ -67,10 +68,8 @@ public class Game1 : Game
         
         
 
-        // TODO: Create your game sprites using the factory
-        // Vector2 playerStart = new Vector2(_screenWidth / 2, _screenHeight / 2);
-        // ISprite playerSprite = SpriteFactory.Instance.CreatePlayerIdleSprite(playerStart);
-        // _currentSprite = playerSprite;
+        var sprites = KnightSpriteBuilder.BuildKnightSprites(centerPosition);
+        _knight = new TheKnight(sprites, centerPosition);
 
         //ISprite[] enviromentSprites = new ISprite[5];
         //ISprite object_1 = SpriteFactory.Instance.createObject1Sprite(_position, _screenWidth);
@@ -82,6 +81,8 @@ public class Game1 : Game
 
         // Setup keyboard controller
         KeyboardController keyboard = new KeyboardController();
+        KeyboardBindings.BindGameplay(keyboard, _knight, this);
+        _controllerList.Add(keyboard);
         // TODO: Register your game commands
         keyboard.RegisterCommand(Keys.P, new ChangeNextEnemyCommand(this));
         keyboard.RegisterCommand(Keys.O, new ChangePreviousEnemyCommand(this));
@@ -140,17 +141,6 @@ public class Game1 : Game
         }
         _currentSprite = sprite;
     }
-
-    public Vector2 GetCurrentSpritePosition()
-    {
-        return _currentSprite?.GetPosition() ?? Vector2.Zero;
-    }
-
-    public void SetCurrentSpritePosition(Vector2 position)
-    {
-        _currentSprite?.SetPosition(position);
-    }
-
     protected override void Update(GameTime gameTime)
     {
         // Update all controllers
@@ -164,6 +154,8 @@ public class Game1 : Game
         // - Enemy AI
         // - Collision detection
         // - Game state management
+
+        _knight.Update(gameTime);
 
         _currentSprite?.Update(gameTime);
         
@@ -180,7 +172,7 @@ public class Game1 : Game
         _spriteBatch.Begin();
 
         // Draw current sprite
-        _currentSprite?.Draw(_spriteBatch);
+        _knight.Draw(_spriteBatch);
 
     
         Enemies[enemy_index].Draw(_spriteBatch);

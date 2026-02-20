@@ -43,8 +43,8 @@ _Screenshots coming soon_
 ### Development Team
 
 - Nicholas Mamais
-- _Team member 2_
-- Zachary Verley 
+- Srinivas Sankaranarayanan
+- _Team member 3_
 - Sudhish Kumar Gopalakrishnan
 - _Team member 5_
 
