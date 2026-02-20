@@ -21,12 +21,11 @@ public class Crawlid : IEnemy
 
     public bool alive;
 
-    public SpriteBatch _spriteBatch;
-
     public Vector2 position;
 
-    public Crawlid()
+    public Crawlid(Vector2 _position)
     {
+        position = _position;
         left = true;
         alive = true;
         Sprite = SpriteFactory.Instance.CreateCrawlidIdleSprite(position);

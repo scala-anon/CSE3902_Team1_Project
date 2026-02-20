@@ -9,7 +9,6 @@ using Microsoft.Xna.Framework.Graphics;
 public class Vengefly : IEnemy
 {
     private int frameCounter = 0;
-
     public int state = 0;
     public bool dead;
     public bool startleAnimationPlayed;
@@ -17,10 +16,10 @@ public class Vengefly : IEnemy
     public bool knightFound;
     private VengeflyStateMachine stateMachine;
     public ISprite VengeFly;
-    public SpriteBatch _spriteBatch;
     public Vector2 position;
-    public Vengefly()
+    public Vengefly(Vector2 _positon)
     {
+        position = _positon;
         dead = false;
         startleAnimationPlayed = true;
         knightFound = false;

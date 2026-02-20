@@ -107,12 +107,20 @@ public class Game1 : Game
         Objects[1] = Path_2;
         IObject Path_3 = new Path_3();
         Objects[2] = Path_3;
+        IObject Path_Ledge = new Path_ledge();
+        Objects[3] = Path_Ledge;
+        IObject Spike = new Spike();
+        Objects[4] = Spike;
+        IObject FloorSpike = new FloorSpike();
+        Objects[5] = FloorSpike;
+        IObject CeilingSpike = new CeilingSpike();
+        Objects[6] = CeilingSpike;
     }
     public void loadEnemies()
     {
-        IEnemy vengefly_1 = new Vengefly();
+        IEnemy vengefly_1 = new Vengefly(new Vector2(0, 150));
         Enemies[0] = vengefly_1;
-        IEnemy crawlid_1 = new Crawlid();
+        IEnemy crawlid_1 = new Crawlid(new Vector2(0,150));
         Enemies[1] = crawlid_1;
     }
    // public void getEnviromentSprites()
