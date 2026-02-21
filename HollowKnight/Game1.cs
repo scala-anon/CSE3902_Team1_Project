@@ -60,10 +60,7 @@ public class Game1 : Game
         _screenHeight = _graphics.PreferredBackBufferHeight;
 
         Vector2 centerPosition = new Vector2(_screenWidth / 2, _screenHeight / 2);
-        //_currentSprite = SpriteFactory.Instance.CreateKnightUpSwordSprite(centerPosition);
-
-        
-        
+         
         loadEnemies();
         loadEnviroment();
         
@@ -71,14 +68,6 @@ public class Game1 : Game
 
         var sprites = KnightSpriteBuilder.BuildKnightSprites(centerPosition);
         _knight = new TheKnight(sprites, centerPosition);
-
-        //ISprite[] enviromentSprites = new ISprite[5];
-        //ISprite object_1 = SpriteFactory.Instance.createObject1Sprite(_position, _screenWidth);
-        //enviromentSprites[0] = object_1;
-        /// Initialize other 4 or 5 objects (Do we want to have an easier way to create these with parameters???)
-
-
-
 
         // Setup keyboard controller
         KeyboardController keyboard = new KeyboardController();
@@ -113,6 +102,7 @@ public class Game1 : Game
         Enemies[1] = crawlid_1;
     }
   
+    //Not being used (potentially can be removed)
     public void SetSprite(ISprite sprite)
     {
         if (_currentSprite != null)
@@ -130,15 +120,7 @@ public class Game1 : Game
             controller.Update(gameTime);
         }
 
-        // TODO: Add your game update logic here
-        // - Player movement
-        // - Enemy AI
-        // - Collision detection
-        // - Game state management
-
         _knight.Update(gameTime);
-
-        _currentSprite?.Update(gameTime);
         
         Enemies[enemy_index].Update(gameTime);
         Objects[enviroment_index].Update(gameTime);
@@ -159,18 +141,7 @@ public class Game1 : Game
         Enemies[enemy_index].Draw(_spriteBatch, _spriteEffects);
         Objects[enviroment_index].Draw(_spriteBatch, _spriteEffects);
 
-       // enviromentSprites[0].Draw(_spriteBatch); // Initially draw first sprite in array
-        
-        // TODO: Draw your game elements here
-        // - Background layers
-        // - Game objects
-        // - UI elements
-        // - Debug info
 
-        // Example: Draw credits/debug text
-        //UNCOMMENT IF YOU ADD A FONT
-        //SpriteFont font = Content.Load<SpriteFont>("fonts/Credits");
-        //_spriteBatch.DrawString(font, "Hollow Knight Clone - Team 1", new Vector2(50, _screenHeight - 50), Color.White);
 
         _spriteBatch.End();
 

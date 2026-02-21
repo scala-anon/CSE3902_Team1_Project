@@ -44,9 +44,9 @@ _Screenshots coming soon_
 
 - Nicholas Mamais
 - Srinivas Sankaranarayanan
-- _Team member 3_
+- Zachary Verley
 - Sudhish Kumar Gopalakrishnan
-- _Team member 5_
+- Thomas Sobodosh
 
 ### Assets
 
