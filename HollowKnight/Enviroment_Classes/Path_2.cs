@@ -21,8 +21,8 @@ public class Path_2 : IObject
         Sprite.Update(_gameTime);
     }
 
-    public void Draw(SpriteBatch _spriteBatch)
+    public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects)
     {
-        Sprite.Draw(_spriteBatch);
+        Sprite.Draw(_spriteBatch, _spriteEffects);
     }
 }

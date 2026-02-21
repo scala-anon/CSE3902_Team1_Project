@@ -67,6 +67,15 @@ namespace HollowKnight.Controllers
             // Damage
             keyboard.RegisterPressedCommand(Keys.E, new PlayerTakeDamageCommand(knight));
 
+
+            //Commands for switching enemy sprites
+            keyboard.RegisterPressedCommand(Keys.P, new ChangeNextEnemyCommand(game));
+            keyboard.RegisterPressedCommand(Keys.O, new ChangePreviousEnemyCommand(game));
+
+            //Commands for switching Enviroment Sprites
+            keyboard.RegisterPressedCommand(Keys.Y, new ChangeNextEnviromentCommand(game));
+            keyboard.RegisterPressedCommand(Keys.T, new ChangePreviousEnviromentCommand(game));
+
             // Quit Game
             keyboard.RegisterPressedCommand(Keys.Q, new QuitCommand(game));
         }

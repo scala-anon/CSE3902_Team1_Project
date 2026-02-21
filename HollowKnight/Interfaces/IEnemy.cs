@@ -6,5 +6,5 @@ public interface IEnemy
 {
     public void Update(GameTime _gameTime);
 
-    public void Draw(SpriteBatch _spriteBatch);
+    public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects);
 }

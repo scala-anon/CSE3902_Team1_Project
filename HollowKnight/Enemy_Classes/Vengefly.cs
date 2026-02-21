@@ -49,9 +49,9 @@ public class Vengefly : IEnemy
         stateMachine.startle();
     }
 
-    public void Draw(SpriteBatch _spriteBatch)
+    public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects)
     {
-        VengeFly.Draw(_spriteBatch);
+        VengeFly.Draw(_spriteBatch, _spriteEffects);
     }
 
     public void Update(GameTime _gameTime)

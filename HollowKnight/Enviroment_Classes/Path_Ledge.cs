@@ -21,8 +21,8 @@ public class Path_ledge : IObject
         sprite.Update(_gameTime);
     }
 
-    public void Draw(SpriteBatch _spriteBatch)
+    public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects)
     {
-        sprite.Draw(_spriteBatch);
+        sprite.Draw(_spriteBatch, _spriteEffects);
     }
 }

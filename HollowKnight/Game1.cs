@@ -15,6 +15,7 @@ namespace HollowKnight;
 /// </summary>
 public class Game1 : Game
 {
+    private SpriteEffects _spriteEffects;
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     public int enemy_index = 0;
@@ -83,19 +84,6 @@ public class Game1 : Game
         KeyboardController keyboard = new KeyboardController();
         KeyboardBindings.BindGameplay(keyboard, _knight, this);
         _controllerList.Add(keyboard);
-        // TODO: Register your game commands
-        keyboard.RegisterCommand(Keys.P, new ChangeNextEnemyCommand(this));
-        keyboard.RegisterCommand(Keys.O, new ChangePreviousEnemyCommand(this));
-        keyboard.RegisterCommand(Keys.Y, new ChangeNextEnviromentCommand(this));
-        keyboard.RegisterCommand(Keys.T, new ChangePreviousEnviromentCommand(this));
-        // keyboard.RegisterCommand(Keys.Escape, new QuitCommand(this));
-        // keyboard.RegisterCommand(Keys.Space, new JumpCommand(player));
-        _controllerList.Add(keyboard);
-
-        // Setup mouse controller (optional)
-        MouseController mouse = new MouseController(_screenWidth, _screenHeight, this);
-        mouse.RegisterRightClickCommand(new QuitCommand(this));
-        _controllerList.Add(mouse);
     }
 
 
@@ -124,14 +112,7 @@ public class Game1 : Game
         IEnemy crawlid_1 = new Crawlid(new Vector2(0,150));
         Enemies[1] = crawlid_1;
     }
-   // public void getEnviromentSprites()
-   // {
-    //    IObjects[] enviromentSprites = new IObjects[5];
-  //  }
-
-    /// <summary>
-    /// Set the currently displayed sprite, preserving position.
-    /// </summary>
+  
     public void SetSprite(ISprite sprite)
     {
         if (_currentSprite != null)
@@ -175,8 +156,8 @@ public class Game1 : Game
         _knight.Draw(_spriteBatch);
 
     
-        Enemies[enemy_index].Draw(_spriteBatch);
-        Objects[enviroment_index].Draw(_spriteBatch);
+        Enemies[enemy_index].Draw(_spriteBatch, _spriteEffects);
+        Objects[enviroment_index].Draw(_spriteBatch, _spriteEffects);
 
        // enviromentSprites[0].Draw(_spriteBatch); // Initially draw first sprite in array
         
