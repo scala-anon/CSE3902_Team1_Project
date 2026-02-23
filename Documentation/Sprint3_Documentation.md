@@ -81,7 +81,7 @@
 
 | Task | Description | Assignee | Branch |
 |------|-------------|----------|--------|
-| Design Room Data File Format | Define the CSV/XML schema: object type, position, room metadata | Thomas (PM) | `feature/room-loading-format` |
+| Design Room Data File Format | Define the CSV/XML schema: object type, position, room metadata | Thomas | `feature/room-loading-format` |
 | Write File Parser / Room Loader | Code that reads the data file(s) and instantiates correct game objects at correct positions | Suhdish | `feature/room-loading-parser` |
 | Create Data Files for Each Room | Populate files with object placement data for every room in the dungeon | Zach | `feature/room-loading-data` |
 | Room Transition Logic | Unload current room and load next room when Link walks to an edge/door | Sri | `feature/room-loading-transitions` |
@@ -107,7 +107,7 @@
 
 | Member | Tasks |
 |--------|-------|
-| **Thomas (PM)** | Design room data file format, PR reviews, documentation, branch management |
+| **Thomas ** | Design room data file format, PR reviews, documentation, branch management |
 | **Zach** | Block detection, item detection, enemy collision response, room data files, test level |
 | **Sri** | Projectile detection, block response, item response, room transitions, room switcher, camera |
 | **Suhdish** | Enemy detection, projectile response, room parser, object lifecycle, state management |
@@ -154,7 +154,7 @@ dev
 ### PR & Commit Guidelines (from Sprint 2 Action Plan)
 - Write clear, descriptive commit messages
 - PRs should reference the task they complete
-- Thomas (PM) reviews and approves PRs
+- Niko reviews and approves PRs
 
 ---
 
