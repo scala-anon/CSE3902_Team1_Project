@@ -4,7 +4,8 @@
 
 | Role | Member |
 |------|--------|
-| Project Manager | Thomas |
+| Project Manager | Niko |
+| Developer | Thomas |
 | Developer | Zach |
 | Developer | Sri |
 | Developer | Suhdish |
@@ -31,7 +32,7 @@
 - Watch video on git documentation (i.e. commit messages and PR requests)
 - More detailed Definition of Done (D.O.D)
 
-**For PM:**
+**For PM (Niko):**
 - Break down the full project better
 - Watching for PRs and git commits
 - Keeping up with documentation
@@ -107,7 +108,8 @@
 
 | Member | Tasks |
 |--------|-------|
-| **Thomas ** | Design room data file format, PR reviews, documentation, branch management |
+| **Niko (PM)** | PR reviews, documentation, branch management, project coordination |
+| **Thomas** | Design room data file format |
 | **Zach** | Block detection, item detection, enemy collision response, room data files, test level |
 | **Sri** | Projectile detection, block response, item response, room transitions, room switcher, camera |
 | **Suhdish** | Enemy detection, projectile response, room parser, object lifecycle, state management |
