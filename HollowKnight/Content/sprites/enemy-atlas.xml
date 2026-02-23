@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas>
+    <Texture>sprites/EnemySpriteSheet</Texture>
+    <Regions>
+        <Region name="Crawlid_Idle_0" x="127" y="23" width="115" height="83" />
+        <Region name="Crawlid_Idle_1" x="246" y="23" width="115" height="83" />
+        <Region name="Crawlid_Idle_2" x="365" y="23" width="115" height="83" />
+        <Region name="Crawlid_Idle_3" x="484" y="23" width="115" height="83" />
+
+        <Region name="Crawlid_Turn_0" x="127" y="130" width="95" height="81" />
+        <Region name="Crawlid_Turn_1" x="226" y="130" width="95" height="81" />
+
+        <Region name="Crawlid_Death_Air_0" x="127" y="235" width="116" height="118" />
+        <Region name="Crawlid_Death_Air_1" x="247" y="235" width="116" height="118" />
+        <Region name="Crawlid_Death_Air_2" x="367" y="235" width="116" height="118" />
+
+        <Region name="Crawlid_Death_Land_0" x="127" y="377" width="127" height="88" />
+        <Region name="Crawlid_Death_Land_1" x="258" y="377" width="127" height="88" />
+
+        <Region name="Vengefly_Idle_0" x="607" y="56" width="108" height="101" />
+        <Region name="Vengefly_Idle_1" x="728" y="24" width="94" height="133" />
+        <Region name="Vengefly_Idle_2" x="849" y="23" width="107" height="135" />
+        <Region name="Vengefly_Idle_3" x="968" y="72" width="113" height="85" />
+        <Region name="Vengefly_Idle_4" x="1088" y="81" width="97" height="74" />
+
+        <Region name="Vengefly_Turning_0" x="628" y="196" width="84" height="133" />
+        <Region name="Vengefly_Turning_1" x="749" y="199" width="79" height="128" />
+
+        <Region name="Vengefly_Startle_0" x="617" y="360" width="72" height="136" />
+        <Region name="Vengefly_Startle_1" x="759" y="358" width="132" height="104" />
+        <Region name="Vengefly_Startle_2" x="904" y="359" width="142" height="106" />
+        <Region name="Vengefly_Startle_3" x="1070" y="401" width="101" height="106" />
+
+        <Region name="Vengefly_Chase_0" x="616" y="530" width="122" height="129" />
+        <Region name="Vengefly_Chase_1" x="755" y="547" width="138" height="118" />
+        <Region name="Vengefly_Chase_2" x="898" y="581" width="136" height="82" />
+        <Region name="Vengefly_Chase_3" x="1049" y="585" width="110" height="75" />
+
+        <Region name="Vengefly_Death_0" x="608" y="705" width="137" height="90" />
+        <Region name="Vengefly_Death_1" x="771" y="688" width="69" height="100" />
+        <Region name="Vengefly_Death_2" x="914" y="709" width="69" height="70" />
+    </Regions>
+</TextureAtlas>

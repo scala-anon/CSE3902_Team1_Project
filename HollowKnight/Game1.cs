@@ -1,12 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using HollowKnight.Interfaces;
 using HollowKnight.Controllers;
-using HollowKnight.Commands;
 using HollowKnight.Factories;
-using HollowKnight.Storage;
+using HollowKnight.Builders;
+using HollowKnight.Player;
 using System.Collections.Generic;
+using System.IO;
 
 namespace HollowKnight;
 
@@ -15,15 +15,22 @@ namespace HollowKnight;
 /// </summary>
 public class Game1 : Game
 {
+    private SpriteEffects _spriteEffects;
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-
+    public int enemy_index = 0;
+    public int enviroment_index = 0;
+    private IEnemy[] Enemies = new IEnemy[2];
+    private IObject[] Objects = new IObject[7];
     // TODO: Replace with your game's sprite management
     private ISprite _currentSprite;
     private List<IController> _controllerList;
 
+   // private IObjects[] enviromentSprites;
     private int _screenWidth;
     private int _screenHeight;
+
+    private TheKnight _knight;
 
     public Game1()
     {
@@ -47,33 +54,55 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         // Load all textures and initialize the sprite factory
-        Texture2DStorage.LoadAllTextures(Content);
-        SpriteFactory.Instance.LoadAllTextures();
+        SpriteFactory.Instance.LoadAllTextures(Content);
 
         _screenWidth = _graphics.PreferredBackBufferWidth;
         _screenHeight = _graphics.PreferredBackBufferHeight;
 
-        // TODO: Create your game sprites using the factory
-        // Vector2 playerStart = new Vector2(_screenWidth / 2, _screenHeight / 2);
-        // ISprite playerSprite = SpriteFactory.Instance.CreatePlayerIdleSprite(playerStart);
-        // _currentSprite = playerSprite;
+        Vector2 centerPosition = new Vector2(_screenWidth / 2, _screenHeight / 2);
+         
+        loadEnemies();
+        loadEnviroment();
+        
+        
+
+        var sprites = KnightSpriteBuilder.BuildKnightSprites(centerPosition);
+        _knight = new TheKnight(sprites, centerPosition);
 
         // Setup keyboard controller
         KeyboardController keyboard = new KeyboardController();
-        // TODO: Register your game commands
-        // keyboard.RegisterCommand(Keys.Escape, new QuitCommand(this));
-        // keyboard.RegisterCommand(Keys.Space, new JumpCommand(player));
+        KeyboardBindings.BindGameplay(keyboard, _knight, this);
         _controllerList.Add(keyboard);
-
-        // Setup mouse controller (optional)
-        MouseController mouse = new MouseController(_screenWidth, _screenHeight, this);
-        mouse.RegisterRightClickCommand(new QuitCommand(this));
-        _controllerList.Add(mouse);
     }
 
-    /// <summary>
-    /// Set the currently displayed sprite, preserving position.
-    /// </summary>
+
+
+    public void loadEnviroment()
+    {
+        IObject Path_1 = new Path_1();
+        Objects[0] = Path_1;
+        IObject Path_2 = new Path_2();
+        Objects[1] = Path_2;
+        IObject Path_3 = new Path_3();
+        Objects[2] = Path_3;
+        IObject Path_Ledge = new Path_ledge();
+        Objects[3] = Path_Ledge;
+        IObject Spike = new Spike();
+        Objects[4] = Spike;
+        IObject FloorSpike = new FloorSpike();
+        Objects[5] = FloorSpike;
+        IObject CeilingSpike = new CeilingSpike();
+        Objects[6] = CeilingSpike;
+    }
+    public void loadEnemies()
+    {
+        IEnemy vengefly_1 = new Vengefly(new Vector2(0, 150));
+        Enemies[0] = vengefly_1;
+        IEnemy crawlid_1 = new Crawlid(new Vector2(0,150));
+        Enemies[1] = crawlid_1;
+    }
+  
+    //Not being used (potentially can be removed)
     public void SetSprite(ISprite sprite)
     {
         if (_currentSprite != null)
@@ -83,17 +112,6 @@ public class Game1 : Game
         }
         _currentSprite = sprite;
     }
-
-    public Vector2 GetCurrentSpritePosition()
-    {
-        return _currentSprite?.GetPosition() ?? Vector2.Zero;
-    }
-
-    public void SetCurrentSpritePosition(Vector2 position)
-    {
-        _currentSprite?.SetPosition(position);
-    }
-
     protected override void Update(GameTime gameTime)
     {
         // Update all controllers
@@ -102,14 +120,10 @@ public class Game1 : Game
             controller.Update(gameTime);
         }
 
-        // TODO: Add your game update logic here
-        // - Player movement
-        // - Enemy AI
-        // - Collision detection
-        // - Game state management
-
-        _currentSprite?.Update(gameTime);
-
+        _knight.Update(gameTime);
+        
+        Enemies[enemy_index].Update(gameTime);
+        Objects[enviroment_index].Update(gameTime);
         base.Update(gameTime);
     }
 
@@ -121,17 +135,13 @@ public class Game1 : Game
         _spriteBatch.Begin();
 
         // Draw current sprite
-        _currentSprite?.Draw(_spriteBatch);
+        _knight.Draw(_spriteBatch);
 
-        // TODO: Draw your game elements here
-        // - Background layers
-        // - Game objects
-        // - UI elements
-        // - Debug info
+    
+        Enemies[enemy_index].Draw(_spriteBatch, _spriteEffects);
+        Objects[enviroment_index].Draw(_spriteBatch, _spriteEffects);
 
-        // Example: Draw credits/debug text
-        SpriteFont font = Texture2DStorage.GetDefaultFont();
-        _spriteBatch.DrawString(font, "Hollow Knight Clone - Team 1", new Vector2(50, _screenHeight - 50), Color.White);
+
 
         _spriteBatch.End();
 

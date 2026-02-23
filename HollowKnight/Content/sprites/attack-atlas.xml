@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas>
+	<Texture>sprites/KnightVarietySpriteSheet</Texture>
+	<Regions>
+    
+    <!--Frames for nail/sword attack - specifically the sword swinging-->
+    <Region name="SideSlash_0" x="164" y="1922" width="153" height="89" />
+    <Region name="SideSlash_1" x="358" y="1918" width="193" height="83" />
+    <Region name="SideSlash_2" x="608" y="1919" width="165" height="81" />
+
+    <Region name="UpSlash_0" x="572" y="2067" width="143" height="156" />
+    <Region name="UpSlash_1" x="568" y="2258" width="134" height="141" />
+
+    <Region name="DownSlash_0" x="229" y="2059" width="218" height="173" />
+    <Region name="DownSlash_1" x="296" y="2251" width="146" height="163" />
+		
+	</Regions>
+</TextureAtlas>

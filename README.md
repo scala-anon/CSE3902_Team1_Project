@@ -10,21 +10,23 @@ Explore a dark, atmospheric world filled with challenging enemies and hidden sec
 
 ### Controls
 
-| Key | Action |
-|-----|--------|
-| *Coming soon* | *Movement, attacks, and abilities will be added* |
+| Key           | Action                                           |
+| ------------- | ------------------------------------------------ |
+| _Coming soon_ | _Movement, attacks, and abilities will be added_ |
 
 ### Gameplay
 
-*Gameplay details coming soon*
+_Gameplay details coming soon_
 
 ## Installation
 
 ### Requirements
+
 - Windows, macOS, or Linux
 - [.NET 9.0 Runtime](https://dotnet.microsoft.com/download/dotnet/9.0)
 
 ### Download & Run
+
 ```bash
 git clone git@github.com:scala-anon/CSE3902_Team1_Project.git
 cd CSE3902_Team1_Project/HollowKnight
@@ -34,22 +36,25 @@ dotnet run
 
 ## Screenshots
 
-*Screenshots coming soon*
+_Screenshots coming soon_
 
 ## Credits
 
 ### Development Team
+
 - Nicholas Mamais
-- *Team member 2*
-- *Team member 3*
-- *Team member 4*
-- *Team member 5*
+- Srinivas Sankaranarayanan
+- Zachary Verley
+- Sudhish Kumar Gopalakrishnan
+- Thomas Sobodosh
 
 ### Assets
-- *Sprite credits to be added*
-- *Audio credits to be added*
+
+- _Sprite credits to be added_
+- _Audio credits to be added_
 
 ### Special Thanks
+
 - Team Cherry for the original Hollow Knight inspiration
 - CSE3902 course staff
 
