@@ -5,6 +5,7 @@ using HollowKnight.Controllers;
 using HollowKnight.Factories;
 using HollowKnight.Builders;
 using HollowKnight.Player;
+using HollowKnight.Collision;
 using System.Collections.Generic;
 using System.IO;
 
@@ -31,6 +32,7 @@ public class Game1 : Game
     private int _screenHeight;
 
     private TheKnight _knight;
+    private CollisionHandler _collisionHandler;
 
     public Game1()
     {
@@ -68,6 +70,10 @@ public class Game1 : Game
 
         var sprites = KnightSpriteBuilder.BuildKnightSprites(centerPosition);
         _knight = new TheKnight(sprites, centerPosition);
+
+        _collisionHandler = new CollisionHandler();
+        DebugRenderer.Initialize(GraphicsDevice);
+        // TODO: Register collision responses here (sub-branches)
 
         // Setup keyboard controller
         KeyboardController keyboard = new KeyboardController();
@@ -121,6 +127,18 @@ public class Game1 : Game
         }
 
         _knight.Update(gameTime);
+
+        //Check all collisions between knight and objects and handle them
+        foreach (IObject obj in Objects)
+        {
+            CollisionSide side = CollisionDetector.Detect(obj, _knight);
+            _collisionHandler.HandleCollision(obj, _knight, side);
+        }
+        foreach (IEnemy enemy in Enemies)
+        {
+            CollisionSide side = CollisionDetector.Detect(enemy, _knight);
+            _collisionHandler.HandleCollision(enemy, _knight, side);
+        }
         
         Enemies[enemy_index].Update(gameTime);
         Objects[enviroment_index].Update(gameTime);
@@ -142,6 +160,15 @@ public class Game1 : Game
         Objects[enviroment_index].Draw(_spriteBatch, _spriteEffects);
 
 
+        DebugRenderer.DrawBounds(_spriteBatch, _knight, DebugRenderer.ColorKnight);
+        foreach (IObject obj in Objects)
+        {
+            DebugRenderer.DrawBounds(_spriteBatch, obj, DebugRenderer.ColorEnvironment);
+        }
+        foreach (IEnemy enemy in Enemies)
+        {
+            DebugRenderer.DrawBounds(_spriteBatch, enemy, DebugRenderer.ColorEnemy);
+        }
 
         _spriteBatch.End();
 
