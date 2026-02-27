@@ -25,4 +25,10 @@ public class Spike : IObject
         Sprite.Draw(_spriteBatch, _spriteEffects);
     
     }
+
+    // TODO: Tune width/height to match the actual scaled sprite size
+    public Rectangle GetBounds()
+    {
+        return new Rectangle((int)position.X, (int)position.Y, 128, 32);
+    }
 }

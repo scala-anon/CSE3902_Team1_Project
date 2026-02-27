@@ -131,6 +131,12 @@ namespace HollowKnight.Player
             currentSprite.SetPosition(position);
             currentSprite.Update(gameTime);
         }
+        // TODO: Tune width/height to match the actual scaled sprite size
+        public Rectangle GetBounds()
+        {
+            return new Rectangle((int)position.X, (int)position.Y, 48, 64);
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             SpriteEffects effects = (Facing == Direction.Right)

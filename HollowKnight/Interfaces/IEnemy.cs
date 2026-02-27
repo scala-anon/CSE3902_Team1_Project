@@ -1,8 +1,8 @@
-using System.Security.Cryptography;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using HollowKnight.Collision;
 
-public interface IEnemy
+public interface IEnemy : ICollidable
 {
     public void Update(GameTime _gameTime);
 
