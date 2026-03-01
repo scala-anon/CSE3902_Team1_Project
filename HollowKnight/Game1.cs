@@ -9,6 +9,7 @@ using HollowKnight.Collision;
 using System.Collections.Generic;
 using System.IO;
 
+
 namespace HollowKnight;
 
 /// <summary>
@@ -85,19 +86,19 @@ public class Game1 : Game
 
     public void loadEnviroment()
     {
-        IObject Path_1 = new Path_1();
+        IObject Path_1 = new Path_1(new Vector2(0, 600));
         Objects[0] = Path_1;
-        IObject Path_2 = new Path_2();
+        IObject Path_2 = new Path_2(new Vector2(50, 0));
         Objects[1] = Path_2;
-        IObject Path_3 = new Path_3();
+        IObject Path_3 = new Path_3(new Vector2(250, 200));
         Objects[2] = Path_3;
-        IObject Path_Ledge = new Path_ledge();
+        IObject Path_Ledge = new Path_ledge(new Vector2(800, 200));
         Objects[3] = Path_Ledge;
-        IObject Spike = new Spike();
+        IObject Spike = new Spike(new Vector2(950, 150));
         Objects[4] = Spike;
-        IObject FloorSpike = new FloorSpike();
+        IObject FloorSpike = new FloorSpike(new Vector2(900,400));
         Objects[5] = FloorSpike;
-        IObject CeilingSpike = new CeilingSpike();
+        IObject CeilingSpike = new CeilingSpike(new Vector2(300,0));
         Objects[6] = CeilingSpike;
     }
     public void loadEnemies()

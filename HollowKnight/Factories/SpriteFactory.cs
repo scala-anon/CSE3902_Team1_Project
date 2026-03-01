@@ -128,34 +128,34 @@ namespace HollowKnight.Factories
         //Platform factory methods
         public ISprite CreatePath_1Sprite(Vector2 position)
         {
-            return new StaticSprite(platformSpriteSheet, platformFrames["Path_1"], position, 2.0f);
+            return new StaticSprite(platformSpriteSheet, platformFrames["Path_1"], position, 1.0f);
         }
 
         public ISprite CreatePath_2Sprite(Vector2 position)
         {
-            return new StaticSprite(platformSpriteSheet, platformFrames["Path_2"], position, 2.0f);
+            return new StaticSprite(platformSpriteSheet, platformFrames["Path_2"], position, 1.0f);
         }
 
         public ISprite CreatePath_Stone_3Sprite(Vector2 position)
         {
-            return new StaticSprite(platformSpriteSheet, platformFrames["Path_Stone_3"], position, 2.0f);
+            return new StaticSprite(platformSpriteSheet, platformFrames["Path_Stone_3"], position, 1.0f);
         }
 
         public ISprite CreatePath_LedgeSprite(Vector2 position)
         {
-            return new StaticSprite(platformSpriteSheet, platformFrames["Path_ledge"], position, 2.0f);
+            return new StaticSprite(platformSpriteSheet, platformFrames["Path_ledge"], position, 1.0f);
         }
         public ISprite CreateSpikeSprite(Vector2 position)
         {
-            return new StaticSprite(platformSpriteSheet, platformFrames["Spike_Floor_1"], position, 2.0f);
+            return new StaticSprite(platformSpriteSheet, platformFrames["Spike_Floor_1"], position, 1.0f);
         }
         public ISprite CreateSpikeFloor2Sprite(Vector2 position)
         {
-            return new StaticSprite(platformSpriteSheet, platformFrames["Spike_Floor_2"], position, 2.0f);
+            return new StaticSprite(platformSpriteSheet, platformFrames["Spike_Floor_2"], position, 1.0f);
         }
         public ISprite CreateSpikeCeilingSprite(Vector2 position)
         {
-            return new StaticSprite(platformSpriteSheet, platformFrames["Spike_Ceiling"], position, 2.0f);
+            return new StaticSprite(platformSpriteSheet, platformFrames["Spike_Ceiling"], position, 1.0f);
         }
 
 

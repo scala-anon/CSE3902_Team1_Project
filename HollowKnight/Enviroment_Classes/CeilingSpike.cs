@@ -9,9 +9,10 @@ public class CeilingSpike : IObject
 
     public Vector2 position;
 
-    public CeilingSpike()
+    public CeilingSpike(Vector2 _position)
     {
-        Sprite = SpriteFactory.Instance.CreateSpikeCeilingSprite(position);
+        position = _position;
+        Sprite = SpriteFactory.Instance.CreateSpikeCeilingSprite(_position);
     }
 
     public void Update(GameTime _gameTime)
@@ -27,6 +28,6 @@ public class CeilingSpike : IObject
     // TODO: Tune width/height to match the actual scaled sprite size
     public Rectangle GetBounds()
     {
-        return new Rectangle((int)position.X, (int)position.Y, 48, 32);
+        return new Rectangle((int)position.X, (int)position.Y, 230, 132);
     }
 }

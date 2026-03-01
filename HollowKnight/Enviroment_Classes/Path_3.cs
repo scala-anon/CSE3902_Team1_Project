@@ -10,9 +10,10 @@ public class Path_3 : IObject
 
     public Vector2 position;
 
-    public Path_3()
+    public Path_3(Vector2 _position)
     {
-        Sprite = SpriteFactory.Instance.CreatePath_Stone_3Sprite(position);
+        position = _position;
+        Sprite = SpriteFactory.Instance.CreatePath_Stone_3Sprite(_position);
     }
 
     public void Update(GameTime _gameTime)
@@ -28,6 +29,6 @@ public class Path_3 : IObject
     // TODO: Tune width/height to match the actual scaled sprite size
     public Rectangle GetBounds()
     {
-        return new Rectangle((int)position.X, (int)position.Y, 128, 32);
+        return new Rectangle((int)position.X, (int)position.Y, 325, 32);
     }
 }
