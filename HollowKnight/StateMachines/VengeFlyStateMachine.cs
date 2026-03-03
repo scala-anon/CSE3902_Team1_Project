@@ -6,62 +6,73 @@ using Microsoft.Xna.Framework.Graphics;
 
 public class VengeflyStateMachine
 {
-    private Vengefly CVengeFly;
+    private Vengefly CurrentVengeFly;
 
     public VengeflyStateMachine(Vengefly _vengeFly)
     {
-        CVengeFly = _vengeFly;
+        CurrentVengeFly = _vengeFly;
     }
     
     public void ChangeDirection()
     {
-        CVengeFly.left = !CVengeFly.left;
+        CurrentVengeFly.left = !CurrentVengeFly.left;
         
     }
 
     public void changeHealth()
     {
-        CVengeFly.dead = !CVengeFly.dead; // alive -> dead
+        CurrentVengeFly.dead = !CurrentVengeFly.dead; // alive -> dead
     }
     
     public void ChangeMovingState()
     {
-        CVengeFly.knightFound = !CVengeFly.knightFound;
+        CurrentVengeFly.knightFound = !CurrentVengeFly.knightFound;
     }
 
     public void startle()
     {
-        CVengeFly.startleAnimationPlayed = !CVengeFly.startleAnimationPlayed;
+        CurrentVengeFly.startleAnimationPlayed = !CurrentVengeFly.startleAnimationPlayed;
     }
 
 
     public void Update(GameTime _gameTime)
     {
-        if (CVengeFly.state == 1)
+        if (CurrentVengeFly.state == 1)
         {
-            CVengeFly.VengeFly = SpriteFactory.Instance.CreateVengeflyStartleSprite(CVengeFly.position);
+            CurrentVengeFly.VengeFly = SpriteFactory.Instance.CreateVengeflyStartleSprite(CurrentVengeFly.position);
            
         }
-        if (CVengeFly.state == 2)
+        if (CurrentVengeFly.state == 2)
         {
-            CVengeFly.VengeFly = SpriteFactory.Instance.CreateVengeflyChaseSprite(CVengeFly.position);
+            CurrentVengeFly.VengeFly = SpriteFactory.Instance.CreateVengeflyChaseSprite(CurrentVengeFly.position);
         }
 
-        if (CVengeFly.state == 3)
+        if (CurrentVengeFly.state == 3)
         {
-            CVengeFly.VengeFly = SpriteFactory.Instance.CreateVengeflyDeathSprite(CVengeFly.position);
+            CurrentVengeFly.VengeFly = SpriteFactory.Instance.CreateVengeflyDeathSprite(CurrentVengeFly.position);
         }
 
-        if (CVengeFly.state == 4)
+        if (CurrentVengeFly.state == 4)
         {   
-            CVengeFly.VengeFly = SpriteFactory.Instance.CreateVengeflyIdleSprite(CVengeFly.position);
+            CurrentVengeFly.VengeFly = SpriteFactory.Instance.CreateVengeflyIdleSprite(CurrentVengeFly.position);
         }
 
-        if (CVengeFly.state == 5)
+        if (CurrentVengeFly.state == 5)
         {
-            CVengeFly.VengeFly = SpriteFactory.Instance.CreateVengeflyIdleSprite(CVengeFly.position);
+            CurrentVengeFly.VengeFly = SpriteFactory.Instance.CreateVengeflyIdleSprite(CurrentVengeFly.position);
         }
     }
     
+    public string GetStateName()
+    {
+        return CurrentVengeFly.state switch
+        {
+            0 => "Idle",
+            1 => "Startle",
+            2 => "Chase",
+            3 => "Death",
+            _ => "Unknown"
+        };
+    }
 
 }

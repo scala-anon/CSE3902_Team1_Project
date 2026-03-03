@@ -44,4 +44,18 @@ public class CrawlidStateMachine
             CurrentCrawlid.Sprite = SpriteFactory.Instance.CreateCrawlidIdleSprite(CurrentCrawlid.position);
         }
     }
+
+public string GetStateName()
+    {
+        return CurrentCrawlid.state switch
+        {
+            0 => "Idle",
+            1 => "Startle",
+            2 => "Chase",
+            3 => "Death",
+            _ => "Unknown"
+        };
+    }
+    
+
 }

@@ -73,5 +73,10 @@ public class Crawlid : IEnemy
     {
         return new Rectangle((int)position.X, (int)position.Y, 48, 32);
     }
+    
+    public string GetStateName()
+    {
+        return stateMachine.GetStateName();
+    }
 
 }
