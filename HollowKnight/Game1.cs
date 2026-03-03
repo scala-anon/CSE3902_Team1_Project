@@ -73,7 +73,12 @@ public class Game1 : Game
 
         _collisionHandler = new CollisionHandler();
         DebugRenderer.Initialize(GraphicsDevice);
-        // TODO: Register collision responses here (sub-branches)
+        // Touching any enemy damages the knight
+        foreach (CollisionSide side in new[] { CollisionSide.Left, CollisionSide.Right, CollisionSide.Top, CollisionSide.Bottom })
+        {
+            _collisionHandler.Register<Crawlid, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage());
+            _collisionHandler.Register<Vengefly, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage());
+        }
 
         // Setup keyboard controller
         KeyboardController keyboard = new KeyboardController();

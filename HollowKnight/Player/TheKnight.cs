@@ -166,6 +166,7 @@ namespace HollowKnight.Player
         }
         public void TakeDamage()
         {
+            if (isDamaged) return;
             Console.WriteLine("Knight took damage");
             CancelHeal();
             isDamaged = true;
