@@ -73,7 +73,8 @@ public class Vengefly : IEnemy
 
     public void Update(GameTime _gameTime)
     {
-        float distanceFromKnight = Vector2.Distance(position, _knightPosition);
+        Vector2 enemyCenter = GetBounds().Center.ToVector2();
+        float distanceFromKnight = Vector2.Distance(enemyCenter, _knightPosition);
         bool knightInDetectionRange = distanceFromKnight <= DetectionRadius;
 
         if (!dead)
