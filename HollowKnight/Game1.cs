@@ -22,12 +22,12 @@ public class Game1 : Game
     public int enemy_index = 0;
     public int enviroment_index = 0;
     private IEnemy[] Enemies = new IEnemy[2];
-    private IObject[] Objects = new IObject[7];
+    // private IObject[] Objects = new IObject[7]; UPDATE commented out to test enemies only
     // TODO: Replace with your game's sprite management
     private ISprite _currentSprite;
     private List<IController> _controllerList;
 
-   // private IObjects[] enviromentSprites;
+    // private IObjects[] enviromentSprites;
     private int _screenWidth;
     private int _screenHeight;
 
@@ -62,11 +62,11 @@ public class Game1 : Game
         _screenHeight = _graphics.PreferredBackBufferHeight;
 
         Vector2 centerPosition = new Vector2(_screenWidth / 2, _screenHeight / 2);
-         
+
         loadEnemies();
-        loadEnviroment();
-        
-        
+        // loadEnviroment(); UPDATE commented out to test enemies only
+
+
 
         var sprites = KnightSpriteBuilder.BuildKnightSprites(centerPosition);
         _knight = new TheKnight(sprites, centerPosition);
@@ -88,7 +88,7 @@ public class Game1 : Game
     }
 
 
-
+    /* UPDATE commented out to test enemies only
     public void loadEnviroment()
     {
         IObject Path_1 = new Path_1();
@@ -106,14 +106,15 @@ public class Game1 : Game
         IObject CeilingSpike = new CeilingSpike();
         Objects[6] = CeilingSpike;
     }
+    */
     public void loadEnemies()
     {
         IEnemy vengefly_1 = new Vengefly(new Vector2(0, 150));
         Enemies[0] = vengefly_1;
-        IEnemy crawlid_1 = new Crawlid(new Vector2(0,150));
+        IEnemy crawlid_1 = new Crawlid(new Vector2(0, 150));
         Enemies[1] = crawlid_1;
     }
-  
+
     //Not being used (potentially can be removed)
     public void SetSprite(ISprite sprite)
     {
@@ -135,21 +136,25 @@ public class Game1 : Game
         _knight.Update(gameTime);
 
         //Check all collisions between knight and objects and handle them
+        /*UPDATE commented out to test enemies only
         foreach (IObject obj in Objects)
         {
             CollisionSide side = CollisionDetector.Detect(obj, _knight);
             _collisionHandler.HandleCollision(obj, _knight, side);
         }
+        */
         foreach (IEnemy enemy in Enemies)
         {
             CollisionSide side = CollisionDetector.Detect(enemy, _knight);
             _collisionHandler.HandleCollision(enemy, _knight, side);
         }
-        
+
         foreach (IEnemy enemy in Enemies)
             enemy.Update(gameTime);
+        /* UPDATE commented out to test enemies only
         foreach (IObject obj in Objects)
             obj.Update(gameTime);
+        */
         base.Update(gameTime);
     }
 
@@ -163,9 +168,10 @@ public class Game1 : Game
         // Draw current sprite
         _knight.Draw(_spriteBatch);
 
-    
+        /* UPDATE commented out to test enemies only
         foreach (IObject obj in Objects)
             obj.Draw(_spriteBatch, _spriteEffects);
+            */
 
         foreach (IEnemy enemy in Enemies)
         {
@@ -175,9 +181,10 @@ public class Game1 : Game
         }
 
         DebugRenderer.DrawBounds(_spriteBatch, _knight, DebugRenderer.ColorKnight);
+        /* UPDATE commented out to test enemies only
         foreach (IObject obj in Objects)
             DebugRenderer.DrawBounds(_spriteBatch, obj, DebugRenderer.ColorEnvironment);
-
+            */
         _spriteBatch.End();
 
         base.Draw(gameTime);
