@@ -18,6 +18,7 @@ namespace HollowKnight.Collision
         public static readonly Color ColorEnemy       = Color.OrangeRed;
         public static readonly Color ColorEnvironment = Color.LimeGreen;
         public static readonly Color ColorTrigger     = Color.Yellow;
+        public static readonly Color ColorMidpoint    = Color.Magenta;
 
         /// <summary>
         /// Creates the internal 1x1 pixel texture.
@@ -108,6 +109,12 @@ namespace HollowKnight.Collision
             spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Bottom - BorderThickness,rect.Width, BorderThickness), color);
             spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Top, BorderThickness, rect.Height), color);
             spriteBatch.Draw(_pixel, new Rectangle(rect.Right - BorderThickness, rect.Top, BorderThickness,rect.Height),color);
+        }
+
+        public static void DrawPoint(SpriteBatch spriteBatch, Vector2 center, Color color, int size = 6)
+        {
+            if(!hitboxEnabled || _pixel == null) return;
+            spriteBatch.Draw(_pixel, new Rectangle((int)(center.X - size/2), (int)(center.Y - size/2), size, size), color);
         }
     }
 }

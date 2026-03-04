@@ -191,6 +191,8 @@ public class Game1 : Game
         }
 
         DebugRenderer.DrawBounds(_spriteBatch, _knight, DebugRenderer.ColorKnight);
+        DebugRenderer.DrawPoint(_spriteBatch, _knight.GetBounds().Center.ToVector2(), DebugRenderer.ColorMidpoint);
+
         /* UPDATE commented out to test enemies only
         foreach (IObject obj in Objects)
             DebugRenderer.DrawBounds(_spriteBatch, obj, DebugRenderer.ColorEnvironment);
