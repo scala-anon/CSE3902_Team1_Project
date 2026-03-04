@@ -134,7 +134,8 @@ namespace HollowKnight.Player
         // TODO: Tune width/height to match the actual scaled sprite size
         public Rectangle GetBounds()
         {
-            return new Rectangle((int)position.X, (int)position.Y, 48, 64);
+            Vector2 size = currentSprite.GetSize();
+            return new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
         }
 
         public void Draw(SpriteBatch spriteBatch)
