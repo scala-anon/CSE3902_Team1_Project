@@ -111,7 +111,7 @@ public class Game1 : Game
     {
         IEnemy vengefly_1 = new Vengefly(new Vector2(0, 150));
         Enemies[0] = vengefly_1;
-        IEnemy crawlid_1 = new Crawlid(new Vector2(0, 150));
+        IEnemy crawlid_1 = new Crawlid(new Vector2(850, 150));
         Enemies[1] = crawlid_1;
     }
 
