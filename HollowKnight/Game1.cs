@@ -134,6 +134,8 @@ public class Game1 : Game
         }
 
         _knight.Update(gameTime);
+        Vector2 knightPosition = _knight.GetBounds().Center.ToVector2(); //use center of knight for enemy detection
+
 
         //Check all collisions between knight and objects and handle them
         /*UPDATE commented out to test enemies only
@@ -145,9 +147,11 @@ public class Game1 : Game
         */
         foreach (IEnemy enemy in Enemies)
         {
+            enemy.SetKnightPosition(knightPosition);
             CollisionSide side = CollisionDetector.Detect(enemy, _knight);
             _collisionHandler.HandleCollision(enemy, _knight, side);
         }
+
 
         foreach (IEnemy enemy in Enemies)
             enemy.Update(gameTime);
@@ -178,6 +182,12 @@ public class Game1 : Game
             enemy.Draw(_spriteBatch, _spriteEffects);
             DebugRenderer.DrawBounds(_spriteBatch, enemy, DebugRenderer.ColorEnemy);
             DebugRenderer.DrawStateLabel(_spriteBatch, enemy, enemy.GetStateName(), DebugRenderer.ColorEnemy);
+
+            if (enemy.GetDetectionRadius() > 0)
+            {
+                Vector2 center = enemy.GetBounds().Center.ToVector2();
+                DebugRenderer.DrawRadius(_spriteBatch, center, enemy.GetDetectionRadius(), DebugRenderer.ColorTrigger * 0.8f);
+            }
         }
 
         DebugRenderer.DrawBounds(_spriteBatch, _knight, DebugRenderer.ColorKnight);

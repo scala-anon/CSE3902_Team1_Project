@@ -1,8 +1,5 @@
 
-using System;
-using System.Diagnostics.Contracts;
-using System.Runtime.CompilerServices;
-using System.Transactions;
+using System.Collections.Generic;
 using HollowKnight.Factories;
 using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
@@ -10,7 +7,6 @@ using Microsoft.Xna.Framework.Graphics;
 
 public class Crawlid : IEnemy
 {
-    private int frameCounter = 0;
     public int state = 0;
 
     private CrawlidStateMachine stateMachine;
@@ -23,6 +19,15 @@ public class Crawlid : IEnemy
 
     public Vector2 position;
 
+    // Crawlid patrols surfaces and turns at edges — it does not chase the knight
+    private static readonly Dictionary<string, int> CrawlidStates = new()
+    {
+        { "Idle",      0 },
+        { "Turn",      1 },  
+        { "DeathAir",  2 },  // Crawlid death while airborne
+        { "DeathLand", 3 }   // Crawlid death on ground
+    };
+
     public Crawlid(Vector2 _position)
     {
         position = _position;
@@ -32,6 +37,9 @@ public class Crawlid : IEnemy
         stateMachine = new CrawlidStateMachine(this);
     }
 
+    // Crawlid does not react to the knight — required by IEnemy interface
+    public void SetKnightPosition(Vector2 knightPosition) { }
+    public float GetDetectionRadius() => 0f;
 
     public void Direction()
     {
@@ -43,23 +51,9 @@ public class Crawlid : IEnemy
         stateMachine.ChangeHealth();
     }
 
-
     public void Update(GameTime _gameTime)
     {
-
-        //TODO impliment actuall state changes
-        frameCounter++;
-        if (frameCounter >= 500)
-        {
-            state++;
-            stateMachine.Update(_gameTime);
-            if (state == 4)
-            {
-                state = 0;
-            }
-            frameCounter = 0;
-        }
-
+        // TODO: Add wall/edge detection to trigger Turn state while patrolling
         CrawlidSprite.Update(_gameTime);
     }
 
@@ -68,16 +62,14 @@ public class Crawlid : IEnemy
         CrawlidSprite.Draw(_spriteBatch, _spriteEffects);
     }
 
-    // TODO: Tune width/height to match the actual scaled sprite size
     public Rectangle GetBounds()
     {
         Vector2 size = CrawlidSprite.GetSize();
         return new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
     }
-    
+
     public string GetStateName()
     {
         return stateMachine.GetStateName();
     }
-
 }
