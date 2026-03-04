@@ -73,6 +73,7 @@ public class Game1 : Game
 
         _collisionHandler = new CollisionHandler();
         DebugRenderer.Initialize(GraphicsDevice);
+        DebugRenderer.LoadFont(Content.Load<SpriteFont>("fonts/Credits"));
         // Touching any enemy damages the knight
         foreach (CollisionSide side in new[] { CollisionSide.Left, CollisionSide.Right, CollisionSide.Top, CollisionSide.Bottom })
         {
@@ -145,8 +146,10 @@ public class Game1 : Game
             _collisionHandler.HandleCollision(enemy, _knight, side);
         }
         
-        Enemies[enemy_index].Update(gameTime);
-        Objects[enviroment_index].Update(gameTime);
+        foreach (IEnemy enemy in Enemies)
+            enemy.Update(gameTime);
+        foreach (IObject obj in Objects)
+            obj.Update(gameTime);
         base.Update(gameTime);
     }
 
@@ -161,19 +164,19 @@ public class Game1 : Game
         _knight.Draw(_spriteBatch);
 
     
-        Enemies[enemy_index].Draw(_spriteBatch, _spriteEffects);
-        Objects[enviroment_index].Draw(_spriteBatch, _spriteEffects);
+        foreach (IObject obj in Objects)
+            obj.Draw(_spriteBatch, _spriteEffects);
 
+        foreach (IEnemy enemy in Enemies)
+        {
+            enemy.Draw(_spriteBatch, _spriteEffects);
+            DebugRenderer.DrawBounds(_spriteBatch, enemy, DebugRenderer.ColorEnemy);
+            DebugRenderer.DrawStateLabel(_spriteBatch, enemy, enemy.GetStateName(), DebugRenderer.ColorEnemy);
+        }
 
         DebugRenderer.DrawBounds(_spriteBatch, _knight, DebugRenderer.ColorKnight);
         foreach (IObject obj in Objects)
-        {
             DebugRenderer.DrawBounds(_spriteBatch, obj, DebugRenderer.ColorEnvironment);
-        }
-        foreach (IEnemy enemy in Enemies)
-        {
-            DebugRenderer.DrawBounds(_spriteBatch, enemy, DebugRenderer.ColorEnemy);
-        }
 
         _spriteBatch.End();
 
