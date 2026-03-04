@@ -15,7 +15,7 @@ public class Crawlid : IEnemy
 
     private CrawlidStateMachine stateMachine;
 
-    public ISprite Sprite;
+    public ISprite CrawlidSprite;
 
     public bool left;
 
@@ -28,7 +28,7 @@ public class Crawlid : IEnemy
         position = _position;
         left = true;
         alive = true;
-        Sprite = SpriteFactory.Instance.CreateCrawlidIdleSprite(position);
+        CrawlidSprite = SpriteFactory.Instance.CreateCrawlidIdleSprite(position);
         stateMachine = new CrawlidStateMachine(this);
     }
 
@@ -60,18 +60,19 @@ public class Crawlid : IEnemy
             frameCounter = 0;
         }
 
-        Sprite.Update(_gameTime);
+        CrawlidSprite.Update(_gameTime);
     }
 
     public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects)
     {
-        Sprite.Draw(_spriteBatch, _spriteEffects);
+        CrawlidSprite.Draw(_spriteBatch, _spriteEffects);
     }
 
     // TODO: Tune width/height to match the actual scaled sprite size
     public Rectangle GetBounds()
     {
-        return new Rectangle((int)position.X, (int)position.Y, 48, 32);
+        Vector2 size = CrawlidSprite.GetSize();
+        return new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
     }
     
     public string GetStateName()

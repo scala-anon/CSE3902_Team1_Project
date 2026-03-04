@@ -90,5 +90,9 @@ namespace HollowKnight.Sprites
         {
             return _position;
         }
+        public Vector2 GetSize()
+        {
+            return new Vector2(_sourceRect.Width * _scale, _sourceRect.Height * _scale);
+        }
     }
 }

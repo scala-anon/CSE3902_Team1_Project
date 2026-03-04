@@ -25,23 +25,23 @@ public class CrawlidStateMachine
     {
         if (CurrentCrawlid.state == 1)
         {
-            CurrentCrawlid.Sprite = SpriteFactory.Instance.CreateCrawlidTurnSprite(CurrentCrawlid.position);
+            CurrentCrawlid.CrawlidSprite = SpriteFactory.Instance.CreateCrawlidTurnSprite(CurrentCrawlid.position);
 
         }
         
         if (CurrentCrawlid.state == 2)
         {
-            CurrentCrawlid.Sprite = SpriteFactory.Instance.CreateCrawlidDeathAirSprite(CurrentCrawlid.position);
+            CurrentCrawlid.CrawlidSprite = SpriteFactory.Instance.CreateCrawlidDeathAirSprite(CurrentCrawlid.position);
         }
 
         if (CurrentCrawlid.state == 3)
         {
-            CurrentCrawlid.Sprite = SpriteFactory.Instance.CreateCrawlidDeathLandSprite(CurrentCrawlid.position);
+            CurrentCrawlid.CrawlidSprite = SpriteFactory.Instance.CreateCrawlidDeathLandSprite(CurrentCrawlid.position);
         }
 
         if (CurrentCrawlid.state == 4)
         {
-            CurrentCrawlid.Sprite = SpriteFactory.Instance.CreateCrawlidIdleSprite(CurrentCrawlid.position);
+            CurrentCrawlid.CrawlidSprite = SpriteFactory.Instance.CreateCrawlidIdleSprite(CurrentCrawlid.position);
         }
     }
 

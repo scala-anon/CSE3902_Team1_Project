@@ -39,27 +39,27 @@ public class VengeflyStateMachine
     {
         if (CurrentVengeFly.state == 1)
         {
-            CurrentVengeFly.VengeFly = SpriteFactory.Instance.CreateVengeflyStartleSprite(CurrentVengeFly.position);
+            CurrentVengeFly.VengeflySprite = SpriteFactory.Instance.CreateVengeflyStartleSprite(CurrentVengeFly.position);
            
         }
         if (CurrentVengeFly.state == 2)
         {
-            CurrentVengeFly.VengeFly = SpriteFactory.Instance.CreateVengeflyChaseSprite(CurrentVengeFly.position);
+            CurrentVengeFly.VengeflySprite = SpriteFactory.Instance.CreateVengeflyChaseSprite(CurrentVengeFly.position);
         }
 
         if (CurrentVengeFly.state == 3)
         {
-            CurrentVengeFly.VengeFly = SpriteFactory.Instance.CreateVengeflyDeathSprite(CurrentVengeFly.position);
+            CurrentVengeFly.VengeflySprite = SpriteFactory.Instance.CreateVengeflyDeathSprite(CurrentVengeFly.position);
         }
 
         if (CurrentVengeFly.state == 4)
         {   
-            CurrentVengeFly.VengeFly = SpriteFactory.Instance.CreateVengeflyIdleSprite(CurrentVengeFly.position);
+            CurrentVengeFly.VengeflySprite = SpriteFactory.Instance.CreateVengeflyIdleSprite(CurrentVengeFly.position);
         }
 
         if (CurrentVengeFly.state == 5)
         {
-            CurrentVengeFly.VengeFly = SpriteFactory.Instance.CreateVengeflyIdleSprite(CurrentVengeFly.position);
+            CurrentVengeFly.VengeflySprite = SpriteFactory.Instance.CreateVengeflyIdleSprite(CurrentVengeFly.position);
         }
     }
     

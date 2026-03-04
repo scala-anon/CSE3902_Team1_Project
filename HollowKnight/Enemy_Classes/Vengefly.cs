@@ -14,9 +14,11 @@ public class Vengefly : IEnemy
     public bool startleAnimationPlayed;
     public bool left;
     public bool knightFound;
+    
     private VengeflyStateMachine stateMachine;
-    public ISprite VengeFly;
+    public ISprite VengeflySprite;
     public Vector2 position;
+    
     public Vengefly(Vector2 _positon)
     {
         position = _positon;
@@ -24,7 +26,7 @@ public class Vengefly : IEnemy
         startleAnimationPlayed = true;
         knightFound = false;
         left = true;
-        VengeFly = SpriteFactory.Instance.CreateVengeflyIdleSprite(position);
+        VengeflySprite = SpriteFactory.Instance.CreateVengeflyIdleSprite(position);
         stateMachine = new VengeflyStateMachine(this);
     }
 
@@ -51,7 +53,7 @@ public class Vengefly : IEnemy
 
     public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects)
     {
-        VengeFly.Draw(_spriteBatch, _spriteEffects);
+        VengeflySprite.Draw(_spriteBatch, _spriteEffects);
     }
 
     public void Update(GameTime _gameTime)
@@ -72,14 +74,15 @@ public class Vengefly : IEnemy
             frameCounter = 0;
         }
         
-        VengeFly.Update(_gameTime);
+        VengeflySprite.Update(_gameTime);
 
     }
 
     // TODO: Tune width/height to match the actual scaled sprite size
     public Rectangle GetBounds()
     {
-        return new Rectangle((int)position.X, (int)position.Y, 48, 32);
+        Vector2 size = VengeflySprite.GetSize();
+        return new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
     }
 
     public string GetStateName()
