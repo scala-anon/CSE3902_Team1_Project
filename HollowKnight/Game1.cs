@@ -8,6 +8,7 @@ using HollowKnight.Player;
 using HollowKnight.Collision;
 using System.Collections.Generic;
 using System.IO;
+using HollowKnight.Pathfinding;
 
 namespace HollowKnight;
 
@@ -19,6 +20,7 @@ public class Game1 : Game
     private SpriteEffects _spriteEffects;
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+    private NavigationGrid _navigationGrid;
     public int enemy_index = 0;
     public int enviroment_index = 0;
     private IEnemy[] Enemies = new IEnemy[2];
@@ -60,6 +62,9 @@ public class Game1 : Game
 
         _screenWidth = _graphics.PreferredBackBufferWidth;
         _screenHeight = _graphics.PreferredBackBufferHeight;
+
+        _navigationGrid ??= new NavigationGrid(_screenWidth, _screenHeight, GraphicsDevice);
+
 
         Vector2 centerPosition = new Vector2(_screenWidth / 2, _screenHeight / 2);
 
@@ -169,6 +174,7 @@ public class Game1 : Game
 
         _spriteBatch.Begin();
 
+        _navigationGrid.Draw(_spriteBatch);
         // Draw current sprite
         _knight.Draw(_spriteBatch);
 
