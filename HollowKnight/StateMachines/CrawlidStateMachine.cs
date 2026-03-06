@@ -1,18 +1,17 @@
 using HollowKnight.Factories;
+using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 
 public class CrawlidStateMachine
 {
     private Crawlid CurrentCrawlid;
+
+    private const float PatrolSpeed = 60f; // TODO: change speed accordingly
+    private Direction _movementDirection = Direction.Right;
+
     public CrawlidStateMachine(Crawlid _enemy)
     {
         CurrentCrawlid = _enemy;
-    }
-
-
-    public void Direction()
-    {
-        CurrentCrawlid.left = !CurrentCrawlid.left;
     }
 
     public void ChangeHealth()
@@ -20,42 +19,37 @@ public class CrawlidStateMachine
         CurrentCrawlid.alive = !CurrentCrawlid.alive;
     }
 
-
     public void Update(GameTime _gameTime)
     {
-        if (CurrentCrawlid.state == 1)
-        {
-            CurrentCrawlid.CrawlidSprite = SpriteFactory.Instance.CreateCrawlidTurnSprite(CurrentCrawlid.position);
+        // TODO: Add wall/edge detection to trigger Turn state while patrolling
+        float elapsedTime = (float)_gameTime.ElapsedGameTime.TotalSeconds;
 
-        }
-        
-        if (CurrentCrawlid.state == 2)
+        CurrentCrawlid.position.X += (_movementDirection == Direction.Right ? PatrolSpeed : -PatrolSpeed) * elapsedTime;
+        float spriteWidth = CurrentCrawlid.CrawlidSprite.GetSize().X;
+
+        if (CurrentCrawlid.position.X + spriteWidth >= 1280)
         {
-            CurrentCrawlid.CrawlidSprite = SpriteFactory.Instance.CreateCrawlidDeathAirSprite(CurrentCrawlid.position);
+            CurrentCrawlid.position.X = 1280 - spriteWidth;
+            _movementDirection = Direction.Left;
+        }
+        else if (CurrentCrawlid.position.X <= 0)
+        {
+            CurrentCrawlid.position.X = 0;
+            _movementDirection = Direction.Right;
         }
 
-        if (CurrentCrawlid.state == 3)
-        {
-            CurrentCrawlid.CrawlidSprite = SpriteFactory.Instance.CreateCrawlidDeathLandSprite(CurrentCrawlid.position);
-        }
-
-        if (CurrentCrawlid.state == 4)
-        {
-            CurrentCrawlid.CrawlidSprite = SpriteFactory.Instance.CreateCrawlidIdleSprite(CurrentCrawlid.position);
-        }
+        CurrentCrawlid.CrawlidSprite.SetPosition(CurrentCrawlid.position);
     }
 
-public string GetStateName()
+    public string GetStateName()
     {
         return CurrentCrawlid.state switch
         {
             0 => "Idle",
-            1 => "Startle",
-            2 => "Chase",
-            3 => "Death",
+            1 => "Turn",
+            2 => "DeathAir",
+            3 => "DeathLand",
             _ => "Unknown"
         };
     }
-    
-
 }

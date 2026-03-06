@@ -1,10 +1,8 @@
 
-using System.Collections.Generic;
 using HollowKnight.Factories;
 using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using HollowKnight.Shared;
 
 public class Vengefly : IEnemy
 {
@@ -14,25 +12,8 @@ public class Vengefly : IEnemy
     public bool left;
     public bool knightFound;
 
-    private static readonly Dictionary<string, int> VengeflyStates = new()
-    {
-        { "Idle",    0 },
-        { "Startle", 1 },
-        { "Chase",   2 },
-        { "Death",   3 }
-    };
-
     //TODO change this default knight position to something more reasonable
-    private Vector2 _knightPosition = new Vector2(-9999, -9999);
-
-    private const float DetectionRadius = 500f; // TODO:  change range, detection is almost half of screen
-    private double _startleTimer = 0;
-    private const double StartleDuration = 0.5;
-
-    private const float PatrolSpeed = 50f; // TODO: change speed accordingly
-    private const float ChaseSpeed = 75f; // TODO: change speed accordingly
-
-    private Direction _patrolDirection = Direction.Right;
+    public Vector2 knightPosition = new Vector2(-9999, -9999);
 
     private VengeflyStateMachine stateMachine;
     public ISprite VengeflySprite;
@@ -49,27 +30,12 @@ public class Vengefly : IEnemy
         stateMachine = new VengeflyStateMachine(this);
     }
 
-    public void SetKnightPosition(Vector2 knightPosition) => _knightPosition = knightPosition;
-    public float GetDetectionRadius() => DetectionRadius;
-
-    public void changeDirection()
-    {
-        stateMachine.ChangeDirection();
-    }
-
-    public void changeMovingState()
-    {
-        stateMachine.ChangeMovingState();
-    }
+    public void SetKnightPosition(Vector2 knightPosition) => this.knightPosition = knightPosition;
+    public float GetDetectionRadius() => stateMachine.GetDetectionRadius();
 
     public void ChangeHealth()
     {
         stateMachine.changeHealth();
-    }
-
-    public void Startle()
-    {
-        stateMachine.startle();
     }
 
     public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects)
@@ -79,64 +45,7 @@ public class Vengefly : IEnemy
 
     public void Update(GameTime _gameTime)
     {
-        Vector2 enemyCenter = GetBounds().Center.ToVector2();
-        float distanceFromKnight = Vector2.Distance(enemyCenter, _knightPosition);
-        bool knightInDetectionRange = distanceFromKnight <= DetectionRadius;
-
-        if (!dead)
-        {
-            if (knightInDetectionRange && state == VengeflyStates["Idle"])
-            {
-                state = VengeflyStates["Startle"];
-                stateMachine.Update(_gameTime);
-                _startleTimer = 0;
-            }
-            else if (state == VengeflyStates["Startle"])
-            {
-                _startleTimer += _gameTime.ElapsedGameTime.TotalSeconds;
-                if (_startleTimer >= StartleDuration)
-                {
-                    state = VengeflyStates["Chase"];
-                    stateMachine.Update(_gameTime);
-                }
-            }
-            else if (state == VengeflyStates["Chase"] && !knightInDetectionRange)
-            {
-                state = VengeflyStates["Idle"];
-                VengeflySprite = SpriteFactory.Instance.CreateVengeflyIdleSprite(position);
-            }
-        }
-
-        //& UPDATE simple vengefly movement unti A* implemented
-        float elapsedTime = (float)_gameTime.ElapsedGameTime.TotalSeconds;
-
-        if (state == VengeflyStates["Idle"])
-        {
-            position.X += (_patrolDirection == Direction.Right ? PatrolSpeed : -PatrolSpeed) * elapsedTime;
-            float spriteWidth = VengeflySprite.GetSize().X;
-
-            if (position.X + spriteWidth >= 1280)
-            {
-                position.X = 1280 - spriteWidth;
-                _patrolDirection = Direction.Left;
-            }
-            else if (position.X <= 0)
-            {
-                position.X = 0;
-                _patrolDirection = Direction.Right;
-            }
-        }
-        else if (state == VengeflyStates["Chase"])
-        {
-            Vector2 directionToKnight = _knightPosition - GetBounds().Center.ToVector2();
-            if (directionToKnight != Vector2.Zero)
-            {
-                directionToKnight.Normalize();
-                position += directionToKnight * ChaseSpeed * elapsedTime;
-            }
-        }
-        VengeflySprite.SetPosition(position);
-
+        stateMachine.Update(_gameTime);
         VengeflySprite.Update(_gameTime);
     }
 

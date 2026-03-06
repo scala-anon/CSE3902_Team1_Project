@@ -1,6 +1,7 @@
 
 using HollowKnight.Factories;
 using HollowKnight.Interfaces;
+using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -8,61 +9,88 @@ public class VengeflyStateMachine
 {
     private Vengefly CurrentVengeFly;
 
+    private const float DetectionRadius = 500f; // TODO: change range, detection is almost half of screen
+    private const float PatrolSpeed = 50f; // TODO: change speed accordingly
+    private const float ChaseSpeed = 75f; // TODO: change speed accordingly
+    private const double StartleDuration = 0.5;
+
+    private Direction _patrolDirection = Direction.Right;
+    private double _startleTimer = 0;
+
     public VengeflyStateMachine(Vengefly _vengeFly)
     {
         CurrentVengeFly = _vengeFly;
     }
-    
-    public void ChangeDirection()
-    {
-        CurrentVengeFly.left = !CurrentVengeFly.left;
-        
-    }
+
+    public float GetDetectionRadius() => DetectionRadius;
 
     public void changeHealth()
     {
-        CurrentVengeFly.dead = !CurrentVengeFly.dead; // alive -> dead
+        CurrentVengeFly.dead = !CurrentVengeFly.dead;
     }
-    
-    public void ChangeMovingState()
-    {
-        CurrentVengeFly.knightFound = !CurrentVengeFly.knightFound;
-    }
-
-    public void startle()
-    {
-        CurrentVengeFly.startleAnimationPlayed = !CurrentVengeFly.startleAnimationPlayed;
-    }
-
 
     public void Update(GameTime _gameTime)
     {
-        if (CurrentVengeFly.state == 1)
+        float elapsedTime = (float)_gameTime.ElapsedGameTime.TotalSeconds;
+        Vector2 enemyCenter = CurrentVengeFly.GetBounds().Center.ToVector2();
+        float distanceFromKnight = Vector2.Distance(enemyCenter, CurrentVengeFly.knightPosition);
+        bool knightInRange = distanceFromKnight <= DetectionRadius;
+
+        // State transitions
+        if (!CurrentVengeFly.dead)
         {
-            CurrentVengeFly.VengeflySprite = SpriteFactory.Instance.CreateVengeflyStartleSprite(CurrentVengeFly.position);
-           
-        }
-        if (CurrentVengeFly.state == 2)
-        {
-            CurrentVengeFly.VengeflySprite = SpriteFactory.Instance.CreateVengeflyChaseSprite(CurrentVengeFly.position);
+            if (knightInRange && CurrentVengeFly.state == 0)
+            {
+                CurrentVengeFly.state = 1;
+                CurrentVengeFly.VengeflySprite = SpriteFactory.Instance.CreateVengeflyStartleSprite(CurrentVengeFly.position);
+                _startleTimer = 0;
+            }
+            else if (CurrentVengeFly.state == 1)
+            {
+                _startleTimer += elapsedTime;
+                if (_startleTimer >= StartleDuration)
+                {
+                    CurrentVengeFly.state = 2;
+                    CurrentVengeFly.VengeflySprite = SpriteFactory.Instance.CreateVengeflyChaseSprite(CurrentVengeFly.position);
+                }
+            }
+            else if (CurrentVengeFly.state == 2 && !knightInRange)
+            {
+                CurrentVengeFly.state = 0;
+                CurrentVengeFly.VengeflySprite = SpriteFactory.Instance.CreateVengeflyIdleSprite(CurrentVengeFly.position);
+            }
         }
 
-        if (CurrentVengeFly.state == 3)
+        // TODO: UPDATE simple vengefly movement until A* implemented
+        if (CurrentVengeFly.state == 0)
         {
-            CurrentVengeFly.VengeflySprite = SpriteFactory.Instance.CreateVengeflyDeathSprite(CurrentVengeFly.position);
+            CurrentVengeFly.position.X += (_patrolDirection == Direction.Right ? PatrolSpeed : -PatrolSpeed) * elapsedTime;
+            float spriteWidth = CurrentVengeFly.VengeflySprite.GetSize().X;
+
+            if (CurrentVengeFly.position.X + spriteWidth >= 1280)
+            {
+                CurrentVengeFly.position.X = 1280 - spriteWidth;
+                _patrolDirection = Direction.Left;
+            }
+            else if (CurrentVengeFly.position.X <= 0)
+            {
+                CurrentVengeFly.position.X = 0;
+                _patrolDirection = Direction.Right;
+            }
+        }
+        else if (CurrentVengeFly.state == 2)
+        {
+            Vector2 dir = CurrentVengeFly.knightPosition - enemyCenter;
+            if (dir != Vector2.Zero)
+            {
+                dir.Normalize();
+                CurrentVengeFly.position += dir * ChaseSpeed * elapsedTime;
+            }
         }
 
-        if (CurrentVengeFly.state == 4)
-        {   
-            CurrentVengeFly.VengeflySprite = SpriteFactory.Instance.CreateVengeflyIdleSprite(CurrentVengeFly.position);
-        }
-
-        if (CurrentVengeFly.state == 5)
-        {
-            CurrentVengeFly.VengeflySprite = SpriteFactory.Instance.CreateVengeflyIdleSprite(CurrentVengeFly.position);
-        }
+        CurrentVengeFly.VengeflySprite.SetPosition(CurrentVengeFly.position);
     }
-    
+
     public string GetStateName()
     {
         return CurrentVengeFly.state switch
@@ -74,5 +102,4 @@ public class VengeflyStateMachine
             _ => "Unknown"
         };
     }
-
 }
