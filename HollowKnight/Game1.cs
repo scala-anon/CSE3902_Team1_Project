@@ -64,7 +64,7 @@ public class Game1 : Game
 
         Vector2 centerPosition = new Vector2(_screenWidth / 2, _screenHeight / 2);
          
-        loadEnemies();
+        //loadEnemies();
         loadEnviroment();
         
         
@@ -135,13 +135,13 @@ public class Game1 : Game
             CollisionSide side = CollisionDetector.Detect(obj, _knight);
             _collisionHandler.HandleCollision(obj, _knight, side);
         }
-        foreach (IEnemy enemy in Enemies)
-        {
-            CollisionSide side = CollisionDetector.Detect(enemy, _knight);
-            _collisionHandler.HandleCollision(enemy, _knight, side);
-        }
+        //foreach (IEnemy enemy in Enemies)
+        //{
+        //    CollisionSide side = CollisionDetector.Detect(enemy, _knight);
+        //    _collisionHandler.HandleCollision(enemy, _knight, side);
+        //}
         
-        Enemies[enemy_index].Update(gameTime);
+       //Enemies[enemy_index].Update(gameTime);
         Objects[enviroment_index].Update(gameTime);
         base.Update(gameTime);
     }
@@ -157,7 +157,7 @@ public class Game1 : Game
         _knight.Draw(_spriteBatch);
 
     
-        Enemies[enemy_index].Draw(_spriteBatch, _spriteEffects);
+        //Enemies[enemy_index].Draw(_spriteBatch, _spriteEffects);
         Objects[enviroment_index].Draw(_spriteBatch, _spriteEffects);
 
 
@@ -166,10 +166,10 @@ public class Game1 : Game
         {
             DebugRenderer.DrawBounds(_spriteBatch, obj, DebugRenderer.ColorEnvironment);
         }
-        foreach (IEnemy enemy in Enemies)
-        {
-            DebugRenderer.DrawBounds(_spriteBatch, enemy, DebugRenderer.ColorEnemy);
-        }
+        //foreach (IEnemy enemy in Enemies)
+        //{
+        //    DebugRenderer.DrawBounds(_spriteBatch, enemy, DebugRenderer.ColorEnemy);
+        //}
 
         _spriteBatch.End();
 

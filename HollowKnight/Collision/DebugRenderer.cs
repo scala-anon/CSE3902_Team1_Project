@@ -61,17 +61,21 @@ namespace HollowKnight.Collision
         // that are separate from the entity's GetBounds() collision box.
 
 
-        private static void DrawHitbox(SpriteBatch spriteBatch, Rectangle rect, Color color)
+        private static void DrawHitbox(SpriteBatch spriteBatch, Rectangle[] rect, Color color)
         {
-            const int BorderThickness = 2;
+            foreach (Rectangle rectangle in rect)
+            {
+                const int BorderThickness = 2;
 
-            spriteBatch.Draw(_pixel, rect, color * 0.25f);
+            spriteBatch.Draw(_pixel, rectangle, color * 0.25f);
 
             // Solid border
-            spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Top, rect.Width, BorderThickness), color);
-            spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Bottom - BorderThickness,rect.Width, BorderThickness), color);
-            spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Top, BorderThickness, rect.Height), color);
-            spriteBatch.Draw(_pixel, new Rectangle(rect.Right - BorderThickness, rect.Top, BorderThickness,rect.Height),color);
+            spriteBatch.Draw(_pixel, new Rectangle(rectangle.Left, rectangle.Top, rectangle.Width, BorderThickness), color);
+            spriteBatch.Draw(_pixel, new Rectangle(rectangle.Left, rectangle.Bottom - BorderThickness,rectangle.Width, BorderThickness), color);
+            spriteBatch.Draw(_pixel, new Rectangle(rectangle.Left, rectangle.Top, BorderThickness, rectangle.Height), color);
+            spriteBatch.Draw(_pixel, new Rectangle(rectangle.Right - BorderThickness, rectangle.Top, BorderThickness,rectangle.Height),color);
+            }
+            
         }
     }
 }

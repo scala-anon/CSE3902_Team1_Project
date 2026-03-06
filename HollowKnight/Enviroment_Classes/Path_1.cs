@@ -7,6 +7,7 @@ public class Path_1 : IObject
 {
     private ISprite Sprite;
 
+    public Rectangle[] hitBoxes = new Rectangle[1];
     public Vector2 position;
 
     public Path_1(Vector2 _position)
@@ -27,8 +28,10 @@ public class Path_1 : IObject
     }
 
     // TODO: Tune width/height to match the actual scaled sprite size
-    public Rectangle GetBounds()
+    public Rectangle[] GetBounds()
     {
-        return new Rectangle((int)position.X, (int)position.Y + 10, 1050, 32);
+        Rectangle rectangle = new Rectangle((int)position.X, (int)position.Y + 10, 1050, 32);
+        hitBoxes[0] = rectangle;
+        return hitBoxes;
     }
 }

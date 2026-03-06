@@ -8,6 +8,7 @@ public class Spike : IObject
 {
     public ISprite Sprite;
 
+    public Rectangle[] hitBoxes = new Rectangle[2];
     public Vector2 position;
 
     public Spike(Vector2 _position)
@@ -28,8 +29,12 @@ public class Spike : IObject
     }
 
     // TODO: Tune width/height to match the actual scaled sprite size
-    public Rectangle GetBounds()
+    public Rectangle[] GetBounds()
     {
-        return new Rectangle((int)position.X, (int)position.Y, 160, 90);
+        Rectangle rectangle = new Rectangle((int)position.X, (int)position.Y, 160, 90);
+        Rectangle rectangle2 = new Rectangle((int)position.X, (int)position.Y, 100, 60);
+        hitBoxes[0] = rectangle;
+        hitBoxes[1] = rectangle2;
+        return hitBoxes;
     }
 }
