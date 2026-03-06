@@ -31,8 +31,8 @@ public class Spike : IObject
     // TODO: Tune width/height to match the actual scaled sprite size
     public Rectangle[] GetBounds()
     {
-        Rectangle rectangle = new Rectangle((int)position.X, (int)position.Y, 160, 90);
-        Rectangle rectangle2 = new Rectangle((int)position.X, (int)position.Y, 100, 60);
+        Rectangle rectangle = new Rectangle((int)position.X, (int)position.Y + 50, 165, 45);
+        Rectangle rectangle2 = new Rectangle((int)position.X + 60, (int)position.Y, 75, 50);
         hitBoxes[0] = rectangle;
         hitBoxes[1] = rectangle2;
         return hitBoxes;

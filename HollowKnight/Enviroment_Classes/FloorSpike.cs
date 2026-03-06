@@ -7,7 +7,7 @@ public class FloorSpike : IObject
 {
     public ISprite Sprite;
 
-    public Rectangle[] hitBoxes = new Rectangle[1];
+    public Rectangle[] hitBoxes = new Rectangle[2];
     public Vector2 position;
 
     public FloorSpike(Vector2 _position)
@@ -30,8 +30,10 @@ public class FloorSpike : IObject
     // TODO: Tune width/height to match the actual scaled sprite size
     public Rectangle[] GetBounds()
     {
-        Rectangle rectangle = new Rectangle((int)position.X, (int)position.Y, 135, 95);
+        Rectangle rectangle = new Rectangle((int)position.X, (int)position.Y + 40, 140, 60);
+        Rectangle rectangle_2 = new Rectangle ((int)position.X + 40, (int)position.Y, 100, 40);
         hitBoxes[0] = rectangle;
+        hitBoxes[1] = rectangle_2;
         return hitBoxes;
     }
 }
