@@ -8,7 +8,7 @@ using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class Crawlid : IEnemy
+public class Crawlid : IEnemy, ICollidable
 {
     private int frameCounter = 0;
     public int state = 0;
@@ -31,6 +31,8 @@ public class Crawlid : IEnemy
         Sprite = SpriteFactory.Instance.CreateCrawlidIdleSprite(position);
         stateMachine = new CrawlidStateMachine(this);
     }
+    public bool IsActive => true;
+    public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, Sprite.Width, Sprite.Height);
 
 
     public void Direction()
