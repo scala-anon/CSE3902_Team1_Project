@@ -1,6 +1,7 @@
 
 using HollowKnight.Factories;
 using HollowKnight.Interfaces;
+using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -15,6 +16,8 @@ public class Crawlid : IEnemy
     public bool alive;
 
     public Vector2 position;
+
+    public Direction facingDirection = Direction.Right;
 
     // Crawlid patrols surfaces and turns at edges — it does not chase the knight
     public Crawlid(Vector2 _position)
@@ -36,7 +39,11 @@ public class Crawlid : IEnemy
 
     public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects)
     {
-        CrawlidSprite.Draw(_spriteBatch, _spriteEffects);
+
+        SpriteEffects effects = facingDirection == Direction.Right
+        ? SpriteEffects.FlipHorizontally
+        : SpriteEffects.None;
+        CrawlidSprite.Draw(_spriteBatch, effects);
     }
 
     public Rectangle GetBounds()

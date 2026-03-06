@@ -114,9 +114,9 @@ public class Game1 : Game
     */
     public void loadEnemies()
     {
-        IEnemy vengefly_1 = new Vengefly(new Vector2(0, 150));
+        IEnemy vengefly_1 = new Vengefly(new Vector2(0, 150)); //TODO: change this hardcoded position
         Enemies[0] = vengefly_1;
-        IEnemy crawlid_1 = new Crawlid(new Vector2(850, 150));
+        IEnemy crawlid_1 = new Crawlid(new Vector2(850, _screenHeight-83)); //TODO: change this hardcorded position
         Enemies[1] = crawlid_1;
     }
 

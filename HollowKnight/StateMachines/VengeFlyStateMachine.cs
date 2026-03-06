@@ -9,9 +9,9 @@ public class VengeflyStateMachine
 {
     private Vengefly CurrentVengeFly;
 
-    private const float DetectionRadius = 500f; // TODO: change range, detection is almost half of screen
-    private const float PatrolSpeed = 50f; // TODO: change speed accordingly
-    private const float ChaseSpeed = 75f; // TODO: change speed accordingly
+    private const float DetectionRadius = 500f;
+    private const float PatrolSpeed = 50f;
+    private const float ChaseSpeed = 75f;
     private const double StartleDuration = 0.5;
 
     private Direction _patrolDirection = Direction.Right;
@@ -61,7 +61,7 @@ public class VengeflyStateMachine
             }
         }
 
-        // TODO: UPDATE simple vengefly movement until A* implemented
+        // Movement
         if (CurrentVengeFly.state == 0)
         {
             CurrentVengeFly.position.X += (_patrolDirection == Direction.Right ? PatrolSpeed : -PatrolSpeed) * elapsedTime;

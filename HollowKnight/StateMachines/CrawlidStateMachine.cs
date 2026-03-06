@@ -31,13 +31,15 @@ public class CrawlidStateMachine
         {
             CurrentCrawlid.position.X = 1280 - spriteWidth;
             _movementDirection = Direction.Left;
+            CurrentCrawlid.facingDirection = Direction.Left;
         }
         else if (CurrentCrawlid.position.X <= 0)
         {
             CurrentCrawlid.position.X = 0;
             _movementDirection = Direction.Right;
+            CurrentCrawlid.facingDirection = Direction.Right;
         }
-
+        
         CurrentCrawlid.CrawlidSprite.SetPosition(CurrentCrawlid.position);
     }
 
