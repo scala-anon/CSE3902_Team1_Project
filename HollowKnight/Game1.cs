@@ -63,7 +63,7 @@ public class Game1 : Game
         _screenWidth = _graphics.PreferredBackBufferWidth;
         _screenHeight = _graphics.PreferredBackBufferHeight;
 
-        _navigationGrid ??= new NavigationGrid(_screenWidth, _screenHeight, GraphicsDevice);
+        _navigationGrid ??= new NavigationGrid(_screenWidth, _screenHeight, GraphicsDevice, cellSize: 12);
 
 
         Vector2 centerPosition = new Vector2(_screenWidth / 2, _screenHeight / 2);
