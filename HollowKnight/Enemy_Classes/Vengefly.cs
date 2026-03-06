@@ -112,7 +112,7 @@ public class Vengefly : IEnemy
 
         if (state == VengeflyStates["Idle"])
         {
-            position.X += (_patrolDirection == Direction.Right ? -PatrolSpeed : PatrolSpeed) * elapsedTime;
+            position.X += (_patrolDirection == Direction.Right ? PatrolSpeed : -PatrolSpeed) * elapsedTime;
             float spriteWidth = VengeflySprite.GetSize().X;
 
             if (position.X + spriteWidth >= 1280)
