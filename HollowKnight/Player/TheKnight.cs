@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using HollowKnight.Shared;
 
 namespace HollowKnight.Player
 {

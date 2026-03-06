@@ -4,6 +4,7 @@ using HollowKnight.Factories;
 using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using HollowKnight.Shared;
 
 public class Vengefly : IEnemy
 {
@@ -27,6 +28,11 @@ public class Vengefly : IEnemy
     private const float DetectionRadius = 500f; // TODO:  change range, detection is almost half of screen
     private double _startleTimer = 0;
     private const double StartleDuration = 0.5;
+
+    private const float PatrolSpeed = 50f; // TODO: change speed accordingly
+    private const float ChaseSpeed = 75f; // TODO: change speed accordingly
+
+    private Direction _patrolDirection = Direction.Right;
 
     private VengeflyStateMachine stateMachine;
     public ISprite VengeflySprite;
@@ -100,6 +106,36 @@ public class Vengefly : IEnemy
                 VengeflySprite = SpriteFactory.Instance.CreateVengeflyIdleSprite(position);
             }
         }
+
+        //& UPDATE simple vengefly movement unti A* implemented
+        float elapsedTime = (float)_gameTime.ElapsedGameTime.TotalSeconds;
+
+        if (state == VengeflyStates["Idle"])
+        {
+            position.X += (_patrolDirection == Direction.Right ? -PatrolSpeed : PatrolSpeed) * elapsedTime;
+            float spriteWidth = VengeflySprite.GetSize().X;
+
+            if (position.X + spriteWidth >= 1280)
+            {
+                position.X = 1280 - spriteWidth;
+                _patrolDirection = Direction.Left;
+            }
+            else if (position.X <= 0)
+            {
+                position.X = 0;
+                _patrolDirection = Direction.Right;
+            }
+        }
+        else if (state == VengeflyStates["Chase"])
+        {
+            Vector2 directionToKnight = _knightPosition - GetBounds().Center.ToVector2();
+            if (directionToKnight != Vector2.Zero)
+            {
+                directionToKnight.Normalize();
+                position += directionToKnight * ChaseSpeed * elapsedTime;
+            }
+        }
+        VengeflySprite.SetPosition(position);
 
         VengeflySprite.Update(_gameTime);
     }
