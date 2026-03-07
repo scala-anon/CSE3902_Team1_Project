@@ -20,6 +20,9 @@ namespace HollowKnight.Sprites
         private int _screenHeight;
         private int _spriteHeight;
 
+        public int Width => (int)(_sourceRect.Width * _scale);
+        public int Height => (int)(_sourceRect.Height * _scale);
+
         /// <summary>
         /// Create a vertically moving sprite.
         /// </summary>

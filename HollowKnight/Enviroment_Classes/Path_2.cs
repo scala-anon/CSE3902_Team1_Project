@@ -9,11 +9,13 @@ public class Path_2 : IObject
 {
     private ISprite Sprite;
 
+    public Rectangle[] hitBoxes = new Rectangle[1];
     public Vector2 position = new Vector2(200, 0);
 
-    public Path_2()
+    public Path_2(Vector2 _position)
     {
-        Sprite = SpriteFactory.Instance.CreatePath_2Sprite(position);
+        position = _position;
+        Sprite = SpriteFactory.Instance.CreatePath_2Sprite(_position);
     }
 
     public void Update(GameTime _gameTime)
@@ -27,8 +29,10 @@ public class Path_2 : IObject
     }
 
     // TODO: Tune width/height to match the actual scaled sprite size
-    public Rectangle GetBounds()
+    public Rectangle[] GetBounds()
     {
-        return new Rectangle((int)position.X, (int)position.Y, 128, 32);
+        Rectangle rectangle = new Rectangle((int)position.X, (int)position.Y + 40, 940, 32);
+        hitBoxes[0] = rectangle;
+        return hitBoxes;
     }
 }

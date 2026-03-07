@@ -16,6 +16,9 @@ namespace HollowKnight.Sprites
         private Vector2 _startPosition;
         private Color _color;
 
+        public int Width => 0;
+        public int Height => 0;
+
         /// <summary>
         /// Create a text sprite.
         /// </summary>

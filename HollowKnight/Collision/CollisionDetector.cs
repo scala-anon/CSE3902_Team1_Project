@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
+using HollowKnight.Interfaces;
 
 namespace HollowKnight.Collision
 {
@@ -14,30 +15,38 @@ namespace HollowKnight.Collision
         /// </summary>
         public static CollisionSide Detect(ICollidable objectA, ICollidable objectB)
         {
-            Rectangle boundsA = objectA.GetBounds();
-            Rectangle boundsB = objectB.GetBounds();
-
-            if (!boundsA.Intersects(boundsB))
+            Rectangle[] boundsA = objectA.GetBounds();
+            Rectangle[] boundsB = objectB.GetBounds();
+            
+            foreach(Rectangle rectangleA in boundsA!)
             {
-                return CollisionSide.None;
+                foreach(Rectangle rectangleB in boundsB)
+                {
+                    if (!rectangleA.Intersects(rectangleB))
+                    {
+                        continue;
+                    }
+
+                     // Measure overlaps
+                    int overlapFromLeft   = rectangleB.Right  - rectangleA.Left;
+                    int overlapFromRight  = rectangleA.Right  - rectangleB.Left;
+                    int overlapFromTop    = rectangleB.Bottom - rectangleA.Top;
+                    int overlapFromBottom = rectangleA.Bottom - rectangleB.Top;
+
+                    // Find the smallest overlap, which indicates the side of collision
+                    int minOverlap = Math.Min(
+                        Math.Min(overlapFromLeft, overlapFromRight),
+                        Math.Min(overlapFromTop,  overlapFromBottom)
+                    );
+
+                    if (minOverlap == overlapFromLeft)   return CollisionSide.Left;
+                    if (minOverlap == overlapFromRight)  return CollisionSide.Right;
+                    if (minOverlap == overlapFromTop)    return CollisionSide.Top;
+                    return CollisionSide.Bottom;
+                }
             }
-
-            // Measure overlaps
-            int overlapFromLeft   = boundsB.Right  - boundsA.Left;
-            int overlapFromRight  = boundsA.Right  - boundsB.Left;
-            int overlapFromTop    = boundsB.Bottom - boundsA.Top;
-            int overlapFromBottom = boundsA.Bottom - boundsB.Top;
-
-            // Find the smallest overlap, which indicates the side of collision
-            int minOverlap = Math.Min(
-                Math.Min(overlapFromLeft, overlapFromRight),
-                Math.Min(overlapFromTop,  overlapFromBottom)
-            );
-
-            if (minOverlap == overlapFromLeft)   return CollisionSide.Left;
-            if (minOverlap == overlapFromRight)  return CollisionSide.Right;
-            if (minOverlap == overlapFromTop)    return CollisionSide.Top;
-            return CollisionSide.Bottom;
+            return CollisionSide.None;
+            
         }
     }
 }

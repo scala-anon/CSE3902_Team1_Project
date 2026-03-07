@@ -4,17 +4,19 @@ using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using HollowKnight.Shared;
+using HollowKnight.Collision;
 
 namespace HollowKnight.Player
 {
-    public class TheKnight : IHollowKnight
+    public class TheKnight : IHollowKnight, ICollidable, ICollideTemp
     {
         private Dictionary<KnightSpriteType, ISprite> sprites;
         private ISprite currentSprite;
         private KnightSpriteType currentState;
 
+        public Rectangle[] hitBoxes = new Rectangle[1];
         public Direction Facing { get; private set; } = Direction.Right;
-        private Vector2 position;
+        public Vector2 position;
         private Vector2 velocity;
 
         private float moveSpeed = 200f;
@@ -42,6 +44,10 @@ namespace HollowKnight.Player
 
         private int health = 5;
         private int maxHealth = 9;
+
+        //TODO change to ICollidable
+        public bool IsActive => true;
+        public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, currentSprite.Width, currentSprite.Height);
 
         public TheKnight(Dictionary<KnightSpriteType, ISprite> sprites, Vector2 position)
         {
@@ -145,6 +151,12 @@ namespace HollowKnight.Player
                 ? SpriteEffects.None
                 : SpriteEffects.FlipHorizontally;
             currentSprite.Draw(spriteBatch, effects);
+        }
+
+        public void Collect(CollisionSide side)
+        {
+            //Need to give the Knight the actual powerup
+            Console.WriteLine("Knight picked up a power up!");
         }
         public void MoveRight()
         {
@@ -280,6 +292,13 @@ namespace HollowKnight.Player
             isHealing = false;
             healApplied = false;
             healTimer = 0;
+        }
+
+        // TODO: Tune width/height to match the actual scaled sprite size
+        public Rectangle[] GetBounds()
+        {
+            hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, 48, 64);
+            return hitBoxes;
         }
     }
 }
