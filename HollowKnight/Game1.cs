@@ -221,8 +221,10 @@ public class Game1 : Game
 
         _projectileManager.Update(gameTime);
 
+        //TODO change to ICollidable
         ICollideTemp player = (ICollideTemp)_knight;
 
+        //TODO change to ICollidable
         List<ICollideTemp> enemyCollidables = new List<ICollideTemp>();
         for (int i = 0; i < Enemies.Length; i++)
         {
@@ -231,7 +233,7 @@ public class Game1 : Game
                 enemyCollidables.Add(collidableEnemy);
             }
         }
-
+        //TODO change to ICollidable
         List<ICollideTemp> blockCollidables = new List<ICollideTemp>();
         for (int i = 0; i < Objects.Length; i++)
         {
@@ -240,7 +242,8 @@ public class Game1 : Game
                 blockCollidables.Add(collidableObject);
             }
         }
-
+        
+        //TODO change to ICollidable
         CollisionManager.ResolveProjectileCollisions(
             _projectileManager,
             player,

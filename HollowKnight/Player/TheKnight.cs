@@ -44,6 +44,7 @@ namespace HollowKnight.Player
         private int health = 5;
         private int maxHealth = 9;
 
+        //TODO change to ICollidable
         public bool IsActive => true;
         public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, currentSprite.Width, currentSprite.Height);
 

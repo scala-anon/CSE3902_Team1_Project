@@ -5,6 +5,7 @@ namespace HollowKnight.Projectiles
 {
     public enum ProjectileFaction { Player, Enemy }
 
+    //TODO change to ICollidable
     public class Projectile : ICollideTemp
     {
         public Vector2 Position;
