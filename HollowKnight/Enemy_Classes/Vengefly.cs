@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 public class Vengefly : IEnemy
 {
+    public Rectangle[] hitBoxes;
     private int frameCounter = 0;
     public int state = 0;
     public bool dead;
@@ -77,8 +78,10 @@ public class Vengefly : IEnemy
     }
 
     // TODO: Tune width/height to match the actual scaled sprite size
-    public Rectangle GetBounds()
+    public Rectangle[] GetBounds()
     {
-        return new Rectangle((int)position.X, (int)position.Y, 48, 32);
+        Rectangle rectangle = new Rectangle((int)position.X, (int)position.Y, 48, 32);
+        hitBoxes[0] = rectangle;
+        return hitBoxes;
     }
 }
