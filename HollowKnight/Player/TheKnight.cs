@@ -25,9 +25,9 @@ namespace HollowKnight.Player
 
         private bool isDamaged;
         private double damagedTimer;
-        private double damagedDuration = 1.5; //in seconds
-        private float knockbackSpeed = 300f;
-        private float knockbackUpwards = -250f; //negative for upwards
+        private double damagedDuration = 1.0;
+        private float knockbackSpeed = 250f;
+        private float knockbackUpwards = -300f; //negative for upwards
 
         private int currentItem;
 
@@ -66,7 +66,7 @@ namespace HollowKnight.Player
             velocity.Y += gravity * dt;
             position += velocity * dt;
 
-            float groundY = 400f;
+            float groundY = 570f;
 
             // Checks to see if Knight is in air or grounded
             if (position.Y >= groundY)
@@ -176,7 +176,7 @@ namespace HollowKnight.Player
         public void TakeDamage(CollisionSide side)
         {
             if (isDamaged) return;
-            Console.WriteLine("Knight took damage");
+            Console.WriteLine("Knight took damage from " + side + " side");
             CancelHeal();
             isDamaged = true;
             damagedTimer = 0;
