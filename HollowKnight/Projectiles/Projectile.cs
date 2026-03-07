@@ -5,7 +5,7 @@ namespace HollowKnight.Projectiles
 {
     public enum ProjectileFaction { Player, Enemy }
 
-    public class Projectile : ICollidable
+    public class Projectile : ICollideTemp
     {
         public Vector2 Position;
         public Vector2 Velocity;
@@ -14,13 +14,25 @@ namespace HollowKnight.Projectiles
 
         public int Damage = 1;
         public bool Alive = true;
+        public bool IsActive => Alive;
 
+        public Rectangle[] hitBoxes = new Rectangle[1];
         public ProjectileFaction Faction;
 
-        public bool IsActive => Alive;
+
+        //TODO choose one
+        public Rectangle[] GetBounds()
+        {
+            Rectangle rectangle = new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
+            hitBoxes[0] = rectangle;
+            return hitBoxes;
+        }
+
 
         public Rectangle Bounds =>
             new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
+
+
 
         public Projectile(Vector2 position, Vector2 velocity, ProjectileFaction faction)
         {

@@ -6,7 +6,7 @@ namespace HollowKnight.Collision
     public static class CollisionManager
     {
         // Returns true if projectile should be destroyed
-        public static bool ProjectileHitsCollidable(Projectile p, ICollidable target)
+        public static bool ProjectileHitsCollidable(Projectile p, ICollideTemp target)
         {
             if (p == null || target == null)
                 return false;
@@ -19,9 +19,9 @@ namespace HollowKnight.Collision
 
         public static void ResolveProjectileCollisions(
             ProjectileManager pm,
-            ICollidable player,
-            ICollidable[] enemies,
-            ICollidable[] blocks,
+            ICollideTemp player,
+            ICollideTemp[] enemies,
+            ICollideTemp[] blocks,
             System.Action onPlayerHit,
             System.Action<int> onEnemyHit // pass enemy index
         )

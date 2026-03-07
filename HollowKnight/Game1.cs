@@ -221,21 +221,21 @@ public class Game1 : Game
 
         _projectileManager.Update(gameTime);
 
-        ICollidable player = (ICollidable)_knight;
+        ICollideTemp player = (ICollideTemp)_knight;
 
-        List<ICollidable> enemyCollidables = new List<ICollidable>();
+        List<ICollideTemp> enemyCollidables = new List<ICollideTemp>();
         for (int i = 0; i < Enemies.Length; i++)
         {
-            if (Enemies[i] is ICollidable collidableEnemy)
+            if (Enemies[i] is ICollideTemp collidableEnemy)
             {
                 enemyCollidables.Add(collidableEnemy);
             }
         }
 
-        List<ICollidable> blockCollidables = new List<ICollidable>();
+        List<ICollideTemp> blockCollidables = new List<ICollideTemp>();
         for (int i = 0; i < Objects.Length; i++)
         {
-            if (Objects[i] is ICollidable collidableObject)
+            if (Objects[i] is ICollideTemp collidableObject)
             {
                 blockCollidables.Add(collidableObject);
             }

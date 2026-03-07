@@ -11,6 +11,7 @@ public class CeilingSpike : IObject
 
     public Vector2 position;
 
+
     public CeilingSpike(Vector2 _position)
     {
         position = _position;

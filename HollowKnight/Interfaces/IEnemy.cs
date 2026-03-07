@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using HollowKnight.Collision;
+using HollowKnight.Interfaces;
 
 public interface IEnemy : ICollidable
 {
