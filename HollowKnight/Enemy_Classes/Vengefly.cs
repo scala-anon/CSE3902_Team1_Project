@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 public class Vengefly : IEnemy, ICollidable
 {
+    public Rectangle[] hitBoxes;
     private int frameCounter = 0;
     public int state = 0;
     public bool dead;
@@ -75,7 +76,15 @@ public class Vengefly : IEnemy, ICollidable
             frameCounter = 0;
         }
         
-        
         VengeFly.Update(_gameTime);
+
+    }
+
+    // TODO: Tune width/height to match the actual scaled sprite size
+    public Rectangle[] GetBounds()
+    {
+        Rectangle rectangle = new Rectangle((int)position.X, (int)position.Y, 48, 32);
+        hitBoxes[0] = rectangle;
+        return hitBoxes;
     }
 }

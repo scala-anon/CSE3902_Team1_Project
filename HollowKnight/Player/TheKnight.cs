@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using HollowKnight.Collision;
 
 namespace HollowKnight.Player
 {
@@ -12,6 +13,7 @@ namespace HollowKnight.Player
         private ISprite currentSprite;
         private KnightSpriteType currentState;
 
+        public Rectangle[] hitBoxes = new Rectangle[1];
         public Direction Facing { get; private set; } = Direction.Right;
         public Vector2 position;
         private Vector2 velocity;
@@ -134,12 +136,20 @@ namespace HollowKnight.Player
             currentSprite.SetPosition(position);
             currentSprite.Update(gameTime);
         }
+        
+
         public void Draw(SpriteBatch spriteBatch)
         {
             SpriteEffects effects = (Facing == Direction.Right)
                 ? SpriteEffects.None
                 : SpriteEffects.FlipHorizontally;
             currentSprite.Draw(spriteBatch, effects);
+        }
+
+        public void Collect(CollisionSide side)
+        {
+            //Need to give the Knight the actual powerup
+            Console.WriteLine("Knight picked up a power up!");
         }
         public void MoveRight()
         {
@@ -274,6 +284,13 @@ namespace HollowKnight.Player
             isHealing = false;
             healApplied = false;
             healTimer = 0;
+        }
+
+        // TODO: Tune width/height to match the actual scaled sprite size
+        public Rectangle[] GetBounds()
+        {
+            hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, 48, 64);
+            return hitBoxes;
         }
     }
 }

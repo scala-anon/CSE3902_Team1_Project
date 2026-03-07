@@ -1,9 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using HollowKnight.Collision;
 
 namespace HollowKnight.Interfaces
 {
-    public interface IHollowKnight
+    public interface IHollowKnight : ICollidable
     {
         void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);

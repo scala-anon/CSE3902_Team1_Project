@@ -9,6 +9,9 @@ using HollowKnight.Projectiles;
 using HollowKnight.Collision;
 using System.Collections.Generic;
 using System.IO;
+using HollowKnight.Ability_Classes;
+using HollowKnight.Storage;
+
 
 namespace HollowKnight;
 
@@ -27,8 +30,7 @@ public class Game1 : Game
     // TODO: Replace with your game's sprite management
     private ISprite _currentSprite;
     private List<IController> _controllerList;
-
-   // private IObjects[] enviromentSprites;
+    private List<IPickup> items = new ();
     private int _screenWidth;
     private int _screenHeight;
 
@@ -36,6 +38,7 @@ public class Game1 : Game
     private ProjectileManager _projectileManager = new ProjectileManager();
     private float projectileTimer = 0f;
     private Texture2D _pixel;
+    private CollisionHandler _collisionHandler;
 
     public Game1()
     {
@@ -65,8 +68,13 @@ public class Game1 : Game
         _screenHeight = _graphics.PreferredBackBufferHeight;
 
         Vector2 centerPosition = new Vector2(_screenWidth / 2, _screenHeight / 2);
-         
-        loadEnemies();
+
+        IPickup spirit = new Spirit(new Vector2(100,100));
+        IPickup spirit_2 = new Spirit(new Vector2(-100,-100));
+        items.Add(spirit);
+        items.Add(spirit_2);
+
+        //loadEnemies();
         loadEnviroment();
         
         _pixel = new Texture2D(GraphicsDevice, 1, 1);
@@ -76,30 +84,48 @@ public class Game1 : Game
         var sprites = KnightSpriteBuilder.BuildKnightSprites(centerPosition);
         _knight = new TheKnight(sprites, centerPosition);
 
+        _collisionHandler = new CollisionHandler();
+        DebugRenderer.Initialize(GraphicsDevice);
+        // TODO: Register collision responses here (sub-branches)
+
+        
+        
+        
+        
+        foreach (CollisionSide side in new[] { CollisionSide.Left, CollisionSide.Right, CollisionSide.Top, CollisionSide.Bottom })
+        {
+            _collisionHandler.Register<Spirit, TheKnight>(side, (a, b) => ((TheKnight)b).Collect(side));
+            
+        }
+
+
         // Setup keyboard controller
         KeyboardController keyboard = new KeyboardController();
         KeyboardBindings.BindGameplay(keyboard, _knight, this);
         _controllerList.Add(keyboard);
+
+        
+        
     }
 
 
 
     public void loadEnviroment()
     {
-        // IObject Path_1 = new Path_1();
-        // Objects[0] = Path_1;
-        // IObject Path_2 = new Path_2();
-        // Objects[1] = Path_2;
-        // IObject Path_3 = new Path_3();
-        // Objects[2] = Path_3;
-        // IObject Path_Ledge = new Path_ledge();
-        // Objects[3] = Path_Ledge;
-        // IObject Spike = new Spike();
-        // Objects[4] = Spike;
-        IObject FloorSpike = new FloorSpike(new Vector2(300, 400));
-        Objects[0] = FloorSpike;
-        // IObject CeilingSpike = new CeilingSpike();
-        // Objects[6] = CeilingSpike;
+        IObject Path_1 = new Path_1(new Vector2(0, 600));
+        Objects[0] = Path_1;
+        IObject Path_2 = new Path_2(new Vector2(50, 0));
+        Objects[1] = Path_2;
+        IObject Path_3 = new Path_3(new Vector2(250, 200));
+        Objects[2] = Path_3;
+        IObject Path_Ledge = new Path_ledge(new Vector2(800, 200));
+        Objects[3] = Path_Ledge;
+        IObject Spike = new Spike(new Vector2(950, 150));
+        Objects[4] = Spike;
+        IObject FloorSpike = new FloorSpike(new Vector2(900,400));
+        Objects[5] = FloorSpike;
+        IObject CeilingSpike = new CeilingSpike(new Vector2(300,0));
+        Objects[6] = CeilingSpike;
     }
     public void loadEnemies()
     {
@@ -229,6 +255,35 @@ public class Game1 : Game
             }
         );
 
+        //Check all collisions between knight and objects and handle them
+        foreach (IObject obj in Objects)
+        {
+            CollisionSide side = CollisionDetector.Detect(obj, _knight);
+            _collisionHandler.HandleCollision(obj, _knight, side);
+        }
+        
+        foreach (IPickup item in items){
+            
+            CollisionSide side = CollisionDetector.Detect(item, _knight);
+            _collisionHandler.HandleCollision(item, _knight, side);
+               
+        }
+        
+        
+
+        //foreach (IEnemy enemy in Enemies)
+        //{
+        //    CollisionSide side = CollisionDetector.Detect(enemy, _knight);
+        //    _collisionHandler.HandleCollision(enemy, _knight, side);
+        //}
+        
+        
+
+
+
+       //Enemies[enemy_index].Update(gameTime);
+        Objects[enviroment_index].Update(gameTime);
+        
         base.Update(gameTime);
     }
 
@@ -250,6 +305,17 @@ public class Game1 : Game
     
         // Enemies[enemy_index].Draw(_spriteBatch, _spriteEffects);
         // Objects[enviroment_index].Draw(_spriteBatch, _spriteEffects);
+        foreach (IPickup item in items)
+        {
+            item.Draw(_spriteBatch);
+            
+        }
+            
+        
+        
+        
+        //Enemies[enemy_index].Draw(_spriteBatch, _spriteEffects);
+        Objects[enviroment_index].Draw(_spriteBatch, _spriteEffects);
 
         // for (int i = 0; i < Enemies.Length; i++)
         // {
@@ -257,30 +323,21 @@ public class Game1 : Game
         //         Enemies[i].Draw(_spriteBatch, SpriteEffects.None);
         // }
 
-        // for (int i = 0; i < Objects.Length; i++)
-        // {
-        //     if (Objects[i] != null)
-        //         Objects[i].Draw(_spriteBatch, SpriteEffects.None);
-        // }
-        DrawRectangleOutline(_knight.Bounds, Color.LimeGreen);
-
-        for (int i = 0; i < Enemies.Length; i++)
+        DebugRenderer.DrawBounds(_spriteBatch, _knight, DebugRenderer.ColorKnight);
+        foreach (IObject obj in Objects)
         {
-            if (Enemies[i] is ICollidable enemy)
-            {
-                Enemies[i].Draw(_spriteBatch, SpriteEffects.None);
-                DrawRectangleOutline(enemy.Bounds, Color.Yellow);
-            }
+            DebugRenderer.DrawBounds(_spriteBatch, obj, DebugRenderer.ColorEnvironment);
+        } 
+        
+        foreach (IPickup item in items){
+        
+            DebugRenderer.DrawBounds(_spriteBatch, item, DebugRenderer.ColorEnvironment);
+            
         }
-
-        for (int i = 0; i < Objects.Length; i++)
-        {
-            if (Objects[i] is ICollidable obj)
-            {
-                Objects[i].Draw(_spriteBatch, SpriteEffects.None);
-                DrawRectangleOutline(obj.Bounds, Color.Blue);
-            }
-        }
+        //foreach (IEnemy enemy in Enemies)
+        //{
+        //    DebugRenderer.DrawBounds(_spriteBatch, enemy, DebugRenderer.ColorEnemy);
+        //}
 
         _spriteBatch.End();
 
