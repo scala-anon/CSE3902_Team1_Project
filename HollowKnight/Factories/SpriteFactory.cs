@@ -170,7 +170,7 @@ namespace HollowKnight.Factories
         }
         public ISprite CreateKnightWalkSprite(Vector2 position)
         {
-            return new AnimatedSprite(knightVarietySheet, knightAnimations["Walking"], position, 0.1, 1.0f); 
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["Walking"], position, 0.1, 1.0f);
         }
 
         public ISprite CreateKnightJumpSprite(Vector2 position)
@@ -211,49 +211,49 @@ namespace HollowKnight.Factories
         //Vengefly factory methods
         public ISprite CreateVengeflyIdleSprite(Vector2 position)
         {
-            return new AnimatedSprite(enemySpriteSheet, vengeflyAnimations["Vengefly_Idle"], position, 0.1, 2.0f);
+            return new AnimatedSprite(enemySpriteSheet, vengeflyAnimations["Vengefly_Idle"], position, 0.1, 1.0f);
         }
 
         public ISprite CreateVengeflyTurningSprite(Vector2 position)
         {
-            return new AnimatedSprite(enemySpriteSheet, vengeflyAnimations["Vengefly_Turning"], position, 0.1, 2.0f);
+            return new AnimatedSprite(enemySpriteSheet, vengeflyAnimations["Vengefly_Turning"], position, 0.1, 1.0f);
         }
 
         public ISprite CreateVengeflyStartleSprite(Vector2 position)
         {
-            return new AnimatedSprite(enemySpriteSheet, vengeflyAnimations["Vengefly_Startle"], position, 0.1, 2.0f);
+            return new AnimatedSprite(enemySpriteSheet, vengeflyAnimations["Vengefly_Startle"], position, 0.1, 1.0f);
         }
 
         public ISprite CreateVengeflyChaseSprite(Vector2 position)
         {
-            return new AnimatedSprite(enemySpriteSheet, vengeflyAnimations["Vengefly_Chase"], position, 0.1, 2.0f);
+            return new AnimatedSprite(enemySpriteSheet, vengeflyAnimations["Vengefly_Chase"], position, 0.1, 1.0f);
         }
 
         public ISprite CreateVengeflyDeathSprite(Vector2 position)
         {
-            return new AnimatedSprite(enemySpriteSheet, vengeflyAnimations["Vengefly_Death"], position, 0.1, 2.0f);
+            return new AnimatedSprite(enemySpriteSheet, vengeflyAnimations["Vengefly_Death"], position, 0.1, 1.0f);
         }
 
 
         //Crawlid factory methods
         public ISprite CreateCrawlidIdleSprite(Vector2 position)
         {
-            return new AnimatedSprite(enemySpriteSheet, crawlidAnimations["Crawlid_Idle"], position, 0.1, 2.0f);
+            return new AnimatedSprite(enemySpriteSheet, crawlidAnimations["Crawlid_Idle"], position, 0.1, 1.0f);
         }
 
         public ISprite CreateCrawlidTurnSprite(Vector2 position)
         {
-            return new AnimatedSprite(enemySpriteSheet, crawlidAnimations["Crawlid_Turn"], position, 0.1, 2.0f);
+            return new AnimatedSprite(enemySpriteSheet, crawlidAnimations["Crawlid_Turn"], position, 0.1, 1.0f);
         }
 
         public ISprite CreateCrawlidDeathAirSprite(Vector2 position)
         {
-            return new AnimatedSprite(enemySpriteSheet, crawlidAnimations["Crawlid_Death_Air"], position, 0.1, 2.0f);
+            return new AnimatedSprite(enemySpriteSheet, crawlidAnimations["Crawlid_Death_Air"], position, 0.1, 1.0f);
         }
 
         public ISprite CreateCrawlidDeathLandSprite(Vector2 position)
         {
-            return new AnimatedSprite(enemySpriteSheet, crawlidAnimations["Crawlid_Death_Land"], position, 0.1, 2.0f);
+            return new AnimatedSprite(enemySpriteSheet, crawlidAnimations["Crawlid_Death_Land"], position, 0.1, 1.0f);
         }
 
 

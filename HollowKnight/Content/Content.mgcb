@@ -105,6 +105,6 @@
 /copy:sprites/platform-atlas.xml
 
 #begin fonts/Credits.spritefont
-#/importer:FontDescriptionImporter
-#/processor:FontDescriptionProcessor
-#/build:fonts/Credits.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/build:fonts/Credits.spritefont

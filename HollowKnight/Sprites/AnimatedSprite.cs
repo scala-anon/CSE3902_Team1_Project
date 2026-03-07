@@ -87,5 +87,12 @@ namespace HollowKnight.Sprites
         {
             return _position;
         }
+
+        public Vector2 GetSize()
+        {
+            
+            Rectangle currentFrame = _frames[_currentFrame];
+            return new Vector2(currentFrame.Width * _scale, currentFrame.Height * _scale);
+        }
     }
 }

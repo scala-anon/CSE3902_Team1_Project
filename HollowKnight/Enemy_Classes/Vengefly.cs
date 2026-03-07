@@ -1,6 +1,4 @@
 
-using System.Net.NetworkInformation;
-using System.Runtime.CompilerServices;
 using HollowKnight.Factories;
 using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
@@ -15,9 +13,14 @@ public class Vengefly : IEnemy, ICollidable
     public bool startleAnimationPlayed;
     public bool left;
     public bool knightFound;
+
+    //TODO change this default knight position to something more reasonable
+    public Vector2 knightPosition = new Vector2(-9999, -9999);
+
     private VengeflyStateMachine stateMachine;
-    public ISprite VengeFly;
+    public ISprite VengeflySprite;
     public Vector2 position;
+
     public Vengefly(Vector2 _positon)
     {
         position = _positon;
@@ -25,10 +28,12 @@ public class Vengefly : IEnemy, ICollidable
         startleAnimationPlayed = true;
         knightFound = false;
         left = true;
-        VengeFly = SpriteFactory.Instance.CreateVengeflyIdleSprite(position);
+        VengeflySprite = SpriteFactory.Instance.CreateVengeflyIdleSprite(position);
         stateMachine = new VengeflyStateMachine(this);
     }
 
+    public void SetKnightPosition(Vector2 knightPosition) => this.knightPosition = knightPosition;
+    public float GetDetectionRadius() => stateMachine.GetDetectionRadius();
     public bool IsActive => true;
     public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, VengeFly.Width, VengeFly.Height);
 
@@ -48,38 +53,26 @@ public class Vengefly : IEnemy, ICollidable
         stateMachine.changeHealth();
     }
 
-    public void Startle()
-    {
-        stateMachine.startle();
-    }
-
     public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects)
     {
-        VengeFly.Draw(_spriteBatch, _spriteEffects);
+        VengeflySprite.Draw(_spriteBatch, _spriteEffects);
     }
 
     public void Update(GameTime _gameTime)
     {
-
-        //Start idle
-
-        //TODO impliment actuall state changes
-        frameCounter++;
-        if (frameCounter >= 500)
-        {
-            state++;
-            stateMachine.Update(_gameTime);
-            if(state == 5)
-            {
-                state = 0;
-            }
-            frameCounter = 0;
-        }
-        
-        VengeFly.Update(_gameTime);
-
+        stateMachine.Update(_gameTime);
+        VengeflySprite.Update(_gameTime);
     }
 
+    public Rectangle GetBounds()
+    {
+        Vector2 size = VengeflySprite.GetSize();
+        return new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
+    }
+
+    public string GetStateName()
+    {
+        return stateMachine.GetStateName();
     // TODO: Tune width/height to match the actual scaled sprite size
     public Rectangle[] GetBounds()
     {

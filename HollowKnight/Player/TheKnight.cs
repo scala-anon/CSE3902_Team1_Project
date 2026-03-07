@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using HollowKnight.Shared;
 using HollowKnight.Collision;
 
 namespace HollowKnight.Player
@@ -137,7 +138,12 @@ namespace HollowKnight.Player
             currentSprite.SetPosition(position);
             currentSprite.Update(gameTime);
         }
-        
+        // TODO: Tune width/height to match the actual scaled sprite size
+        public Rectangle GetBounds()
+        {
+            Vector2 size = currentSprite.GetSize();
+            return new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
+        }
 
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -174,6 +180,7 @@ namespace HollowKnight.Player
         }
         public void TakeDamage()
         {
+            if (isDamaged) return;
             Console.WriteLine("Knight took damage");
             CancelHeal();
             isDamaged = true;
