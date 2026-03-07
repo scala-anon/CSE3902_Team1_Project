@@ -261,7 +261,7 @@ namespace HollowKnight.Factories
         //Spirit factory methods
         public ISprite CreateSpiritInitialSprite(Vector2 position)
         {
-            return new StaticSprite(spellsSpriteSheet, spiritSingleFrames["SpiritInitial"], position, 2.0f);
+            return new StaticSprite(spellsSpriteSheet, spiritSingleFrames["SpiritInitial"], position, 1.0f);
         }
 
         public ISprite CreateSpiritMovingSprite(Vector2 position)

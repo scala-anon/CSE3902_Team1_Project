@@ -8,6 +8,8 @@ using HollowKnight.Player;
 using HollowKnight.Collision;
 using System.Collections.Generic;
 using System.IO;
+using HollowKnight.Ability_Classes;
+using HollowKnight.Storage;
 
 
 namespace HollowKnight;
@@ -27,8 +29,7 @@ public class Game1 : Game
     // TODO: Replace with your game's sprite management
     private ISprite _currentSprite;
     private List<IController> _controllerList;
-
-   // private IObjects[] enviromentSprites;
+    private List<IPickup> items = new ();
     private int _screenWidth;
     private int _screenHeight;
 
@@ -63,7 +64,12 @@ public class Game1 : Game
         _screenHeight = _graphics.PreferredBackBufferHeight;
 
         Vector2 centerPosition = new Vector2(_screenWidth / 2, _screenHeight / 2);
-         
+
+        IPickup spirit = new Spirit(new Vector2(100,100));
+        IPickup spirit_2 = new Spirit(new Vector2(-100,-100));
+        items.Add(spirit);
+        items.Add(spirit_2);
+
         //loadEnemies();
         loadEnviroment();
         
@@ -76,10 +82,24 @@ public class Game1 : Game
         DebugRenderer.Initialize(GraphicsDevice);
         // TODO: Register collision responses here (sub-branches)
 
+        
+        
+        
+        
+        foreach (CollisionSide side in new[] { CollisionSide.Left, CollisionSide.Right, CollisionSide.Top, CollisionSide.Bottom })
+        {
+            _collisionHandler.Register<Spirit, TheKnight>(side, (a, b) => ((TheKnight)b).Collect(side));
+            
+        }
+
+
         // Setup keyboard controller
         KeyboardController keyboard = new KeyboardController();
         KeyboardBindings.BindGameplay(keyboard, _knight, this);
         _controllerList.Add(keyboard);
+
+        
+        
     }
 
 
@@ -135,14 +155,29 @@ public class Game1 : Game
             CollisionSide side = CollisionDetector.Detect(obj, _knight);
             _collisionHandler.HandleCollision(obj, _knight, side);
         }
+        
+        foreach (IPickup item in items){
+            
+            CollisionSide side = CollisionDetector.Detect(item, _knight);
+            _collisionHandler.HandleCollision(item, _knight, side);
+               
+        }
+        
+        
+
         //foreach (IEnemy enemy in Enemies)
         //{
         //    CollisionSide side = CollisionDetector.Detect(enemy, _knight);
         //    _collisionHandler.HandleCollision(enemy, _knight, side);
         //}
         
+        
+
+
+
        //Enemies[enemy_index].Update(gameTime);
         Objects[enviroment_index].Update(gameTime);
+        
         base.Update(gameTime);
     }
 
@@ -156,7 +191,15 @@ public class Game1 : Game
         // Draw current sprite
         _knight.Draw(_spriteBatch);
 
-    
+        foreach (IPickup item in items)
+        {
+            item.Draw(_spriteBatch);
+            
+        }
+            
+        
+        
+        
         //Enemies[enemy_index].Draw(_spriteBatch, _spriteEffects);
         Objects[enviroment_index].Draw(_spriteBatch, _spriteEffects);
 
@@ -165,6 +208,12 @@ public class Game1 : Game
         foreach (IObject obj in Objects)
         {
             DebugRenderer.DrawBounds(_spriteBatch, obj, DebugRenderer.ColorEnvironment);
+        } 
+        
+        foreach (IPickup item in items){
+        
+            DebugRenderer.DrawBounds(_spriteBatch, item, DebugRenderer.ColorEnvironment);
+            
         }
         //foreach (IEnemy enemy in Enemies)
         //{

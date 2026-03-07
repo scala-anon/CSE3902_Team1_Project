@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using HollowKnight.Collision;
 
 namespace HollowKnight.Player
 {
@@ -140,6 +141,12 @@ namespace HollowKnight.Player
                 ? SpriteEffects.None
                 : SpriteEffects.FlipHorizontally;
             currentSprite.Draw(spriteBatch, effects);
+        }
+
+        public void Collect(CollisionSide side)
+        {
+            //Need to give the Knight the actual powerup
+            Console.WriteLine("Knight picked up a power up!");
         }
         public void MoveRight()
         {
