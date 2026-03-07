@@ -74,6 +74,10 @@ namespace HollowKnight.Player
                 position.Y = groundY;
                 velocity.Y = 0;
                 isGrounded = true;
+                if (isHealing || isDamaged)
+                {
+                    velocity.X = 0;
+                }
             }
             else
             {
