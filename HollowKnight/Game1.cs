@@ -5,6 +5,7 @@ using HollowKnight.Controllers;
 using HollowKnight.Factories;
 using HollowKnight.Builders;
 using HollowKnight.Player;
+using HollowKnight.Projectiles;
 using HollowKnight.Collision;
 using System.Collections.Generic;
 using System.IO;
@@ -34,6 +35,9 @@ public class Game1 : Game
     private int _screenHeight;
 
     private TheKnight _knight;
+    private ProjectileManager _projectileManager = new ProjectileManager();
+    private float projectileTimer = 0f;
+    private Texture2D _pixel;
     private CollisionHandler _collisionHandler;
 
     public Game1()
@@ -73,6 +77,8 @@ public class Game1 : Game
         //loadEnemies();
         loadEnviroment();
         
+        _pixel = new Texture2D(GraphicsDevice, 1, 1);
+        _pixel.SetData(new[] { Color.White });
         
 
         var sprites = KnightSpriteBuilder.BuildKnightSprites(centerPosition);
@@ -139,6 +145,15 @@ public class Game1 : Game
         }
         _currentSprite = sprite;
     }
+
+    private void DrawRectangleOutline(Rectangle rect, Color color, int thickness = 2)
+    {
+        _spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Top, rect.Width, thickness), color); // top
+        _spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Bottom - thickness, rect.Width, thickness), color); // bottom
+        _spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Top, thickness, rect.Height), color); // left
+        _spriteBatch.Draw(_pixel, new Rectangle(rect.Right - thickness, rect.Top, thickness, rect.Height), color); // right
+    }
+
     protected override void Update(GameTime gameTime)
     {
         // Update all controllers
@@ -148,6 +163,97 @@ public class Game1 : Game
         }
 
         _knight.Update(gameTime);
+
+        // Future use case when we have more enemies
+        // for (int i = 0; i < Enemies.Length; i++)
+        // {
+        //     Enemies[i].Update(gameTime);
+        // }
+
+        // for (int i = 0; i < Objects.Length; i++)
+        // {
+        //     Objects[i].Update(gameTime);
+        // }
+
+        projectileTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+        if (projectileTimer > 2f)
+        {
+            projectileTimer = 0f;
+
+            float projectileSpeed = 400f;
+            Vector2 direction;
+            Vector2 spawn;
+
+            if (_knight.Facing == Direction.Right)
+            {
+                direction = new Vector2(1f, 0f);
+                spawn = new Vector2(
+                    _knight.Bounds.Right,
+                    _knight.Bounds.Top + _knight.Bounds.Height / 2f
+                );
+            }
+            else
+            {
+                direction = new Vector2(-1f, 0f);
+                spawn = new Vector2(
+                    _knight.Bounds.Left - 12f,
+                    _knight.Bounds.Top + _knight.Bounds.Height / 2f
+                );
+            }
+
+            _projectileManager.Spawn(
+                new Projectile(spawn, direction * projectileSpeed, ProjectileFaction.Player)
+            );
+        }
+
+        for (int i = 0; i < Enemies.Length; i++)
+        {
+            if (Enemies[i] != null)
+                Enemies[i].Update(gameTime);
+        }
+
+        for (int i = 0; i < Objects.Length; i++)
+        {
+            if (Objects[i] != null)
+                Objects[i].Update(gameTime);
+        }
+
+        _projectileManager.Update(gameTime);
+
+        ICollidable player = (ICollidable)_knight;
+
+        List<ICollidable> enemyCollidables = new List<ICollidable>();
+        for (int i = 0; i < Enemies.Length; i++)
+        {
+            if (Enemies[i] is ICollidable collidableEnemy)
+            {
+                enemyCollidables.Add(collidableEnemy);
+            }
+        }
+
+        List<ICollidable> blockCollidables = new List<ICollidable>();
+        for (int i = 0; i < Objects.Length; i++)
+        {
+            if (Objects[i] is ICollidable collidableObject)
+            {
+                blockCollidables.Add(collidableObject);
+            }
+        }
+
+        CollisionManager.ResolveProjectileCollisions(
+            _projectileManager,
+            player,
+            enemyCollidables.ToArray(),
+            blockCollidables.ToArray(),
+            onPlayerHit: () => _knight.TakeDamage(),
+            onEnemyHit: (enemyIndex) =>
+            {
+                // If your enemy has TakeDamage later, call it here.
+                // For now you can mark dead or trigger state machine.
+                // Example (if you add it): ((IDamageable)Enemies[enemyIndex]).TakeDamage(1);
+            }
+        );
 
         //Check all collisions between knight and objects and handle them
         foreach (IObject obj in Objects)
@@ -191,6 +297,14 @@ public class Game1 : Game
         // Draw current sprite
         _knight.Draw(_spriteBatch);
 
+        foreach (var p in _projectileManager.All)
+        {
+            DrawRectangleOutline(p.Bounds, Color.Red);
+        }
+
+    
+        // Enemies[enemy_index].Draw(_spriteBatch, _spriteEffects);
+        // Objects[enviroment_index].Draw(_spriteBatch, _spriteEffects);
         foreach (IPickup item in items)
         {
             item.Draw(_spriteBatch);
@@ -203,6 +317,11 @@ public class Game1 : Game
         //Enemies[enemy_index].Draw(_spriteBatch, _spriteEffects);
         Objects[enviroment_index].Draw(_spriteBatch, _spriteEffects);
 
+        // for (int i = 0; i < Enemies.Length; i++)
+        // {
+        //     if (Enemies[i] != null)
+        //         Enemies[i].Draw(_spriteBatch, SpriteEffects.None);
+        // }
 
         DebugRenderer.DrawBounds(_spriteBatch, _knight, DebugRenderer.ColorKnight);
         foreach (IObject obj in Objects)

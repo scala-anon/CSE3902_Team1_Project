@@ -19,6 +19,9 @@ namespace HollowKnight.Sprites
         private double _frameTimer;
         private double _frameInterval;
 
+        public int Width => (int)(_frames[_currentFrame].Width * _scale);
+        public int Height => (int)(_frames[_currentFrame].Height * _scale);
+
         /// <summary>
         /// Create an animated sprite from a sprite sheet.
         /// </summary>

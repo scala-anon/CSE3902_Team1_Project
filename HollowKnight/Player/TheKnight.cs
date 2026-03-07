@@ -7,7 +7,7 @@ using HollowKnight.Collision;
 
 namespace HollowKnight.Player
 {
-    public class TheKnight : IHollowKnight
+    public class TheKnight : IHollowKnight, ICollidable
     {
         private Dictionary<KnightSpriteType, ISprite> sprites;
         private ISprite currentSprite;
@@ -15,7 +15,7 @@ namespace HollowKnight.Player
 
         public Rectangle[] hitBoxes = new Rectangle[1];
         public Direction Facing { get; private set; } = Direction.Right;
-        private Vector2 position;
+        public Vector2 position;
         private Vector2 velocity;
 
         private float moveSpeed = 200f;
@@ -43,6 +43,9 @@ namespace HollowKnight.Player
 
         private int health = 5;
         private int maxHealth = 9;
+
+        public bool IsActive => true;
+        public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, currentSprite.Width, currentSprite.Height);
 
         public TheKnight(Dictionary<KnightSpriteType, ISprite> sprites, Vector2 position)
         {

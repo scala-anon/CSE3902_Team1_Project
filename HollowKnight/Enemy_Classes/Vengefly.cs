@@ -6,7 +6,7 @@ using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class Vengefly : IEnemy
+public class Vengefly : IEnemy, ICollidable
 {
     public Rectangle[] hitBoxes;
     private int frameCounter = 0;
@@ -28,6 +28,9 @@ public class Vengefly : IEnemy
         VengeFly = SpriteFactory.Instance.CreateVengeflyIdleSprite(position);
         stateMachine = new VengeflyStateMachine(this);
     }
+
+    public bool IsActive => true;
+    public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, VengeFly.Width, VengeFly.Height);
 
     public void changeDirection()
     {

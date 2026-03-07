@@ -16,6 +16,9 @@ namespace HollowKnight.Sprites
         private Vector2 _startPosition;
         private float _scale;
 
+        public int Width => (int)(_sourceRect.Width * _scale);
+        public int Height => (int)(_sourceRect.Height * _scale);
+
         /// <summary>
         /// Create a static sprite from a sprite sheet.
         /// </summary>
