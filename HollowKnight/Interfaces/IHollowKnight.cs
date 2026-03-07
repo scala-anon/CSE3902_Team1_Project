@@ -13,7 +13,7 @@ namespace HollowKnight.Interfaces
         void MoveUp();
         void MoveDown();
         void Jump();
-        void TakeDamage();
+        void TakeDamage(CollisionSide side);
         void StopMovingHorizontal();
         void StopMovingVertical();
         void SideSlash();

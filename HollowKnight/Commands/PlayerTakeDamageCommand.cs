@@ -1,5 +1,6 @@
 using HollowKnight.Interfaces;
 using HollowKnight.Player;
+using HollowKnight.Collision;
 
 namespace HollowKnight.Commands
 {
@@ -14,7 +15,7 @@ namespace HollowKnight.Commands
 
         public void Execute()
         {
-            _knight.TakeDamage();
+            _knight.TakeDamage(CollisionSide.None); //none for default
         }
     }
 }

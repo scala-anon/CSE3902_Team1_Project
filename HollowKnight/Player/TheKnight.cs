@@ -4,6 +4,7 @@ using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using HollowKnight.Shared;
+using HollowKnight.Collision;
 
 namespace HollowKnight.Player
 {
@@ -24,7 +25,9 @@ namespace HollowKnight.Player
 
         private bool isDamaged;
         private double damagedTimer;
-        private double damagedDuration = 0.4;
+        private double damagedDuration = 1.5; //in seconds
+        private float knockbackSpeed = 300f;
+        private float knockbackUpwards = -250f; //negative for upwards
 
         private int currentItem;
 
@@ -105,7 +108,7 @@ namespace HollowKnight.Player
             {
                 UpdateHeal(gameTime);
             }
-            else 
+            else
             {
                 if (isAttacking)
                 {
@@ -166,7 +169,7 @@ namespace HollowKnight.Player
         {
             Console.WriteLine("Camera Move Down");
         }
-        public void TakeDamage()
+        public void TakeDamage(CollisionSide side)
         {
             if (isDamaged) return;
             Console.WriteLine("Knight took damage");
@@ -174,6 +177,24 @@ namespace HollowKnight.Player
             isDamaged = true;
             damagedTimer = 0;
             health = Math.Max(0, health - 1);
+
+            switch (side)
+            {
+                case CollisionSide.Left:
+                    velocity.X = -knockbackSpeed;
+                    velocity.Y = knockbackUpwards;
+                    break;
+                case CollisionSide.Right:
+                    velocity.X = knockbackSpeed;
+                    velocity.Y = knockbackUpwards;
+                    break;
+                case CollisionSide.Top:
+                    velocity.Y = knockbackUpwards;
+                    break;
+                case CollisionSide.Bottom:
+                    velocity.Y = -knockbackUpwards;
+                    break;
+            }
         }
         public void UseItem(int _itemNumber)
         {
@@ -210,7 +231,7 @@ namespace HollowKnight.Player
             CancelHeal();
             attackType = KnightSpriteType.UpSlash;
             isAttacking = true;
-            attackTimer = 0;        
+            attackTimer = 0;
         }
         public void DownSlash()
         {
@@ -256,7 +277,7 @@ namespace HollowKnight.Player
                 return;
             }
 
-            if(!healApplied)
+            if (!healApplied)
             {
                 healApplied = true;
 
@@ -265,7 +286,7 @@ namespace HollowKnight.Player
                     health++;
                     Console.WriteLine($"Healed! Health is now {health}");
                 }
-                else 
+                else
                 {
                     Console.WriteLine("Heal finished, but already at max health");
                 }
