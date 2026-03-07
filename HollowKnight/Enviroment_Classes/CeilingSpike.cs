@@ -3,11 +3,14 @@ using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class CeilingSpike : IObject
+public class CeilingSpike : IObject, ICollidable
 {
     public ISprite Sprite;
 
-    public Vector2 position;
+    public Vector2 position = new Vector2(1050, 0);
+
+    public bool IsActive => true;
+    public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, Sprite.Width, Sprite.Height);
 
     public CeilingSpike()
     {

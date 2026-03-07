@@ -1,5 +1,8 @@
 using HollowKnight.Interfaces;
 using HollowKnight.Projectiles;
+using HollowKnight.Player;
+using Microsoft.Xna.Framework;
+using System;
 
 namespace HollowKnight.Collision
 {
@@ -30,14 +33,17 @@ namespace HollowKnight.Collision
             {
                 if (!p.Alive) continue;
 
-                // 1) Blocks first: projectile dies on impact
+                // Blocks first: projectile dies on impact
                 for (int i = 0; i < blocks.Length && p.Alive; i++)
                 {
                     if (ProjectileHitsCollidable(p, blocks[i]))
+                    {
+                        Console.WriteLine("Projective Collided with Object");
                         p.Alive = false;
+                    }
                 }
 
-                // 2) Enemy hits (player faction only)
+                // Enemy hits (player faction only)
                 if (p.Faction == ProjectileFaction.Player)
                 {
                     for (int i = 0; i < enemies.Length && p.Alive; i++)
@@ -50,7 +56,7 @@ namespace HollowKnight.Collision
                     }
                 }
 
-                // 3) Player hits (enemy faction only)
+                // Player hits (enemy faction only)
                 if (p.Faction == ProjectileFaction.Enemy && p.Alive)
                 {
                     if (ProjectileHitsCollidable(p, player))
@@ -62,6 +68,60 @@ namespace HollowKnight.Collision
             }
 
             pm.CullDead();
+        }
+
+        public static void ResolvePlayerBlockCollision(TheKnight player, ICollidable block)
+        {
+            if (player == null || block == null)
+                return;
+
+            if (!player.IsActive || !block.IsActive)
+                return;
+
+            Rectangle playerBounds = player.Bounds;
+            Rectangle blockBounds = block.Bounds;
+
+            if (!playerBounds.Intersects(blockBounds))
+                return;
+
+            int overlapLeft = playerBounds.Right - blockBounds.Left;
+            int overlapRight = blockBounds.Right - playerBounds.Left;
+            int overlapTop = playerBounds.Bottom - blockBounds.Top;
+            int overlapBottom = blockBounds.Bottom - playerBounds.Top;
+
+            int minOverlapX = Math.Min(overlapLeft, overlapRight);
+            int minOverlapY = Math.Min(overlapTop, overlapBottom);
+
+            if (minOverlapX < minOverlapY)
+            {
+                // Resolve left/right wall collision
+                if (overlapLeft < overlapRight)
+                {
+                    player.position.X -= overlapLeft;
+                }
+                else
+                {
+                    player.position.X += overlapRight;
+                }
+
+                player.StopMovingHorizontal();
+            }
+            else
+            {
+                // Resolve top/bottom collision
+                if (overlapTop < overlapBottom)
+                {
+                    // Player landed on top of block
+                    player.position.Y -= overlapTop;
+                    player.Land();
+                }
+                else
+                {
+                    // Player hit underside of block
+                    player.position.Y += overlapBottom;
+                    player.StopMovingVertical();
+                }
+            }
         }
     }
 }
