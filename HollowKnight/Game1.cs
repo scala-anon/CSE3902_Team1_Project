@@ -174,7 +174,7 @@ public class Game1 : Game
 
         _spriteBatch.Begin();
 
-        _navigationGrid.Draw(_spriteBatch);
+        if (NavigationGrid.GridEnabled) _navigationGrid.Draw(_spriteBatch);
         // Draw current sprite
         _knight.Draw(_spriteBatch);
 

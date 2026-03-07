@@ -9,6 +9,7 @@ namespace HollowKnight.Pathfinding
     public int cellSize { get; }
     public int cols { get; }
     public int rows { get; }
+    public static bool GridEnabled { get; set; } = true;
 
     private Texture2D _pixel; 
 
