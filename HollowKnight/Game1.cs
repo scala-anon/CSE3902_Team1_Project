@@ -169,7 +169,7 @@ public class Game1 : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        // TODO: Change background color to match your game
+        // TODO: Change background color to match game
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
         _spriteBatch.Begin();
