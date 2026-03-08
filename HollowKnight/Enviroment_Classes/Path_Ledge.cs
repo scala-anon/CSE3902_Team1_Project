@@ -5,7 +5,7 @@ using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class Path_ledge : IObject, ICollidable
+public class Path_ledge : IObject
 {
     public ISprite sprite;
 

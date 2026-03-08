@@ -4,7 +4,7 @@ using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class Spike : IObject, ICollidable
+public class Spike : IObject
 {
     public ISprite Sprite;
 

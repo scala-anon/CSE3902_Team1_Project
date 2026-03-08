@@ -3,7 +3,7 @@ using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class FloorSpike : IObject, ICollidable
+public class FloorSpike : IObject
 {
     public ISprite Sprite;
 

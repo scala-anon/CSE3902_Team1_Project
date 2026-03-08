@@ -4,7 +4,7 @@ using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class Vengefly : IEnemy, ICollidable
+public class Vengefly : IEnemy
 {
     public int state = 0;
     public bool dead;

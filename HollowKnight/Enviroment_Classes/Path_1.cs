@@ -3,7 +3,7 @@ using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class Path_1 : IObject, ICollidable
+public class Path_1 : IObject
 {
     private ISprite Sprite;
 

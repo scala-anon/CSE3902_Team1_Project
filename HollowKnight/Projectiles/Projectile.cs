@@ -1,5 +1,5 @@
 using Microsoft.Xna.Framework;
-using HollowKnight.Interfaces;
+using HollowKnight.Collision;
 
 namespace HollowKnight.Projectiles
 {
@@ -32,6 +32,11 @@ namespace HollowKnight.Projectiles
         public void Update(GameTime gameTime)
         {
             Position += Velocity;
+        }
+
+        public Rectangle GetBounds()
+        {
+            return Bounds;
         }
 
         public void Step(Vector2 delta)

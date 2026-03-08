@@ -5,7 +5,7 @@ using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class Crawlid : IEnemy, ICollidable
+public class Crawlid : IEnemy
 {
     public int state = 0;
 
