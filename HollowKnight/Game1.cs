@@ -5,6 +5,7 @@ using HollowKnight.Controllers;
 using HollowKnight.Factories;
 using HollowKnight.Builders;
 using HollowKnight.Player;
+using HollowKnight.Projectiles;
 using HollowKnight.Collision;
 using System.Collections.Generic;
 using System.IO;
@@ -35,6 +36,10 @@ public class Game1 : Game
 
     private TheKnight _knight;
     private CollisionHandler _collisionHandler;
+    private ProjectileManager _projectileManager = new ProjectileManager();
+    private ProjectileSpawner _projectileSpawner;
+    private KnightProjectile _knightProjectile;
+    private Texture2D _pixel;
 
     public Game1()
     {
@@ -69,9 +74,10 @@ public class Game1 : Game
         Vector2 centerPosition = new Vector2(_screenWidth / 2, _screenHeight / 2);
 
         loadEnemies();
-        // loadEnviroment(); UPDATE commented out to test enemies only
-
-
+        loadEnviroment();
+        
+        _pixel = new Texture2D(GraphicsDevice, 1, 1);
+        _pixel.SetData(new[] { Color.White });
 
         var sprites = KnightSpriteBuilder.BuildKnightSprites(centerPosition);
         _knight = new TheKnight(sprites, centerPosition);
@@ -85,6 +91,8 @@ public class Game1 : Game
             _collisionHandler.Register<Crawlid, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
             _collisionHandler.Register<Vengefly, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
         }
+        _projectileSpawner = new ProjectileSpawner(_projectileManager);
+        _knightProjectile = new KnightProjectile(_knight, _projectileSpawner);
 
         // Setup keyboard controller
         KeyboardController keyboard = new KeyboardController();
@@ -106,7 +114,7 @@ public class Game1 : Game
         Objects[3] = Path_Ledge;
         IObject Spike = new Spike();
         Objects[4] = Spike;
-        IObject FloorSpike = new FloorSpike();
+        IObject FloorSpike = new FloorSpike(new Vector2(300, 400));
         Objects[5] = FloorSpike;
         IObject CeilingSpike = new CeilingSpike();
         Objects[6] = CeilingSpike;
@@ -130,6 +138,15 @@ public class Game1 : Game
         }
         _currentSprite = sprite;
     }
+
+    private void DrawRectangleOutline(Rectangle rect, Color color, int thickness = 2)
+    {
+        _spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Top, rect.Width, thickness), color); // top
+        _spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Bottom - thickness, rect.Width, thickness), color); // bottom
+        _spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Top, thickness, rect.Height), color); // left
+        _spriteBatch.Draw(_pixel, new Rectangle(rect.Right - thickness, rect.Top, thickness, rect.Height), color); // right
+    }
+
     protected override void Update(GameTime gameTime)
     {
         // Update all controllers
@@ -164,6 +181,44 @@ public class Game1 : Game
         foreach (IObject obj in Objects)
             obj.Update(gameTime);
         */
+        _knightProjectile.Update(gameTime);
+        
+        for (int i = 0; i < Enemies.Length; i++)
+        {
+            if (Enemies[i] != null)
+                Enemies[i].Update(gameTime);
+        }
+
+        for (int i = 0; i < Objects.Length; i++)
+        {
+            if (Objects[i] != null)
+                Objects[i].Update(gameTime);
+        }
+
+        for (int i = 0; i < Objects.Length; i++)
+        {
+            if (Objects[i] is ICollidable block)
+                CollisionManager.ResolvePlayerBlockCollision(_knight, block);
+        }
+
+        _projectileManager.Update(gameTime);
+
+        ICollidable player = _knight;
+        ICollidable[] enemyCollidables = CollisionGroupBuilder.GetCollidables(Enemies);
+        ICollidable[] blockCollidables = CollisionGroupBuilder.GetCollidables(Objects);
+
+        CollisionManager.ResolveProjectileCollisions(
+            _projectileManager,
+            player,
+            enemyCollidables,
+            blockCollidables,
+            onPlayerHit: () => _knight.TakeDamage(),
+            onEnemyHit: (enemyIndex) =>
+            {
+                // Enemy TakeDamage will be called here
+            }
+        );
+
         base.Update(gameTime);
     }
 
@@ -198,6 +253,30 @@ public class Game1 : Game
 
         DebugRenderer.DrawBounds(_spriteBatch, _knight, DebugRenderer.ColorKnight);
         DebugRenderer.DrawPoint(_spriteBatch, _knight.GetBounds().Center.ToVector2(), DebugRenderer.ColorMidpoint);
+        DrawRectangleOutline(_knight.Bounds, Color.LimeGreen);
+
+        foreach (var p in _projectileManager.All)
+        {
+            DrawRectangleOutline(p.Bounds, Color.Red);
+        }
+
+        for (int i = 0; i < Enemies.Length; i++)
+        {
+            if (Enemies[i] is ICollidable enemy)
+            {
+                Enemies[i].Draw(_spriteBatch, SpriteEffects.None);
+                DrawRectangleOutline(enemy.Bounds, Color.Yellow);
+            }
+        }
+
+        for (int i = 0; i < Objects.Length; i++)
+        {
+            if (Objects[i] is ICollidable obj)
+            {
+                Objects[i].Draw(_spriteBatch, SpriteEffects.None);
+                DrawRectangleOutline(obj.Bounds, Color.Blue);
+            }
+        }
 
         /* UPDATE commented out to test enemies only
         foreach (IObject obj in Objects)

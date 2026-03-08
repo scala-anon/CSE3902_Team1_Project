@@ -4,11 +4,13 @@ using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class Path_3 : IObject
+public class Path_3 : IObject, ICollidable
 {
     private ISprite Sprite;
 
-    public Vector2 position;
+    public Vector2 position = new Vector2(400, 300);
+    public bool IsActive => true;
+    public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, Sprite.Width, Sprite.Height);
 
     public Path_3()
     {
