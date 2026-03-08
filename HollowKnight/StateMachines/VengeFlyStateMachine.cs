@@ -32,7 +32,7 @@ public class VengeflyStateMachine
     public void Update(GameTime _gameTime)
     {
         float elapsedTime = (float)_gameTime.ElapsedGameTime.TotalSeconds;
-        Vector2 enemyCenter = CurrentVengeFly.GetBounds().Center.ToVector2();
+        Vector2 enemyCenter = CurrentVengeFly.GetBounds()[0].Center.ToVector2();
         float distanceFromKnight = Vector2.Distance(enemyCenter, CurrentVengeFly.knightPosition);
         bool knightInRange = distanceFromKnight <= DetectionRadius;
 

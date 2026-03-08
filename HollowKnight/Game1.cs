@@ -12,6 +12,7 @@ using System.IO;
 using HollowKnight.Pathfinding;
 using HollowKnight.Ability_Classes;
 using HollowKnight.Storage;
+using HollowKnight.Shared;
 
 
 namespace HollowKnight;
@@ -28,7 +29,7 @@ public class Game1 : Game
     public int enemy_index = 0;
     public int enviroment_index = 0;
     private IEnemy[] Enemies = new IEnemy[2];
-    // private IObject[] Objects = new IObject[7]; UPDATE commented out to test enemies only
+    private IObject[] Objects = new IObject[7];
     // TODO: Replace with your game's sprite management
     private ISprite _currentSprite;
     private List<IController> _controllerList;
@@ -75,15 +76,11 @@ public class Game1 : Game
         Vector2 centerPosition = new Vector2(_screenWidth / 2, _screenHeight / 2);
 
         loadEnemies();
-        // loadEnviroment(); UPDATE commented out to test enemies only
-
-
         IPickup spirit = new Spirit(new Vector2(100,100));
         IPickup spirit_2 = new Spirit(new Vector2(-100,-100));
         items.Add(spirit);
         items.Add(spirit_2);
 
-        //loadEnemies();
         loadEnviroment();
         
         _pixel = new Texture2D(GraphicsDevice, 1, 1);
@@ -123,8 +120,6 @@ public class Game1 : Game
         
     }
 
-
-    /* UPDATE commented out to test enemies only
     public void loadEnviroment()
     {
         IObject Path_1 = new Path_1(new Vector2(0, 600));
@@ -142,7 +137,7 @@ public class Game1 : Game
         IObject CeilingSpike = new CeilingSpike(new Vector2(300,0));
         Objects[6] = CeilingSpike;
     }
-    */
+
     public void loadEnemies()
     {
         IEnemy vengefly_1 = new Vengefly(new Vector2(0, 150)); //TODO: change this hardcoded position
@@ -179,19 +174,8 @@ public class Game1 : Game
         }
 
         _knight.Update(gameTime);
-        Vector2 knightPosition = _knight.GetBounds().Center.ToVector2(); //use center of knight for enemy detection
+        Vector2 knightPosition = _knight.GetBounds()[0].Center.ToVector2(); //use center of knight for enemy detection
 
-
-        // Future use case when we have more enemies
-        // for (int i = 0; i < Enemies.Length; i++)
-        // {
-        //     Enemies[i].Update(gameTime);
-        // }
-
-        // for (int i = 0; i < Objects.Length; i++)
-        // {
-        //     Objects[i].Update(gameTime);
-        // }
 
         projectileTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -224,7 +208,7 @@ public class Game1 : Game
                 new Projectile(spawn, direction * projectileSpeed, ProjectileFaction.Player)
             );
         }
-
+        /*
         for (int i = 0; i < Enemies.Length; i++)
         {
             if (Enemies[i] != null)
@@ -236,7 +220,7 @@ public class Game1 : Game
             if (Objects[i] != null)
                 Objects[i].Update(gameTime);
         }
-
+*/
         _projectileManager.Update(gameTime);
 
         //TODO change to ICollidable
@@ -277,13 +261,13 @@ public class Game1 : Game
         );
 
         //Check all collisions between knight and objects and handle them
-        /*UPDATE commented out to test enemies only
         foreach (IObject obj in Objects)
         {
             CollisionSide side = CollisionDetector.Detect(obj, _knight);
             _collisionHandler.HandleCollision(obj, _knight, side);
         }
-        */
+        
+        
         foreach (IEnemy enemy in Enemies)
         {
             enemy.SetKnightPosition(knightPosition);
@@ -292,12 +276,13 @@ public class Game1 : Game
         }
 
 
-        foreach (IEnemy enemy in Enemies)
+        foreach (IEnemy enemy in Enemies){
             enemy.Update(gameTime);
-        /* UPDATE commented out to test enemies only
-        foreach (IObject obj in Objects)
+        }
+        
+        foreach (IObject obj in Objects){
             obj.Update(gameTime);
-        */
+        }
         
         foreach (IPickup item in items){
             
@@ -305,21 +290,9 @@ public class Game1 : Game
             _collisionHandler.HandleCollision(item, _knight, side);
                
         }
-        
-        
 
-        //foreach (IEnemy enemy in Enemies)
-        //{
-        //    CollisionSide side = CollisionDetector.Detect(enemy, _knight);
-        //    _collisionHandler.HandleCollision(enemy, _knight, side);
-        //}
-        
-        
-
-
-
-       //Enemies[enemy_index].Update(gameTime);
-        Objects[enviroment_index].Update(gameTime);
+        //Enemies[enemy_index].Update(gameTime);
+        //Objects[enviroment_index].Update(gameTime);
         
         base.Update(gameTime);
     }
@@ -335,10 +308,10 @@ public class Game1 : Game
         // Draw current sprite
         _knight.Draw(_spriteBatch);
 
-        /* UPDATE commented out to test enemies only
-        foreach (IObject obj in Objects)
+    
+        foreach (IObject obj in Objects){
             obj.Draw(_spriteBatch, _spriteEffects);
-            */
+        }
 
         foreach (IEnemy enemy in Enemies)
         {
@@ -348,7 +321,7 @@ public class Game1 : Game
 
             if (enemy.GetDetectionRadius() > 0)
             {
-                Vector2 center = enemy.GetBounds().Center.ToVector2();
+                Vector2 center = enemy.GetBounds()[0].Center.ToVector2();
                 DebugRenderer.DrawRadius(_spriteBatch, center, enemy.GetDetectionRadius(), DebugRenderer.ColorTrigger * 0.8f);
             }
         }
@@ -357,26 +330,11 @@ public class Game1 : Game
             DrawRectangleOutline(p.Bounds, Color.Red);
         }
 
-    
-        // Enemies[enemy_index].Draw(_spriteBatch, _spriteEffects);
-        // Objects[enviroment_index].Draw(_spriteBatch, _spriteEffects);
         foreach (IPickup item in items)
         {
             item.Draw(_spriteBatch);
             
-        }
-            
-        
-        
-        
-        //Enemies[enemy_index].Draw(_spriteBatch, _spriteEffects);
-        Objects[enviroment_index].Draw(_spriteBatch, _spriteEffects);
-
-        // for (int i = 0; i < Enemies.Length; i++)
-        // {
-        //     if (Enemies[i] != null)
-        //         Enemies[i].Draw(_spriteBatch, SpriteEffects.None);
-        // }
+        }  
 
         DebugRenderer.DrawBounds(_spriteBatch, _knight, DebugRenderer.ColorKnight);
         foreach (IObject obj in Objects)
@@ -389,18 +347,10 @@ public class Game1 : Game
             DebugRenderer.DrawBounds(_spriteBatch, item, DebugRenderer.ColorEnvironment);
             
         }
-        //foreach (IEnemy enemy in Enemies)
-        //{
-        //    DebugRenderer.DrawBounds(_spriteBatch, enemy, DebugRenderer.ColorEnemy);
-        //}
 
         DebugRenderer.DrawBounds(_spriteBatch, _knight, DebugRenderer.ColorKnight);
-        DebugRenderer.DrawPoint(_spriteBatch, _knight.GetBounds().Center.ToVector2(), DebugRenderer.ColorMidpoint);
+        DebugRenderer.DrawPoint(_spriteBatch, _knight.GetBounds()[0].Center.ToVector2(), DebugRenderer.ColorMidpoint);
 
-        /* UPDATE commented out to test enemies only
-        foreach (IObject obj in Objects)
-            DebugRenderer.DrawBounds(_spriteBatch, obj, DebugRenderer.ColorEnvironment);
-            */
         _spriteBatch.End();
 
         base.Draw(gameTime);

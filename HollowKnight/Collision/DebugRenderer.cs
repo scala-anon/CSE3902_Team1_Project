@@ -40,7 +40,7 @@ namespace HollowKnight.Collision
         public static void DrawStateLabel(SpriteBatch spriteBatch, ICollidable obj, string label, Color color)
         {
             if(!hitboxEnabled || _font ==null) return;
-            Rectangle bounds = obj.GetBounds();
+            Rectangle bounds = obj.GetBounds()[0];
             spriteBatch.DrawString(_font, label, new Vector2(bounds.Left, bounds.Top -16 ), Color.White); //16 for offset above hitbox
         }
 
