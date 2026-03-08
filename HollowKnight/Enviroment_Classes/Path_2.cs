@@ -5,11 +5,13 @@ using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class Path_2 : IObject
+public class Path_2 : IObject, ICollidable
 {
     private ISprite Sprite;
 
-    public Vector2 position = new Vector2(200, 0);
+    public Vector2 position = new Vector2(850, 400);
+    public bool IsActive => true;
+    public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, Sprite.Width, Sprite.Height);
 
     public Path_2()
     {

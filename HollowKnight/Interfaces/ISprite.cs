@@ -35,5 +35,7 @@ namespace HollowKnight.Interfaces
         /// Get the sprite's current position.
         /// </summary>
         Vector2 GetPosition();
+        int Width { get; }
+        int Height { get; }
     }
 }
