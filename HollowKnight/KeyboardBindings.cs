@@ -76,6 +76,12 @@ namespace HollowKnight.Controllers
             keyboard.RegisterPressedCommand(Keys.Y, new ChangeNextEnviromentCommand(game));
             keyboard.RegisterPressedCommand(Keys.T, new ChangePreviousEnviromentCommand(game));
 
+            //Command for hitbox toggling
+            keyboard.RegisterPressedCommand(Keys.H, new ToggleHitboxesCommand(game));
+
+            //Command for grid toggling
+            keyboard.RegisterPressedCommand(Keys.G, new ToggleGridCommand(game));
+
             // Quit Game
             keyboard.RegisterPressedCommand(Keys.Q, new QuitCommand(game));
         }

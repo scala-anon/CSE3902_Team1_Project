@@ -59,5 +59,10 @@ namespace HollowKnight.Sprites
         {
             return _position;
         }
+
+        public Vector2 GetSize()
+        {
+            return _font?.MeasureString(_text) ?? Vector2.Zero;
+        }
     }
 }
