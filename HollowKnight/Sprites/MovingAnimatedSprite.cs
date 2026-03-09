@@ -23,6 +23,9 @@ namespace HollowKnight.Sprites
         private double _frameTimer;
         private double _frameInterval;
 
+        public int Width => (int)(_frames[_currentFrame].Width * _scale);
+        public int Height => (int)(_frames[_currentFrame].Height * _scale);
+
         /// <summary>
         /// Create a horizontally moving animated sprite.
         /// </summary>
@@ -110,6 +113,10 @@ namespace HollowKnight.Sprites
         public Vector2 GetPosition()
         {
             return _position;
+        }
+        public Vector2 GetSize()
+        {
+            return new Vector2(_frames[0].Width * _scale, _frames[0].Height * _scale);
         }
     }
 }

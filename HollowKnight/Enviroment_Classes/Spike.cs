@@ -8,11 +8,13 @@ public class Spike : IObject
 {
     public ISprite Sprite;
 
+    public Rectangle[] hitBoxes = new Rectangle[2];
     public Vector2 position;
 
-    public Spike()
+    public Spike(Vector2 _position)
     {
-        Sprite = SpriteFactory.Instance.CreateSpikeSprite(position);
+        position = _position;
+        Sprite = SpriteFactory.Instance.CreateSpikeSprite(_position);
     }
 
     public void Update(GameTime _gameTime)
@@ -24,5 +26,15 @@ public class Spike : IObject
     {
         Sprite.Draw(_spriteBatch, _spriteEffects);
     
+    }
+
+    // TODO: Tune width/height to match the actual scaled sprite size
+    public Rectangle[] GetBounds()
+    {
+        Rectangle rectangle = new Rectangle((int)position.X, (int)position.Y + 50, 165, 45);
+        Rectangle rectangle2 = new Rectangle((int)position.X + 60, (int)position.Y, 75, 50);
+        hitBoxes[0] = rectangle;
+        hitBoxes[1] = rectangle2;
+        return hitBoxes;
     }
 }
