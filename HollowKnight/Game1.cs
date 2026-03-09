@@ -89,8 +89,15 @@ public class Game1 : Game
         foreach (CollisionSide side in new[] { CollisionSide.Left, CollisionSide.Right, CollisionSide.Top, CollisionSide.Bottom })
         {
             _collisionHandler.Register<Spirit, TheKnight>(side, (a, b) => ((TheKnight)b).Collect(side));
-            
+            _collisionHandler.Register<FloorSpike, TheKnight>(side, (a, b) => ((TheKnight)b).Block(side));
+            _collisionHandler.Register<Path_1, TheKnight>(side, (a, b) => ((TheKnight)b).Block(side));
+            _collisionHandler.Register<Path_2, TheKnight>(side, (a, b) => ((TheKnight)b).Block(side));
+            _collisionHandler.Register<Path_3, TheKnight>(side, (a, b) => ((TheKnight)b).Block(side));
+            _collisionHandler.Register<Spike, TheKnight>(side, (a, b) => ((TheKnight)b).Block(side));
+            _collisionHandler.Register<CeilingSpike, TheKnight>(side, (a, b) => ((TheKnight)b).Block(side));
+            _collisionHandler.Register<Path_ledge, TheKnight>(side, (a, b) => ((TheKnight)b).Block(side));
         }
+
 
 
         // Setup keyboard controller
@@ -106,7 +113,7 @@ public class Game1 : Game
 
     public void loadEnviroment()
     {
-        IObject Path_1 = new Path_1(new Vector2(0, 600));
+        IObject Path_1 = new Path_1(new Vector2(0, 550));
         Objects[0] = Path_1;
         IObject Path_2 = new Path_2(new Vector2(50, 0));
         Objects[1] = Path_2;
@@ -116,9 +123,9 @@ public class Game1 : Game
         Objects[3] = Path_Ledge;
         IObject Spike = new Spike(new Vector2(950, 150));
         Objects[4] = Spike;
-        IObject FloorSpike = new FloorSpike(new Vector2(900,400));
+        IObject FloorSpike = new FloorSpike(new Vector2(900,300));
         Objects[5] = FloorSpike;
-        IObject CeilingSpike = new CeilingSpike(new Vector2(300,0));
+        IObject CeilingSpike = new CeilingSpike(new Vector2(600,300));
         Objects[6] = CeilingSpike;
     }
     public void loadEnemies()
