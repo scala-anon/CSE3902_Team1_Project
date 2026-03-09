@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Level name="LevelOne">
+
+<!-- Player -->
+
+<Item>
+    <ObjectType>Knight</ObjectType>
+    <ObjectName>Knight</ObjectName>
+    <Location>160 400</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>0 670</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>960 670</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>1920 670</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_8</ObjectName>
+    <Location>2124 499</Location>
+</Item>

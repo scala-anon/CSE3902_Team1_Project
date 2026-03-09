@@ -15,7 +15,7 @@ namespace HollowKnight.Commands
         public void Execute()
         {
             _game1.enviroment_index++;
-            if(_game1.enviroment_index == 7)
+            if(_game1.enviroment_index == 17)
             {
                 _game1.enviroment_index = 0;
             }

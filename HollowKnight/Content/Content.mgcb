@@ -86,6 +86,18 @@
 /processorParam:TextureFormat=Color
 /build:sprites/platformSpritesheet.png
 
+#begin sprites/platformSpriteSheet2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:sprites/platformSpriteSheet2.png
+
 #begin sprites/knight_movement-atlas.xml
 /copy:sprites/knight_movement-atlas.xml
 
@@ -100,6 +112,9 @@
 
 #begin sprites/spirit-atlas.xml
 /copy:sprites/spirit-atlas.xml
+
+#begin sprites/tutorial-platform-atlas.xml
+/copy:sprites/tutorial-platform-atlas.xml
 
 #begin sprites/platform-atlas.xml
 /copy:sprites/platform-atlas.xml

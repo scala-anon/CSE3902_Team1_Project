@@ -21,7 +21,7 @@ public class Game1 : Game
     public int enemy_index = 0;
     public int enviroment_index = 0;
     private IEnemy[] Enemies = new IEnemy[2];
-    private IObject[] Objects = new IObject[7];
+    private IObject[] Objects = new IObject[17];
     // TODO: Replace with your game's sprite management
     private ISprite _currentSprite;
     private List<IController> _controllerList;
@@ -93,6 +93,28 @@ public class Game1 : Game
         Objects[5] = FloorSpike;
         IObject CeilingSpike = new CeilingSpike();
         Objects[6] = CeilingSpike;
+        IObject TutorialPlatform1 = new Tutorial_Platform_1();
+        Objects[7] = TutorialPlatform1;
+        IObject TutorialPlatfrom2 = new Tutorial_Platform_2();
+        Objects[8] = TutorialPlatfrom2;
+        IObject TutorialPlatfrom3 = new Tutorial_Platform_3();
+        Objects[9] = TutorialPlatfrom3;
+        IObject TutorialPlatfrom4 = new Tutorial_Platform_4();
+        Objects[10] = TutorialPlatfrom4;
+        IObject TutorialPlatfrom5 = new Tutorial_Platform_5();
+        Objects[11] = TutorialPlatfrom5;
+
+        IObject TutorialPlatform6 = new Tutorial_Platform_6();
+        Objects[12] = TutorialPlatform6;
+        IObject TutorialPlatfrom7 = new Tutorial_Platform_7();
+        Objects[13] = TutorialPlatfrom7;
+        IObject TutorialPlatfrom8 = new Tutorial_Platform_8();
+        Objects[14] = TutorialPlatfrom8;
+        IObject TutorialPlatfrom9 = new Tutorial_Platform_9();
+        Objects[15] = TutorialPlatfrom9;
+        IObject TutorialPlatfrom10 = new Tutorial_Platform_10();
+        Objects[16] = TutorialPlatfrom10;
+
     }
     public void loadEnemies()
     {

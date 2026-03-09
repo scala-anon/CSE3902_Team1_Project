@@ -13,6 +13,5 @@
         <Region name="Tutorial_Platform_8" x="1200" y="8" width="105" height="62" />
         <Region name="Tutorial_Platform_9" x="1320" y="8" width="110" height="62" />
         <Region name="Tutorial_Platform_10" x="1442" y="6" width="174" height="70" />
-    	
 	</Regions>
 </TextureAtlas>
