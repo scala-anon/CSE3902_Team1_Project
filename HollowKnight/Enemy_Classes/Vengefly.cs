@@ -4,7 +4,7 @@ using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class Vengefly : IEnemy
+public class Vengefly : IEnemy, ICollidable
 {
     public int state = 0;
     public bool dead;
@@ -32,6 +32,19 @@ public class Vengefly : IEnemy
 
     public void SetKnightPosition(Vector2 knightPosition) => this.knightPosition = knightPosition;
     public float GetDetectionRadius() => stateMachine.GetDetectionRadius();
+    public bool IsActive => true;
+    public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, VengeFly.Width, VengeFly.Height);
+
+    public void changeDirection()
+    {
+        stateMachine.ChangeDirection();
+    }
+
+
+    public void changeMovingState()
+    {
+        stateMachine.ChangeMovingState();
+    }
 
     public void ChangeHealth()
     {

@@ -8,14 +8,14 @@ using HollowKnight.Collision;
 
 namespace HollowKnight.Player
 {
-    public class TheKnight : IHollowKnight
+    public class TheKnight : IHollowKnight, ICollidable
     {
         private Dictionary<KnightSpriteType, ISprite> sprites;
         private ISprite currentSprite;
         private KnightSpriteType currentState;
 
         public Direction Facing { get; private set; } = Direction.Right;
-        private Vector2 position;
+        public Vector2 position;
         private Vector2 velocity;
 
         private float moveSpeed = 200f;
@@ -46,6 +46,10 @@ namespace HollowKnight.Player
         private int health = 5;
         private int maxHealth = 9;
 
+        public bool IsActive => true;
+        public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, currentSprite.Width, currentSprite.Height);
+        public float VelocityY => velocity.Y;
+
         public TheKnight(Dictionary<KnightSpriteType, ISprite> sprites, Vector2 position)
         {
             this.sprites = sprites;
@@ -62,27 +66,9 @@ namespace HollowKnight.Player
         public void Update(GameTime gameTime)
         {
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
+            
             velocity.Y += gravity * dt;
             position += velocity * dt;
-
-            float groundY = 570f;
-
-            // Checks to see if Knight is in air or grounded
-            if (position.Y >= groundY)
-            {
-                position.Y = groundY;
-                velocity.Y = 0;
-                isGrounded = true;
-                if (isHealing || isDamaged)
-                {
-                    velocity.X = 0;
-                }
-            }
-            else
-            {
-                isGrounded = false;
-            }
 
             // Checks to see if Knight has been damaged
             if (isDamaged)
@@ -222,6 +208,11 @@ namespace HollowKnight.Player
         public void StopMovingVertical()
         {
             velocity.Y = 0;
+        }
+        public void Land()
+        {
+            velocity.Y = 0;
+            isGrounded = true;
         }
         public void SideSlash()
         {

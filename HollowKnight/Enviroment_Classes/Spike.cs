@@ -4,11 +4,13 @@ using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class Spike : IObject
+public class Spike : IObject, ICollidable
 {
     public ISprite Sprite;
 
     public Vector2 position;
+    public bool IsActive => true;
+    public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, Sprite.Width, Sprite.Height);
 
     public Spike()
     {

@@ -5,7 +5,7 @@ using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class Crawlid : IEnemy
+public class Crawlid : IEnemy, ICollidable
 {
     public int state = 0;
 
@@ -27,6 +27,8 @@ public class Crawlid : IEnemy
         CrawlidSprite = SpriteFactory.Instance.CreateCrawlidIdleSprite(position);
         stateMachine = new CrawlidStateMachine(this);
     }
+    public bool IsActive => true;
+    public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, Sprite.Width, Sprite.Height);
 
     // Crawlid does not react to the knight — required by IEnemy interface
     public void SetKnightPosition(Vector2 knightPosition) { }

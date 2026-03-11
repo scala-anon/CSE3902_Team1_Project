@@ -37,5 +37,7 @@ namespace HollowKnight.Interfaces
         Vector2 GetPosition();
 
         Vector2 GetSize();
+        int Width { get; }
+        int Height { get; }
     }
 }
