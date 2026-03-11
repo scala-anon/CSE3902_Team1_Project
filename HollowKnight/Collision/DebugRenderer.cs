@@ -19,6 +19,7 @@ namespace HollowKnight.Collision
         public static readonly Color ColorEnvironment = Color.LimeGreen;
         public static readonly Color ColorTrigger     = Color.Yellow;
         public static readonly Color ColorMidpoint    = Color.Magenta;
+        public static readonly Color ColorSword       = Color.Cyan;
 
         /// <summary>
         /// Creates the internal 1x1 pixel texture.

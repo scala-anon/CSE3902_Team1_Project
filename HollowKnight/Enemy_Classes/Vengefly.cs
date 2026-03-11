@@ -12,6 +12,10 @@ public class Vengefly : IEnemy, ICollidable
     public bool left;
     public bool knightFound;
 
+    private bool _isDamaged;
+    private double _damagedTimer;
+    private const double DamagedDuration = 0.4;
+
     //TODO change this default knight position to something more reasonable
     public Vector2 knightPosition = new Vector2(-9999, -9999);
 
@@ -33,8 +37,8 @@ public class Vengefly : IEnemy, ICollidable
     public void SetKnightPosition(Vector2 knightPosition) => this.knightPosition = knightPosition;
     public float GetDetectionRadius() => stateMachine.GetDetectionRadius();
     public bool IsActive => true;
-    public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, VengeFly.Width, VengeFly.Height);
-
+    public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, VengeflySprite.Width, VengeflySprite.Height);
+/*
     public void changeDirection()
     {
         stateMachine.ChangeDirection();
@@ -45,10 +49,18 @@ public class Vengefly : IEnemy, ICollidable
     {
         stateMachine.ChangeMovingState();
     }
-
+*/
     public void ChangeHealth()
     {
         stateMachine.changeHealth();
+    }
+
+    public void TakeDamage()
+    {
+        if (_isDamaged) return;
+        _isDamaged = true;
+        _damagedTimer = 0;
+        ChangeHealth();
     }
 
     public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects)
@@ -58,6 +70,16 @@ public class Vengefly : IEnemy, ICollidable
 
     public void Update(GameTime _gameTime)
     {
+        if (_isDamaged)
+        {
+            _damagedTimer += _gameTime.ElapsedGameTime.TotalSeconds;
+            if (_damagedTimer >= DamagedDuration)
+            {
+                _isDamaged = false;
+                _damagedTimer = 0;
+            }
+        }
+
         stateMachine.Update(_gameTime);
         VengeflySprite.Update(_gameTime);
     }

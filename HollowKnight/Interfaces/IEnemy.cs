@@ -13,4 +13,6 @@ public interface IEnemy : ICollidable
     void SetKnightPosition(Vector2 knightPosition); // Enemies need to know where knight is
 
     float GetDetectionRadius(); //Detection radius for different enemy states
+
+    void TakeDamage();
 }

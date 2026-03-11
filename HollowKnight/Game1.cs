@@ -74,7 +74,7 @@ public class Game1 : Game
         Vector2 centerPosition = new Vector2(_screenWidth / 2, _screenHeight / 2);
 
         loadEnemies();
-        loadEnviroment();
+        //loadEnviroment();
         
         _pixel = new Texture2D(GraphicsDevice, 1, 1);
         _pixel.SetData(new[] { Color.White });
@@ -85,12 +85,21 @@ public class Game1 : Game
         _collisionHandler = new CollisionHandler();
         DebugRenderer.Initialize(GraphicsDevice);
         DebugRenderer.LoadFont(Content.Load<SpriteFont>("fonts/Credits"));
+        
         // Touching any enemy damages the knight
         foreach (CollisionSide side in new[] { CollisionSide.Left, CollisionSide.Right, CollisionSide.Top, CollisionSide.Bottom })
         {
             _collisionHandler.Register<Crawlid, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
             _collisionHandler.Register<Vengefly, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
         }
+        
+        //Sword touching enemy damages enemy
+        foreach (CollisionSide side in new[] { CollisionSide.Left, CollisionSide.Right, CollisionSide.Top, CollisionSide.Bottom })
+        {
+            _collisionHandler.Register<SwordHitbox, Crawlid>(side, (a, b) => ((Crawlid)b).TakeDamage());
+            _collisionHandler.Register<SwordHitbox, Vengefly>(side, (a, b) => ((Vengefly)b).TakeDamage());
+        }
+
         _projectileSpawner = new ProjectileSpawner(_projectileManager);
         _knightProjectile = new KnightProjectile(_knight, _projectileSpawner);
 
@@ -174,6 +183,15 @@ public class Game1 : Game
             _collisionHandler.HandleCollision(enemy, _knight, side);
         }
 
+        SwordHitbox swordHitbox = _knight.GetSwordHitbox();
+        if (swordHitbox != null)        {
+            foreach (IEnemy enemy in Enemies)
+            {
+                CollisionSide side = CollisionDetector.Detect(swordHitbox, enemy);
+                _collisionHandler.HandleCollision(swordHitbox, enemy, side);
+            }
+        }
+
 
         foreach (IEnemy enemy in Enemies)
             enemy.Update(gameTime);
@@ -254,6 +272,12 @@ public class Game1 : Game
         DebugRenderer.DrawBounds(_spriteBatch, _knight, DebugRenderer.ColorKnight);
         DebugRenderer.DrawPoint(_spriteBatch, _knight.GetBounds().Center.ToVector2(), DebugRenderer.ColorMidpoint);
         DrawRectangleOutline(_knight.Bounds, Color.LimeGreen);
+
+        SwordHitbox swordHitbox = _knight.GetSwordHitbox();
+        if (swordHitbox != null)
+        {
+            DebugRenderer.DrawBounds(_spriteBatch, swordHitbox, DebugRenderer.ColorSword);
+        }
 
         foreach (var p in _projectileManager.All)
         {

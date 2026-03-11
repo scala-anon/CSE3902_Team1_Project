@@ -159,6 +159,17 @@ namespace HollowKnight.Player
         {
             Console.WriteLine("Camera Move Down");
         }
+        public void TakeDamage()
+        {
+            TakeDamage(CollisionSide.None);
+        }
+
+        public SwordHitbox GetSwordHitbox()
+        {
+            if (!isAttacking) return null;
+            return new SwordHitbox(GetBounds(), Facing, attackType);
+        }
+
         public void TakeDamage(CollisionSide side)
         {
             if (isDamaged) return;
