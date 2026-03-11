@@ -194,7 +194,7 @@ namespace HollowKnight.Factories
 
         public ISprite CreatePath_1Sprite(Vector2 position)
         {
-            return new StaticSprite(platformSpriteSheet, platformFrames["Path_1"], position, 2.0f);
+            return new StaticSprite(platformSpriteSheet, platformFrames["Path_1"], position, 1.0f);
         }
 
         public ISprite CreatePath_2Sprite(Vector2 position)

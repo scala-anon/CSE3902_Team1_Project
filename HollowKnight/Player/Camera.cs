@@ -1,0 +1,41 @@
+using Microsoft.Xna.Framework;
+
+namespace HollowKnight
+{
+    public class Camera
+    {
+        private Vector2 position;
+        private readonly int _screenWidth;
+        private readonly int _screenHeight;
+        private readonly int _levelWidth;
+        private readonly int _levelHeight;
+
+        public Camera(int screenWidth, int screenHeight, int levelWidth, int levelHeight)
+        {
+            _screenWidth = screenWidth;
+            _screenHeight = screenHeight;
+            _levelWidth = levelWidth;
+            _levelHeight = levelHeight;
+        }
+
+        public Matrix GetTransform()
+        {
+            // so everything on screen goes to the left when moving right
+            return Matrix.CreateTranslation(-position.X, -position.Y,0);
+        }
+
+        // TODO: fix knight movement speed so that camera isn't as slow.
+        public void Follow(Vector2 target)
+        {
+            // puts target at center of screen
+            float x = target.X - _screenWidth /2f;
+            float y = target.Y - _screenHeight /2f;
+
+            // makes sure that the range for the camera is valid
+            x = MathHelper.Clamp(x,0,_levelWidth - _screenWidth);
+            y = MathHelper.Clamp(y,0, _levelHeight - _screenHeight);
+
+            position = new Vector2(x,y);
+        }
+    }
+}

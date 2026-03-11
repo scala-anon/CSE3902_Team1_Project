@@ -6,19 +6,30 @@
 <Item>
     <ObjectType>Knight</ObjectType>
     <ObjectName>Knight</ObjectName>
-    <Location>160 400</Location>
+    <Location>100 590</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Path_1</ObjectName>
-    <Location>0 670</Location>
+    <Location>0 600</Location>
+</Item>
+
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Vengefly</ObjectName>
+    <Location>500 400</Location>
+</Item>
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Crawlid</ObjectName>
+    <Location>100 400</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Path_1</ObjectName>
-    <Location>960 670</Location>
+    <Location>850 600</Location>
 </Item>
 
 <Item>
@@ -32,3 +43,4 @@
     <ObjectName>Tutorial_Platform_8</ObjectName>
     <Location>2124 499</Location>
 </Item>
+</Level>

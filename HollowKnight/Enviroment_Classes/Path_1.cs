@@ -13,6 +13,11 @@ public class Path_1 : IObject
     {
         Sprite = SpriteFactory.Instance.CreatePath_1Sprite(position);
     }
+    public Path_1(Vector2 Pos)
+    {
+        position = Pos;
+        Sprite = SpriteFactory.Instance.CreatePath_1Sprite(position);
+    }
 
 
     public void Update(GameTime _gameTime)

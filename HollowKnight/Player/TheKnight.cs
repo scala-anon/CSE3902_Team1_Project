@@ -61,8 +61,8 @@ namespace HollowKnight.Player
 
             velocity.Y += gravity * dt;
             position += velocity * dt;
-
-            float groundY = 400f;
+            // TODO: Should refactor so that is based on the spawn
+            float groundY = 480f;
 
             // Checks to see if Knight is in air or grounded
             if (position.Y >= groundY)
@@ -272,5 +272,8 @@ namespace HollowKnight.Player
             healApplied = false;
             healTimer = 0;
         }
+        // TODO: PUT at top
+        public Vector2 GetPosition() => position;
     }
 }
+

@@ -15,6 +15,12 @@ public class Path_3 : IObject
         Sprite = SpriteFactory.Instance.CreatePath_Stone_3Sprite(position);
     }
 
+    public Path_3(Vector2 pos)
+    {
+        position = pos;
+        Sprite = SpriteFactory.Instance.CreatePath_Stone_3Sprite(position);
+    }
+
     public void Update(GameTime _gameTime)
     {
         Sprite.Update(_gameTime);

@@ -15,6 +15,12 @@ public class Spike : IObject
         Sprite = SpriteFactory.Instance.CreateSpikeSprite(position);
     }
 
+     public Spike(Vector2 pos)
+    {
+        position = pos;
+        Sprite = SpriteFactory.Instance.CreateSpikeSprite(position);
+    }
+
     public void Update(GameTime _gameTime)
     {
         Sprite.Update(_gameTime);

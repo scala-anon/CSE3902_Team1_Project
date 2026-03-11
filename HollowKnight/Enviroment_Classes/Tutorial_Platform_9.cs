@@ -14,6 +14,12 @@ public class Tutorial_Platform_9: IObject
         Sprite = SpriteFactory.Instance.CreateTutorial_Platform_9Sprite(position);
     }
 
+    public Tutorial_Platform_9(Vector2 pos)
+    {
+        position = pos;
+        Sprite = SpriteFactory.Instance.CreateTutorial_Platform_9Sprite(position);
+    }
+
 
     public void Update(GameTime _gameTime)
     {

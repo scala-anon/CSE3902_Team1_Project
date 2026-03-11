@@ -16,6 +16,12 @@ public class Path_2 : IObject
         Sprite = SpriteFactory.Instance.CreatePath_2Sprite(position);
     }
 
+    public Path_2(Vector2 pos)
+    {
+        position = pos;
+        Sprite = SpriteFactory.Instance.CreatePath_2Sprite(position);
+    }
+
     public void Update(GameTime _gameTime)
     {
         Sprite.Update(_gameTime);

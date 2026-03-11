@@ -14,6 +14,12 @@ public class FloorSpike : IObject
         Sprite = SpriteFactory.Instance.CreateSpikeFloor2Sprite(position);
     }
 
+    public FloorSpike(Vector2 pos)
+    {
+        position = pos;
+        Sprite = SpriteFactory.Instance.CreateSpikeFloor2Sprite(position);
+    }
+
     public void Update(GameTime _gameTime)
     {
         Sprite.Update(_gameTime);

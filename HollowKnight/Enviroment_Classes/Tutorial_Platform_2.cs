@@ -14,6 +14,11 @@ public class Tutorial_Platform_2: IObject
         Sprite = SpriteFactory.Instance.CreateTutorial_Platform_2Sprite(position);
     }
 
+    public Tutorial_Platform_2(Vector2 pos)
+    {
+        position = pos;
+        Sprite = SpriteFactory.Instance.CreateTutorial_Platform_2Sprite(position);
+    }
 
     public void Update(GameTime _gameTime)
     {

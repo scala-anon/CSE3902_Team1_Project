@@ -15,6 +15,11 @@ public class Path_ledge : IObject
     {
         sprite = SpriteFactory.Instance.CreatePath_LedgeSprite(position);
     }
+     public Path_ledge(Vector2 pos)
+    {
+        position = pos;
+        sprite = SpriteFactory.Instance.CreatePath_LedgeSprite(position);
+    }
 
     public void Update(GameTime _gameTime)
     {
