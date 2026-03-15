@@ -26,11 +26,14 @@ public class VengeflyStateMachine
 
     public void changeHealth()
     {
-        CurrentVengeFly.dead = !CurrentVengeFly.dead;
+        CurrentVengeFly.health--;
+        if (CurrentVengeFly.health <= 0)
+            CurrentVengeFly.dead = true;
     }
 
     public void Update(GameTime _gameTime)
     {
+        if (CurrentVengeFly.dead || CurrentVengeFly.IsDamaged) return;
         float elapsedTime = (float)_gameTime.ElapsedGameTime.TotalSeconds;
         Vector2 enemyCenter = CurrentVengeFly.GetBounds().Center.ToVector2();
         float distanceFromKnight = Vector2.Distance(enemyCenter, CurrentVengeFly.knightPosition);

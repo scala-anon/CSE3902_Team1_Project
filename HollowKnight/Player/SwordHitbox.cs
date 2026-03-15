@@ -13,6 +13,8 @@ namespace HollowKnight.Player
       _hitbox = ComputeBounds(knightBounds, facing, attackType);  
     }
 
+    public Rectangle Bounds => _hitbox;
+    public bool IsActive => true;
     public Rectangle GetBounds() => _hitbox;
 
     //TODO: fix the values to fit sword frames
@@ -23,23 +25,24 @@ namespace HollowKnight.Player
       int xOffset = 0;
       int yOffset = 0;
 
+      // TODO: updated hardcoded values 
       switch (attackType)
       {
         case KnightSpriteType.SideSlash:
-          width = 30;
-          height = 20;
+          width = 60;
+          height = 90;
           xOffset = facing == Direction.Right ? knightBounds.Width : -width;
-          yOffset = 10;
+          yOffset = (knightBounds.Height-height)/2;
           break;
         case KnightSpriteType.UpSlash:
-          width = 20;
-          height = 30;
+          width = 75;
+          height = 75;
           xOffset = (knightBounds.Width - width) / 2;
           yOffset = -height;
           break;
         case KnightSpriteType.DownSlash:
-          width = 20;
-          height = 30;
+          width = 75;
+          height = 75;
           xOffset = (knightBounds.Width - width) / 2;
           yOffset = knightBounds.Height;
           break;

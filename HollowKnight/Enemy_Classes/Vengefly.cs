@@ -1,10 +1,11 @@
 
 using HollowKnight.Factories;
 using HollowKnight.Interfaces;
+using HollowKnight.Collision;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class Vengefly : IEnemy, ICollidable
+public class Vengefly : IEnemy, HollowKnight.Interfaces.ICollidable
 {
     public int state = 0;
     public bool dead;
@@ -12,9 +13,16 @@ public class Vengefly : IEnemy, ICollidable
     public bool left;
     public bool knightFound;
 
+    public int health = 2;
+    public bool IsDamaged => _isDamaged;
+
     private bool _isDamaged;
     private double _damagedTimer;
     private const double DamagedDuration = 0.4;
+
+    private Vector2 _knockbackVelocity;
+    private const float KnockbackSpeed = 300f;
+    private const float KnockbackDecay = 8f;
 
     //TODO change this default knight position to something more reasonable
     public Vector2 knightPosition = new Vector2(-9999, -9999);
@@ -55,12 +63,21 @@ public class Vengefly : IEnemy, ICollidable
         stateMachine.changeHealth();
     }
 
-    public void TakeDamage()
+    public void TakeDamage() => TakeDamage(CollisionSide.None);
+
+    public void TakeDamage(CollisionSide side)
     {
         if (_isDamaged) return;
         _isDamaged = true;
         _damagedTimer = 0;
         ChangeHealth();
+        switch (side)
+        {
+            case CollisionSide.Left:   _knockbackVelocity = new Vector2(-KnockbackSpeed, -150f); break;
+            case CollisionSide.Right:  _knockbackVelocity = new Vector2( KnockbackSpeed, -150f); break;
+            case CollisionSide.Top:    _knockbackVelocity = new Vector2(0, -KnockbackSpeed); break;
+            case CollisionSide.Bottom: _knockbackVelocity = new Vector2(0,  KnockbackSpeed); break;
+        }
     }
 
     public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects)
@@ -70,9 +87,11 @@ public class Vengefly : IEnemy, ICollidable
 
     public void Update(GameTime _gameTime)
     {
+        float dt = (float)_gameTime.ElapsedGameTime.TotalSeconds;
+
         if (_isDamaged)
         {
-            _damagedTimer += _gameTime.ElapsedGameTime.TotalSeconds;
+            _damagedTimer += dt;
             if (_damagedTimer >= DamagedDuration)
             {
                 _isDamaged = false;
@@ -80,7 +99,16 @@ public class Vengefly : IEnemy, ICollidable
             }
         }
 
+        if (_knockbackVelocity != Vector2.Zero)
+        {
+            position += _knockbackVelocity * dt;
+            _knockbackVelocity *= (1f - KnockbackDecay * dt);
+            if (_knockbackVelocity.Length() < 1f)
+                _knockbackVelocity = Vector2.Zero;
+        }
+
         stateMachine.Update(_gameTime);
+        VengeflySprite.SetPosition(position);
         VengeflySprite.Update(_gameTime);
     }
 

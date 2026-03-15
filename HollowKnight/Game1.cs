@@ -10,6 +10,7 @@ using HollowKnight.Collision;
 using System.Collections.Generic;
 using System.IO;
 using HollowKnight.Pathfinding;
+using IHCCollidable = HollowKnight.Collision.ICollidable;
 
 namespace HollowKnight;
 
@@ -25,7 +26,7 @@ public class Game1 : Game
     public int enemy_index = 0;
     public int enviroment_index = 0;
     private IEnemy[] Enemies = new IEnemy[2];
-    // private IObject[] Objects = new IObject[7]; UPDATE commented out to test enemies only
+    private IObject[] Objects = new IObject[0];
     // TODO: Replace with your game's sprite management
     private ISprite _currentSprite;
     private List<IController> _controllerList;
@@ -75,7 +76,7 @@ public class Game1 : Game
 
         loadEnemies();
         //loadEnviroment();
-        
+
         _pixel = new Texture2D(GraphicsDevice, 1, 1);
         _pixel.SetData(new[] { Color.White });
 
@@ -85,19 +86,19 @@ public class Game1 : Game
         _collisionHandler = new CollisionHandler();
         DebugRenderer.Initialize(GraphicsDevice);
         DebugRenderer.LoadFont(Content.Load<SpriteFont>("fonts/Credits"));
-        
+
         // Touching any enemy damages the knight
         foreach (CollisionSide side in new[] { CollisionSide.Left, CollisionSide.Right, CollisionSide.Top, CollisionSide.Bottom })
         {
             _collisionHandler.Register<Crawlid, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
             _collisionHandler.Register<Vengefly, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
         }
-        
+
         //Sword touching enemy damages enemy
         foreach (CollisionSide side in new[] { CollisionSide.Left, CollisionSide.Right, CollisionSide.Top, CollisionSide.Bottom })
         {
-            _collisionHandler.Register<SwordHitbox, Crawlid>(side, (a, b) => ((Crawlid)b).TakeDamage());
-            _collisionHandler.Register<SwordHitbox, Vengefly>(side, (a, b) => ((Vengefly)b).TakeDamage());
+            _collisionHandler.Register<SwordHitbox, Crawlid>(side, (a, b) => ((Crawlid)b).TakeDamage(side));
+            _collisionHandler.Register<SwordHitbox, Vengefly>(side, (a, b) => ((Vengefly)b).TakeDamage(side));
         }
 
         _projectileSpawner = new ProjectileSpawner(_projectileManager);
@@ -133,7 +134,7 @@ public class Game1 : Game
     {
         IEnemy vengefly_1 = new Vengefly(new Vector2(0, 150)); //TODO: change this hardcoded position
         Enemies[0] = vengefly_1;
-        IEnemy crawlid_1 = new Crawlid(new Vector2(850, _screenHeight-83)); //TODO: change this hardcorded position
+        IEnemy crawlid_1 = new Crawlid(new Vector2(850, _screenHeight - 83)); //TODO: change this hardcorded position
         Enemies[1] = crawlid_1;
     }
 
@@ -165,6 +166,17 @@ public class Game1 : Game
         }
 
         _knight.Update(gameTime);
+
+        // Screen floor boundary (keeps knight in-bounds while environment is not loaded)
+        Rectangle kb = _knight.GetBounds();
+        if (kb.Bottom >= _screenHeight)
+        {
+            _knight.position.Y = _screenHeight - kb.Height;
+            _knight.Land();
+        }
+        if (_knight.position.X < 0) _knight.position.X = 0;
+        if (kb.Right > _screenWidth) _knight.position.X = _screenWidth - kb.Width;
+
         Vector2 knightPosition = _knight.GetBounds().Center.ToVector2(); //use center of knight for enemy detection
 
 
@@ -184,7 +196,8 @@ public class Game1 : Game
         }
 
         SwordHitbox swordHitbox = _knight.GetSwordHitbox();
-        if (swordHitbox != null)        {
+        if (swordHitbox != null)
+        {
             foreach (IEnemy enemy in Enemies)
             {
                 CollisionSide side = CollisionDetector.Detect(swordHitbox, enemy);
@@ -200,12 +213,6 @@ public class Game1 : Game
             obj.Update(gameTime);
         */
         _knightProjectile.Update(gameTime);
-        
-        for (int i = 0; i < Enemies.Length; i++)
-        {
-            if (Enemies[i] != null)
-                Enemies[i].Update(gameTime);
-        }
 
         for (int i = 0; i < Objects.Length; i++)
         {
@@ -215,15 +222,15 @@ public class Game1 : Game
 
         for (int i = 0; i < Objects.Length; i++)
         {
-            if (Objects[i] is ICollidable block)
-                CollisionManager.ResolvePlayerBlockCollision(_knight, block);
+            if (Objects[i] is HollowKnight.Collision.ICollidable blockObj)
+                CollisionManager.ResolvePlayerBlockCollision(_knight, blockObj);
         }
 
         _projectileManager.Update(gameTime);
 
-        ICollidable player = _knight;
-        ICollidable[] enemyCollidables = CollisionGroupBuilder.GetCollidables(Enemies);
-        ICollidable[] blockCollidables = CollisionGroupBuilder.GetCollidables(Objects);
+        IHCCollidable player = _knight;
+        IHCCollidable[] enemyCollidables = CollisionGroupBuilder.GetCollidables(Enemies);
+        IHCCollidable[] blockCollidables = CollisionGroupBuilder.GetCollidables(Objects);
 
         CollisionManager.ResolveProjectileCollisions(
             _projectileManager,
@@ -284,18 +291,9 @@ public class Game1 : Game
             DrawRectangleOutline(p.Bounds, Color.Red);
         }
 
-        for (int i = 0; i < Enemies.Length; i++)
-        {
-            if (Enemies[i] is ICollidable enemy)
-            {
-                Enemies[i].Draw(_spriteBatch, SpriteEffects.None);
-                DrawRectangleOutline(enemy.Bounds, Color.Yellow);
-            }
-        }
-
         for (int i = 0; i < Objects.Length; i++)
         {
-            if (Objects[i] is ICollidable obj)
+            if (Objects[i] is IHCCollidable obj)
             {
                 Objects[i].Draw(_spriteBatch, SpriteEffects.None);
                 DrawRectangleOutline(obj.Bounds, Color.Blue);

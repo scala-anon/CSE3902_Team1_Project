@@ -2,10 +2,11 @@
 using HollowKnight.Factories;
 using HollowKnight.Interfaces;
 using HollowKnight.Shared;
+using HollowKnight.Collision;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class Crawlid : IEnemy, ICollidable
+public class Crawlid : IEnemy, HollowKnight.Interfaces.ICollidable
 {
     public int state = 0;
 
@@ -13,11 +14,17 @@ public class Crawlid : IEnemy, ICollidable
 
     public ISprite CrawlidSprite;
 
-    public bool alive;
+    public bool alive = true;
+    public int health = 2;
+    public bool IsDamaged => _isDamaged;
 
     private bool _isDamaged;
     private double _damagedTimer;
     private const double DamagedDuration = 0.4;
+
+    private Vector2 _knockbackVelocity;
+    private const float KnockbackSpeed = 300f;
+    private const float KnockbackDecay = 8f;
 
     public Vector2 position;
 
@@ -27,7 +34,6 @@ public class Crawlid : IEnemy, ICollidable
     public Crawlid(Vector2 _position)
     {
         position = _position;
-        alive = true;
         CrawlidSprite = SpriteFactory.Instance.CreateCrawlidIdleSprite(position);
         stateMachine = new CrawlidStateMachine(this);
     }
@@ -43,12 +49,21 @@ public class Crawlid : IEnemy, ICollidable
         stateMachine.ChangeHealth();
     }
 
-    public void TakeDamage()
+    public void TakeDamage() => TakeDamage(CollisionSide.None);
+
+    public void TakeDamage(CollisionSide side)
     {
-        if(_isDamaged) return;
+        if (_isDamaged) return;
         _isDamaged = true;
         _damagedTimer = 0;
         ChangeHealth();
+        switch (side)
+        {
+            case CollisionSide.Left:   _knockbackVelocity = new Vector2(-KnockbackSpeed, -150f); break;
+            case CollisionSide.Right:  _knockbackVelocity = new Vector2( KnockbackSpeed, -150f); break;
+            case CollisionSide.Top:    _knockbackVelocity = new Vector2(0, -KnockbackSpeed); break;
+            case CollisionSide.Bottom: _knockbackVelocity = new Vector2(0,  KnockbackSpeed); break;
+        }
     }
 
     public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects)
@@ -73,10 +88,11 @@ public class Crawlid : IEnemy, ICollidable
 
     public void Update(GameTime _gameTime)
     {
+        float dt = (float)_gameTime.ElapsedGameTime.TotalSeconds;
 
         if (_isDamaged)
         {
-            _damagedTimer += (float) _gameTime.ElapsedGameTime.TotalSeconds;
+            _damagedTimer += dt;
             if (_damagedTimer >= DamagedDuration)
             {
                 _isDamaged = false;
@@ -84,7 +100,16 @@ public class Crawlid : IEnemy, ICollidable
             }
         }
 
+        if (_knockbackVelocity != Vector2.Zero)
+        {
+            position += _knockbackVelocity * dt;
+            _knockbackVelocity *= (1f - KnockbackDecay * dt);
+            if (_knockbackVelocity.Length() < 1f)
+                _knockbackVelocity = Vector2.Zero;
+        }
+
         stateMachine.Update(_gameTime);
+        CrawlidSprite.SetPosition(position);
         CrawlidSprite.Update(_gameTime);
     }
 }

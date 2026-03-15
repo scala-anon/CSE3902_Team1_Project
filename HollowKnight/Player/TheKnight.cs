@@ -8,7 +8,7 @@ using HollowKnight.Collision;
 
 namespace HollowKnight.Player
 {
-    public class TheKnight : IHollowKnight, ICollidable
+    public class TheKnight : IHollowKnight
     {
         private Dictionary<KnightSpriteType, ISprite> sprites;
         private ISprite currentSprite;

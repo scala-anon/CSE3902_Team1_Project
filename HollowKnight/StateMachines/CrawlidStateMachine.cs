@@ -16,11 +16,14 @@ public class CrawlidStateMachine
 
     public void ChangeHealth()
     {
-        CurrentCrawlid.alive = !CurrentCrawlid.alive;
+        CurrentCrawlid.health--;
+        if (CurrentCrawlid.health <= 0)
+            CurrentCrawlid.alive = false;
     }
 
     public void Update(GameTime _gameTime)
     {
+        if (!CurrentCrawlid.alive || CurrentCrawlid.IsDamaged) return;
         // TODO: Add wall/edge detection to trigger Turn state while patrolling
         float elapsedTime = (float)_gameTime.ElapsedGameTime.TotalSeconds;
 

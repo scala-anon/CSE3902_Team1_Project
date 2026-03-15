@@ -15,4 +15,5 @@ public interface IEnemy : ICollidable
     float GetDetectionRadius(); //Detection radius for different enemy states
 
     void TakeDamage();
+    void TakeDamage(CollisionSide side);
 }
