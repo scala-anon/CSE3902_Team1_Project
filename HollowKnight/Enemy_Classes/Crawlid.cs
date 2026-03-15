@@ -25,6 +25,10 @@ public class Crawlid : IEnemy, HollowKnight.Interfaces.ICollidable
     private Vector2 _knockbackVelocity;
     private const float KnockbackSpeed = 300f;
     private const float KnockbackDecay = 8f;
+    private const float DeathGravity = 600f;
+    private const float ScreenFloor = 720f;
+
+    public bool IsGrounded { get; private set; } = true;
 
     public Vector2 position;
 
@@ -56,7 +60,8 @@ public class Crawlid : IEnemy, HollowKnight.Interfaces.ICollidable
         if (_isDamaged) return;
         _isDamaged = true;
         _damagedTimer = 0;
-        ChangeHealth();
+
+        // Set knockback and grounded state before ChangeHealth so death sprite picks correctly
         switch (side)
         {
             case CollisionSide.Left:   _knockbackVelocity = new Vector2(-KnockbackSpeed, -150f); break;
@@ -64,6 +69,9 @@ public class Crawlid : IEnemy, HollowKnight.Interfaces.ICollidable
             case CollisionSide.Top:    _knockbackVelocity = new Vector2(0, -KnockbackSpeed); break;
             case CollisionSide.Bottom: _knockbackVelocity = new Vector2(0,  KnockbackSpeed); break;
         }
+        if (_knockbackVelocity.Y < 0) IsGrounded = false;
+
+        ChangeHealth();
     }
 
     public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects)
@@ -89,6 +97,28 @@ public class Crawlid : IEnemy, HollowKnight.Interfaces.ICollidable
     public void Update(GameTime _gameTime)
     {
         float dt = (float)_gameTime.ElapsedGameTime.TotalSeconds;
+
+        if (!alive)
+        {
+            if (!IsGrounded)
+            {
+                _knockbackVelocity.Y += DeathGravity * dt;
+                position += _knockbackVelocity * dt;
+
+                float spriteHeight = CrawlidSprite.GetSize().Y;
+                if (position.Y + spriteHeight >= ScreenFloor)
+                {
+                    position.Y = ScreenFloor - spriteHeight;
+                    _knockbackVelocity = Vector2.Zero;
+                    IsGrounded = true;
+                    state = 3;
+                    CrawlidSprite = SpriteFactory.Instance.CreateCrawlidDeathLandSprite(position);
+                }
+            }
+            CrawlidSprite.SetPosition(position);
+            CrawlidSprite.Update(_gameTime);
+            return;
+        }
 
         if (_isDamaged)
         {

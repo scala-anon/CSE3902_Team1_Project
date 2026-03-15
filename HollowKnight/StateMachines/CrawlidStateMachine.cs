@@ -19,6 +19,7 @@ public class CrawlidStateMachine
         CurrentCrawlid.health--;
         if (CurrentCrawlid.health <= 0)
             CurrentCrawlid.alive = false;
+            
     }
 
     public void Update(GameTime _gameTime)

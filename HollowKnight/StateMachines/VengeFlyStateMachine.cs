@@ -29,6 +29,8 @@ public class VengeflyStateMachine
         CurrentVengeFly.health--;
         if (CurrentVengeFly.health <= 0)
             CurrentVengeFly.dead = true;
+            CurrentVengeFly.state = 3;
+            CurrentVengeFly.VengeflySprite = SpriteFactory.Instance.CreateVengeflyDeathSprite(CurrentVengeFly.position);
     }
 
     public void Update(GameTime _gameTime)
