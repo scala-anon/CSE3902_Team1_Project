@@ -25,7 +25,7 @@ namespace HollowKnight.Player
 
         private bool isDamaged;
         private double damagedTimer;
-        private double damagedDuration = 1.0;
+        private double invincibilityDuration = 1.3; //same as actual game base stats
         private float knockbackSpeed = 250f;
         private float knockbackUpwards = -300f; //negative for upwards
 
@@ -75,7 +75,7 @@ namespace HollowKnight.Player
             {
                 damagedTimer += gameTime.ElapsedGameTime.TotalSeconds;
 
-                if (damagedTimer >= damagedDuration)
+                if (damagedTimer >= invincibilityDuration)
                 {
                     isDamaged = false;
                     damagedTimer = 0;
