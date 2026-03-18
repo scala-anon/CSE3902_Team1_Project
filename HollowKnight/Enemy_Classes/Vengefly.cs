@@ -13,7 +13,7 @@ public class Vengefly : IEnemy, HollowKnight.Interfaces.ICollidable
     public bool left;
     public bool knightFound;
 
-    public int health = 5;
+    public int health = 3;
     public bool IsDamaged => _isDamaged;
 
     private bool _isDamaged;
