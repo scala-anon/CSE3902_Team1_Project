@@ -191,6 +191,7 @@ public class Game1 : Game
         foreach (IEnemy enemy in Enemies)
         {
             enemy.SetKnightPosition(knightPosition);
+            if (!enemy.IsActive) continue;
             CollisionSide side = CollisionDetector.Detect(enemy, _knight);
             _collisionHandler.HandleCollision(enemy, _knight, side);
         }
@@ -200,6 +201,7 @@ public class Game1 : Game
         {
             foreach (IEnemy enemy in Enemies)
             {
+                if (!enemy.IsActive) continue;
                 CollisionSide side = CollisionDetector.Detect(swordHitbox, enemy);
                 _collisionHandler.HandleCollision(swordHitbox, enemy, side);
             }
@@ -279,6 +281,13 @@ public class Game1 : Game
         DebugRenderer.DrawBounds(_spriteBatch, _knight, DebugRenderer.ColorKnight);
         DebugRenderer.DrawPoint(_spriteBatch, _knight.GetBounds().Center.ToVector2(), DebugRenderer.ColorMidpoint);
         DrawRectangleOutline(_knight.Bounds, Color.LimeGreen);
+
+        DebugRenderer.DrawStateLabel(_spriteBatch, _knight, _knight.GetStateName(), DebugRenderer.ColorKnight);
+        
+        string atkText = $"Attack CoolDown: {_knight.GetAttackCooldownRemaining():F2}s";
+        string invText = $"Invincibility CoolDown: {_knight.GetInvincibilityCooldownRemaining():F2}s";
+        DebugRenderer.DrawText(_spriteBatch, atkText, new Vector2(10, 10), Color.White);
+        DebugRenderer.DrawText(_spriteBatch, invText, new Vector2(10, 30), Color.White);
 
         SwordHitbox swordHitbox = _knight.GetSwordHitbox();
         if (swordHitbox != null)

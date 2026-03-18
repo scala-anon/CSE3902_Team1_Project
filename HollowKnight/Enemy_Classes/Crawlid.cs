@@ -1,4 +1,4 @@
-
+using System;
 using HollowKnight.Factories;
 using HollowKnight.Interfaces;
 using HollowKnight.Shared;
@@ -15,7 +15,7 @@ public class Crawlid : IEnemy, HollowKnight.Interfaces.ICollidable
     public ISprite CrawlidSprite;
 
     public bool alive = true;
-    public int health = 3; //TODO: edit this back to 2 or 3
+    public int health = 3;
 
     public bool IsDamaged => _isDamaged;
 
@@ -30,6 +30,7 @@ public class Crawlid : IEnemy, HollowKnight.Interfaces.ICollidable
     private const float ScreenFloor = 720f;
 
     public bool IsGrounded { get; private set; } = true;
+    public bool IsActive => alive;
 
     public Vector2 position;
 
@@ -42,7 +43,7 @@ public class Crawlid : IEnemy, HollowKnight.Interfaces.ICollidable
         CrawlidSprite = SpriteFactory.Instance.CreateCrawlidIdleSprite(position);
         stateMachine = new CrawlidStateMachine(this);
     }
-    public bool IsActive => true;
+    
     public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, CrawlidSprite.Width, CrawlidSprite.Height);
 
     // Crawlid does not react to the knight — required by IEnemy interface
@@ -104,6 +105,9 @@ public class Crawlid : IEnemy, HollowKnight.Interfaces.ICollidable
             if (!IsGrounded)
             {
                 _knockbackVelocity.Y += DeathGravity * dt;
+                _knockbackVelocity.X *= (1f - KnockbackDecay * dt);
+                if (Math.Abs(_knockbackVelocity.X) < 1f) _knockbackVelocity.X = 0;
+                
                 position += _knockbackVelocity * dt;
 
                 float spriteHeight = CrawlidSprite.GetSize().Y;

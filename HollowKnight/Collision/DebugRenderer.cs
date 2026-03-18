@@ -44,6 +44,12 @@ namespace HollowKnight.Collision
             spriteBatch.DrawString(_font, label, new Vector2(bounds.Left, bounds.Top -16 ), Color.White); //16 for offset above hitbox
         }
 
+        public static void DrawText(SpriteBatch spriteBatch, string text, Vector2 position, Color color)
+        {
+            if (!hitboxEnabled || _font == null) return;
+            spriteBatch.DrawString(_font, text, position, color);
+        }
+
 
         // Draws the bounding box of a single ICollidable object.
         public static void DrawBounds(SpriteBatch spriteBatch, ICollidable obj, Color color)

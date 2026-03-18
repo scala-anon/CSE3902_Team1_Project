@@ -73,17 +73,20 @@ public class VengeflyStateMachine
         if (CurrentVengeFly.state == 0)
         {
             CurrentVengeFly.position.X += (_patrolDirection == Direction.Right ? PatrolSpeed : -PatrolSpeed) * elapsedTime;
+            CurrentVengeFly.facingDirection = _patrolDirection;
             float spriteWidth = CurrentVengeFly.VengeflySprite.GetSize().X;
 
             if (CurrentVengeFly.position.X + spriteWidth >= 1280)
             {
                 CurrentVengeFly.position.X = 1280 - spriteWidth;
                 _patrolDirection = Direction.Left;
+                CurrentVengeFly.facingDirection = Direction.Left;
             }
             else if (CurrentVengeFly.position.X <= 0)
             {
                 CurrentVengeFly.position.X = 0;
                 _patrolDirection = Direction.Right;
+                CurrentVengeFly.facingDirection = Direction.Right;
             }
         }
         else if (CurrentVengeFly.state == 2)
@@ -93,6 +96,10 @@ public class VengeflyStateMachine
             {
                 dir.Normalize();
                 CurrentVengeFly.position += dir * ChaseSpeed * elapsedTime;
+                if (dir.X > 0)
+                    CurrentVengeFly.facingDirection = Direction.Right;
+                else if (dir.X < 0)
+                    CurrentVengeFly.facingDirection = Direction.Left;
             }
         }
 

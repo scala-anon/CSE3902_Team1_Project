@@ -145,6 +145,12 @@ namespace HollowKnight.Player
             return new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
         }
 
+        public string GetStateName() => currentState.ToString();
+        
+        public double GetAttackCooldownRemaining() => isAttackOnCooldown ? Math.Max(0, attackCooldown - attackCooldownTimer) : 0;
+
+        public double GetInvincibilityCooldownRemaining() => isDamaged ? Math.Max(0, invincibilityDuration - damagedTimer) : 0;
+
         public void Draw(SpriteBatch spriteBatch)
         {
             SpriteEffects effects = (Facing == Direction.Right)

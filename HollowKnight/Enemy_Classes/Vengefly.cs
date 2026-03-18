@@ -1,6 +1,7 @@
-
+using System;
 using HollowKnight.Factories;
 using HollowKnight.Interfaces;
+using HollowKnight.Shared;
 using HollowKnight.Collision;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,7 +11,7 @@ public class Vengefly : IEnemy, HollowKnight.Interfaces.ICollidable
     public int state = 0;
     public bool dead;
     public bool startleAnimationPlayed;
-    public bool left;
+    public Direction facingDirection = Direction.Left;
     public bool knightFound;
 
     public int health = 3;
@@ -23,6 +24,9 @@ public class Vengefly : IEnemy, HollowKnight.Interfaces.ICollidable
     private Vector2 _knockbackVelocity;
     private const float KnockbackSpeed = 950f;
     private const float KnockbackDecay = 8f;
+    private const float DeathGravity = 600f; 
+    private const float ScreenFloor = 720f; //TODO: change this to be based on the map instead of hardcoded
+    public bool IsGrounded { get; private set; } = false;
 
     //TODO change this default knight position to something more reasonable
     public Vector2 knightPosition = new Vector2(-9999, -9999);
@@ -37,14 +41,14 @@ public class Vengefly : IEnemy, HollowKnight.Interfaces.ICollidable
         dead = false;
         startleAnimationPlayed = true;
         knightFound = false;
-        left = true;
+        facingDirection = Direction.Left;
         VengeflySprite = SpriteFactory.Instance.CreateVengeflyIdleSprite(position);
         stateMachine = new VengeflyStateMachine(this);
     }
 
     public void SetKnightPosition(Vector2 knightPosition) => this.knightPosition = knightPosition;
     public float GetDetectionRadius() => stateMachine.GetDetectionRadius();
-    public bool IsActive => true;
+    public bool IsActive => !dead;
     public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, VengeflySprite.Width, VengeflySprite.Height);
     /*
         public void changeDirection()
@@ -82,12 +86,39 @@ public class Vengefly : IEnemy, HollowKnight.Interfaces.ICollidable
 
     public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects)
     {
-        VengeflySprite.Draw(_spriteBatch, _spriteEffects);
+        SpriteEffects effects = facingDirection == Direction.Right ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+        VengeflySprite.Draw(_spriteBatch, effects);
     }
 
     public void Update(GameTime _gameTime)
     {
         float dt = (float)_gameTime.ElapsedGameTime.TotalSeconds;
+
+        //death gravity 
+        //TODO: change this to be based on the map instead of hardcoded
+        if (dead)
+        {
+            if (!IsGrounded)
+            {
+                _knockbackVelocity.Y += DeathGravity * dt;
+                _knockbackVelocity.X *= (1f - KnockbackDecay * dt);
+                if (Math.Abs(_knockbackVelocity.X) < 1f) _knockbackVelocity.X = 0;
+                
+                position += _knockbackVelocity * dt;
+
+                float spriteHeight = VengeflySprite.GetSize().Y;
+                if (position.Y + spriteHeight >= ScreenFloor)
+                {
+                    position.Y = ScreenFloor - spriteHeight;
+                    _knockbackVelocity = Vector2.Zero;
+                    IsGrounded = true;
+                }
+            }
+            
+            VengeflySprite.SetPosition(position);
+            VengeflySprite.Update(_gameTime);
+            return;
+        }
 
         if (_isDamaged)
         {
