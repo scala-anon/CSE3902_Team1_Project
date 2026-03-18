@@ -13,7 +13,7 @@ public class Vengefly : IEnemy, HollowKnight.Interfaces.ICollidable
     public bool left;
     public bool knightFound;
 
-    public int health = 2;
+    public int health = 5;
     public bool IsDamaged => _isDamaged;
 
     private bool _isDamaged;
@@ -21,7 +21,7 @@ public class Vengefly : IEnemy, HollowKnight.Interfaces.ICollidable
     private const double DamagedDuration = 0.4;
 
     private Vector2 _knockbackVelocity;
-    private const float KnockbackSpeed = 300f;
+    private const float KnockbackSpeed = 950f;
     private const float KnockbackDecay = 8f;
 
     //TODO change this default knight position to something more reasonable
@@ -46,18 +46,18 @@ public class Vengefly : IEnemy, HollowKnight.Interfaces.ICollidable
     public float GetDetectionRadius() => stateMachine.GetDetectionRadius();
     public bool IsActive => true;
     public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, VengeflySprite.Width, VengeflySprite.Height);
-/*
-    public void changeDirection()
-    {
-        stateMachine.ChangeDirection();
-    }
+    /*
+        public void changeDirection()
+        {
+            stateMachine.ChangeDirection();
+        }
 
 
-    public void changeMovingState()
-    {
-        stateMachine.ChangeMovingState();
-    }
-*/
+        public void changeMovingState()
+        {
+            stateMachine.ChangeMovingState();
+        }
+    */
     public void ChangeHealth()
     {
         stateMachine.changeHealth();
@@ -69,15 +69,15 @@ public class Vengefly : IEnemy, HollowKnight.Interfaces.ICollidable
     {
         if (_isDamaged) return;
         _isDamaged = true;
-        _damagedTimer = 0;
-        ChangeHealth();
+        _damagedTimer = 0;  
         switch (side)
         {
-            case CollisionSide.Left:   _knockbackVelocity = new Vector2(-KnockbackSpeed, -150f); break;
-            case CollisionSide.Right:  _knockbackVelocity = new Vector2( KnockbackSpeed, -150f); break;
-            case CollisionSide.Top:    _knockbackVelocity = new Vector2(0, -KnockbackSpeed); break;
-            case CollisionSide.Bottom: _knockbackVelocity = new Vector2(0,  KnockbackSpeed); break;
+            case CollisionSide.Left: _knockbackVelocity = new Vector2(-KnockbackSpeed, -150f); break;
+            case CollisionSide.Right: _knockbackVelocity = new Vector2(KnockbackSpeed, -150f); break;
+            case CollisionSide.Top: _knockbackVelocity = new Vector2(0, -KnockbackSpeed); break;
+            case CollisionSide.Bottom: _knockbackVelocity = new Vector2(0, KnockbackSpeed); break;
         }
+        ChangeHealth();
     }
 
     public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects)

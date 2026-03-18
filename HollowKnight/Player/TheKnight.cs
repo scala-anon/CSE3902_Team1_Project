@@ -35,6 +35,9 @@ namespace HollowKnight.Player
         private bool isAttacking;
         private double attackTimer;
         private double attackDuration = 0.25;
+        private double attackCooldown = 0.41;
+        private double attackCooldownTimer = 0;
+        private bool isAttackOnCooldown = false;
 
         private bool isHealing;
         private bool healApplied;
@@ -66,7 +69,7 @@ namespace HollowKnight.Player
         public void Update(GameTime gameTime)
         {
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            
+
             velocity.Y += gravity * dt;
             position += velocity * dt;
 
@@ -90,6 +93,16 @@ namespace HollowKnight.Player
                 {
                     isAttacking = false;
                     attackTimer = 0;
+                }
+            }
+
+            if (isAttackOnCooldown)
+            {
+                attackCooldownTimer += gameTime.ElapsedGameTime.TotalSeconds;
+                if (attackCooldownTimer >= attackCooldown)
+                {
+                    isAttackOnCooldown = false;
+                    attackCooldownTimer = 0;
                 }
             }
 
@@ -227,24 +240,32 @@ namespace HollowKnight.Player
         }
         public void SideSlash()
         {
+            if (!CanAttack()) return;
             CancelHeal();
             attackType = KnightSpriteType.SideSlash;
-            isAttacking = true;
-            attackTimer = 0;
+            StartAttack();
         }
         public void UpSlash()
         {
+            if (!CanAttack()) return;
             CancelHeal();
             attackType = KnightSpriteType.UpSlash;
-            isAttacking = true;
-            attackTimer = 0;
+            StartAttack();
         }
         public void DownSlash()
         {
+            if (!CanAttack()) return;
             CancelHeal();
             attackType = KnightSpriteType.DownSlash;
+            StartAttack();
+        }
+        private bool CanAttack() => !isAttackOnCooldown;
+        private void StartAttack()
+        {
             isAttacking = true;
             attackTimer = 0;
+            isAttackOnCooldown = true;
+            attackCooldownTimer = 0;
         }
         public void StartHeal()
         {

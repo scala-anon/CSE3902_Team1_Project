@@ -15,7 +15,8 @@ public class Crawlid : IEnemy, HollowKnight.Interfaces.ICollidable
     public ISprite CrawlidSprite;
 
     public bool alive = true;
-    public int health = 2;
+    public int health = 3; //TODO: edit this back to 2 or 3
+
     public bool IsDamaged => _isDamaged;
 
     private bool _isDamaged;
@@ -23,7 +24,7 @@ public class Crawlid : IEnemy, HollowKnight.Interfaces.ICollidable
     private const double DamagedDuration = 0.4;
 
     private Vector2 _knockbackVelocity;
-    private const float KnockbackSpeed = 300f;
+    private const float KnockbackSpeed = 950f; //TODO: edit this to make it closer to the actual game
     private const float KnockbackDecay = 8f;
     private const float DeathGravity = 600f;
     private const float ScreenFloor = 720f;
@@ -64,10 +65,10 @@ public class Crawlid : IEnemy, HollowKnight.Interfaces.ICollidable
         // Set knockback and grounded state before ChangeHealth so death sprite picks correctly
         switch (side)
         {
-            case CollisionSide.Left:   _knockbackVelocity = new Vector2(-KnockbackSpeed, -150f); break;
-            case CollisionSide.Right:  _knockbackVelocity = new Vector2( KnockbackSpeed, -150f); break;
-            case CollisionSide.Top:    _knockbackVelocity = new Vector2(0, -KnockbackSpeed); break;
-            case CollisionSide.Bottom: _knockbackVelocity = new Vector2(0,  KnockbackSpeed); break;
+            case CollisionSide.Left: _knockbackVelocity = new Vector2(-KnockbackSpeed, 0f); break;
+            case CollisionSide.Right: _knockbackVelocity = new Vector2(KnockbackSpeed, 0f); break;
+            case CollisionSide.Top: _knockbackVelocity = new Vector2(0, 0f); break; //no vertical knockback
+            case CollisionSide.Bottom: _knockbackVelocity = new Vector2(0, 0f); break; //no vertical knockback, should not be possible to be hit from the bottom
         }
         if (_knockbackVelocity.Y < 0) IsGrounded = false;
 
