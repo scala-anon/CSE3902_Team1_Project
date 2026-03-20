@@ -26,23 +26,24 @@ namespace HollowKnight.Player
       int yOffset = 0;
 
       // TODO: updated hardcoded values 
+      // TODO: update width & heights to be more accurate
       switch (attackType)
       {
         case KnightSpriteType.SideSlash:
-          width = 60;
-          height = 90;
+          width = 160; //prev. 60
+          height = 110; //prev 90
           xOffset = facing == Direction.Right ? knightBounds.Width : -width;
           yOffset = (knightBounds.Height-height)/2;
           break;
         case KnightSpriteType.UpSlash:
-          width = 75;
-          height = 75;
+          width = 90; //prev 75
+          height = 120; //prev 75
           xOffset = (knightBounds.Width - width) / 2;
           yOffset = -height;
           break;
         case KnightSpriteType.DownSlash:
-          width = 75;
-          height = 75;
+          width = 90; //prev75
+          height = 120; //prev 75
           xOffset = (knightBounds.Width - width) / 2;
           yOffset = knightBounds.Height;
           break;

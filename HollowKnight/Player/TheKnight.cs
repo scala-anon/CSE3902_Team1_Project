@@ -143,19 +143,26 @@ namespace HollowKnight.Player
             currentSprite.SetPosition(position);
             currentSprite.Update(gameTime);
 
+            // TODO: update slasheffect position to be relative to the knight
+            // TODO: update the positioning to use const variables instead of hardcoded
             if(isSlashEffectActive && slashEffect != null){
                 Vector2 slashPosition = position;
                 Vector2 knightSize = currentSprite.GetSize();
                 
                 switch(attackType) {
                     case KnightSpriteType.SideSlash:
-                        slashPosition.X += Facing == Direction.Right ? knightSize.X : -slashEffect.Width;
+                        slashPosition.X += Facing == Direction.Right
+                            ? knightSize.X - knightSize.X / 7
+                            : -slashEffect.Width + knightSize.X / 5;
+                        slashPosition.Y += knightSize.Y / 10;
                         break;
                     case KnightSpriteType.UpSlash:
-                        slashPosition.Y += Facing == Direction.Right ? knightSize.Y : -slashEffect.Height;
+                        slashPosition.X += (knightSize.X - slashEffect.Width) / 2;
+                        slashPosition.Y -= slashEffect.Height - knightSize.Y / 4;
                         break;
                     case KnightSpriteType.DownSlash:
-                        slashPosition.Y += Facing == Direction.Right ? knightSize.Y : -slashEffect.Height;
+                        slashPosition.X += (knightSize.X - slashEffect.Width) / 2 - knightSize.X / 10;
+                        slashPosition.Y += knightSize.Y - knightSize.Y / 3;
                         break;
                 }
                 slashEffect.SetPosition(slashPosition);
