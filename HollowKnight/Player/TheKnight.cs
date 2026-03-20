@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using HollowKnight.Shared;
 using HollowKnight.Collision;
+using HollowKnight.Factories;
 
 namespace HollowKnight.Player
 {
@@ -35,14 +36,16 @@ namespace HollowKnight.Player
         private bool isAttacking;
         private double attackTimer;
         private double attackDuration = 0.25;
-        private double attackCooldown = 0.41;
+        private double attackCooldown = 0.41; //TODO: change this so it reflects closer to the game
         private double attackCooldownTimer = 0;
         private bool isAttackOnCooldown = false;
+
+        private ISprite slashEffect;
+        private bool isSlashEffectActive;
 
         private bool isHealing;
         private bool healApplied;
         private double healTimer;
-
         private double healPrepDuration = 0.6;
         private double healPostDuration = 0.2;
 
@@ -90,9 +93,11 @@ namespace HollowKnight.Player
             {
                 attackTimer += gameTime.ElapsedGameTime.TotalSeconds;
                 if (attackTimer >= attackDuration)
-                {
+                {   
                     isAttacking = false;
                     attackTimer = 0;
+                    isSlashEffectActive = false;
+                    slashEffect = null;
                 }
             }
 
@@ -137,6 +142,25 @@ namespace HollowKnight.Player
             currentSprite = sprites[currentState];
             currentSprite.SetPosition(position);
             currentSprite.Update(gameTime);
+
+            if(isSlashEffectActive && slashEffect != null){
+                Vector2 slashPosition = position;
+                Vector2 knightSize = currentSprite.GetSize();
+                
+                switch(attackType) {
+                    case KnightSpriteType.SideSlash:
+                        slashPosition.X += Facing == Direction.Right ? knightSize.X : -slashEffect.Width;
+                        break;
+                    case KnightSpriteType.UpSlash:
+                        slashPosition.Y += Facing == Direction.Right ? knightSize.Y : -slashEffect.Height;
+                        break;
+                    case KnightSpriteType.DownSlash:
+                        slashPosition.Y += Facing == Direction.Right ? knightSize.Y : -slashEffect.Height;
+                        break;
+                }
+                slashEffect.SetPosition(slashPosition);
+                slashEffect.Update(gameTime);
+            }
         }
         // TODO: Tune width/height to match the actual scaled sprite size
         public Rectangle GetBounds()
@@ -157,6 +181,13 @@ namespace HollowKnight.Player
                 ? SpriteEffects.None
                 : SpriteEffects.FlipHorizontally;
             currentSprite.Draw(spriteBatch, effects);
+
+            if(isSlashEffectActive && slashEffect != null) {
+                SpriteEffects slashEffects = (Facing == Direction.Right)
+                    ? SpriteEffects.None
+                    : SpriteEffects.FlipHorizontally;
+                slashEffect.Draw(spriteBatch, slashEffects);
+            }
         }
         public void MoveRight()
         {
@@ -266,13 +297,28 @@ namespace HollowKnight.Player
             StartAttack();
         }
         private bool CanAttack() => !isAttackOnCooldown;
+        
         private void StartAttack()
         {
             isAttacking = true;
             attackTimer = 0;
             isAttackOnCooldown = true;
             attackCooldownTimer = 0;
+
+            isSlashEffectActive = true;
+            switch(attackType){
+                case KnightSpriteType.SideSlash:
+                    slashEffect = SpriteFactory.Instance.CreateSideSlashEffect(position);
+                    break;
+                case KnightSpriteType.UpSlash:
+                    slashEffect = SpriteFactory.Instance.CreateUpSlashEffect(position);
+                    break;
+                case KnightSpriteType.DownSlash:
+                    slashEffect = SpriteFactory.Instance.CreateDownSlashEffect(position);
+                    break;
+            }
         }
+        
         public void StartHeal()
         {
             if (isAttacking || !isGrounded)
@@ -286,6 +332,7 @@ namespace HollowKnight.Player
                 velocity.X = 0;
             }
         }
+        
         public void CancelHeal()
         {
             if (!isHealing)
@@ -295,6 +342,7 @@ namespace HollowKnight.Player
             healApplied = false;
             healTimer = 0;
         }
+        
         public void UpdateHeal(GameTime gameTime)
         {
             if (!isHealing)

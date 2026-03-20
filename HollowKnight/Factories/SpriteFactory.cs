@@ -20,7 +20,6 @@ namespace HollowKnight.Factories
         private Texture2D spellsSpriteSheet;
 
 
-
         private SpriteFont defaultFont; //not used yet, will use later on
 
         private readonly Dictionary<string, Rectangle> knightSingleFrames;
@@ -70,6 +69,7 @@ namespace HollowKnight.Factories
             // Loading Atlases
             TextureAtlas knightAtlas = TextureAtlas.FromFile(content, "sprites/knight_movement-atlas.xml");
             TextureAtlas knightAttacksAtlas = TextureAtlas.FromFile(content, "sprites/knight_abilities-atlas.xml");
+
             TextureAtlas SpiritAttacksAtlas = TextureAtlas.FromFile(content, "sprites/spirit-atlas.xml");
             TextureAtlas enemyAtlas = TextureAtlas.FromFile(content, "sprites/enemy-atlas.xml");
             TextureAtlas platformAtlas = TextureAtlas.FromFile(content, "sprites/platform-atlas.xml");
@@ -94,6 +94,11 @@ namespace HollowKnight.Factories
             knightAnimations.Add("HealPrep", knightAttacksAtlas.GetAnimationFrames("HealPrep"));
             knightAnimations.Add("HealPost", knightAttacksAtlas.GetAnimationFrames("HealPost"));
             knightAnimations.Add("SpiritCast", knightAttacksAtlas.GetAnimationFrames("SpiritCast"));
+
+            //Slash effect animations (also from knight_abilities-atlas.xml)
+            knightAnimations.Add("SideSlash", knightAttacksAtlas.GetAnimationFrames("SideSlash"));
+            knightAnimations.Add("UpSlash", knightAttacksAtlas.GetAnimationFrames("UpSlash"));
+            knightAnimations.Add("DownSlash", knightAttacksAtlas.GetAnimationFrames("DownSlash"));
 
             //From spirit-atlas.xml
             spiritSingleFrames.Add("SpiritInitial", SpiritAttacksAtlas.GetRegion("SpiritInitial").SourceRectangle);
@@ -191,6 +196,21 @@ namespace HollowKnight.Factories
         public ISprite CreateKnightDownSwordSprite(Vector2 position)
         {
             return new AnimatedSprite(knightVarietySheet, knightAnimations["DownSword"], position, 0.1, 1.0f);
+        }
+
+        public ISprite CreateSideSlashEffect(Vector2 position)
+        {
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["SideSlash"], position, 0.08, 1.0f);
+        }
+
+        public ISprite CreateUpSlashEffect(Vector2 position)
+        {
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["UpSlash"], position, 0.08, 1.0f);
+        }
+
+        public ISprite CreateDownSlashEffect(Vector2 position)
+        {
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["DownSlash"], position, 0.08, 1.0f);
         }
 
         public ISprite CreateKnightHealPrepSprite(Vector2 position)
