@@ -198,12 +198,14 @@ namespace HollowKnight.Player
         }
         public void MoveRight()
         {
+            if (isAttacking) return;
             CancelHeal();
             Facing = Direction.Right;
             velocity.X = moveSpeed;
         }
         public void MoveLeft()
         {
+            if (isAttacking) return;
             CancelHeal();
             Facing = Direction.Left;
             velocity.X = -moveSpeed;
@@ -298,7 +300,7 @@ namespace HollowKnight.Player
         }
         public void DownSlash()
         {
-            if (!CanAttack()) return;
+            if (!CanAttack() || isGrounded) return;
             CancelHeal();
             attackType = KnightSpriteType.DownSlash;
             StartAttack();
