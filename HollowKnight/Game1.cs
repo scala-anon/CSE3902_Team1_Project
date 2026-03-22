@@ -72,7 +72,6 @@ public class Game1 : Game
 
         _navigationGrid ??= new NavigationGrid(_screenWidth, _screenHeight, GraphicsDevice, cellSize: 12);
 
-
         Vector2 centerPosition = new Vector2(_screenWidth / 2, _screenHeight / 2);
 
         loadEnemies();
@@ -85,24 +84,17 @@ public class Game1 : Game
         
         _pixel = new Texture2D(GraphicsDevice, 1, 1);
         _pixel.SetData(new[] { Color.White });
-        
 
         var sprites = KnightSpriteBuilder.BuildKnightSprites(centerPosition);
         _knight = new TheKnight(sprites, centerPosition);
 
         _collisionHandler = new CollisionHandler();
-        DebugRenderer.Initialize(GraphicsDevice);
-        DebugRenderer.LoadFont(Content.Load<SpriteFont>("fonts/Credits"));
-        // Touching any enemy damages the knight
+
         foreach (CollisionSide side in new[] { CollisionSide.Left, CollisionSide.Right, CollisionSide.Top, CollisionSide.Bottom })
         {
             _collisionHandler.Register<Crawlid, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage());
             _collisionHandler.Register<Vengefly, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage());
         }
-
-        
-        
-        
         
         foreach (CollisionSide side in new[] { CollisionSide.Left, CollisionSide.Right, CollisionSide.Top, CollisionSide.Bottom })
         {
@@ -110,14 +102,24 @@ public class Game1 : Game
             
         }
 
+        foreach (CollisionSide side in new[] { CollisionSide.Left, CollisionSide.Right, CollisionSide.Top, CollisionSide.Bottom})
+        {
+            _collisionHandler.Register<Path_1, TheKnight>(side,(a, b) => CollisionResponse.ResolvePlayerBlockCollision((TheKnight)b, (ICollidable)a));
+            _collisionHandler.Register<Path_2, TheKnight>(side,(a, b) => CollisionResponse.ResolvePlayerBlockCollision((TheKnight)b, (ICollidable)a));
+            _collisionHandler.Register<Path_3, TheKnight>(side,(a, b) => CollisionResponse.ResolvePlayerBlockCollision((TheKnight)b, (ICollidable)a));
+            _collisionHandler.Register<Path_ledge, TheKnight>(side,(a, b) => CollisionResponse.ResolvePlayerBlockCollision((TheKnight)b, (ICollidable)a));
+            _collisionHandler.Register<FloorSpike, TheKnight>(side,(a, b) => CollisionResponse.ResolvePlayerBlockCollision((TheKnight)b, (ICollidable)a));
+            _collisionHandler.Register<CeilingSpike, TheKnight>(side,(a, b) => CollisionResponse.ResolvePlayerBlockCollision((TheKnight)b, (ICollidable)a));
+            _collisionHandler.Register<Spike, TheKnight>(side,(a, b) => CollisionResponse.ResolvePlayerBlockCollision((TheKnight)b, (ICollidable)a));
+        }
 
+        DebugRenderer.Initialize(GraphicsDevice);
+        DebugRenderer.LoadFont(Content.Load<SpriteFont>("fonts/Credits"));
+    
         // Setup keyboard controller
         KeyboardController keyboard = new KeyboardController();
         KeyboardBindings.BindGameplay(keyboard, _knight, this);
         _controllerList.Add(keyboard);
-
-        
-        
     }
 
     public void loadEnviroment()
@@ -157,6 +159,33 @@ public class Game1 : Game
         _currentSprite = sprite;
     }
 
+    private void HandleProjectileCollisions()
+    {
+        ICollidable[] enemyCollidablesArray = new ICollidable[Enemies.Length];
+        for (int i = 0; i < Enemies.Length; i++)
+        {
+            enemyCollidablesArray[i] = (ICollidable)Enemies[i];
+        }
+
+        ICollidable[] blockCollidablesArray = new ICollidable[Objects.Length];
+        for (int i = 0; i < Objects.Length; i++)
+        {
+            blockCollidablesArray[i] = (ICollidable)Objects[i];
+        }
+
+        CollisionResponse.ResolveProjectileCollisions(
+            _projectileManager,
+            _knight,
+            enemyCollidablesArray,
+            blockCollidablesArray,
+            onPlayerHit: () => _knight.TakeDamage(),
+            onEnemyHit: i =>
+            {
+                
+            }
+        );
+    }
+
     private void DrawRectangleOutline(Rectangle rect, Color color, int thickness = 2)
     {
         _spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Top, rect.Width, thickness), color); // top
@@ -167,7 +196,6 @@ public class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
-        // Update all controllers
         foreach (IController controller in _controllerList)
         {
             controller.Update(gameTime);
@@ -208,65 +236,15 @@ public class Game1 : Game
                 new Projectile(spawn, direction * projectileSpeed, ProjectileFaction.Player)
             );
         }
-        /*
-        for (int i = 0; i < Enemies.Length; i++)
-        {
-            if (Enemies[i] != null)
-                Enemies[i].Update(gameTime);
-        }
-
-        for (int i = 0; i < Objects.Length; i++)
-        {
-            if (Objects[i] != null)
-                Objects[i].Update(gameTime);
-        }
-*/
-        _projectileManager.Update(gameTime);
-
-        //TODO change to ICollidable
-        ICollideTemp player = (ICollideTemp)_knight;
-
-        //TODO change to ICollidable
-        List<ICollideTemp> enemyCollidables = new List<ICollideTemp>();
-        for (int i = 0; i < Enemies.Length; i++)
-        {
-            if (Enemies[i] is ICollideTemp collidableEnemy)
-            {
-                enemyCollidables.Add(collidableEnemy);
-            }
-        }
-        //TODO change to ICollidable
-        List<ICollideTemp> blockCollidables = new List<ICollideTemp>();
-        for (int i = 0; i < Objects.Length; i++)
-        {
-            if (Objects[i] is ICollideTemp collidableObject)
-            {
-                blockCollidables.Add(collidableObject);
-            }
-        }
         
-        //TODO change to ICollidable
-        CollisionManager.ResolveProjectileCollisions(
-            _projectileManager,
-            player,
-            enemyCollidables.ToArray(),
-            blockCollidables.ToArray(),
-            onPlayerHit: () => _knight.TakeDamage(),
-            onEnemyHit: (enemyIndex) =>
-            {
-                // If your enemy has TakeDamage later, call it here.
-                // For now you can mark dead or trigger state machine.
-                // Example (if you add it): ((IDamageable)Enemies[enemyIndex]).TakeDamage(1);
-            }
-        );
-
-        //Check all collisions between knight and objects and handle them
+        _projectileManager.Update(gameTime);
+        HandleProjectileCollisions();
+        
         foreach (IObject obj in Objects)
         {
             CollisionSide side = CollisionDetector.Detect(obj, _knight);
             _collisionHandler.HandleCollision(obj, _knight, side);
         }
-        
         
         foreach (IEnemy enemy in Enemies)
         {
@@ -275,6 +253,12 @@ public class Game1 : Game
             _collisionHandler.HandleCollision(enemy, _knight, side);
         }
 
+        foreach (IPickup item in items){
+            
+            CollisionSide side = CollisionDetector.Detect(item, _knight);
+            _collisionHandler.HandleCollision(item, _knight, side);
+               
+        }
 
         foreach (IEnemy enemy in Enemies){
             enemy.Update(gameTime);
@@ -283,16 +267,6 @@ public class Game1 : Game
         foreach (IObject obj in Objects){
             obj.Update(gameTime);
         }
-        
-        foreach (IPickup item in items){
-            
-            CollisionSide side = CollisionDetector.Detect(item, _knight);
-            _collisionHandler.HandleCollision(item, _knight, side);
-               
-        }
-
-        //Enemies[enemy_index].Update(gameTime);
-        //Objects[enviroment_index].Update(gameTime);
         
         base.Update(gameTime);
     }

@@ -11,6 +11,7 @@ public class Spirit : IPickup
 {
     private SpriteEffects effect;
     private ISprite sprite;
+    public bool IsActive => true;
 
     public bool Collected;
     private Vector2 position;

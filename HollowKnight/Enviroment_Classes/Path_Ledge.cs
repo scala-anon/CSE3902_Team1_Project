@@ -10,6 +10,7 @@ public class Path_ledge : IObject
     public ISprite Sprite;
 
     public Rectangle[] hitBoxes = new Rectangle[1];
+    public bool IsActive => true;
 
     public Vector2 position;
 

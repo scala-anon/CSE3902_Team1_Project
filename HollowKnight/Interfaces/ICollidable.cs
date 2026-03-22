@@ -6,5 +6,6 @@ namespace HollowKnight.Interfaces
     public interface ICollidable
     {
         Rectangle[] GetBounds();
+        bool IsActive { get; }
     }
 }
