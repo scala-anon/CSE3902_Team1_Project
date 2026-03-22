@@ -7,7 +7,7 @@ public class CrawlidStateMachine
 {
     private Crawlid CurrentCrawlid;
 
-    private const float PatrolSpeed = 60f; // TODO: change speed accordingly
+    private const float PatrolSpeed = 120f; // TODO: change speed accordingly
     private Direction _movementDirection = Direction.Right;
     private bool _isTurning = false;
     private float _turnTimer = 0f;

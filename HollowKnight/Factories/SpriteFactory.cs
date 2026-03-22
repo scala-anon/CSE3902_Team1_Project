@@ -175,7 +175,7 @@ namespace HollowKnight.Factories
         }
         public ISprite CreateKnightWalkSprite(Vector2 position)
         {
-            return new AnimatedSprite(knightVarietySheet, knightAnimations["Walking"], position, 0.1, 1.0f);
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["Walking"], position, 0.05, 1.0f); //made walking animation faster
         }
 
         public ISprite CreateKnightJumpSprite(Vector2 position)

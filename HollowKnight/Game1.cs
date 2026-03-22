@@ -26,7 +26,7 @@ public class Game1 : Game
     public int enemy_index = 0;
     public int enviroment_index = 0;
     private IEnemy[] Enemies = new IEnemy[2];
-    private IObject[] Objects = new IObject[0];
+    private IObject[] Objects = new IObject[7];
     // TODO: Replace with your game's sprite management
     private ISprite _currentSprite;
     private List<IController> _controllerList;
@@ -74,8 +74,8 @@ public class Game1 : Game
 
         Vector2 centerPosition = new Vector2(_screenWidth / 2, _screenHeight / 2);
 
+        loadEnviroment();
         loadEnemies();
-        //loadEnviroment();
 
         _pixel = new Texture2D(GraphicsDevice, 1, 1);
         _pixel.SetData(new[] { Color.White });
@@ -111,7 +111,6 @@ public class Game1 : Game
     }
 
 
-    /* UPDATE commented out to test enemies only
     public void loadEnviroment()
     {
         IObject Path_1 = new Path_1();
@@ -129,13 +128,18 @@ public class Game1 : Game
         IObject CeilingSpike = new CeilingSpike();
         Objects[6] = CeilingSpike;
     }
-    */
     public void loadEnemies()
     {
         IEnemy vengefly_1 = new Vengefly(new Vector2(0, 150)); //TODO: change this hardcoded position
         Enemies[0] = vengefly_1;
         IEnemy crawlid_1 = new Crawlid(new Vector2(850, _screenHeight - 83)); //TODO: change this hardcorded position
         Enemies[1] = crawlid_1;
+
+        // Initialize grid obstacles
+        foreach (IObject obj in Objects)
+        {
+            if (obj != null) _navigationGrid.AddObstacle(obj.GetBounds());
+        }
     }
 
     //Not being used (potentially can be removed)
@@ -181,16 +185,16 @@ public class Game1 : Game
 
 
         //Check all collisions between knight and objects and handle them
-        /*UPDATE commented out to test enemies only
         foreach (IObject obj in Objects)
         {
-            CollisionSide side = CollisionDetector.Detect(obj, _knight);
+            if (obj == null) continue;
+            CollisionSide side = CollisionDetector.Detect(obj.GetBounds(), _knight.GetBounds());
             _collisionHandler.HandleCollision(obj, _knight, side);
         }
-        */
         foreach (IEnemy enemy in Enemies)
         {
             enemy.SetKnightPosition(knightPosition);
+            enemy.SetNavigationGrid(_navigationGrid);
             if (!enemy.IsActive) continue;
             CollisionSide side = CollisionDetector.Detect(enemy.GetHurtbox(), _knight.GetHurtbox());
             _collisionHandler.HandleCollision(enemy, _knight, side);
@@ -210,10 +214,7 @@ public class Game1 : Game
 
         foreach (IEnemy enemy in Enemies)
             enemy.Update(gameTime);
-        /* UPDATE commented out to test enemies only
-        foreach (IObject obj in Objects)
-            obj.Update(gameTime);
-        */
+
         _knightProjectile.Update(gameTime);
 
         for (int i = 0; i < Objects.Length; i++)
@@ -260,10 +261,8 @@ public class Game1 : Game
         // Draw current sprite
         _knight.Draw(_spriteBatch);
 
-        /* UPDATE commented out to test enemies only
         foreach (IObject obj in Objects)
-            obj.Draw(_spriteBatch, _spriteEffects);
-            */
+            if (obj != null) obj.Draw(_spriteBatch, _spriteEffects);
 
         foreach (IEnemy enemy in Enemies)
         {
@@ -311,10 +310,8 @@ public class Game1 : Game
             }
         }
 
-        /* UPDATE commented out to test enemies only
         foreach (IObject obj in Objects)
-            DebugRenderer.DrawBounds(_spriteBatch, obj, DebugRenderer.ColorEnvironment);
-            */
+            if (obj != null) DebugRenderer.DrawBounds(_spriteBatch, obj, DebugRenderer.ColorEnvironment);
         _spriteBatch.End();
 
         base.Draw(gameTime);

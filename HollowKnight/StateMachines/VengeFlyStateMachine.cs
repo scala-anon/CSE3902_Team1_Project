@@ -2,6 +2,8 @@
 using HollowKnight.Factories;
 using HollowKnight.Interfaces;
 using HollowKnight.Shared;
+using HollowKnight.Pathfinding;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -10,12 +12,17 @@ public class VengeflyStateMachine
     private Vengefly CurrentVengeFly;
 
     private const float DetectionRadius = 500f;
-    private const float PatrolSpeed = 50f;
-    private const float ChaseSpeed = 75f;
+    private const float PatrolSpeed = 75f;
+    private const float ChaseSpeed = 100f;
     private const double StartleDuration = 0.5;
 
     private Direction _patrolDirection = Direction.Right;
     private double _startleTimer = 0;
+    private NavigationGrid _grid;
+    private List<Vector2> _currentPath = new List<Vector2>();
+    private float _pathUpdateTimer = 0f;
+
+    public void SetNavigationGrid(NavigationGrid grid) { _grid = grid; }
 
     public VengeflyStateMachine(Vengefly _vengeFly)
     {
@@ -91,15 +98,48 @@ public class VengeflyStateMachine
         }
         else if (CurrentVengeFly.state == 2)
         {
-            Vector2 dir = CurrentVengeFly.knightPosition - enemyCenter;
-            if (dir != Vector2.Zero)
+            _pathUpdateTimer += elapsedTime;
+            
+            // Recalculate path every 0.3 seconds or if we don't have a path
+            if (_pathUpdateTimer >= 0.3f || _currentPath.Count == 0)
             {
-                dir.Normalize();
-                CurrentVengeFly.position += dir * ChaseSpeed * elapsedTime;
-                if (dir.X > 0)
-                    CurrentVengeFly.facingDirection = Direction.Right;
-                else if (dir.X < 0)
-                    CurrentVengeFly.facingDirection = Direction.Left;
+                _pathUpdateTimer = 0f;
+                if (_grid != null) {
+                    _currentPath = AStarPathFinder.FindPath(_grid, enemyCenter, CurrentVengeFly.knightPosition);
+                }
+            }
+            
+            if (_currentPath.Count > 0)
+            {
+                Vector2 targetWaypoint = _currentPath[0];
+                if (Vector2.Distance(enemyCenter, targetWaypoint) < 10f)
+                {
+                    _currentPath.RemoveAt(0); // reached knight
+                    if (_currentPath.Count > 0) targetWaypoint = _currentPath[0];
+                }
+
+                Vector2 dir = targetWaypoint - enemyCenter;
+                if (dir != Vector2.Zero)
+                {
+                    dir.Normalize();
+                    CurrentVengeFly.position += dir * ChaseSpeed * elapsedTime;
+                    if (dir.X > 0)
+                        CurrentVengeFly.facingDirection = Direction.Right;
+                    else if (dir.X < 0)
+                        CurrentVengeFly.facingDirection = Direction.Left;
+                }
+            } else {
+                 // Fallback to straight line if no path found
+                 Vector2 dir = CurrentVengeFly.knightPosition - enemyCenter;
+                 if (dir != Vector2.Zero)
+                 {
+                    dir.Normalize();
+                    CurrentVengeFly.position += dir * ChaseSpeed * elapsedTime;
+                    if (dir.X > 0)
+                        CurrentVengeFly.facingDirection = Direction.Right;
+                    else if (dir.X < 0)
+                        CurrentVengeFly.facingDirection = Direction.Left;
+                 }
             }
         }
 

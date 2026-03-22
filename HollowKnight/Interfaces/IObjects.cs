@@ -4,7 +4,7 @@ using HollowKnight.Collision;
 
 namespace HollowKnight.Interfaces
 {
-    public interface IObject : ICollidable
+    public interface IObject : HollowKnight.Collision.ICollidable
     {
         public void Update(GameTime _gameTime);
 

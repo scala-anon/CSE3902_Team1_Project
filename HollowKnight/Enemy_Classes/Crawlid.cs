@@ -5,6 +5,7 @@ using HollowKnight.Shared;
 using HollowKnight.Collision;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using HollowKnight.Pathfinding; //not used but required by IEnemy interface
 
 public class Crawlid : IEnemy, HollowKnight.Interfaces.ICollidable
 {
@@ -48,6 +49,7 @@ public class Crawlid : IEnemy, HollowKnight.Interfaces.ICollidable
 
     // Crawlid does not react to the knight — required by IEnemy interface
     public void SetKnightPosition(Vector2 knightPosition) { }
+    public void SetNavigationGrid(NavigationGrid grid) { } //not used but required by IEnemy interface
     public float GetDetectionRadius() => 0f;
 
     public void ChangeHealth()

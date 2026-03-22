@@ -2,7 +2,9 @@ using System;
 using HollowKnight.Factories;
 using HollowKnight.Interfaces;
 using HollowKnight.Shared;
+using HollowKnight.Player;
 using HollowKnight.Collision;
+using HollowKnight.Pathfinding;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -47,6 +49,11 @@ public class Vengefly : IEnemy, HollowKnight.Interfaces.ICollidable
     }
 
     public void SetKnightPosition(Vector2 knightPosition) => this.knightPosition = knightPosition;
+
+    public void SetNavigationGrid(NavigationGrid grid)
+    {
+        stateMachine.SetNavigationGrid(grid);
+    }
     public float GetDetectionRadius() => stateMachine.GetDetectionRadius();
     public bool IsActive => !dead;
     public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, VengeflySprite.Width, VengeflySprite.Height);
