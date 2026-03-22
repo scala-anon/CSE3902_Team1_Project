@@ -91,6 +91,14 @@ public class Crawlid : IEnemy, HollowKnight.Interfaces.ICollidable
         return new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
     }
 
+    //bigger hitbox for enemy collision
+    public Rectangle GetHurtbox()
+    {
+        Rectangle bounds = GetBounds();
+        bounds.Inflate(6, 6);
+        return bounds;
+    }
+
     public string GetStateName()
     {
         return stateMachine.GetStateName();

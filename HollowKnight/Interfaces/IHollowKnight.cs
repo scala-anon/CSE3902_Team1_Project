@@ -19,5 +19,6 @@ namespace HollowKnight.Interfaces
         void SideSlash();
         void UpSlash();
         void DownSlash();
+        Rectangle GetHurtbox();
     }
 }

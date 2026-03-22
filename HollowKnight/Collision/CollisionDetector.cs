@@ -14,9 +14,11 @@ namespace HollowKnight.Collision
         /// </summary>
         public static CollisionSide Detect(ICollidable objectA, ICollidable objectB)
         {
-            Rectangle boundsA = objectA.GetBounds();
-            Rectangle boundsB = objectB.GetBounds();
+            return Detect(objectA.GetBounds(), objectB.GetBounds());
+        }
 
+        public static CollisionSide Detect(Rectangle boundsA, Rectangle boundsB)
+        {
             if (!boundsA.Intersects(boundsB))
             {
                 return CollisionSide.None;

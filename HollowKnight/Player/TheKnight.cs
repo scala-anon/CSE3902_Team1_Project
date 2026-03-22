@@ -176,6 +176,14 @@ namespace HollowKnight.Player
             return new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
         }
 
+        //smaller hitbox for enemy collision
+        public Rectangle GetHurtbox()
+        {
+            Rectangle bounds = GetBounds();
+            bounds.Inflate(-6, -6);
+            return bounds;
+        }
+
         public string GetStateName() => currentState.ToString();
         
         public double GetAttackCooldownRemaining() => isAttackOnCooldown ? Math.Max(0, attackCooldown - attackCooldownTimer) : 0;

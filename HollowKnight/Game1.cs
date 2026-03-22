@@ -192,7 +192,7 @@ public class Game1 : Game
         {
             enemy.SetKnightPosition(knightPosition);
             if (!enemy.IsActive) continue;
-            CollisionSide side = CollisionDetector.Detect(enemy, _knight);
+            CollisionSide side = CollisionDetector.Detect(enemy.GetHurtbox(), _knight.GetHurtbox());
             _collisionHandler.HandleCollision(enemy, _knight, side);
         }
 
@@ -202,7 +202,7 @@ public class Game1 : Game
             foreach (IEnemy enemy in Enemies)
             {
                 if (!enemy.IsActive) continue;
-                CollisionSide side = CollisionDetector.Detect(swordHitbox, enemy);
+                CollisionSide side = CollisionDetector.Detect(swordHitbox.GetBounds(), enemy.GetHurtbox());
                 _collisionHandler.HandleCollision(swordHitbox, enemy, side);
             }
         }
@@ -269,6 +269,7 @@ public class Game1 : Game
         {
             enemy.Draw(_spriteBatch, _spriteEffects);
             DebugRenderer.DrawBounds(_spriteBatch, enemy, DebugRenderer.ColorEnemy);
+            DrawRectangleOutline(enemy.GetHurtbox(), Color.DarkRed); // Show new combat hurtbox
             DebugRenderer.DrawStateLabel(_spriteBatch, enemy, enemy.GetStateName(), DebugRenderer.ColorEnemy);
 
             if (enemy.GetDetectionRadius() > 0)
@@ -281,6 +282,7 @@ public class Game1 : Game
         DebugRenderer.DrawBounds(_spriteBatch, _knight, DebugRenderer.ColorKnight);
         DebugRenderer.DrawPoint(_spriteBatch, _knight.GetBounds().Center.ToVector2(), DebugRenderer.ColorMidpoint);
         DrawRectangleOutline(_knight.Bounds, Color.LimeGreen);
+        DrawRectangleOutline(_knight.GetHurtbox(), Color.DarkRed); // Show new combat hurtbox
 
         DebugRenderer.DrawStateLabel(_spriteBatch, _knight, _knight.GetStateName(), DebugRenderer.ColorKnight);
         
