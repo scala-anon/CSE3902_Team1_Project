@@ -7,6 +7,7 @@ using HollowKnight.Collision;
 using HollowKnight.Pathfinding;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 public class Vengefly : IEnemy, HollowKnight.Interfaces.ICollidable
 {
@@ -53,6 +54,11 @@ public class Vengefly : IEnemy, HollowKnight.Interfaces.ICollidable
     public void SetNavigationGrid(NavigationGrid grid)
     {
         stateMachine.SetNavigationGrid(grid);
+    }
+    
+    public List<Vector2> GetCurrentPath()
+    {
+        return stateMachine.GetCurrentPath();
     }
     public float GetDetectionRadius() => stateMachine.GetDetectionRadius();
     public bool IsActive => !dead;

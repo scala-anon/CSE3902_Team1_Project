@@ -104,6 +104,19 @@ namespace HollowKnight.Collision
             spriteBatch.Draw(_pixel, p1, null, color, angle, Vector2.Zero, new Vector2(length, 1), SpriteEffects.None, 0); 
         }
 
+        public static void DrawPath(SpriteBatch spriteBatch, ICollidable obj, List<Vector2> path, Color lineColor, Color pointColor)
+        {
+            if (!hitboxEnabled || _pixel == null || path == null || path.Count == 0) return;
+
+            Vector2 currentPos = new Vector2(obj.GetBounds().Center.X, obj.GetBounds().Center.Y);
+            foreach (Vector2 waypoint in path)
+            {
+                DrawLine(spriteBatch, currentPos, waypoint, lineColor);
+                DrawPoint(spriteBatch, waypoint, pointColor, 4);
+                currentPos = waypoint;
+            }
+        }
+
 
         private static void DrawHitbox(SpriteBatch spriteBatch, Rectangle rect, Color color)
         {

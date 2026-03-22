@@ -23,6 +23,7 @@ public class VengeflyStateMachine
     private float _pathUpdateTimer = 0f;
 
     public void SetNavigationGrid(NavigationGrid grid) { _grid = grid; }
+    public List<Vector2> GetCurrentPath() { return _currentPath; }
 
     public VengeflyStateMachine(Vengefly _vengeFly)
     {

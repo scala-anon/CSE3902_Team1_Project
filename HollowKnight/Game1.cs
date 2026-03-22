@@ -312,6 +312,14 @@ public class Game1 : Game
 
         foreach (IObject obj in Objects)
             if (obj != null) DebugRenderer.DrawBounds(_spriteBatch, obj, DebugRenderer.ColorEnvironment);
+            
+        // Draw A* Paths
+        foreach (IEnemy enemy in Enemies)
+        {
+            if (enemy == null || !enemy.IsActive) continue;
+            DebugRenderer.DrawPath(_spriteBatch, enemy, enemy.GetCurrentPath(), Color.Yellow, Color.Red);
+        }
+        
         _spriteBatch.End();
 
         base.Draw(gameTime);
