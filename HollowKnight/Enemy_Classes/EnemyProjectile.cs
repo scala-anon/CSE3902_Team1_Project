@@ -1,4 +1,4 @@
-using HollowKnight.Interfaces;
+using HollowKnight.Collision;
 using HollowKnight.Projectiles;
 using Microsoft.Xna.Framework;
 

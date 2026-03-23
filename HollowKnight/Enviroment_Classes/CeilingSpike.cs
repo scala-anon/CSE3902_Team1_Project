@@ -3,7 +3,7 @@ using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class CeilingSpike : IObject, ICollidable
+public class CeilingSpike : IObject
 {
     public ISprite Sprite;
 

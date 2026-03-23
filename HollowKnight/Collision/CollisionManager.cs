@@ -1,4 +1,3 @@
-using HollowKnight.Interfaces;
 using HollowKnight.Projectiles;
 using HollowKnight.Player;
 using Microsoft.Xna.Framework;
