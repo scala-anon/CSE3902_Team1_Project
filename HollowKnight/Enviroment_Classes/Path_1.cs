@@ -8,6 +8,7 @@ public class Path_1 : IObject
     private ISprite Sprite;
 
     public Rectangle[] hitBoxes = new Rectangle[1];
+    public bool IsActive => true;
     public Vector2 position;
 
     public Path_1(Vector2 _position)

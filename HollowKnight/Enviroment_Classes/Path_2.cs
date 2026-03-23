@@ -10,6 +10,7 @@ public class Path_2 : IObject
     private ISprite Sprite;
 
     public Rectangle[] hitBoxes = new Rectangle[1];
+    public bool IsActive => true;
     public Vector2 position = new Vector2(200, 0);
 
     public Path_2(Vector2 _position)

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using HollowKnight.Shared;
 using HollowKnight.Collision;
 
 namespace HollowKnight.Player
 {
-    public class TheKnight : IHollowKnight
+    public class TheKnight : IHollowKnight, ICollidable
     {
         private Dictionary<KnightSpriteType, ISprite> sprites;
         private ISprite currentSprite;
@@ -15,7 +16,7 @@ namespace HollowKnight.Player
 
         public Rectangle[] hitBoxes = new Rectangle[1];
         public Direction Facing { get; private set; } = Direction.Right;
-        private Vector2 position;
+        public Vector2 position;
         private Vector2 velocity;
 
         private float moveSpeed = 200f;
@@ -44,6 +45,12 @@ namespace HollowKnight.Player
         private int health = 5;
         private int maxHealth = 9;
 
+        //TODO change to ICollidable
+        public bool IsActive => true;
+        public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, currentSprite.Width, currentSprite.Height);
+        public float VelocityY => velocity.Y;
+
+
         public TheKnight(Dictionary<KnightSpriteType, ISprite> sprites, Vector2 position)
         {
             this.sprites = sprites;
@@ -63,20 +70,6 @@ namespace HollowKnight.Player
 
             velocity.Y += gravity * dt;
             position += velocity * dt;
-
-            float groundY = 400f;
-
-            // Checks to see if Knight is in air or grounded
-            if (position.Y >= groundY)
-            {
-                position.Y = groundY;
-                velocity.Y = 0;
-                isGrounded = true;
-            }
-            else
-            {
-                isGrounded = false;
-            }
 
             // Checks to see if Knight has been damaged
             if (isDamaged)
@@ -175,6 +168,7 @@ namespace HollowKnight.Player
         }
         public void TakeDamage()
         {
+            if (isDamaged) return;
             Console.WriteLine("Knight took damage");
             CancelHeal();
             isDamaged = true;
@@ -204,6 +198,12 @@ namespace HollowKnight.Player
         public void StopMovingVertical()
         {
             velocity.Y = 0;
+        }
+
+        public void Land()
+        {
+            velocity.Y = 0;
+            isGrounded = true;
         }
         public void SideSlash()
         {
@@ -292,7 +292,8 @@ namespace HollowKnight.Player
         // TODO: Tune width/height to match the actual scaled sprite size
         public Rectangle[] GetBounds()
         {
-            hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, 48, 64);
+            Vector2 size = currentSprite.GetSize();
+            hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
             return hitBoxes;
         }
     }
