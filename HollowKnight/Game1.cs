@@ -82,6 +82,10 @@ public class Game1 : Game
         {
             obj.Update(gameTime);
         }
+        foreach (IEnemy obj in _level.Enemies)
+        {
+            obj.Update(gameTime);
+        }
 
         _roomManager.Update(gameTime);
         base.Update(gameTime);
@@ -93,6 +97,10 @@ public class Game1 : Game
         _spriteBatch.Begin(transformMatrix: _camera.GetTransform());
 
         foreach (IObject obj in _level.Platforms)
+        {
+            obj.Draw(_spriteBatch, _spriteEffects);
+        }
+        foreach (IEnemy obj in _level.Enemies)
         {
             obj.Draw(_spriteBatch, _spriteEffects);
         }

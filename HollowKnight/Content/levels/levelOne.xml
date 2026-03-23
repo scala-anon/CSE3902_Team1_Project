@@ -16,16 +16,26 @@
 </Item>
 
 <Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_3</ObjectName>
+    <Location>475 375</Location>
+</Item>
+
+<Item>
     <ObjectType>Enemy</ObjectType>
     <ObjectName>Vengefly</ObjectName>
-    <Location>500 400</Location>
+    <Location>600 175</Location>
 </Item>
 <Item>
     <ObjectType>Enemy</ObjectType>
     <ObjectName>Crawlid</ObjectName>
-    <Location>100 400</Location>
+    <Location>475 550</Location>
 </Item>
-
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Spike_Floor_2</ObjectName>
+    <Location>1000 590</Location>
+</Item>
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Path_1</ObjectName>
