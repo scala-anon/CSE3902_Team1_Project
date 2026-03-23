@@ -27,7 +27,7 @@ public class Vengefly : IEnemy
     private Vector2 _knockbackVelocity;
     private const float KnockbackSpeed = 950f;
     private const float KnockbackDecay = 8f;
-    private const float DeathGravity = 600f; 
+    private const float DeathGravity = 600f;
     private const float ScreenFloor = 720f; //TODO: change this to be based on the map instead of hardcoded
     public bool IsGrounded { get; private set; } = false;
 
@@ -55,7 +55,7 @@ public class Vengefly : IEnemy
     {
         stateMachine.SetNavigationGrid(grid);
     }
-    
+
     public List<Vector2> GetCurrentPath()
     {
         return stateMachine.GetCurrentPath();
@@ -86,7 +86,7 @@ public class Vengefly : IEnemy
     {
         if (_isDamaged) return;
         _isDamaged = true;
-        _damagedTimer = 0;  
+        _damagedTimer = 0;
         switch (side)
         {
             case CollisionSide.Left: _knockbackVelocity = new Vector2(-KnockbackSpeed, -150f); break;
@@ -116,7 +116,7 @@ public class Vengefly : IEnemy
                 _knockbackVelocity.Y += DeathGravity * dt;
                 _knockbackVelocity.X *= (1f - KnockbackDecay * dt);
                 if (Math.Abs(_knockbackVelocity.X) < 1f) _knockbackVelocity.X = 0;
-                
+
                 position += _knockbackVelocity * dt;
 
                 float spriteHeight = VengeflySprite.GetSize().Y;
@@ -127,7 +127,7 @@ public class Vengefly : IEnemy
                     IsGrounded = true;
                 }
             }
-            
+
             VengeflySprite.SetPosition(position);
             VengeflySprite.Update(_gameTime);
             return;
