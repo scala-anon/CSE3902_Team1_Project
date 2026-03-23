@@ -155,6 +155,7 @@ public class Game1 : Game
 
     private void DrawRectangleOutline(Rectangle rect, Color color, int thickness = 2)
     {
+        if (!HollowKnight.Collision.DebugRenderer.hitboxEnabled) return;
         _spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Top, rect.Width, thickness), color); // top
         _spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Bottom - thickness, rect.Width, thickness), color); // bottom
         _spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Top, thickness, rect.Height), color); // left
