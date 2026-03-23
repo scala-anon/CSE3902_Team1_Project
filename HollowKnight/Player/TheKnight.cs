@@ -141,6 +141,11 @@ namespace HollowKnight.Player
             //Need to give the Knight the actual powerup
             Console.WriteLine("Knight picked up a power up!");
         }
+
+        public void Block(CollisionSide side)
+        {
+            Console.WriteLine("Knight is colliding with a block");
+        }
         public void MoveRight()
         {
             CancelHeal();
@@ -175,6 +180,7 @@ namespace HollowKnight.Player
             currentItem = _itemNumber;
             Console.WriteLine($"Using item #{currentItem}");
         }
+
         public void Jump()
         {
             CancelHeal();

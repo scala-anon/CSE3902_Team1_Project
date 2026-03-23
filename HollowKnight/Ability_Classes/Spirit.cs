@@ -13,6 +13,8 @@ public class Spirit : IPickup
     private ISprite sprite;
     public bool IsActive => true;
 
+    public bool IsActive{get; set; } = true;
+
     public bool Collected;
     private Vector2 position;
 
