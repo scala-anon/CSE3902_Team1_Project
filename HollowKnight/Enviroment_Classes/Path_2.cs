@@ -11,7 +11,8 @@ public class Path_2 : IObject
 
     public Rectangle[] hitBoxes = new Rectangle[1];
     public bool IsActive => true;
-    public Vector2 position = new Vector2(200, 0);
+    public Vector2 position = new Vector2(850, 400);
+    public Rectangle Bounds {get;} //new Rectangle((int)position.X, (int)position.Y, Sprite.Width, Sprite.Height);
 
     public Path_2(Vector2 _position)
     {

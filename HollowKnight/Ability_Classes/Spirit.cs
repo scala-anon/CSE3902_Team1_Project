@@ -10,12 +10,11 @@ public class Spirit : IPickup
 {
     private SpriteEffects effect;
     private ISprite sprite;
-    public bool IsActive {get; set;} = true;
+    public bool IsActive { get; set; } = true;
     public bool Collected;
     private Vector2 position;
-
     public Rectangle[] hitBoxes = new Rectangle[1];
-    
+    public Rectangle Bounds { get; }
     public Spirit(Vector2 _position)
     {
         Collected = false;
@@ -33,7 +32,7 @@ public class Spirit : IPickup
         sprite.Draw(spriteBatch, effect);
     }
 
-    
+
     public Rectangle[] GetBounds()
     {
         Rectangle rectangle = new Rectangle((int)position.X, (int)position.Y, 100, 100);

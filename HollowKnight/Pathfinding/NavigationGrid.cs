@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -9,6 +10,7 @@ namespace HollowKnight.Pathfinding
     public int cellSize { get; }
     public int cols { get; }
     public int rows { get; }
+    public static bool GridEnabled { get; set; } = true;
 
     private Texture2D _pixel; 
 
@@ -21,6 +23,29 @@ namespace HollowKnight.Pathfinding
 
       _pixel = new Texture2D(graphicsDevice, 1, 1); // Create a 1x1 white texture for drawing
       _pixel.SetData(new[] { Color.White }); 
+    }
+
+    
+    public void AddObstacle(Rectangle bounds)
+    {
+      int startCol = Math.Max(0, bounds.Left / cellSize);
+      int endCol = Math.Min(cols - 1, bounds.Right / cellSize);
+      int startRow = Math.Max(0, bounds.Top / cellSize);
+      int endRow = Math.Min(rows - 1, bounds.Bottom / cellSize);
+
+      for(int x = startCol; x <= endCol; x++)
+      {
+        for(int y = startRow; y <= endRow; y++)
+        {
+          _blocked[x, y] = true;
+        }
+      }
+    }
+
+    public bool IsWalkable(int x, int y)
+    {
+       if (x < 0 || x >= cols || y < 0 || y >= rows) return false;
+       return !_blocked[x, y];
     }
 
     public void Draw(SpriteBatch spriteBatch)

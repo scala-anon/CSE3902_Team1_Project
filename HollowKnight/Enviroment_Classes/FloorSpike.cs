@@ -3,14 +3,14 @@ using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class FloorSpike : IObject, ICollidable
+public class FloorSpike : IObject
 {
     public ISprite Sprite;
 
     public Rectangle[] hitBoxes = new Rectangle[2];
     public Vector2 position;
     public bool IsActive => true;
-    public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, Sprite.Width, Sprite.Height);
+    public Rectangle Bounds{get;}// new Rectangle((int)position.X, (int)position.Y, Sprite.Width, Sprite.Height);
 
     public FloorSpike(Vector2 _position)
     {

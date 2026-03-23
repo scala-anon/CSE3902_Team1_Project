@@ -13,6 +13,8 @@ namespace HollowKnight.Collision
         ///
         /// Returns CollisionSide.None if the two rectangles do not intersect.
         /// </summary>
+        /// 
+        /// /*
         public static CollisionSide Detect(ICollidable objectA, ICollidable objectB)
         {
             Rectangle[] boundsA = objectA.GetBounds();
@@ -26,6 +28,15 @@ namespace HollowKnight.Collision
                     {
                         continue;
                     }
+            //return Detect(objectA.GetBounds(), objectB.GetBounds());
+        //}
+        
+       // public static CollisionSide Detect(Rectangle boundsA, Rectangle boundsB)
+        //{
+            //if (!boundsA.Intersects(boundsB))
+            //{
+            //    return CollisionSide.None;
+            //}
 
                      // Measure overlaps
                     int overlapFromLeft   = rectangleB.Right  - rectangleA.Left;

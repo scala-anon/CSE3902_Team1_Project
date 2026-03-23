@@ -1,5 +1,5 @@
 using Microsoft.Xna.Framework;
-using HollowKnight.Interfaces;
+using HollowKnight.Collision;
 
 namespace HollowKnight.Projectiles
 {
@@ -22,13 +22,13 @@ namespace HollowKnight.Projectiles
 
 
         //TODO choose one
-        public Rectangle[] GetBounds()
-        {
-            Rectangle rectangle = new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
-            hitBoxes[0] = rectangle;
-            return hitBoxes;
-        }
-
+        /* public Rectangle[] GetBounds()
+         {
+             Rectangle rectangle = new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
+             hitBoxes[0] = rectangle;
+             return hitBoxes;
+         }
+     */
 
         public Rectangle Bounds =>
             new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
@@ -45,6 +45,12 @@ namespace HollowKnight.Projectiles
         public void Update(GameTime gameTime)
         {
             Position += Velocity;
+        }
+
+        public Rectangle[] GetBounds()
+        {
+            hitBoxes[0] = Bounds;
+            return hitBoxes;
         }
 
         public void Step(Vector2 delta)

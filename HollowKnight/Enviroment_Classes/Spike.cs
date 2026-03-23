@@ -11,6 +11,7 @@ public class Spike : IObject
     public Rectangle[] hitBoxes = new Rectangle[2];
     public bool IsActive => true;
     public Vector2 position;
+    public Rectangle Bounds { get; } // new Rectangle((int)position.X, (int)position.Y, Sprite.Width, Sprite.Height);
 
     public Spike(Vector2 _position)
     {
@@ -26,7 +27,7 @@ public class Spike : IObject
     public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects)
     {
         Sprite.Draw(_spriteBatch, _spriteEffects);
-    
+
     }
 
     // TODO: Tune width/height to match the actual scaled sprite size

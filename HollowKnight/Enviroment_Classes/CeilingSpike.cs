@@ -10,7 +10,9 @@ public class CeilingSpike : IObject
     public Rectangle[] hitBoxes = new Rectangle[2];
     public bool IsActive => true;
 
-    public Vector2 position;
+    public Vector2 position = new Vector2(1050, 0);
+
+    public Rectangle Bounds { get; } //new Rectangle((int)position.X, (int)position.Y, Sprite.Width, Sprite.Height);
 
 
     public CeilingSpike(Vector2 _position)
@@ -27,7 +29,7 @@ public class CeilingSpike : IObject
     public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects)
     {
         Sprite.Draw(_spriteBatch, _spriteEffects);
-    } 
+    }
 
     // TODO: Tune width/height to match the actual scaled sprite size
     public Rectangle[] GetBounds()
