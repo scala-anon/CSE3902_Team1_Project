@@ -1,5 +1,6 @@
 using HollowKnight.Player;
 using HollowKnight.Projectiles;
+using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 
 namespace HollowKnight.Player

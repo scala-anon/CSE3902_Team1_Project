@@ -19,6 +19,7 @@ namespace HollowKnight.Collision
         public static readonly Color ColorEnvironment = Color.LimeGreen;
         public static readonly Color ColorTrigger     = Color.Yellow;
         public static readonly Color ColorMidpoint    = Color.Magenta;
+        public static readonly Color ColorSword       = Color.Cyan;
 
         /// <summary>
         /// Creates the internal 1x1 pixel texture.
@@ -41,6 +42,12 @@ namespace HollowKnight.Collision
             if(!hitboxEnabled || _font ==null) return;
             Rectangle bounds = obj.GetBounds();
             spriteBatch.DrawString(_font, label, new Vector2(bounds.Left, bounds.Top -16 ), Color.White); //16 for offset above hitbox
+        }
+
+        public static void DrawText(SpriteBatch spriteBatch, string text, Vector2 position, Color color)
+        {
+            if (!hitboxEnabled || _font == null) return;
+            spriteBatch.DrawString(_font, text, position, color);
         }
 
 
@@ -95,6 +102,19 @@ namespace HollowKnight.Collision
             float length = diff.Length();
             float angle = MathF.Atan2(diff.Y, diff.X); //angle of the line in radians
             spriteBatch.Draw(_pixel, p1, null, color, angle, Vector2.Zero, new Vector2(length, 1), SpriteEffects.None, 0); 
+        }
+
+        public static void DrawPath(SpriteBatch spriteBatch, ICollidable obj, List<Vector2> path, Color lineColor, Color pointColor)
+        {
+            if (!hitboxEnabled || _pixel == null || path == null || path.Count == 0) return;
+
+            Vector2 currentPos = new Vector2(obj.GetBounds().Center.X, obj.GetBounds().Center.Y);
+            foreach (Vector2 waypoint in path)
+            {
+                DrawLine(spriteBatch, currentPos, waypoint, lineColor);
+                DrawPoint(spriteBatch, waypoint, pointColor, 4);
+                currentPos = waypoint;
+            }
         }
 
 
