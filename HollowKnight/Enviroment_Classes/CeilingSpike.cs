@@ -8,6 +8,7 @@ public class CeilingSpike : IObject
     public ISprite Sprite;
 
     public Rectangle[] hitBoxes = new Rectangle[2];
+    public bool IsActive => true;
 
     public Vector2 position;
 

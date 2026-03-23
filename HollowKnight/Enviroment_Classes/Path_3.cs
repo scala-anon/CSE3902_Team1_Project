@@ -9,6 +9,7 @@ public class Path_3 : IObject
     private ISprite Sprite;
 
     public Rectangle[] hitBoxes = new Rectangle[1];
+    public bool IsActive => true;
 
     public Vector2 position;
 
