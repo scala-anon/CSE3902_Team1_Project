@@ -29,7 +29,7 @@ public class Game1 : Game
     // TODO: Replace with your game's sprite management
     private ISprite _currentSprite;
     private List<IController> _controllerList;
-    private List<IPickup> items = new ();
+    private List<Spirit> items = new ();
     private int _screenWidth;
     private int _screenHeight;
 
@@ -65,8 +65,8 @@ public class Game1 : Game
 
         Vector2 centerPosition = new Vector2(_screenWidth / 2, _screenHeight / 2);
 
-        IPickup spirit = new Spirit(new Vector2(100,100));
-        IPickup spirit_2 = new Spirit(new Vector2(-100,-100));
+        Spirit spirit = new Spirit(new Vector2(100,100));
+        Spirit spirit_2 = new Spirit(new Vector2(-100,-100));
         items.Add(spirit);
         items.Add(spirit_2);
 
@@ -163,11 +163,23 @@ public class Game1 : Game
             _collisionHandler.HandleCollision(obj, _knight, side);
         }
         
-        foreach (IPickup item in items){
+        foreach (Spirit item in items){
             
             CollisionSide side = CollisionDetector.Detect(item, _knight);
             _collisionHandler.HandleCollision(item, _knight, side);
+            if (side != CollisionSide.None)
+            {
+                item.IsActive = false;
+            }
                
+        }
+
+        for (int i = 0; i < items.Count - 1; i++)
+        {
+            if (!items[i].IsActive)
+            {
+                items.Remove(items[i]);
+            }
         }
         
         
@@ -198,9 +210,14 @@ public class Game1 : Game
         // Draw current sprite
         _knight.Draw(_spriteBatch);
 
-        foreach (IPickup item in items)
+        foreach (Spirit item in items)
         {
-            item.Draw(_spriteBatch);
+            if (item.IsActive == true)
+            {
+                item.Draw(_spriteBatch);
+                DebugRenderer.DrawBounds(_spriteBatch, item, DebugRenderer.ColorEnvironment);
+            }
+            
             
         }
             
@@ -217,11 +234,6 @@ public class Game1 : Game
             DebugRenderer.DrawBounds(_spriteBatch, obj, DebugRenderer.ColorEnvironment);
         } 
         
-        foreach (IPickup item in items){
-        
-            DebugRenderer.DrawBounds(_spriteBatch, item, DebugRenderer.ColorEnvironment);
-            
-        }
         //foreach (IEnemy enemy in Enemies)
         //{
         //    DebugRenderer.DrawBounds(_spriteBatch, enemy, DebugRenderer.ColorEnemy);
