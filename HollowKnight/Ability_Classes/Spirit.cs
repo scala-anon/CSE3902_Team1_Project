@@ -1,7 +1,6 @@
 
 using HollowKnight.Factories;
 using HollowKnight.Interfaces;
-using Microsoft.VisualBasic.FileIO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -11,10 +10,7 @@ public class Spirit : IPickup
 {
     private SpriteEffects effect;
     private ISprite sprite;
-    public bool IsActive => true;
-
-    public bool IsActive{get; set; } = true;
-
+    public bool IsActive {get; set;} = true;
     public bool Collected;
     private Vector2 position;
 

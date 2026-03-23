@@ -80,6 +80,7 @@ public class Game1 : Game
         items.Add(spirit_2);
 
         loadEnviroment();
+        loadEnemies();
         
         _pixel = new Texture2D(GraphicsDevice, 1, 1);
         _pixel.SetData(new[] { Color.White });
@@ -252,7 +253,7 @@ public class Game1 : Game
             _collisionHandler.HandleCollision(obj, _knight, side);
         }
         
-        foreach (Spirit item in items){
+      
         foreach (IEnemy enemy in Enemies)
         {
             enemy.SetKnightPosition(knightPosition);
@@ -260,7 +261,8 @@ public class Game1 : Game
             _collisionHandler.HandleCollision(enemy, _knight, side);
         }
 
-        foreach (IPickup item in items){
+        foreach (Spirit item in items)
+        {
             
             CollisionSide side = CollisionDetector.Detect(item, _knight);
             _collisionHandler.HandleCollision(item, _knight, side);
@@ -281,11 +283,13 @@ public class Game1 : Game
         
         
 
-        foreach (IEnemy enemy in Enemies){
+        foreach (IEnemy enemy in Enemies)
+        {
             enemy.Update(gameTime);
         }
         
-        foreach (IObject obj in Objects){
+        foreach (IObject obj in Objects)
+        {
             obj.Update(gameTime);
         }
         
@@ -325,15 +329,13 @@ public class Game1 : Game
             DrawRectangleOutline(p.Bounds, Color.Red);
         }
 
-        foreach (IPickup item in items)
+        foreach (Spirit item in items)
         {
             if (item.IsActive == true)
             {
                 item.Draw(_spriteBatch);
                 DebugRenderer.DrawBounds(_spriteBatch, item, DebugRenderer.ColorEnvironment);
             }
-            
-            
         }  
 
         DebugRenderer.DrawBounds(_spriteBatch, _knight, DebugRenderer.ColorKnight);
@@ -341,12 +343,6 @@ public class Game1 : Game
         {
             DebugRenderer.DrawBounds(_spriteBatch, obj, DebugRenderer.ColorEnvironment);
         } 
-        
-        foreach (IPickup item in items){
-        
-            DebugRenderer.DrawBounds(_spriteBatch, item, DebugRenderer.ColorEnvironment);
-            
-        }
 
         DebugRenderer.DrawBounds(_spriteBatch, _knight, DebugRenderer.ColorKnight);
         DebugRenderer.DrawPoint(_spriteBatch, _knight.GetBounds()[0].Center.ToVector2(), DebugRenderer.ColorMidpoint);
