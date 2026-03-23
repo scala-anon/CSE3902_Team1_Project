@@ -6,7 +6,7 @@ namespace HollowKnight.Controllers
 {
     public static class KeyboardBindings
     {
-        public static void BindGameplay(KeyboardController keyboard, TheKnight knight, Game1 game)
+        public static void BindGameplay(KeyboardController keyboard, TheKnight knight, Game1 game, RoomManager roomManager)
         {
             // Move Left
             keyboard.RegisterHeldCommand(Keys.A, new PlayerMoveLeftCommand(knight));
@@ -68,13 +68,14 @@ namespace HollowKnight.Controllers
             keyboard.RegisterPressedCommand(Keys.E, new PlayerTakeDamageCommand(knight));
 
 
-            //Commands for switching enemy sprites
-            keyboard.RegisterPressedCommand(Keys.P, new ChangeNextEnemyCommand(game));
-            keyboard.RegisterPressedCommand(Keys.O, new ChangePreviousEnemyCommand(game));
-
-            //Commands for switching Enviroment Sprites
-            keyboard.RegisterPressedCommand(Keys.Y, new ChangeNextEnviromentCommand(game));
-            keyboard.RegisterPressedCommand(Keys.T, new ChangePreviousEnviromentCommand(game));
+            // Debug room switching
+            keyboard.RegisterComboPressedCommand(Keys.Right, Keys.LeftControl, new SwitchRoomCommand(roomManager, 1));
+            keyboard.RegisterComboPressedCommand(Keys.Left, Keys.LeftControl, new SwitchRoomCommand(roomManager, -1));
+            keyboard.RegisterComboPressedCommand(Keys.Right, Keys.RightControl, new SwitchRoomCommand(roomManager, 1));
+            keyboard.RegisterComboPressedCommand(Keys.Left, Keys.RightControl, new SwitchRoomCommand(roomManager, -1));
+            keyboard.RegisterPressedCommand(Keys.F1, new JumpToRoomCommand(roomManager, 0));
+            keyboard.RegisterPressedCommand(Keys.F2, new JumpToRoomCommand(roomManager, 1));
+            keyboard.RegisterPressedCommand(Keys.F3, new JumpToRoomCommand(roomManager, 2));
 
             // Quit Game
             keyboard.RegisterPressedCommand(Keys.Q, new QuitCommand(game));

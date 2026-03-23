@@ -30,5 +30,8 @@
   <None Update="Content\levels\levelOne.xml">
     <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
   </None>
+  <None Update="Content\rooms\*.csv">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </None>
   </ItemGroup>
 </Project>

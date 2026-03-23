@@ -7,8 +7,8 @@ namespace HollowKnight
         private Vector2 position;
         private readonly int _screenWidth;
         private readonly int _screenHeight;
-        private readonly int _levelWidth;
-        private readonly int _levelHeight;
+        private int _levelWidth;
+        private int _levelHeight;
 
         public Camera(int screenWidth, int screenHeight, int levelWidth, int levelHeight)
         {
@@ -36,6 +36,17 @@ namespace HollowKnight
             y = MathHelper.Clamp(y,0, _levelHeight - _screenHeight);
 
             position = new Vector2(x,y);
+        }
+
+        public void SetBounds(int levelWidth, int levelHeight)
+        {
+            _levelWidth = levelWidth;
+            _levelHeight = levelHeight;
+        }
+
+        public void SnapTo(Vector2 target)
+        {
+            Follow(target);
         }
     }
 }
