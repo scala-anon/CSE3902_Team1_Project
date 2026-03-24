@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework.Input;
 using HollowKnight.Commands;
+using HollowKnight.Levels;
 using HollowKnight.Player;
 
 namespace HollowKnight.Controllers
@@ -8,52 +9,41 @@ namespace HollowKnight.Controllers
     {
         public static void BindGameplay(KeyboardController keyboard, TheKnight knight, Game1 game, RoomManager roomManager)
         {
-            // Move Left
+            // Move Left — A and Left Arrow
             keyboard.RegisterHeldCommand(Keys.A, new PlayerMoveLeftCommand(knight));
             keyboard.RegisterHeldCommand(Keys.Left, new PlayerMoveLeftCommand(knight));
 
-            // Move Right
+            // Move Right — D and Right Arrow
             keyboard.RegisterHeldCommand(Keys.D, new PlayerMoveRightCommand(knight));
             keyboard.RegisterHeldCommand(Keys.Right, new PlayerMoveRightCommand(knight));
 
-            // Look Up
+            // Look Up — W and Up Arrow
             keyboard.RegisterHeldCommand(Keys.W, new PlayerMoveUpCommand(knight));
             keyboard.RegisterHeldCommand(Keys.Up, new PlayerMoveUpCommand(knight));
 
-            // Look Down
-            keyboard.RegisterHeldCommand(Keys.S, new PlayerMoveDownCommand(knight));
-            keyboard.RegisterHeldCommand(Keys.Down, new PlayerMoveDownCommand(knight));
-
-            // Stop Horizontal
+            // Stop Horizontal on release
             keyboard.RegisterReleasedCommand(Keys.A, new PlayerStopMovingHorizontalCommand(knight));
             keyboard.RegisterReleasedCommand(Keys.Left, new PlayerStopMovingHorizontalCommand(knight));
             keyboard.RegisterReleasedCommand(Keys.D, new PlayerStopMovingHorizontalCommand(knight));
             keyboard.RegisterReleasedCommand(Keys.Right, new PlayerStopMovingHorizontalCommand(knight));
 
-            // Stop Vertical
+            // Stop Vertical on release
             keyboard.RegisterReleasedCommand(Keys.W, new PlayerStopMovingVerticalCommand(knight));
             keyboard.RegisterReleasedCommand(Keys.Up, new PlayerStopMovingVerticalCommand(knight));
-            keyboard.RegisterReleasedCommand(Keys.S, new PlayerStopMovingVerticalCommand(knight));
-            keyboard.RegisterReleasedCommand(Keys.Down, new PlayerStopMovingVerticalCommand(knight));
 
-            // Jump
+            // Jump — Space
             keyboard.RegisterPressedCommand(Keys.Space, new PlayerJumpCommand(knight));
 
-            // Attack (SideSlash, UpSlash, DownSlash)
-            // Up Slash
+            // Attack — Z + direction for slash variants
             keyboard.RegisterComboPressedCommand(Keys.Z, Keys.W, new PlayerUpSlashCommand(knight));
             keyboard.RegisterComboPressedCommand(Keys.Z, Keys.Up, new PlayerUpSlashCommand(knight));
-
-            // Down Slash
             keyboard.RegisterComboPressedCommand(Keys.Z, Keys.S, new PlayerDownSlashCommand(knight));
             keyboard.RegisterComboPressedCommand(Keys.Z, Keys.Down, new PlayerDownSlashCommand(knight));
-
-            // Side
             keyboard.RegisterComboPressedCommand(Keys.Z, new PlayerSideSlashCommand(knight));
 
-            // Healing
-            keyboard.RegisterHeldCommand(Keys.A, new PlayerHealHoldCommand(knight));
-            keyboard.RegisterReleasedCommand(Keys.A, new PlayerHealCancelCommand(knight));
+            // Healing — hold X to heal
+            keyboard.RegisterHeldCommand(Keys.X, new PlayerHealHoldCommand(knight));
+            keyboard.RegisterReleasedCommand(Keys.X, new PlayerHealCancelCommand(knight));
 
             // Items
             keyboard.RegisterPressedCommand(Keys.D1, new PlayerUseItemCommand(knight, 1));
@@ -64,9 +54,8 @@ namespace HollowKnight.Controllers
             keyboard.RegisterPressedCommand(Keys.U, new CycleItemPreviousCommand());
             keyboard.RegisterPressedCommand(Keys.I, new CycleItemNextCommand());
 
-            // Damage
+            // Damage (debug)
             keyboard.RegisterPressedCommand(Keys.E, new PlayerTakeDamageCommand(knight));
-
 
             // Debug room switching
             keyboard.RegisterComboPressedCommand(Keys.Right, Keys.LeftControl, new SwitchRoomCommand(roomManager, 1));
@@ -77,13 +66,11 @@ namespace HollowKnight.Controllers
             keyboard.RegisterPressedCommand(Keys.F2, new JumpToRoomCommand(roomManager, 1));
             keyboard.RegisterPressedCommand(Keys.F3, new JumpToRoomCommand(roomManager, 2));
 
-            //Command for hitbox toggling
+            // Debug toggles
             keyboard.RegisterPressedCommand(Keys.H, new ToggleHitboxesCommand(game));
-
-            //Command for grid toggling
             keyboard.RegisterPressedCommand(Keys.G, new ToggleGridCommand(game));
 
-            // Quit Game
+            // Quit
             keyboard.RegisterPressedCommand(Keys.Q, new QuitCommand(game));
         }
     }
