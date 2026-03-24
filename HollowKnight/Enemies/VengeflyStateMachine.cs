@@ -84,9 +84,9 @@ public class VengeflyStateMachine
             CurrentVengeFly.facingDirection = _patrolDirection;
             float spriteWidth = CurrentVengeFly.VengeflySprite.GetSize().X;
 
-            if (CurrentVengeFly.position.X + spriteWidth >= 1280)
+            if (CurrentVengeFly.position.X + spriteWidth >= 3200)
             {
-                CurrentVengeFly.position.X = 1280 - spriteWidth;
+                CurrentVengeFly.position.X = 3200 - spriteWidth;
                 _patrolDirection = Direction.Left;
                 CurrentVengeFly.facingDirection = Direction.Left;
             }

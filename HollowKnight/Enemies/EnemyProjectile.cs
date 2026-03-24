@@ -2,7 +2,7 @@ using HollowKnight.Collision;
 using HollowKnight.Projectiles;
 using Microsoft.Xna.Framework;
 
-namespace HollowKnight.Enemy_Classes
+namespace HollowKnight.Enemies
 {
     public class EnemyProjectile
     {

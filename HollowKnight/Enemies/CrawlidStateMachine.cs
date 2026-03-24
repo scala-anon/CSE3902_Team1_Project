@@ -59,9 +59,9 @@ public class CrawlidStateMachine
         CurrentCrawlid.position.X += (_movementDirection == Direction.Right ? PatrolSpeed : -PatrolSpeed) * elapsedTime;
         float spriteWidth = CurrentCrawlid.CrawlidSprite.GetSize().X;
 
-        if (CurrentCrawlid.position.X + spriteWidth >= 1280)
+        if (CurrentCrawlid.position.X + spriteWidth >= 3200)
         {
-            CurrentCrawlid.position.X = 1280 - spriteWidth;
+            CurrentCrawlid.position.X = 3200 - spriteWidth;
             _movementDirection = Direction.Left;
             CurrentCrawlid.facingDirection = Direction.Left;
             CrawlidTurn();

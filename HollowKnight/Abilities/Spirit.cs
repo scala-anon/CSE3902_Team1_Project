@@ -4,7 +4,7 @@ using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace HollowKnight.Ability_Classes;
+namespace HollowKnight.Abilities;
 
 public class Spirit : IPickup
 {
