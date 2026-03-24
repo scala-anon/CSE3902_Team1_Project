@@ -4,7 +4,7 @@ using HollowKnight.Collision;
 
 namespace HollowKnight.Interfaces
 {
-    public interface IHollowKnight : HollowKnight.Collision.ICollidable
+    public interface IPlayer : HollowKnight.Collision.ICollidable
     {
         void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);

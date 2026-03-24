@@ -1,4 +1,5 @@
 using HollowKnight.Interfaces;
+using HollowKnight.Levels;
 
 namespace HollowKnight.Commands
 {

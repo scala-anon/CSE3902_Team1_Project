@@ -9,7 +9,7 @@ using HollowKnight.Factories;
 
 namespace HollowKnight.Player
 {
-    public class TheKnight : IHollowKnight
+    public class TheKnight : IPlayer
     {
         private Dictionary<KnightSpriteType, ISprite> sprites;
         private ISprite currentSprite;
