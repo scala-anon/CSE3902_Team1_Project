@@ -21,6 +21,7 @@ public class CeilingSpike : IObject
         Sprite = SpriteFactory.Instance.CreateSpikeCeilingSprite(_position);
     }
 
+
     public void Update(GameTime _gameTime)
     {
         Sprite.Update(_gameTime);

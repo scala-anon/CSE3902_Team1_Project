@@ -16,6 +16,8 @@ namespace HollowKnight.Factories
 
         private Texture2D enemySpriteSheet;
         private Texture2D platformSpriteSheet;
+        //ideally we make this into one sprite sheet but for now we have this additional one
+        private Texture2D tutorialPlatformSpriteSheet;
 
         private Texture2D spellsSpriteSheet;
 
@@ -73,10 +75,11 @@ namespace HollowKnight.Factories
             TextureAtlas SpiritAttacksAtlas = TextureAtlas.FromFile(content, "sprites/spirit-atlas.xml");
             TextureAtlas enemyAtlas = TextureAtlas.FromFile(content, "sprites/enemy-atlas.xml");
             TextureAtlas platformAtlas = TextureAtlas.FromFile(content, "sprites/platform-atlas.xml");
-
+            TextureAtlas tutorialPlatformAtlas = TextureAtlas.FromFile(content,"sprites/tutorial-platform-atlas.xml");
 
             enemySpriteSheet = enemyAtlas.Texture;
             platformSpriteSheet = platformAtlas.Texture;
+            tutorialPlatformSpriteSheet = tutorialPlatformAtlas.Texture;
             spellsSpriteSheet = SpiritAttacksAtlas.Texture;
 
             //From knight_movement-atlas.xml
@@ -115,6 +118,18 @@ namespace HollowKnight.Factories
             platformFrames.Add("Path_Stone_3", platformAtlas.GetRegion("Path_Stone_3").SourceRectangle);
             platformFrames.Add("Path_ledge", platformAtlas.GetRegion("Path_ledge").SourceRectangle);
 
+            platformFrames.Add("Tutorial_Platform_1", tutorialPlatformAtlas.GetRegion("Tutorial_Platform_1").SourceRectangle);
+            platformFrames.Add("Tutorial_Platform_2", tutorialPlatformAtlas.GetRegion("Tutorial_Platform_2").SourceRectangle);
+            platformFrames.Add("Tutorial_Platform_3", tutorialPlatformAtlas.GetRegion("Tutorial_Platform_3").SourceRectangle);
+            platformFrames.Add("Tutorial_Platform_4", tutorialPlatformAtlas.GetRegion("Tutorial_Platform_4").SourceRectangle);
+            platformFrames.Add("Tutorial_Platform_5", tutorialPlatformAtlas.GetRegion("Tutorial_Platform_5").SourceRectangle);
+            platformFrames.Add("Tutorial_Platform_6", tutorialPlatformAtlas.GetRegion("Tutorial_Platform_6").SourceRectangle);
+            platformFrames.Add("Tutorial_Platform_7", tutorialPlatformAtlas.GetRegion("Tutorial_Platform_7").SourceRectangle);
+            platformFrames.Add("Tutorial_Platform_8", tutorialPlatformAtlas.GetRegion("Tutorial_Platform_8").SourceRectangle);
+            platformFrames.Add("Tutorial_Platform_9", tutorialPlatformAtlas.GetRegion("Tutorial_Platform_9").SourceRectangle);
+            platformFrames.Add("Tutorial_Platform_10", tutorialPlatformAtlas.GetRegion("Tutorial_Platform_10").SourceRectangle);
+
+
             // From enemy-atlas.xml
             crawlidAnimations.Add("Crawlid_Idle", enemyAtlas.GetAnimationFrames("Crawlid_Idle"));
             crawlidAnimations.Add("Crawlid_Turn", enemyAtlas.GetAnimationFrames("Crawlid_Turn"));
@@ -131,6 +146,57 @@ namespace HollowKnight.Factories
         }
 
         //Platform factory methods
+        public ISprite CreateTutorial_Platform_1Sprite(Vector2 position)
+        {
+            return new StaticSprite(tutorialPlatformSpriteSheet, platformFrames["Tutorial_Platform_1"], position, 1.0f);
+        }
+
+        public ISprite CreateTutorial_Platform_2Sprite(Vector2 position)
+        {
+            return new StaticSprite(tutorialPlatformSpriteSheet, platformFrames["Tutorial_Platform_2"], position, 1.0f);
+        }
+
+        public ISprite CreateTutorial_Platform_3Sprite(Vector2 position)
+        {
+            return new StaticSprite(tutorialPlatformSpriteSheet, platformFrames["Tutorial_Platform_3"], position, 1.0f);
+        }
+
+        public ISprite CreateTutorial_Platform_4Sprite(Vector2 position)
+        {
+            return new StaticSprite(tutorialPlatformSpriteSheet, platformFrames["Tutorial_Platform_4"], position, 1.0f);
+        }
+
+        public ISprite CreateTutorial_Platform_5Sprite(Vector2 position)
+        {
+            return new StaticSprite(tutorialPlatformSpriteSheet, platformFrames["Tutorial_Platform_5"], position, 1.0f);
+        }
+
+        public ISprite CreateTutorial_Platform_6Sprite(Vector2 position)
+        {
+            return new StaticSprite(tutorialPlatformSpriteSheet, platformFrames["Tutorial_Platform_6"], position, 1.0f);
+        }
+
+        public ISprite CreateTutorial_Platform_7Sprite(Vector2 position)
+        {
+            return new StaticSprite(tutorialPlatformSpriteSheet, platformFrames["Tutorial_Platform_7"], position, 1.0f);
+        }
+
+        public ISprite CreateTutorial_Platform_8Sprite(Vector2 position)
+        {
+            return new StaticSprite(tutorialPlatformSpriteSheet, platformFrames["Tutorial_Platform_8"], position, 1.0f);
+        }
+
+        public ISprite CreateTutorial_Platform_9Sprite(Vector2 position)
+        {
+            return new StaticSprite(tutorialPlatformSpriteSheet, platformFrames["Tutorial_Platform_9"], position, 1.0f);
+        }
+
+        public ISprite CreateTutorial_Platform_10Sprite(Vector2 position)
+        {
+            return new StaticSprite(tutorialPlatformSpriteSheet, platformFrames["Tutorial_Platform_10"], position, 1.0f);
+        }
+
+
         public ISprite CreatePath_1Sprite(Vector2 position)
         {
             return new StaticSprite(platformSpriteSheet, platformFrames["Path_1"], position, 1.0f);

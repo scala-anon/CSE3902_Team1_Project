@@ -20,6 +20,7 @@ public class Path_3 : IObject
         Sprite = SpriteFactory.Instance.CreatePath_Stone_3Sprite(_position);
     }
 
+
     public void Update(GameTime _gameTime)
     {
         Sprite.Update(_gameTime);

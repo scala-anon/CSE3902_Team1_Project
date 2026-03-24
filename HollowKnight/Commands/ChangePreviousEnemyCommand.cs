@@ -14,11 +14,7 @@ namespace HollowKnight.Commands
 
         public void Execute()
         {
-            _game1.enemy_index--;
-            if (_game1.enemy_index == -1)
-            {
-                _game1.enemy_index = 1;
-            }
+            _game1.SwitchToPreviousRoom();
         }
     }
 }

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Level name="LevelOne">
+
+<!-- Player -->
+
+<Item>
+    <ObjectType>Knight</ObjectType>
+    <ObjectName>Knight</ObjectName>
+    <Location>100 590</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>0 600</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_3</ObjectName>
+    <Location>475 375</Location>
+</Item>
+
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Vengefly</ObjectName>
+    <Location>600 175</Location>
+</Item>
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Crawlid</ObjectName>
+    <Location>475 550</Location>
+</Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Spike_Floor_2</ObjectName>
+    <Location>1000 590</Location>
+</Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>850 600</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>1920 670</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_8</ObjectName>
+    <Location>2124 499</Location>
+</Item>
+</Level>

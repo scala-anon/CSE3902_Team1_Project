@@ -423,5 +423,14 @@ namespace HollowKnight.Player
             healApplied = false;
             healTimer = 0;
         }
+        // TODO: PUT at top
+        public Vector2 GetPosition() => position;
+
+        public void SetPosition(Vector2 newPosition)
+        {
+            position = newPosition;
+            velocity = Vector2.Zero;
+            currentSprite.SetPosition(position);
+        }
     }
 }
