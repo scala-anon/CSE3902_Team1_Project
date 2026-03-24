@@ -33,7 +33,6 @@ public class Crawlid : IEnemy
 
     public bool IsGrounded { get; private set; } = true;
     public bool IsActive => alive;
-    //public bool IsActive => true;
 
 
     public Vector2 position;

@@ -12,7 +12,6 @@ using System.Collections.Generic;
 public class Vengefly : IEnemy
 {
     public Rectangle[] hitBoxes = new Rectangle[1];
-    private int frameCounter = 0;
     public int state = 0;
     public bool dead;
     public bool startleAnimationPlayed;

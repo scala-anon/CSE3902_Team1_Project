@@ -11,7 +11,7 @@ public class Tutorial_Platform_1: IObject
     public Rectangle[] hitBoxes = new Rectangle[1];
 
     public bool IsActive => true;
-    public Rectangle Bounds { get; }
+    public Rectangle Bounds => GetBounds()[0];
 
     public Tutorial_Platform_1()
     {

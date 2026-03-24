@@ -8,7 +8,7 @@ namespace HollowKnight.Ability_Classes;
 
 public class Spirit : IPickup
 {
-    private SpriteEffects effect;
+    private SpriteEffects effect = SpriteEffects.None;
     private ISprite sprite;
     public bool IsActive { get; set; } = true;
     public bool Collected;

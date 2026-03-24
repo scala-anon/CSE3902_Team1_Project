@@ -11,7 +11,7 @@ public class Path_1 : IObject
     public bool IsActive => true;
     public Vector2 position = new Vector2(0, 650);
 
-    public Rectangle Bounds { get; } //new Rectangle((int)position.X, (int)position.Y + 15, Sprite.Width, Sprite.Height);
+    public Rectangle Bounds => GetBounds()[0]; //new Rectangle((int)position.X, (int)position.Y + 15, Sprite.Width, Sprite.Height);
 
     public Path_1(Vector2 _position)
     {

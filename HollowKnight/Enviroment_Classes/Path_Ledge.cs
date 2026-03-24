@@ -13,7 +13,7 @@ public class Path_ledge : IObject
     public bool IsActive => true;
 
     public Vector2 position;
-    public Rectangle Bounds {get;} // new Rectangle((int)position.X, (int)position.Y, Sprite.Width, Sprite.Height);
+    public Rectangle Bounds => GetBounds()[0]; // new Rectangle((int)position.X, (int)position.Y, Sprite.Width, Sprite.Height);
 
     public Path_ledge(Vector2 _position)
     {

@@ -12,6 +12,7 @@ public class CeilingSpike : IObject
 
     public Vector2 position = new Vector2(1050, 0);
 
+    // TODO: Need to fix collision detector to loop over rectangles!
     public Rectangle Bounds { get; } //new Rectangle((int)position.X, (int)position.Y, Sprite.Width, Sprite.Height);
 
 

@@ -12,8 +12,7 @@ public class Tutorial_Platform_8: IObject
     public Rectangle[] hitBoxes = new Rectangle[1];
 
     public bool IsActive => true;
-    public Rectangle Bounds { get; }
-
+    public Rectangle Bounds => GetBounds()[0];
     public Tutorial_Platform_8()
     {
         Sprite = SpriteFactory.Instance.CreateTutorial_Platform_8Sprite(position);

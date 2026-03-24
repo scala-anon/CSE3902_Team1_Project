@@ -25,12 +25,6 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private NavigationGrid _navigationGrid;
-    public int enemy_index = 0;
-    public int enviroment_index = 0;
-    private IEnemy[] Enemies = new IEnemy[2];
-    private IObject[] Objects = new IObject[7];
-    // TODO: Replace with your game's sprite management
-    private ISprite _currentSprite;
     private List<IController> _controllerList;
     private List<Spirit> items = new();
     private int _screenWidth;
@@ -77,7 +71,7 @@ public class Game1 : Game
         Spirit spirit_2 = new Spirit(new Vector2(-100, -100));
         items.Add(spirit);
         items.Add(spirit_2);
-        
+
         _level = new LevelLoader();
         _level.Load("Content/levels/levelOne.xml");
         loadObstacles();
@@ -108,7 +102,6 @@ public class Game1 : Game
         }
 
         _projectileSpawner = new ProjectileSpawner(_projectileManager);
-        _knightProjectile = new KnightProjectile(_knight, _projectileSpawner);
         //TODO: delete later
         /* 
         foreach (CollisionSide side in new[] { CollisionSide.Left, CollisionSide.Right, CollisionSide.Top, CollisionSide.Bottom })
@@ -143,6 +136,7 @@ public class Game1 : Game
         // Setup keyboard controller
         var sprites = KnightSpriteBuilder.BuildKnightSprites(_level.KnightSpawn);
         _knight = new TheKnight(sprites, _level.KnightSpawn);
+        _knightProjectile = new KnightProjectile(_knight, _projectileSpawner);
 
         const int levelWidth = 3200;
         const int levelHeight = 720;
@@ -186,16 +180,16 @@ public class Game1 : Game
 
     private void HandleProjectileCollisions()
     {
-        ICollidable[] enemyCollidablesArray = new ICollidable[Enemies.Length];
-        for (int i = 0; i < Enemies.Length; i++)
+        ICollidable[] enemyCollidablesArray = new ICollidable[_level.Enemies.Count];
+        for (int i = 0; i < _level.Enemies.Count; i++)
         {
-            enemyCollidablesArray[i] = (ICollidable)Enemies[i];
+            enemyCollidablesArray[i] = (ICollidable)_level.Enemies[i];
         }
 
-        ICollidable[] blockCollidablesArray = new ICollidable[Objects.Length];
-        for (int i = 0; i < Objects.Length; i++)
+        ICollidable[] blockCollidablesArray = new ICollidable[_level.Platforms.Count];
+        for (int i = 0; i < _level.Platforms.Count; i++)
         {
-            blockCollidablesArray[i] = (ICollidable)Objects[i];
+            blockCollidablesArray[i] = (ICollidable)_level.Platforms[i];
         }
 
         CollisionResponse.ResolveProjectileCollisions(
