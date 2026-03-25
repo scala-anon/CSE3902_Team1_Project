@@ -80,7 +80,11 @@ namespace HollowKnight.Collision
             Rectangle playerBounds = player.Bounds;
             Rectangle blockBounds = block.Bounds;
 
-            if (!playerBounds.Intersects(blockBounds))
+            // Expand by 1px so touching surfaces (not just overlapping) are caught —
+            // prevents gravity drift when knight sits exactly on a platform edge
+            Rectangle expanded = playerBounds;
+            expanded.Inflate(0, 1);
+            if (!expanded.Intersects(blockBounds))
                 return;
 
             int overlapLeft = playerBounds.Right - blockBounds.Left;
@@ -110,14 +114,14 @@ namespace HollowKnight.Collision
                 // Resolve top/bottom collision
                 if (overlapTop < overlapBottom)
                 {
-                    // Player landed on top of block
-                    player.position.Y -= overlapTop;
+                    // Player landed on top of block — snap to integer to prevent sub-pixel jitter
+                    player.position.Y = blockBounds.Top - playerBounds.Height;
                     player.Land();
                 }
                 else
                 {
                     // Player hit underside of block
-                    player.position.Y += overlapBottom;
+                    player.position.Y = blockBounds.Bottom;
                     player.StopMovingVertical();
                 }
             }

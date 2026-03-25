@@ -23,8 +23,7 @@ namespace HollowKnight.Player
 
         public void Update(float dt)
         {
-            if (!IsGrounded)
-                Velocity.Y += gravity * dt;
+            Velocity.Y += gravity * dt;
         }
 
         public void MoveRight()
