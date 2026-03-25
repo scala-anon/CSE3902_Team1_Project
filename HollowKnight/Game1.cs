@@ -26,6 +26,7 @@ public class Game1 : Game
     private List<IController> _controllerList;
     private List<Spirit> items = new();
 
+    private GameState _gameState = GameState.Playing;
     private TheKnight _knight;
     private CollisionSystem _collisionSystem;
     private DebugOverlay _debugOverlay;
@@ -106,27 +107,37 @@ public class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
+        // Input is always processed (so pause toggle works)
         foreach (IController controller in _controllerList)
             controller.Update(gameTime);
 
-        _knight.Update(gameTime);
-        _roomManager.Update(gameTime);
-
-        _collisionSystem.Update(_knight, _level.Platforms, _level.Enemies, items, _projectileManager, _navigationGrid);
-
-        foreach (IEnemy enemy in _level.Enemies)
-            enemy.Update(gameTime);
-
-        _knightProjectile.Update(gameTime);
-
-        for (int i = 0; i < _level.Platforms.Count; i++)
+        if (_gameState == GameState.Playing)
         {
-            if (_level.Platforms[i] != null)
-                _level.Platforms[i].Update(gameTime);
+            _knight.Update(gameTime);
+            _roomManager.Update(gameTime);
+
+            _collisionSystem.Update(_knight, _level.Platforms, _level.Enemies, items, _projectileManager, _navigationGrid);
+
+            foreach (IEnemy enemy in _level.Enemies)
+                enemy.Update(gameTime);
+
+            _knightProjectile.Update(gameTime);
+
+            for (int i = 0; i < _level.Platforms.Count; i++)
+            {
+                if (_level.Platforms[i] != null)
+                    _level.Platforms[i].Update(gameTime);
+            }
+
+            _projectileManager.Update(gameTime);
         }
 
-        _projectileManager.Update(gameTime);
         base.Update(gameTime);
+    }
+
+    public void TogglePause()
+    {
+        _gameState = _gameState == GameState.Playing ? GameState.Paused : GameState.Playing;
     }
 
     protected override void Draw(GameTime gameTime)

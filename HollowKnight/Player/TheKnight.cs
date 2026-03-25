@@ -12,7 +12,7 @@ namespace HollowKnight.Player
     {
         private readonly Dictionary<KnightSpriteType, ISprite> sprites;
         private ISprite currentSprite;
-        private KnightSpriteType currentState;
+        private KnightSpriteType currentSpriteType;
 
         public Rectangle[] hitBoxes = new Rectangle[1];
         public Direction Facing { get; private set; } = Direction.Right;
@@ -24,6 +24,8 @@ namespace HollowKnight.Player
 
         private int currentItem;
 
+        public KnightState CurrentState { get; private set; } = KnightState.Idle;
+
         public bool IsActive => true;
         public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, currentSprite.Width, currentSprite.Height);
         public float VelocityY => physics.Velocity.Y;
@@ -33,8 +35,8 @@ namespace HollowKnight.Player
             this.sprites = sprites;
             this.position = position;
 
-            currentState = KnightSpriteType.Idle;
-            currentSprite = this.sprites[currentState];
+            currentSpriteType = KnightSpriteType.Idle;
+            currentSprite = this.sprites[currentSpriteType];
             currentSprite.SetPosition(position);
         }
 
@@ -48,36 +50,42 @@ namespace HollowKnight.Player
             health.Update(gameTime);
             combat.Update(gameTime, position, Facing, currentSprite);
 
-            // Resolve animation state
+            // Resolve game state and animation state together
             if (health.IsHealing)
             {
+                CurrentState = KnightState.Healing;
                 KnightSpriteType? healState = health.UpdateHeal(gameTime);
                 if (healState.HasValue)
-                    currentState = healState.Value;
+                    currentSpriteType = healState.Value;
                 physics.StopMovingHorizontal();
             }
             else if (combat.IsAttacking)
             {
-                currentState = combat.AttackType;
+                CurrentState = KnightState.Attacking;
+                currentSpriteType = combat.AttackType;
             }
             else if (health.IsDamaged)
             {
-                currentState = KnightSpriteType.Damaged;
+                CurrentState = KnightState.Damaged;
+                currentSpriteType = KnightSpriteType.Damaged;
             }
             else if (!physics.IsGrounded)
             {
-                currentState = KnightSpriteType.Jumping;
+                CurrentState = physics.Velocity.Y > 0 ? KnightState.Falling : KnightState.Jumping;
+                currentSpriteType = KnightSpriteType.Jumping;
             }
             else if (physics.Velocity.X != 0)
             {
-                currentState = KnightSpriteType.Walking;
+                CurrentState = KnightState.Running;
+                currentSpriteType = KnightSpriteType.Walking;
             }
             else
             {
-                currentState = KnightSpriteType.Idle;
+                CurrentState = KnightState.Idle;
+                currentSpriteType = KnightSpriteType.Idle;
             }
 
-            currentSprite = sprites[currentState];
+            currentSprite = sprites[currentSpriteType];
             currentSprite.SetPosition(position);
             currentSprite.Update(gameTime);
         }
@@ -96,7 +104,7 @@ namespace HollowKnight.Player
             return bounds[0];
         }
 
-        public string GetStateName() => currentState.ToString();
+        public string GetStateName() => CurrentState.ToString();
         public double GetAttackCooldownRemaining() => combat.GetCooldownRemaining();
         public double GetInvincibilityCooldownRemaining() => health.GetInvincibilityCooldownRemaining();
 

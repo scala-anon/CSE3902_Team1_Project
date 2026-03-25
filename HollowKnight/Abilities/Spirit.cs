@@ -1,43 +1,42 @@
-
 using HollowKnight.Factories;
 using HollowKnight.Interfaces;
+using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace HollowKnight.Abilities;
-
-public class Spirit : IPickup
+namespace HollowKnight.Abilities
 {
-    private SpriteEffects effect = SpriteEffects.None;
-    private ISprite sprite;
-    public bool IsActive { get; set; } = true;
-    public bool Collected;
-    private Vector2 position;
-    public Rectangle[] hitBoxes = new Rectangle[1];
-    public Rectangle Bounds { get; }
-    public Spirit(Vector2 _position)
+    public class Spirit : IPickup
     {
-        Collected = false;
-        position = _position;
-        sprite = SpriteFactory.Instance.CreateSpiritInitialSprite(position);
+        private ISprite sprite;
+        private Vector2 position;
+        private Rectangle[] hitBoxes = new Rectangle[1];
+
+        public bool IsActive { get; set; } = true;
+        public bool Collected { get; set; }
+        public Rectangle Bounds => GetBounds()[0];
+
+        public Spirit(Vector2 position)
+        {
+            Collected = false;
+            this.position = position;
+            sprite = SpriteFactory.Instance.CreateSpiritInitialSprite(position);
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            sprite.Update(gameTime);
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            sprite.Draw(spriteBatch, SpriteEffects.None);
+        }
+
+        public Rectangle[] GetBounds()
+        {
+            hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, 100, 100);
+            return hitBoxes;
+        }
     }
-
-    public void Update(GameTime gameTime)
-    {
-        sprite.Update(gameTime);
-    }
-
-    public void Draw(SpriteBatch spriteBatch)
-    {
-        sprite.Draw(spriteBatch, effect);
-    }
-
-
-    public Rectangle[] GetBounds()
-    {
-        Rectangle rectangle = new Rectangle((int)position.X, (int)position.Y, 100, 100);
-        hitBoxes[0] = rectangle;
-        return hitBoxes;
-    }
-
 }

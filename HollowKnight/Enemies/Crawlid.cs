@@ -20,14 +20,14 @@ public enum CrawlidState
 
 public class Crawlid : IEnemy
 {
-    public CrawlidState state = CrawlidState.Idle;
+    public CrawlidState State { get; set; } = CrawlidState.Idle;
 
     private CrawlidStateMachine stateMachine;
 
-    public ISprite CrawlidSprite;
+    public ISprite Sprite { get; set; }
 
-    public bool alive = true;
-    public int health = GameConstants.EnemyDefaultHealth;
+    public bool Alive { get; set; } = true;
+    public int Health { get; set; } = GameConstants.EnemyDefaultHealth;
 
     public bool IsDamaged => _isDamaged;
 
@@ -42,23 +42,22 @@ public class Crawlid : IEnemy
     private const float ScreenFloor = GameConstants.ScreenHeight;
 
     public bool IsGrounded { get; private set; } = true;
-    public bool IsActive => alive;
+    public bool IsActive => Alive;
 
 
     public Vector2 position;
 
-    public Direction facingDirection = Direction.Right;
+    public Direction FacingDirection { get; set; } = Direction.Right;
 
-    // Crawlid patrols surfaces and turns at edges — it does not chase the knight
-    public Rectangle[] hitBoxes = new Rectangle[1];
+    private Rectangle[] hitBoxes = new Rectangle[1];
 
     public Crawlid(Vector2 _position)
     {
         position = _position;
-        CrawlidSprite = SpriteFactory.Instance.CreateCrawlidIdleSprite(position);
+        Sprite = SpriteFactory.Instance.CreateCrawlidIdleSprite(position);
         stateMachine = new CrawlidStateMachine(this);
     }
-    public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, CrawlidSprite.Width, CrawlidSprite.Height);
+    public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, Sprite.Width, Sprite.Height);
 
     // Crawlid does not react to the knight — required by IEnemy interface
     public void SetKnightPosition(Vector2 knightPosition) { }
@@ -95,15 +94,15 @@ public class Crawlid : IEnemy
     public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects)
     {
 
-        SpriteEffects effects = facingDirection == Direction.Right
+        SpriteEffects effects = FacingDirection == Direction.Right
         ? SpriteEffects.FlipHorizontally
         : SpriteEffects.None;
-        CrawlidSprite.Draw(_spriteBatch, effects);
+        Sprite.Draw(_spriteBatch, effects);
     }
 
     public Rectangle[] GetBounds()
     {
-        Vector2 size = CrawlidSprite.GetSize();
+        Vector2 size = Sprite.GetSize();
         hitBoxes[0] =  new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
         return hitBoxes;
     }
@@ -124,7 +123,7 @@ public class Crawlid : IEnemy
     {
         float dt = (float)_gameTime.ElapsedGameTime.TotalSeconds;
 
-        if (!alive)
+        if (!Alive)
         {
             if (!IsGrounded)
             {
@@ -134,18 +133,18 @@ public class Crawlid : IEnemy
                 
                 position += _knockbackVelocity * dt;
 
-                float spriteHeight = CrawlidSprite.GetSize().Y;
+                float spriteHeight = Sprite.GetSize().Y;
                 if (position.Y + spriteHeight >= ScreenFloor)
                 {
                     position.Y = ScreenFloor - spriteHeight;
                     _knockbackVelocity = Vector2.Zero;
                     IsGrounded = true;
-                    state = CrawlidState.DeathLand;
-                    CrawlidSprite = SpriteFactory.Instance.CreateCrawlidDeathLandSprite(position);
+                    State = CrawlidState.DeathLand;
+                    Sprite = SpriteFactory.Instance.CreateCrawlidDeathLandSprite(position);
                 }
             }
-            CrawlidSprite.SetPosition(position);
-            CrawlidSprite.Update(_gameTime);
+            Sprite.SetPosition(position);
+            Sprite.Update(_gameTime);
             return;
         }
 
@@ -168,8 +167,8 @@ public class Crawlid : IEnemy
         }
 
         stateMachine.Update(_gameTime);
-        CrawlidSprite.SetPosition(position);
-        CrawlidSprite.Update(_gameTime);
+        Sprite.SetPosition(position);
+        Sprite.Update(_gameTime);
     }
 }
 }

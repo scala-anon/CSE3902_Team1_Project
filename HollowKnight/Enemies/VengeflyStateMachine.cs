@@ -31,72 +31,72 @@ public class VengeflyStateMachine
 
     public float GetDetectionRadius() => DetectionRadius;
 
-    public void changeHealth()
+    public void ChangeHealth()
     {
-        CurrentVengeFly.health--;
-        if (CurrentVengeFly.health <= 0)
+        CurrentVengeFly.Health--;
+        if (CurrentVengeFly.Health <= 0)
         {
-            CurrentVengeFly.dead = true;
-            CurrentVengeFly.state = VengeflyState.Death;
-            CurrentVengeFly.VengeflySprite = SpriteFactory.Instance.CreateVengeflyDeathSprite(CurrentVengeFly.position);
+            CurrentVengeFly.Dead = true;
+            CurrentVengeFly.State = VengeflyState.Death;
+            CurrentVengeFly.Sprite = SpriteFactory.Instance.CreateVengeflyDeathSprite(CurrentVengeFly.position);
         }
     }
 
 
     public void Update(GameTime _gameTime)
     {
-        if (CurrentVengeFly.dead || CurrentVengeFly.IsDamaged) return;
+        if (CurrentVengeFly.Dead || CurrentVengeFly.IsDamaged) return;
         float elapsedTime = (float)_gameTime.ElapsedGameTime.TotalSeconds;
         Vector2 enemyCenter = CurrentVengeFly.GetBounds()[0].Center.ToVector2();
         float distanceFromKnight = Vector2.Distance(enemyCenter, CurrentVengeFly.knightPosition);
         bool knightInRange = distanceFromKnight <= DetectionRadius;
 
         // State transitions
-        if (!CurrentVengeFly.dead)
+        if (!CurrentVengeFly.Dead)
         {
-            if (knightInRange && CurrentVengeFly.state == VengeflyState.Idle)
+            if (knightInRange && CurrentVengeFly.State == VengeflyState.Idle)
             {
-                CurrentVengeFly.state = VengeflyState.Startle;
-                CurrentVengeFly.VengeflySprite = SpriteFactory.Instance.CreateVengeflyStartleSprite(CurrentVengeFly.position);
+                CurrentVengeFly.State = VengeflyState.Startle;
+                CurrentVengeFly.Sprite = SpriteFactory.Instance.CreateVengeflyStartleSprite(CurrentVengeFly.position);
                 _startleTimer = 0;
             }
-            else if (CurrentVengeFly.state == VengeflyState.Startle)
+            else if (CurrentVengeFly.State == VengeflyState.Startle)
             {
                 _startleTimer += elapsedTime;
                 if (_startleTimer >= StartleDuration)
                 {
-                    CurrentVengeFly.state = VengeflyState.Chase;
-                    CurrentVengeFly.VengeflySprite = SpriteFactory.Instance.CreateVengeflyChaseSprite(CurrentVengeFly.position);
+                    CurrentVengeFly.State = VengeflyState.Chase;
+                    CurrentVengeFly.Sprite = SpriteFactory.Instance.CreateVengeflyChaseSprite(CurrentVengeFly.position);
                 }
             }
-            else if (CurrentVengeFly.state == VengeflyState.Chase && !knightInRange)
+            else if (CurrentVengeFly.State == VengeflyState.Chase && !knightInRange)
             {
-                CurrentVengeFly.state = VengeflyState.Idle;
-                CurrentVengeFly.VengeflySprite = SpriteFactory.Instance.CreateVengeflyIdleSprite(CurrentVengeFly.position);
+                CurrentVengeFly.State = VengeflyState.Idle;
+                CurrentVengeFly.Sprite = SpriteFactory.Instance.CreateVengeflyIdleSprite(CurrentVengeFly.position);
             }
         }
 
         // Movement
-        if (CurrentVengeFly.state == VengeflyState.Idle)
+        if (CurrentVengeFly.State == VengeflyState.Idle)
         {
             CurrentVengeFly.position.X += (_patrolDirection == Direction.Right ? PatrolSpeed : -PatrolSpeed) * elapsedTime;
-            CurrentVengeFly.facingDirection = _patrolDirection;
-            float spriteWidth = CurrentVengeFly.VengeflySprite.GetSize().X;
+            CurrentVengeFly.FacingDirection = _patrolDirection;
+            float spriteWidth = CurrentVengeFly.Sprite.GetSize().X;
 
             if (CurrentVengeFly.position.X + spriteWidth >= GameConstants.DefaultLevelWidth)
             {
                 CurrentVengeFly.position.X = GameConstants.DefaultLevelWidth - spriteWidth;
                 _patrolDirection = Direction.Left;
-                CurrentVengeFly.facingDirection = Direction.Left;
+                CurrentVengeFly.FacingDirection = Direction.Left;
             }
             else if (CurrentVengeFly.position.X <= 0)
             {
                 CurrentVengeFly.position.X = 0;
                 _patrolDirection = Direction.Right;
-                CurrentVengeFly.facingDirection = Direction.Right;
+                CurrentVengeFly.FacingDirection = Direction.Right;
             }
         }
-        else if (CurrentVengeFly.state == VengeflyState.Chase)
+        else if (CurrentVengeFly.State == VengeflyState.Chase)
         {
             _pathUpdateTimer += elapsedTime;
             
@@ -124,9 +124,9 @@ public class VengeflyStateMachine
                     dir.Normalize();
                     CurrentVengeFly.position += dir * ChaseSpeed * elapsedTime;
                     if (dir.X > 0)
-                        CurrentVengeFly.facingDirection = Direction.Right;
+                        CurrentVengeFly.FacingDirection = Direction.Right;
                     else if (dir.X < 0)
-                        CurrentVengeFly.facingDirection = Direction.Left;
+                        CurrentVengeFly.FacingDirection = Direction.Left;
                 }
             } else {
                  // Fallback to straight line if no path found
@@ -136,16 +136,16 @@ public class VengeflyStateMachine
                     dir.Normalize();
                     CurrentVengeFly.position += dir * ChaseSpeed * elapsedTime;
                     if (dir.X > 0)
-                        CurrentVengeFly.facingDirection = Direction.Right;
+                        CurrentVengeFly.FacingDirection = Direction.Right;
                     else if (dir.X < 0)
-                        CurrentVengeFly.facingDirection = Direction.Left;
+                        CurrentVengeFly.FacingDirection = Direction.Left;
                  }
             }
         }
 
-        CurrentVengeFly.VengeflySprite.SetPosition(CurrentVengeFly.position);
+        CurrentVengeFly.Sprite.SetPosition(CurrentVengeFly.position);
     }
 
-    public string GetStateName() => CurrentVengeFly.state.ToString();
+    public string GetStateName() => CurrentVengeFly.State.ToString();
 }
 }

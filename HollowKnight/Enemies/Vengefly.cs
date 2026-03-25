@@ -21,14 +21,12 @@ public enum VengeflyState
 
 public class Vengefly : IEnemy
 {
-    public Rectangle[] hitBoxes = new Rectangle[1];
-    public VengeflyState state = VengeflyState.Idle;
-    public bool dead;
-    public bool startleAnimationPlayed;
-    public Direction facingDirection = Direction.Left;
-    public bool knightFound;
+    private Rectangle[] hitBoxes = new Rectangle[1];
+    public VengeflyState State { get; set; } = VengeflyState.Idle;
+    public bool Dead { get; set; }
+    public Direction FacingDirection { get; set; } = Direction.Left;
 
-    public int health = GameConstants.EnemyDefaultHealth;
+    public int Health { get; set; } = GameConstants.EnemyDefaultHealth;
     public bool IsDamaged => _isDamaged;
 
     private bool _isDamaged;
@@ -45,17 +43,13 @@ public class Vengefly : IEnemy
     public Vector2 knightPosition = new Vector2(-9999, -9999);
 
     private VengeflyStateMachine stateMachine;
-    public ISprite VengeflySprite;
+    public ISprite Sprite { get; set; }
     public Vector2 position;
 
-    public Vengefly(Vector2 _positon)
+    public Vengefly(Vector2 position)
     {
-        position = _positon;
-        dead = false;
-        startleAnimationPlayed = true;
-        knightFound = false;
-        facingDirection = Direction.Left;
-        VengeflySprite = SpriteFactory.Instance.CreateVengeflyIdleSprite(position);
+        this.position = position;
+        Sprite = SpriteFactory.Instance.CreateVengeflyIdleSprite(position);
         stateMachine = new VengeflyStateMachine(this);
     }
 
@@ -71,11 +65,11 @@ public class Vengefly : IEnemy
         return stateMachine.GetCurrentPath();
     }
     public float GetDetectionRadius() => stateMachine.GetDetectionRadius();
-    public bool IsActive => !dead;
-    public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, VengeflySprite.Width, VengeflySprite.Height);
+    public bool IsActive => !Dead;
+    public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, Sprite.Width, Sprite.Height);
     public void ChangeHealth()
     {
-        stateMachine.changeHealth();
+        stateMachine.ChangeHealth();
     }
 
     public void TakeDamage() => TakeDamage(CollisionSide.None);
@@ -97,15 +91,15 @@ public class Vengefly : IEnemy
 
     public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects)
     {
-        SpriteEffects effects = facingDirection == Direction.Right ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-        VengeflySprite.Draw(_spriteBatch, effects);
+        SpriteEffects effects = FacingDirection == Direction.Right ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+        Sprite.Draw(_spriteBatch, effects);
     }
 
     public void Update(GameTime _gameTime)
     {
         float dt = (float)_gameTime.ElapsedGameTime.TotalSeconds;
 
-        if (dead)
+        if (Dead)
         {
             if (!IsGrounded)
             {
@@ -115,7 +109,7 @@ public class Vengefly : IEnemy
 
                 position += _knockbackVelocity * dt;
 
-                float spriteHeight = VengeflySprite.GetSize().Y;
+                float spriteHeight = Sprite.GetSize().Y;
                 if (position.Y + spriteHeight >= ScreenFloor)
                 {
                     position.Y = ScreenFloor - spriteHeight;
@@ -124,8 +118,8 @@ public class Vengefly : IEnemy
                 }
             }
 
-            VengeflySprite.SetPosition(position);
-            VengeflySprite.Update(_gameTime);
+            Sprite.SetPosition(position);
+            Sprite.Update(_gameTime);
             return;
         }
 
@@ -148,13 +142,13 @@ public class Vengefly : IEnemy
         }
 
         stateMachine.Update(_gameTime);
-        VengeflySprite.SetPosition(position);
-        VengeflySprite.Update(_gameTime);
+        Sprite.SetPosition(position);
+        Sprite.Update(_gameTime);
     }
 
     public Rectangle[] GetBounds()
     {
-        Vector2 size = VengeflySprite.GetSize();
+        Vector2 size = Sprite.GetSize();
         hitBoxes[0] =  new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
         return hitBoxes;
     }

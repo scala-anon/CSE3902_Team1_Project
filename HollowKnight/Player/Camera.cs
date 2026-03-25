@@ -24,7 +24,6 @@ namespace HollowKnight
             return Matrix.CreateTranslation(-position.X, -position.Y,0);
         }
 
-        // TODO: fix knight movement speed so that camera isn't as slow.
         public void Follow(Vector2 target)
         {
             // puts target at center of screen

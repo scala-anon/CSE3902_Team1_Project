@@ -21,26 +21,26 @@ public class CrawlidStateMachine
 
     public void ChangeHealth()
     {
-        CurrentCrawlid.health--;
-        if (CurrentCrawlid.health <= 0)
+        CurrentCrawlid.Health--;
+        if (CurrentCrawlid.Health <= 0)
         {
-            CurrentCrawlid.alive = false;
+            CurrentCrawlid.Alive = false;
             if (!CurrentCrawlid.IsGrounded)
             {
-                CurrentCrawlid.state = CrawlidState.DeathAir;
-                CurrentCrawlid.CrawlidSprite = SpriteFactory.Instance.CreateCrawlidDeathAirSprite(CurrentCrawlid.position);
+                CurrentCrawlid.State = CrawlidState.DeathAir;
+                CurrentCrawlid.Sprite = SpriteFactory.Instance.CreateCrawlidDeathAirSprite(CurrentCrawlid.position);
             }
             else
             {
-                CurrentCrawlid.state = CrawlidState.DeathLand;
-                CurrentCrawlid.CrawlidSprite = SpriteFactory.Instance.CreateCrawlidDeathLandSprite(CurrentCrawlid.position);
+                CurrentCrawlid.State = CrawlidState.DeathLand;
+                CurrentCrawlid.Sprite = SpriteFactory.Instance.CreateCrawlidDeathLandSprite(CurrentCrawlid.position);
             }
         }
     }
 
     public void Update(GameTime _gameTime)
     {
-        if (!CurrentCrawlid.alive || CurrentCrawlid.IsDamaged) return;
+        if (!CurrentCrawlid.Alive || CurrentCrawlid.IsDamaged) return;
         float elapsedTime = (float)_gameTime.ElapsedGameTime.TotalSeconds;
 
         if (_isTurning)
@@ -50,42 +50,42 @@ public class CrawlidStateMachine
             {
                 _isTurning = false;
                 _turnTimer = 0f;
-                CurrentCrawlid.state = CrawlidState.Idle;
-                CurrentCrawlid.CrawlidSprite = SpriteFactory.Instance.CreateCrawlidIdleSprite(CurrentCrawlid.position);
+                CurrentCrawlid.State = CrawlidState.Idle;
+                CurrentCrawlid.Sprite = SpriteFactory.Instance.CreateCrawlidIdleSprite(CurrentCrawlid.position);
             }
-            CurrentCrawlid.CrawlidSprite.SetPosition(CurrentCrawlid.position);
+            CurrentCrawlid.Sprite.SetPosition(CurrentCrawlid.position);
             return;
         }
 
         CurrentCrawlid.position.X += (_movementDirection == Direction.Right ? PatrolSpeed : -PatrolSpeed) * elapsedTime;
-        float spriteWidth = CurrentCrawlid.CrawlidSprite.GetSize().X;
+        float spriteWidth = CurrentCrawlid.Sprite.GetSize().X;
 
         if (CurrentCrawlid.position.X + spriteWidth >= GameConstants.DefaultLevelWidth)
         {
             CurrentCrawlid.position.X = GameConstants.DefaultLevelWidth - spriteWidth;
             _movementDirection = Direction.Left;
-            CurrentCrawlid.facingDirection = Direction.Left;
+            CurrentCrawlid.FacingDirection = Direction.Left;
             CrawlidTurn();
         }
         else if (CurrentCrawlid.position.X <= 0)
         {
             CurrentCrawlid.position.X = 0;
             _movementDirection = Direction.Right;
-            CurrentCrawlid.facingDirection = Direction.Right;
+            CurrentCrawlid.FacingDirection = Direction.Right;
             CrawlidTurn();
         }
         
-        CurrentCrawlid.CrawlidSprite.SetPosition(CurrentCrawlid.position);
+        CurrentCrawlid.Sprite.SetPosition(CurrentCrawlid.position);
     }
 
     private void CrawlidTurn()
     {
         _isTurning = true;
         _turnTimer = 0f;
-        CurrentCrawlid.state = CrawlidState.Turn;
-        CurrentCrawlid.CrawlidSprite = SpriteFactory.Instance.CreateCrawlidTurnSprite(CurrentCrawlid.position);
+        CurrentCrawlid.State = CrawlidState.Turn;
+        CurrentCrawlid.Sprite = SpriteFactory.Instance.CreateCrawlidTurnSprite(CurrentCrawlid.position);
     }
 
-    public string GetStateName() => CurrentCrawlid.state.ToString();
+    public string GetStateName() => CurrentCrawlid.State.ToString();
 }
 }

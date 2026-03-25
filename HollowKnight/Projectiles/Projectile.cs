@@ -5,7 +5,6 @@ namespace HollowKnight.Projectiles
 {
     public enum ProjectileFaction { Player, Enemy }
 
-    //TODO change to ICollidable
     public class Projectile : ICollidable
     {
         public Vector2 Position;
@@ -17,23 +16,11 @@ namespace HollowKnight.Projectiles
         public bool Alive = true;
         public bool IsActive => Alive;
 
-        public Rectangle[] hitBoxes = new Rectangle[1];
+        private Rectangle[] hitBoxes = new Rectangle[1];
         public ProjectileFaction Faction;
-
-
-        //TODO choose one
-        /* public Rectangle[] GetBounds()
-         {
-             Rectangle rectangle = new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
-             hitBoxes[0] = rectangle;
-             return hitBoxes;
-         }
-     */
 
         public Rectangle Bounds =>
             new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
-
-
 
         public Projectile(Vector2 position, Vector2 velocity, ProjectileFaction faction)
         {

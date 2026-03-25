@@ -35,12 +35,6 @@ namespace HollowKnight.Collision
 
                 // Item pickup
                 _handler.Register<Spirit, TheKnight>(side, (a, b) => ((TheKnight)b).Collect(side));
-
-                // Environment blocks knight
-                _handler.Register<TutorialPlatform, TheKnight>(side, (a, b) => CollisionManager.ResolvePlayerBlockCollision((TheKnight)b, (ICollidable)a));
-                _handler.Register<Path, TheKnight>(side, (a, b) => CollisionManager.ResolvePlayerBlockCollision((TheKnight)b, (ICollidable)a));
-                _handler.Register<PathLedge, TheKnight>(side, (a, b) => CollisionManager.ResolvePlayerBlockCollision((TheKnight)b, (ICollidable)a));
-                _handler.Register<Spike, TheKnight>(side, (a, b) => CollisionManager.ResolvePlayerBlockCollision((TheKnight)b, (ICollidable)a));
             }
         }
 
