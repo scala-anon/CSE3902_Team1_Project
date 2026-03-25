@@ -41,7 +41,7 @@ namespace HollowKnight.Pathfinding
             List<Node> openList = new List<Node>();
             HashSet<string> closedList = new HashSet<string>();
 
-            Node startNode = new Node { X = startX, Y = startY, G = 0, H = GetManhattanDistance(startX, startY, targetX, targetY) };
+            Node startNode = new Node { X = startX, Y = startY, G = 0, H = GetOctileDistance(startX, startY, targetX, targetY) };
             openList.Add(startNode);
 
             int maxIterations = 1000; // Failsafe to prevent infinite loops / lag
@@ -96,7 +96,7 @@ namespace HollowKnight.Pathfinding
                         }
                         
                         neighborNode.G = newCostToNeighbor;
-                        neighborNode.H = GetManhattanDistance(neighborX, neighborY, targetX, targetY);
+                        neighborNode.H = GetOctileDistance(neighborX, neighborY, targetX, targetY);
                         neighborNode.Parent = current;
                     }
                 }
@@ -116,10 +116,24 @@ namespace HollowKnight.Pathfinding
             return path;
         }
 
+        /*
         private static int GetManhattanDistance(int x1, int y1, int x2, int y2)
         {
             // Multiplying by 10 to make integer math easier
             return 10 * (Math.Abs(x1 - x2) + Math.Abs(y1 - y2));
         }
+        */
+        
+        private static int GetOctileDistance(int x1, int y1, int x2, int y2)
+        {
+            int dx = Math.Abs(x1 - x2);
+            int dy = Math.Abs(y1 - y2);
+
+            // Uses integer approximation of diagonal cost (14) vs straight cost (10).
+            // Formula: 10 * (dx + dy) + (14 - 20) * min(dx, dy)
+            // Simplified: 10 * max + 4 * min
+            return 10 * Math.Max(dx, dy) + 4 * Math.Min(dx, dy);
+        }
+        
     }
 }
