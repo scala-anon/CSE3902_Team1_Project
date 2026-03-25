@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using HollowKnight.Interfaces;
 using HollowKnight.Environment;
+using HollowKnight.Enemies;
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;

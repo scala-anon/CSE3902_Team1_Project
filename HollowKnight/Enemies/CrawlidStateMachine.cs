@@ -1,17 +1,18 @@
-using System.Reflection;
 using HollowKnight.Factories;
 using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 
+namespace HollowKnight.Enemies
+{
 public class CrawlidStateMachine
 {
     private Crawlid CurrentCrawlid;
 
-    private const float PatrolSpeed = 120f; // TODO: change speed accordingly
+    private const float PatrolSpeed = GameConstants.CrawlidPatrolSpeed;
     private Direction _movementDirection = Direction.Right;
     private bool _isTurning = false;
     private float _turnTimer = 0f;
-    private const float TurnDuration = 0.08f;
+    private const float TurnDuration = GameConstants.CrawlidTurnDuration;
 
     public CrawlidStateMachine(Crawlid _enemy)
     {
@@ -26,12 +27,12 @@ public class CrawlidStateMachine
             CurrentCrawlid.alive = false;
             if (!CurrentCrawlid.IsGrounded)
             {
-                CurrentCrawlid.state = 2;
+                CurrentCrawlid.state = CrawlidState.DeathAir;
                 CurrentCrawlid.CrawlidSprite = SpriteFactory.Instance.CreateCrawlidDeathAirSprite(CurrentCrawlid.position);
             }
             else
             {
-                CurrentCrawlid.state = 3;
+                CurrentCrawlid.state = CrawlidState.DeathLand;
                 CurrentCrawlid.CrawlidSprite = SpriteFactory.Instance.CreateCrawlidDeathLandSprite(CurrentCrawlid.position);
             }
         }
@@ -49,7 +50,7 @@ public class CrawlidStateMachine
             {
                 _isTurning = false;
                 _turnTimer = 0f;
-                CurrentCrawlid.state = 0;
+                CurrentCrawlid.state = CrawlidState.Idle;
                 CurrentCrawlid.CrawlidSprite = SpriteFactory.Instance.CreateCrawlidIdleSprite(CurrentCrawlid.position);
             }
             CurrentCrawlid.CrawlidSprite.SetPosition(CurrentCrawlid.position);
@@ -59,9 +60,9 @@ public class CrawlidStateMachine
         CurrentCrawlid.position.X += (_movementDirection == Direction.Right ? PatrolSpeed : -PatrolSpeed) * elapsedTime;
         float spriteWidth = CurrentCrawlid.CrawlidSprite.GetSize().X;
 
-        if (CurrentCrawlid.position.X + spriteWidth >= 3200)
+        if (CurrentCrawlid.position.X + spriteWidth >= GameConstants.DefaultLevelWidth)
         {
-            CurrentCrawlid.position.X = 3200 - spriteWidth;
+            CurrentCrawlid.position.X = GameConstants.DefaultLevelWidth - spriteWidth;
             _movementDirection = Direction.Left;
             CurrentCrawlid.facingDirection = Direction.Left;
             CrawlidTurn();
@@ -81,19 +82,10 @@ public class CrawlidStateMachine
     {
         _isTurning = true;
         _turnTimer = 0f;
-        CurrentCrawlid.state = 1;
+        CurrentCrawlid.state = CrawlidState.Turn;
         CurrentCrawlid.CrawlidSprite = SpriteFactory.Instance.CreateCrawlidTurnSprite(CurrentCrawlid.position);
     }
 
-    public string GetStateName()
-    {
-        return CurrentCrawlid.state switch
-        {
-            0 => "Idle",
-            1 => "Turn",
-            2 => "DeathAir",
-            3 => "DeathLand",
-            _ => "Unknown"
-        };
-    }
+    public string GetStateName() => CurrentCrawlid.state.ToString();
+}
 }

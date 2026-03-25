@@ -5,31 +5,41 @@ using HollowKnight.Shared;
 using HollowKnight.Collision;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using HollowKnight.Pathfinding; //not used but required by IEnemy interface
-using System.Collections.Generic; //not used but required by IEnemy interface
+using HollowKnight.Pathfinding;
+using System.Collections.Generic;
+
+namespace HollowKnight.Enemies
+{
+public enum CrawlidState
+{
+    Idle,
+    Turn,
+    DeathAir,
+    DeathLand
+}
 
 public class Crawlid : IEnemy
 {
-    public int state = 0;
+    public CrawlidState state = CrawlidState.Idle;
 
     private CrawlidStateMachine stateMachine;
 
     public ISprite CrawlidSprite;
 
     public bool alive = true;
-    public int health = 3;
+    public int health = GameConstants.EnemyDefaultHealth;
 
     public bool IsDamaged => _isDamaged;
 
     private bool _isDamaged;
     private double _damagedTimer;
-    private const double DamagedDuration = 0.4;
+    private const double DamagedDuration = GameConstants.EnemyDamagedDuration;
 
     private Vector2 _knockbackVelocity;
-    private const float KnockbackSpeed = 950f; //TODO: edit this to make it closer to the actual game
-    private const float KnockbackDecay = 8f;
-    private const float DeathGravity = 600f;
-    private const float ScreenFloor = 720f;
+    private const float KnockbackSpeed = GameConstants.EnemyKnockbackSpeed;
+    private const float KnockbackDecay = GameConstants.EnemyKnockbackDecay;
+    private const float DeathGravity = GameConstants.EnemyDeathGravity;
+    private const float ScreenFloor = GameConstants.ScreenHeight;
 
     public bool IsGrounded { get; private set; } = true;
     public bool IsActive => alive;
@@ -102,7 +112,7 @@ public class Crawlid : IEnemy
     public Rectangle GetHurtbox()
     {
         Rectangle[] bounds = GetBounds();
-        bounds[0].Inflate(6, 6);
+        bounds[0].Inflate(GameConstants.EnemyHurtboxGrow, GameConstants.EnemyHurtboxGrow);
         return bounds[0];
     }
 
@@ -110,16 +120,6 @@ public class Crawlid : IEnemy
     {
         return stateMachine.GetStateName();
     }
-    /*
-    // TODO: Tune width/height to match the actual scaled sprite size
-    public Rectangle[] GetBounds()
-    {
-        Vector2 size = CrawlidSprite.GetSize();
-        hitBoxes[0] = Bounds;
-        return hitBoxes;
-    }
-    */
-
     public void Update(GameTime _gameTime)
     {
         float dt = (float)_gameTime.ElapsedGameTime.TotalSeconds;
@@ -140,7 +140,7 @@ public class Crawlid : IEnemy
                     position.Y = ScreenFloor - spriteHeight;
                     _knockbackVelocity = Vector2.Zero;
                     IsGrounded = true;
-                    state = 3;
+                    state = CrawlidState.DeathLand;
                     CrawlidSprite = SpriteFactory.Instance.CreateCrawlidDeathLandSprite(position);
                 }
             }
@@ -171,4 +171,5 @@ public class Crawlid : IEnemy
         CrawlidSprite.SetPosition(position);
         CrawlidSprite.Update(_gameTime);
     }
+}
 }

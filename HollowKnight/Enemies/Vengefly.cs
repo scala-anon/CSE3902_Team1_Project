@@ -9,30 +9,39 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
+namespace HollowKnight.Enemies
+{
+public enum VengeflyState
+{
+    Idle,
+    Startle,
+    Chase,
+    Death
+}
+
 public class Vengefly : IEnemy
 {
     public Rectangle[] hitBoxes = new Rectangle[1];
-    public int state = 0;
+    public VengeflyState state = VengeflyState.Idle;
     public bool dead;
     public bool startleAnimationPlayed;
     public Direction facingDirection = Direction.Left;
     public bool knightFound;
 
-    public int health = 3;
+    public int health = GameConstants.EnemyDefaultHealth;
     public bool IsDamaged => _isDamaged;
 
     private bool _isDamaged;
     private double _damagedTimer;
-    private const double DamagedDuration = 0.4;
+    private const double DamagedDuration = GameConstants.EnemyDamagedDuration;
 
     private Vector2 _knockbackVelocity;
-    private const float KnockbackSpeed = 950f;
-    private const float KnockbackDecay = 8f;
-    private const float DeathGravity = 600f;
-    private const float ScreenFloor = 720f; //TODO: change this to be based on the map instead of hardcoded
+    private const float KnockbackSpeed = GameConstants.EnemyKnockbackSpeed;
+    private const float KnockbackDecay = GameConstants.EnemyKnockbackDecay;
+    private const float DeathGravity = GameConstants.EnemyDeathGravity;
+    private const float ScreenFloor = GameConstants.ScreenHeight;
     public bool IsGrounded { get; private set; } = false;
 
-    //TODO change this default knight position to something more reasonable
     public Vector2 knightPosition = new Vector2(-9999, -9999);
 
     private VengeflyStateMachine stateMachine;
@@ -64,18 +73,6 @@ public class Vengefly : IEnemy
     public float GetDetectionRadius() => stateMachine.GetDetectionRadius();
     public bool IsActive => !dead;
     public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, VengeflySprite.Width, VengeflySprite.Height);
-    /*
-        public void changeDirection()
-        {
-            stateMachine.ChangeDirection();
-        }
-
-
-        public void changeMovingState()
-        {
-            stateMachine.ChangeMovingState();
-        }
-    */
     public void ChangeHealth()
     {
         stateMachine.changeHealth();
@@ -90,8 +87,8 @@ public class Vengefly : IEnemy
         _damagedTimer = 0;
         switch (side)
         {
-            case CollisionSide.Left: _knockbackVelocity = new Vector2(-KnockbackSpeed, -150f); break;
-            case CollisionSide.Right: _knockbackVelocity = new Vector2(KnockbackSpeed, -150f); break;
+            case CollisionSide.Left: _knockbackVelocity = new Vector2(-KnockbackSpeed, GameConstants.VengeflyKnockbackUpComponent); break;
+            case CollisionSide.Right: _knockbackVelocity = new Vector2(KnockbackSpeed, GameConstants.VengeflyKnockbackUpComponent); break;
             case CollisionSide.Top: _knockbackVelocity = new Vector2(0, -KnockbackSpeed); break;
             case CollisionSide.Bottom: _knockbackVelocity = new Vector2(0, KnockbackSpeed); break;
         }
@@ -108,8 +105,6 @@ public class Vengefly : IEnemy
     {
         float dt = (float)_gameTime.ElapsedGameTime.TotalSeconds;
 
-        //death gravity 
-        //TODO: change this to be based on the map instead of hardcoded
         if (dead)
         {
             if (!IsGrounded)
@@ -168,7 +163,7 @@ public class Vengefly : IEnemy
     public Rectangle GetHurtbox()
     {
         Rectangle[] bounds = GetBounds();
-        bounds[0].Inflate(6, 6);
+        bounds[0].Inflate(GameConstants.EnemyHurtboxGrow, GameConstants.EnemyHurtboxGrow);
         return bounds[0];
     }
 
@@ -176,15 +171,5 @@ public class Vengefly : IEnemy
     {
         return stateMachine.GetStateName();
     }
-    /*
-    // TODO: Tune width/height to match the actual scaled sprite size
-    public Rectangle[] GetBounds()
-    {
-        Vector2 size = VengeflySprite.GetSize();
-        //Rectangle rectangle = new Rectangle((int)position.X, (int)position.Y, VengeflySprite.Width, VengeflySprite.Height);
-        hitBoxes[0] = Bounds;
-        //Console.WriteLine($"Vengefly Bounds: {rectangle}");
-        return hitBoxes;
-    }
-    */
+}
 }

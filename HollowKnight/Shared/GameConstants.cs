@@ -1,36 +1,56 @@
 namespace HollowKnight.Shared
 {
-    // TODO: Extract all magic numbers from TheKnight, Crawlid, Vengefly,
-    // CrawlidStateMachine, VengeflyStateMachine, and Game1 into this class.
-    // Changing screen resolution or tuning physics should mean editing one file.
     public static class GameConstants
     {
         // Screen
-        // TODO: Replace hardcoded 1280/720 in Game1, enemy classes, and state machines
         public const int ScreenWidth = 1280;
         public const int ScreenHeight = 720;
 
         // Level
-        // TODO: Replace hardcoded 3200/720 in Game1
         public const int DefaultLevelWidth = 3200;
         public const int DefaultLevelHeight = 720;
 
-        // Player Physics
-        // TODO: Extract from TheKnight fields
-        // public const float PlayerMoveSpeed = ...;
-        // public const float PlayerJumpSpeed = ...;
-        // public const float Gravity = ...;
+        // Knight — Physics
+        public const float KnightMoveSpeed = 200f;
+        public const float KnightJumpSpeed = -700f;
+        public const float KnightGravity = 900f;
+        public const float KnightKnockbackSpeed = 250f;
+        public const float KnightKnockbackUpwards = -300f;
 
-        // Player Combat
-        // TODO: Extract from TheKnight fields
-        // public const float AttackCooldown = ...;
-        // public const float AttackDuration = ...;
-        // public const float InvincibilityDuration = ...;
-        // public const float KnockbackSpeed = ...;
+        // Knight — Combat
+        public const double KnightAttackDuration = 0.25;
+        public const double KnightAttackCooldown = 0.41;
 
-        // Enemy Defaults
-        // TODO: Extract from Crawlid/Vengefly fields
-        // public const float CrawlidSpeed = ...;
-        // public const float VengeflySpeed = ...;
+        // Knight — Health
+        public const int KnightStartHealth = 5;
+        public const int KnightMaxHealth = 9;
+        public const double KnightInvincibilityDuration = 1.3;
+        public const double KnightHealPrepDuration = 0.6;
+        public const double KnightHealPostDuration = 0.2;
+        public const int KnightHurtboxShrink = 6;
+
+        // Enemy — Shared
+        public const float EnemyKnockbackSpeed = 950f;
+        public const float EnemyKnockbackDecay = 8f;
+        public const float EnemyDeathGravity = 600f;
+        public const double EnemyDamagedDuration = 0.4;
+        public const int EnemyHurtboxGrow = 6;
+        public const int EnemyDefaultHealth = 3;
+
+        // Crawlid
+        public const float CrawlidPatrolSpeed = 120f;
+        public const float CrawlidTurnDuration = 0.08f;
+
+        // Vengefly
+        public const float VengeflyDetectionRadius = 500f;
+        public const float VengeflyPatrolSpeed = 75f;
+        public const float VengeflyChaseSpeed = 100f;
+        public const double VengeflyStartleDuration = 0.5;
+        public const float VengeflyPathUpdateInterval = 0.3f;
+        public const float VengeflyKnockbackUpComponent = -150f;
+
+        // Navigation
+        public const int NavGridCellSize = 12;
+        public const float PathReachedThreshold = 10f;
     }
 }

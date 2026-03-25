@@ -1,20 +1,19 @@
-
 using HollowKnight.Factories;
-using HollowKnight.Interfaces;
 using HollowKnight.Shared;
 using HollowKnight.Pathfinding;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
+namespace HollowKnight.Enemies
+{
 public class VengeflyStateMachine
 {
     private Vengefly CurrentVengeFly;
 
-    private const float DetectionRadius = 500f;
-    private const float PatrolSpeed = 75f;
-    private const float ChaseSpeed = 100f;
-    private const double StartleDuration = 0.5;
+    private const float DetectionRadius = GameConstants.VengeflyDetectionRadius;
+    private const float PatrolSpeed = GameConstants.VengeflyPatrolSpeed;
+    private const float ChaseSpeed = GameConstants.VengeflyChaseSpeed;
+    private const double StartleDuration = GameConstants.VengeflyStartleDuration;
 
     private Direction _patrolDirection = Direction.Right;
     private double _startleTimer = 0;
@@ -38,7 +37,7 @@ public class VengeflyStateMachine
         if (CurrentVengeFly.health <= 0)
         {
             CurrentVengeFly.dead = true;
-            CurrentVengeFly.state = 3;
+            CurrentVengeFly.state = VengeflyState.Death;
             CurrentVengeFly.VengeflySprite = SpriteFactory.Instance.CreateVengeflyDeathSprite(CurrentVengeFly.position);
         }
     }
@@ -55,38 +54,38 @@ public class VengeflyStateMachine
         // State transitions
         if (!CurrentVengeFly.dead)
         {
-            if (knightInRange && CurrentVengeFly.state == 0)
+            if (knightInRange && CurrentVengeFly.state == VengeflyState.Idle)
             {
-                CurrentVengeFly.state = 1;
+                CurrentVengeFly.state = VengeflyState.Startle;
                 CurrentVengeFly.VengeflySprite = SpriteFactory.Instance.CreateVengeflyStartleSprite(CurrentVengeFly.position);
                 _startleTimer = 0;
             }
-            else if (CurrentVengeFly.state == 1)
+            else if (CurrentVengeFly.state == VengeflyState.Startle)
             {
                 _startleTimer += elapsedTime;
                 if (_startleTimer >= StartleDuration)
                 {
-                    CurrentVengeFly.state = 2;
+                    CurrentVengeFly.state = VengeflyState.Chase;
                     CurrentVengeFly.VengeflySprite = SpriteFactory.Instance.CreateVengeflyChaseSprite(CurrentVengeFly.position);
                 }
             }
-            else if (CurrentVengeFly.state == 2 && !knightInRange)
+            else if (CurrentVengeFly.state == VengeflyState.Chase && !knightInRange)
             {
-                CurrentVengeFly.state = 0;
+                CurrentVengeFly.state = VengeflyState.Idle;
                 CurrentVengeFly.VengeflySprite = SpriteFactory.Instance.CreateVengeflyIdleSprite(CurrentVengeFly.position);
             }
         }
 
         // Movement
-        if (CurrentVengeFly.state == 0)
+        if (CurrentVengeFly.state == VengeflyState.Idle)
         {
             CurrentVengeFly.position.X += (_patrolDirection == Direction.Right ? PatrolSpeed : -PatrolSpeed) * elapsedTime;
             CurrentVengeFly.facingDirection = _patrolDirection;
             float spriteWidth = CurrentVengeFly.VengeflySprite.GetSize().X;
 
-            if (CurrentVengeFly.position.X + spriteWidth >= 3200)
+            if (CurrentVengeFly.position.X + spriteWidth >= GameConstants.DefaultLevelWidth)
             {
-                CurrentVengeFly.position.X = 3200 - spriteWidth;
+                CurrentVengeFly.position.X = GameConstants.DefaultLevelWidth - spriteWidth;
                 _patrolDirection = Direction.Left;
                 CurrentVengeFly.facingDirection = Direction.Left;
             }
@@ -97,12 +96,12 @@ public class VengeflyStateMachine
                 CurrentVengeFly.facingDirection = Direction.Right;
             }
         }
-        else if (CurrentVengeFly.state == 2)
+        else if (CurrentVengeFly.state == VengeflyState.Chase)
         {
             _pathUpdateTimer += elapsedTime;
             
             // Recalculate path every 0.3 seconds or if we don't have a path
-            if (_pathUpdateTimer >= 0.3f || _currentPath.Count == 0)
+            if (_pathUpdateTimer >= GameConstants.VengeflyPathUpdateInterval || _currentPath.Count == 0)
             {
                 _pathUpdateTimer = 0f;
                 if (_grid != null) {
@@ -113,7 +112,7 @@ public class VengeflyStateMachine
             if (_currentPath.Count > 0)
             {
                 Vector2 targetWaypoint = _currentPath[0];
-                if (Vector2.Distance(enemyCenter, targetWaypoint) < 10f)
+                if (Vector2.Distance(enemyCenter, targetWaypoint) < GameConstants.PathReachedThreshold)
                 {
                     _currentPath.RemoveAt(0); // reached knight
                     if (_currentPath.Count > 0) targetWaypoint = _currentPath[0];
@@ -147,15 +146,6 @@ public class VengeflyStateMachine
         CurrentVengeFly.VengeflySprite.SetPosition(CurrentVengeFly.position);
     }
 
-    public string GetStateName()
-    {
-        return CurrentVengeFly.state switch
-        {
-            0 => "Idle",
-            1 => "Startle",
-            2 => "Chase",
-            3 => "Death",
-            _ => "Unknown"
-        };
-    }
+    public string GetStateName() => CurrentVengeFly.state.ToString();
+}
 }
