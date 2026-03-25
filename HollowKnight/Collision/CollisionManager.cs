@@ -80,17 +80,28 @@ namespace HollowKnight.Collision
             Rectangle playerBounds = player.Bounds;
             Rectangle blockBounds = block.Bounds;
 
-            // Expand by 1px so touching surfaces (not just overlapping) are caught —
-            // prevents gravity drift when knight sits exactly on a platform edge
-            Rectangle expanded = playerBounds;
-            expanded.Inflate(0, 1);
-            if (!expanded.Intersects(blockBounds))
+            // Use a 1px downward extension so "resting on surface" (touching) is detected
+            Rectangle probe = new Rectangle(playerBounds.X, playerBounds.Y, playerBounds.Width, playerBounds.Height + 1);
+            if (!probe.Intersects(blockBounds))
                 return;
 
             int overlapLeft = playerBounds.Right - blockBounds.Left;
             int overlapRight = blockBounds.Right - playerBounds.Left;
             int overlapTop = playerBounds.Bottom - blockBounds.Top;
             int overlapBottom = blockBounds.Bottom - playerBounds.Top;
+
+            // Skip if no actual overlap on original bounds (only the probe touched)
+            // This means the knight is resting on top — just re-confirm grounding
+            if (overlapTop <= 0 && overlapBottom > 0 && playerBounds.Right > blockBounds.Left && playerBounds.Left < blockBounds.Right)
+            {
+                player.position.Y = blockBounds.Top - playerBounds.Height;
+                player.Land();
+                return;
+            }
+
+            // No real overlap at all
+            if (overlapLeft <= 0 || overlapRight <= 0 || overlapTop <= 0 || overlapBottom <= 0)
+                return;
 
             int minOverlapX = Math.Min(overlapLeft, overlapRight);
             int minOverlapY = Math.Min(overlapTop, overlapBottom);
@@ -99,22 +110,17 @@ namespace HollowKnight.Collision
             {
                 // Resolve left/right wall collision
                 if (overlapLeft < overlapRight)
-                {
                     player.position.X -= overlapLeft;
-                }
                 else
-                {
                     player.position.X += overlapRight;
-                }
 
                 player.StopMovingHorizontal();
             }
             else
             {
-                // Resolve top/bottom collision
                 if (overlapTop < overlapBottom)
                 {
-                    // Player landed on top of block — snap to integer to prevent sub-pixel jitter
+                    // Player landed on top of block
                     player.position.Y = blockBounds.Top - playerBounds.Height;
                     player.Land();
                 }

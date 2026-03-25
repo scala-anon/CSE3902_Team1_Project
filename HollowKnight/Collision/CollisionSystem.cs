@@ -46,12 +46,6 @@ namespace HollowKnight.Collision
             ProjectileManager projectileManager,
             NavigationGrid navigationGrid)
         {
-            // Horizontal boundary clamping (no floor — falling off is death)
-            if (knight.position.X < 0) knight.position.X = 0;
-            Rectangle kb = knight.GetBounds()[0];
-            if (kb.Right > GameConstants.DefaultLevelWidth)
-                knight.position.X = GameConstants.DefaultLevelWidth - kb.Width;
-
             Vector2 knightPosition = knight.GetBounds()[0].Center.ToVector2();
 
             // Platform collisions

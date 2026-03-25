@@ -47,6 +47,11 @@ namespace HollowKnight.Player
             // Update subsystems
             physics.Update(dt);
             position += physics.Velocity * dt;
+
+            // Absorb sub-pixel gravity drift when grounded to prevent vertical jitter
+            if (physics.IsGrounded)
+                position.Y = MathF.Floor(position.Y);
+
             health.Update(gameTime);
             combat.Update(gameTime, position, Facing, currentSprite);
 
