@@ -1,13 +1,12 @@
 using System;
+using System.Collections.Generic;
 using HollowKnight.Factories;
 using HollowKnight.Interfaces;
 using HollowKnight.Shared;
-using HollowKnight.Player;
 using HollowKnight.Collision;
 using HollowKnight.Pathfinding;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 
 namespace HollowKnight.Enemies
 {
@@ -22,6 +21,8 @@ public enum VengeflyState
 public class Vengefly : IEnemy
 {
     private Rectangle[] hitBoxes = new Rectangle[1];
+    private readonly Dictionary<VengeflyState, ISprite> sprites;
+
     public VengeflyState State { get; set; } = VengeflyState.Idle;
     public bool Dead { get; set; }
     public Direction FacingDirection { get; set; } = Direction.Left;
@@ -43,34 +44,37 @@ public class Vengefly : IEnemy
     public Vector2 knightPosition = new Vector2(-9999, -9999);
 
     private VengeflyStateMachine stateMachine;
-    public ISprite Sprite { get; set; }
+    public ISprite Sprite { get; private set; }
     public Vector2 position;
 
     public Vengefly(Vector2 position)
     {
         this.position = position;
-        Sprite = SpriteFactory.Instance.CreateVengeflyIdleSprite(position);
+        sprites = new Dictionary<VengeflyState, ISprite>
+        {
+            [VengeflyState.Idle] = SpriteFactory.Instance.CreateVengeflyIdleSprite(position),
+            [VengeflyState.Startle] = SpriteFactory.Instance.CreateVengeflyStartleSprite(position),
+            [VengeflyState.Chase] = SpriteFactory.Instance.CreateVengeflyChaseSprite(position),
+            [VengeflyState.Death] = SpriteFactory.Instance.CreateVengeflyDeathSprite(position),
+        };
+        Sprite = sprites[VengeflyState.Idle];
         stateMachine = new VengeflyStateMachine(this);
     }
 
+    public void SetState(VengeflyState newState)
+    {
+        State = newState;
+        Sprite = sprites[newState];
+    }
+
     public void SetKnightPosition(Vector2 knightPosition) => this.knightPosition = knightPosition;
-
-    public void SetNavigationGrid(NavigationGrid grid)
-    {
-        stateMachine.SetNavigationGrid(grid);
-    }
-
-    public List<Vector2> GetCurrentPath()
-    {
-        return stateMachine.GetCurrentPath();
-    }
+    public void SetNavigationGrid(NavigationGrid grid) => stateMachine.SetNavigationGrid(grid);
+    public List<Vector2> GetCurrentPath() => stateMachine.GetCurrentPath();
     public float GetDetectionRadius() => stateMachine.GetDetectionRadius();
     public bool IsActive => !Dead;
     public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, Sprite.Width, Sprite.Height);
-    public void ChangeHealth()
-    {
-        stateMachine.ChangeHealth();
-    }
+
+    public void ChangeHealth() => stateMachine.ChangeHealth();
 
     public void TakeDamage() => TakeDamage(CollisionSide.None);
 
@@ -89,15 +93,15 @@ public class Vengefly : IEnemy
         ChangeHealth();
     }
 
-    public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects)
+    public void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects)
     {
         SpriteEffects effects = FacingDirection == Direction.Right ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-        Sprite.Draw(_spriteBatch, effects);
+        Sprite.Draw(spriteBatch, effects);
     }
 
-    public void Update(GameTime _gameTime)
+    public void Update(GameTime gameTime)
     {
-        float dt = (float)_gameTime.ElapsedGameTime.TotalSeconds;
+        float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         if (Dead)
         {
@@ -119,7 +123,7 @@ public class Vengefly : IEnemy
             }
 
             Sprite.SetPosition(position);
-            Sprite.Update(_gameTime);
+            Sprite.Update(gameTime);
             return;
         }
 
@@ -141,19 +145,18 @@ public class Vengefly : IEnemy
                 _knockbackVelocity = Vector2.Zero;
         }
 
-        stateMachine.Update(_gameTime);
+        stateMachine.Update(gameTime);
         Sprite.SetPosition(position);
-        Sprite.Update(_gameTime);
+        Sprite.Update(gameTime);
     }
 
     public Rectangle[] GetBounds()
     {
         Vector2 size = Sprite.GetSize();
-        hitBoxes[0] =  new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
+        hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
         return hitBoxes;
     }
 
-    //bigger hitbox for enemy collision
     public Rectangle GetHurtbox()
     {
         Rectangle[] bounds = GetBounds();
@@ -161,9 +164,6 @@ public class Vengefly : IEnemy
         return bounds[0];
     }
 
-    public string GetStateName()
-    {
-        return stateMachine.GetStateName();
-    }
+    public string GetStateName() => stateMachine.GetStateName();
 }
 }

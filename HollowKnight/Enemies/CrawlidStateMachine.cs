@@ -1,4 +1,3 @@
-using HollowKnight.Factories;
 using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 
@@ -14,9 +13,9 @@ public class CrawlidStateMachine
     private float _turnTimer = 0f;
     private const float TurnDuration = GameConstants.CrawlidTurnDuration;
 
-    public CrawlidStateMachine(Crawlid _enemy)
+    public CrawlidStateMachine(Crawlid enemy)
     {
-        CurrentCrawlid = _enemy;
+        CurrentCrawlid = enemy;
     }
 
     public void ChangeHealth()
@@ -25,23 +24,16 @@ public class CrawlidStateMachine
         if (CurrentCrawlid.Health <= 0)
         {
             CurrentCrawlid.Alive = false;
-            if (!CurrentCrawlid.IsGrounded)
-            {
-                CurrentCrawlid.State = CrawlidState.DeathAir;
-                CurrentCrawlid.Sprite = SpriteFactory.Instance.CreateCrawlidDeathAirSprite(CurrentCrawlid.position);
-            }
-            else
-            {
-                CurrentCrawlid.State = CrawlidState.DeathLand;
-                CurrentCrawlid.Sprite = SpriteFactory.Instance.CreateCrawlidDeathLandSprite(CurrentCrawlid.position);
-            }
+            CurrentCrawlid.SetState(CurrentCrawlid.IsGrounded
+                ? CrawlidState.DeathLand
+                : CrawlidState.DeathAir);
         }
     }
 
-    public void Update(GameTime _gameTime)
+    public void Update(GameTime gameTime)
     {
         if (!CurrentCrawlid.Alive || CurrentCrawlid.IsDamaged) return;
-        float elapsedTime = (float)_gameTime.ElapsedGameTime.TotalSeconds;
+        float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         if (_isTurning)
         {
@@ -50,8 +42,7 @@ public class CrawlidStateMachine
             {
                 _isTurning = false;
                 _turnTimer = 0f;
-                CurrentCrawlid.State = CrawlidState.Idle;
-                CurrentCrawlid.Sprite = SpriteFactory.Instance.CreateCrawlidIdleSprite(CurrentCrawlid.position);
+                CurrentCrawlid.SetState(CrawlidState.Idle);
             }
             CurrentCrawlid.Sprite.SetPosition(CurrentCrawlid.position);
             return;
@@ -74,7 +65,7 @@ public class CrawlidStateMachine
             CurrentCrawlid.FacingDirection = Direction.Right;
             CrawlidTurn();
         }
-        
+
         CurrentCrawlid.Sprite.SetPosition(CurrentCrawlid.position);
     }
 
@@ -82,8 +73,7 @@ public class CrawlidStateMachine
     {
         _isTurning = true;
         _turnTimer = 0f;
-        CurrentCrawlid.State = CrawlidState.Turn;
-        CurrentCrawlid.Sprite = SpriteFactory.Instance.CreateCrawlidTurnSprite(CurrentCrawlid.position);
+        CurrentCrawlid.SetState(CrawlidState.Turn);
     }
 
     public string GetStateName() => CurrentCrawlid.State.ToString();

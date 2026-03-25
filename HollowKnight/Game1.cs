@@ -60,7 +60,7 @@ public class Game1 : Game
         int screenWidth = _graphics.PreferredBackBufferWidth;
         int screenHeight = _graphics.PreferredBackBufferHeight;
 
-        _navigationGrid ??= new NavigationGrid(screenWidth, screenHeight, GraphicsDevice, cellSize: GameConstants.NavGridCellSize);
+        _navigationGrid ??= new NavigationGrid(GameConstants.DefaultLevelWidth, GameConstants.DefaultLevelHeight, GraphicsDevice, cellSize: GameConstants.NavGridCellSize);
 
         Spirit spirit = new Spirit(new Vector2(100, 100));
         Spirit spirit_2 = new Spirit(new Vector2(-100, -100));
