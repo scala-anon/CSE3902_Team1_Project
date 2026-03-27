@@ -13,6 +13,7 @@ namespace HollowKnight.Environment
         private int id;
 
         public bool IsActive => true;
+        public string Label => $"TutorialPlatform_{id}";
         public Rectangle Bounds => GetBounds()[0];
 
         public TutorialPlatform(int id, Vector2 pos)

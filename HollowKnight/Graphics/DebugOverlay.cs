@@ -27,7 +27,8 @@ namespace HollowKnight.Graphics
             List<IEnemy> enemies,
             List<Spirit> items,
             ProjectileManager projectileManager,
-            NavigationGrid navigationGrid)
+            NavigationGrid navigationGrid,
+            Camera camera)
         {
             // Navigation grid
             if (NavigationGrid.GridEnabled)
@@ -67,25 +68,31 @@ namespace HollowKnight.Graphics
 
             string atkText = $"Attack CoolDown: {knight.GetAttackCooldownRemaining():F2}s";
             string invText = $"Invincibility CoolDown: {knight.GetInvincibilityCooldownRemaining():F2}s";
-            DebugRenderer.DrawText(spriteBatch, atkText, new Vector2(10, 10), Color.White);
-            DebugRenderer.DrawText(spriteBatch, invText, new Vector2(10, 30), Color.White);
+            string posText = $"Knight Position: ({knight.position.X:F0}, {knight.position.Y:F0})";
+
+            //hud for knight stats in debug mode
+            Vector2 hudBasePos = camera.Position + new Vector2(10, 10);
+            DebugRenderer.DrawText(spriteBatch, atkText, hudBasePos, Color.White);
+            DebugRenderer.DrawText(spriteBatch, invText, hudBasePos + new Vector2(0, 20), Color.White);
+            DebugRenderer.DrawText(spriteBatch, posText, hudBasePos + new Vector2(0, 40), Color.White);
 
             // Sword hitbox debug
             SwordHitbox swordHitbox = knight.GetSwordHitbox();
             if (swordHitbox != null)
                 DebugRenderer.DrawBounds(spriteBatch, swordHitbox, DebugRenderer.ColorSword);
 
-            // Platform hitbox debug
-            for (int i = 0; i < platforms.Count; i++)
-            {
-                if (platforms[i] is ICollidable obj)
-                    DrawRectangleOutline(spriteBatch, obj.Bounds, Color.Blue);
-            }
-
+            // Platform hitbox and label debug
             foreach (IObject obj in platforms)
             {
                 if (obj != null)
+                {
                     DebugRenderer.DrawBounds(spriteBatch, obj, DebugRenderer.ColorEnvironment);
+                    
+                    // Draw block label above the hitbox
+                    string label = obj.Label;
+                    Rectangle bounds = obj.GetBounds()[0];
+                    DebugRenderer.DrawText(spriteBatch, label, new Vector2(bounds.Left, bounds.Top - 20), Color.White);
+                }
             }
 
             // Enemy pathfinding debug

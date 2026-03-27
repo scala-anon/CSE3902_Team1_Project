@@ -13,12 +13,15 @@ namespace HollowKnight.Environment
         private int hitWidth;
         private int hitHeight;
         private int hitOffsetY;
+        private int variant;
 
         public bool IsActive => true;
+        public string Label => $"Path_{variant}";
         public Rectangle Bounds => GetBounds()[0];
 
         public Path(int variant, Vector2 pos, int hitWidth, int hitHeight, int hitOffsetY = 0)
         {
+            this.variant = variant;
             position = pos;
             this.hitWidth = hitWidth;
             this.hitHeight = hitHeight;
