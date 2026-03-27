@@ -2,9 +2,13 @@
 <TextureAtlas>
 	<Texture>sprites/KnightVarietySpriteSheet</Texture>
 	<Regions>
-		<!-- Single frames (IDLE is not actually a single frame, this will be updated soon)-->
-		<Region name="Idle" x="1000" y="50" width="64" height="138" />
+		<!-- Single frames-->
 		<Region name="Damaged" x="2269" y="1634" width="95" height="123" />
+
+		<Region name="Idle_0" x="100" y="1263" width="59" height="127" />
+		<Region name="Idle_1" x="214" y="1262" width="59" height="128" />
+		<Region name="Idle_2" x="331" y="1260" width="59" height="128" />
+		<Region name="Idle_3" x="444" y="1258" width="60" height="128" />
 
 		<Region name="Walking_0" x="1139" y="62" width="73" height="123" />
 		<Region name="Walking_1" x="1286" y="62" width="99" height="123" />

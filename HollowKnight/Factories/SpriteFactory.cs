@@ -62,8 +62,9 @@ namespace HollowKnight.Factories
             spellsSpriteSheet = spiritAttacksAtlas.Texture;
 
             // Knight movement frames
-            knightSingleFrames.Add("Idle", knightAtlas.GetRegion("Idle").SourceRectangle);
             knightSingleFrames.Add("Damaged", knightAtlas.GetRegion("Damaged").SourceRectangle);
+            
+            knightAnimations.Add("Idle", knightAtlas.GetAnimationFrames("Idle"));
             knightAnimations.Add("Walking", knightAtlas.GetAnimationFrames("Walking"));
             knightAnimations.Add("Jumping", knightAtlas.GetAnimationFrames("Jumping"));
 
@@ -150,7 +151,7 @@ namespace HollowKnight.Factories
         // Knight factory methods
         public ISprite CreateKnightIdleSprite(Vector2 position)
         {
-            return new StaticSprite(knightVarietySheet, knightSingleFrames["Idle"], position, 1.0f);
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["Idle"], position, 0.1, 1.0f);
         }
         public ISprite CreateKnightDamagedSprite(Vector2 position)
         {
