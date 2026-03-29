@@ -73,8 +73,50 @@ namespace HollowKnight.Levels
                     Console.WriteLine($"[LevelLoader] Unknown ObjectType '{objectType}'");
             }
 
+            AssignPlatformsToCrawlid();
             Console.WriteLine($"[LevelLoader] Loaded: {Enemies.Count} enemies, " +
                               $"{Platforms.Count} platforms. Knight spawns at {KnightSpawn}.");
+        }
+
+        private void AssignPlatformsToCrawlid()
+        {
+            foreach (var enemy in Enemies)
+            {
+                IObject assignedPlatform = null;
+                float minVerticalDist = float.MaxValue;
+                
+                // Get bounds of the enemy (first hitbox)
+                Rectangle[] crawlidHitboxes = enemy.GetBounds();
+                if (crawlidHitboxes.Length == 0) continue;
+                Rectangle crawlidBounds = crawlidHitboxes[0];
+                float crawlidCenterX = crawlidBounds.Center.X;
+
+                foreach (var platform in Platforms)
+                {
+                    Rectangle[] pHitboxes = platform.GetBounds();
+                    if (pHitboxes.Length == 0) continue;
+                    Rectangle pBounds = pHitboxes[0];
+
+                    // Check if enemy is horizontally within platform
+                    if (crawlidCenterX >= pBounds.Left && crawlidCenterX <= pBounds.Right)
+                    {
+                        float verticalDist = pBounds.Top - crawlidBounds.Bottom;
+                        
+                        // We want the platform to be BELOW or very close to the enemy
+                        // Tolerance of 10 pixels for existing overlap/float
+                        if (verticalDist >= -10 && verticalDist < minVerticalDist)
+                        {
+                            minVerticalDist = verticalDist;
+                            assignedPlatform = platform;
+                        }
+                    }
+                }
+                
+                if (assignedPlatform != null)
+                {
+                    enemy.SetPlatform(assignedPlatform);
+                }
+            }
         }
 
         private void SpawnPlatform(string name, Vector2 position)

@@ -15,7 +15,8 @@ public enum VengeflyState
     Idle,
     Startle,
     Chase,
-    Death
+    DeathAir,
+    DeathLand
 }
 
 public class Vengefly : IEnemy
@@ -55,7 +56,8 @@ public class Vengefly : IEnemy
             [VengeflyState.Idle] = SpriteFactory.Instance.CreateVengeflyIdleSprite(position),
             [VengeflyState.Startle] = SpriteFactory.Instance.CreateVengeflyStartleSprite(position),
             [VengeflyState.Chase] = SpriteFactory.Instance.CreateVengeflyChaseSprite(position),
-            [VengeflyState.Death] = SpriteFactory.Instance.CreateVengeflyDeathSprite(position),
+            [VengeflyState.DeathAir] = SpriteFactory.Instance.CreateVengeflyDeathAirSprite(position),
+            [VengeflyState.DeathLand] = SpriteFactory.Instance.CreateVengeflyDeathLandSprite(position),
         };
         Sprite = sprites[VengeflyState.Idle];
         stateMachine = new VengeflyStateMachine(this);
@@ -71,6 +73,7 @@ public class Vengefly : IEnemy
     public void SetNavigationGrid(NavigationGrid grid) => stateMachine.SetNavigationGrid(grid);
     public List<Vector2> GetCurrentPath() => stateMachine.GetCurrentPath();
     public float GetDetectionRadius() => stateMachine.GetDetectionRadius();
+    public void SetPlatform(IObject platform) { } // Flying enemy doesn't need platform
     public bool IsActive => !Dead;
     public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, Sprite.Width, Sprite.Height);
 
@@ -87,8 +90,8 @@ public class Vengefly : IEnemy
         {
             case CollisionSide.Left: _knockbackVelocity = new Vector2(-KnockbackSpeed, GameConstants.VengeflyKnockbackUpComponent); break;
             case CollisionSide.Right: _knockbackVelocity = new Vector2(KnockbackSpeed, GameConstants.VengeflyKnockbackUpComponent); break;
-            case CollisionSide.Top: _knockbackVelocity = new Vector2(0, -KnockbackSpeed); break;
-            case CollisionSide.Bottom: _knockbackVelocity = new Vector2(0, KnockbackSpeed); break;
+            case CollisionSide.Top: _knockbackVelocity = new Vector2(0, -GameConstants.VengeflyVerticalKnockbackSpeed); break;
+            case CollisionSide.Bottom: _knockbackVelocity = new Vector2(0, GameConstants.VengeflyVerticalKnockbackSpeed); break;
         }
         ChangeHealth();
     }
@@ -119,6 +122,7 @@ public class Vengefly : IEnemy
                     position.Y = ScreenFloor - spriteHeight;
                     _knockbackVelocity = Vector2.Zero;
                     IsGrounded = true;
+                    SetState(VengeflyState.DeathLand);
                 }
             }
 

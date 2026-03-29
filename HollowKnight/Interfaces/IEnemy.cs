@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using HollowKnight.Collision;
 using HollowKnight.Pathfinding;
+using HollowKnight.Interfaces;
 
 public interface IEnemy : ICollidable
 {
@@ -24,4 +25,5 @@ public interface IEnemy : ICollidable
 
     void TakeDamage();
     void TakeDamage(CollisionSide side);
+    void SetPlatform(IObject platform);
 }
