@@ -30,7 +30,10 @@
 
 ### Sudhish
 - **What went well?**
+  Good collaboration between group for discussing debugging as well as sprint planning
 - **What can be improved?**
+  Having more scheduled meetings outside of class.
+  Having a better work distribution. It was jumbled around, causing a slow start to sprint 3
 
 ### Action Plan
 
