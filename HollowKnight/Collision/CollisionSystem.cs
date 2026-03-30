@@ -84,10 +84,10 @@ namespace HollowKnight.Collision
                     CollisionManager.ResolvePlayerBlockCollision(knight, blockObj);
             }
 
-            // Block resolution for vengefly enemies
+            // Block resolution for vengefly enemies (includes dead vengeflies falling)
             foreach (IEnemy enemy in enemies)
             {
-                if (!enemy.IsActive || !(enemy is Vengefly vengefly)) continue;
+                if (!(enemy is Vengefly vengefly)) continue;
                 for (int i = 0; i < platforms.Count; i++)
                 {
                     if (platforms[i] is ICollidable blockObj)

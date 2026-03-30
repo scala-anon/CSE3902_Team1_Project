@@ -73,7 +73,7 @@ namespace HollowKnight.Collision
         public static void ResolveEnemyBlockCollision(Vengefly vengefly, ICollidable block)
         {
             if (vengefly == null || block == null) return;
-            if (!vengefly.IsActive || !block.IsActive) return;
+            if (!block.IsActive || vengefly.IsGrounded) return;
 
             Rectangle enemyBounds = vengefly.Bounds;
             Rectangle blockBounds = block.Bounds;
@@ -97,9 +97,15 @@ namespace HollowKnight.Collision
             else
             {
                 if (overlapTop < overlapBottom)
+                {
                     vengefly.position.Y -= overlapTop;
+                    if (vengefly.Dead)
+                        vengefly.Land();
+                }
                 else
+                {
                     vengefly.position.Y += overlapBottom;
+                }
             }
         }
 
