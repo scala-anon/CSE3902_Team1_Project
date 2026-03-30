@@ -52,5 +52,11 @@ namespace HollowKnight.Shared
         // Navigation
         public const int NavGridCellSize = 12;
         public const float PathReachedThreshold = 10f;
+
+
+
+        // Audio 
+        public const float NoVolume = 0.0f;
+        public const float MaxVolume = 1.0f;
     }
 }
