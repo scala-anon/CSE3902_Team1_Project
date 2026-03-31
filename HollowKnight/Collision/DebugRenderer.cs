@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using HollowKnight.Interfaces;
 
 namespace HollowKnight.Collision
 {
@@ -13,7 +11,7 @@ namespace HollowKnight.Collision
         // The 1x1 white pixel that gets stretched to fill any rectangle
         private static Texture2D _pixel;
         private static SpriteFont _font;
-        public static bool hitboxEnabled { get; set; } = true;
+        public static bool hitboxEnabled { get; set; } = false;
 
         public static readonly Color ColorKnight      = Color.DodgerBlue;
         public static readonly Color ColorEnemy       = Color.OrangeRed;

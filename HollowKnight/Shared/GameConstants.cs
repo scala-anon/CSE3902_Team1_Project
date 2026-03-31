@@ -48,10 +48,16 @@ namespace HollowKnight.Shared
         public const double VengeflyStartleDuration = 0.5;
         public const float VengeflyPathUpdateInterval = 0.3f;
         public const float VengeflyKnockbackUpComponent = -150f;
-        public const float VengeflyVerticalKnockbackSpeed = 250f;
+        public const float VengeflyVerticalKnockbackSpeed = 250f; //used for death
 
         // Navigation
         public const int NavGridCellSize = 12;
         public const float PathReachedThreshold = 10f;
+
+        //Damage
+        public const int KnightDamage = 1;
+        public const int CrawlidDamage = 1;
+        public const int VengeflyDamage = 1;
+        public const int SpikeDamage = 1;
     }
 }
