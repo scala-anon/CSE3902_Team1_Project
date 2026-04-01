@@ -9,6 +9,7 @@ using HollowKnight.Abilities;
 using HollowKnight.Pathfinding;
 using HollowKnight.Shared;
 using IHCCollidable = HollowKnight.Collision.ICollidable;
+using System;
 
 namespace HollowKnight.Collision
 {
@@ -28,6 +29,13 @@ namespace HollowKnight.Collision
                 // Enemy contact damages knight
                 _handler.Register<Crawlid, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
                 _handler.Register<Vengefly, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
+
+                // Hitting spikes damages the knight
+                _handler.Register<Spike, TheKnight>(side, (a, b) => 
+                {
+                    Console.WriteLine($"Knight hit a spike");
+                    ((TheKnight)b).TakeDamage(side);
+                });
 
                 // Sword damages enemies
                 _handler.Register<SwordHitbox, Crawlid>(side, (a, b) => ((Crawlid)b).TakeDamage(side));
