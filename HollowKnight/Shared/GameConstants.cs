@@ -11,7 +11,7 @@ namespace HollowKnight.Shared
         public const int DefaultLevelHeight = 720;
 
         // Knight — Physics
-        public const float KnightMoveSpeed = 200f;
+        public const float KnightMoveSpeed = 250f; //prev 200
         public const float KnightJumpSpeed = -700f;
         public const float KnightGravity = 900f;
         public const float KnightKnockbackSpeed = 250f;
@@ -38,13 +38,13 @@ namespace HollowKnight.Shared
         public const int EnemyDefaultHealth = 3;
 
         // Crawlid
-        public const float CrawlidPatrolSpeed = 120f;
+        public const float CrawlidPatrolSpeed = 175f; //prev 120
         public const float CrawlidTurnDuration = 0.08f;
 
         // Vengefly
         public const float VengeflyDetectionRadius = 500f;
-        public const float VengeflyPatrolSpeed = 75f;
-        public const float VengeflyChaseSpeed = 100f;
+        public const float VengeflyPatrolSpeed = 95f; //prev 75
+        public const float VengeflyChaseSpeed = 130f; //prev 100
         public const double VengeflyStartleDuration = 0.5;
         public const float VengeflyPathUpdateInterval = 0.3f;
         public const float VengeflyKnockbackUpComponent = -150f;
