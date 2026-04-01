@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using HollowKnight.Shared;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -146,10 +147,18 @@ namespace HollowKnight.Audio
         public SoundEffectInstance PlaySoundEffect(SoundEffect soundEffect)
         {
             //TODO replace magic numbers => GameConstants
-            return PlaySoundEffect(soundEffect, GameConstants.MaxVolume, 0.0f, 0.0f, false);
+            return PlaySoundEffect(soundEffect, GameConstants.MaxVolume, GameConstants.Pitch, GameConstants.Pan, false);
         }
 
-
+        /// <summary>
+        /// Plays the sound effect.
+        /// </summary>
+        /// <param name="soundEffect">The sound to be played</param>
+        /// <param name="volume">The volume</param>
+        /// <param name="pitch">Pitch ranging from -1.0 to 1.0</param>
+        /// <param name="pan">Pan ranging from -1.0 (left speaker) to 1.0 (right speaker)</param>
+        /// <param name="isLooped">Is the sound playing on repeat or just once</param>
+        /// <returns></returns>
         public SoundEffectInstance PlaySoundEffect(SoundEffect soundEffect, float volume, float pitch, float pan, bool isLooped)
         {
             SoundEffectInstance soundEffectInstance = soundEffect.CreateInstance();
@@ -166,6 +175,84 @@ namespace HollowKnight.Audio
             return soundEffectInstance;
         }
 
+        /// <summary>
+        /// Plays the gvien song
+        /// </summary>
+        /// <param name="song">Song to be played</param>
+        /// <param name="isrepeating">Set to true by default</param>
+        public void PlaySong(Song song, bool isRepeating = true)
+        {
+            if (MediaPlayer.State == MediaState.Playing)
+            {
+                MediaPlayer.Stop();
+            }
+
+            MediaPlayer.Play(song);
+            MediaPlayer.IsRepeating = isRepeating;
+
+        }
+
+        /// <summary>
+        /// Pauses all audio
+        /// </summary>
+        public void PauseAudio()
+        {
+            MediaPlayer.Pause();
+
+            foreach(SoundEffectInstance soundEffectInstance in _activateSoundEffectInstances)
+            {
+                soundEffectInstance.Pause();
+            }
+        }
+
+
+        public void ResumeAudio()
+        {
+            MediaPlayer.Resume();
+
+            foreach(SoundEffectInstance soundEffectInstance in _activateSoundEffectInstances)
+            {
+                soundEffectInstance.Resume();
+            }
+        }
+
+
+        /// <summary>
+        /// Mutes all audio
+        /// </summary>
+        public void MuteAudio()
+        {
+            _previousSongVolume = MediaPlayer.Volume;
+            _previousSoundEffectVolume = SoundEffect.MasterVolume;
+
+            MediaPlayer.Volume = GameConstants.NoVolume;
+            SoundEffect.MasterVolume = GameConstants.NoVolume;
+
+            IsMuted = true;
+        }
+
+        public void UnmuteAudio()
+        {
+            MediaPlayer.Volume = _previousSongVolume;
+            SoundEffect.MasterVolume = _previousSoundEffectVolume;
+
+            IsMuted = false;
+        }
+
+        /// <summary>
+        /// Called when pressing a key to mute/unmute all audio
+        /// </summary>
+        public void ToggleMute()
+        {
+            if (IsMuted)
+            {
+                UnmuteAudio();
+            }
+            else
+            {
+                MuteAudio();
+            }
+        }
 
 
         
