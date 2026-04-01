@@ -29,6 +29,8 @@ namespace HollowKnight.Player
                     IsDamaged = false;
                     damagedTimer = 0;
                 }
+
+                
             }
         }
 
