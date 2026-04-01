@@ -16,6 +16,7 @@ namespace HollowKnight.Factories
         private Texture2D platformSpriteSheet;
         private Texture2D tutorialPlatformSpriteSheet;
         private Texture2D spellsSpriteSheet;
+        private Texture2D backgroundSpriteSheet;
 
         private SpriteFont defaultFont;
 
@@ -26,6 +27,11 @@ namespace HollowKnight.Factories
         private readonly Dictionary<string, Rectangle> spiritSingleFrames;
         private readonly Dictionary<string, Rectangle[]> spiritAnimations;
         private readonly Dictionary<string, Rectangle> platformFrames;
+
+        private readonly Dictionary<string, Rectangle> plantSingleFrames;
+        private readonly Dictionary<string, Rectangle[]> plantAnimations;
+
+        private readonly Dictionary<string, Rectangle> backgroundFrames;
 
         private static SpriteFactory instance = new SpriteFactory();
 
@@ -43,6 +49,9 @@ namespace HollowKnight.Factories
             spiritSingleFrames = new Dictionary<string, Rectangle>();
             spiritAnimations = new Dictionary<string, Rectangle[]>();
             platformFrames = new Dictionary<string, Rectangle>();
+            plantSingleFrames = new Dictionary<string, Rectangle>();
+            plantAnimations = new Dictionary<string, Rectangle[]>();
+            backgroundFrames = new Dictionary<string, Rectangle>();
         }
 
         public void LoadAllTextures(ContentManager content)
@@ -55,12 +64,12 @@ namespace HollowKnight.Factories
             TextureAtlas enemyAtlas = TextureAtlas.FromFile(content, "sprites/enemy-atlas.xml");
             TextureAtlas platformAtlas = TextureAtlas.FromFile(content, "sprites/platform-atlas.xml");
             TextureAtlas tutorialPlatformAtlas = TextureAtlas.FromFile(content, "sprites/tutorial-platform-atlas.xml");
-
+            TextureAtlas backgroundAtlas = TextureAtlas.FromFile(content, "sprites/background-atlas.xml");
             enemySpriteSheet = enemyAtlas.Texture;
             platformSpriteSheet = platformAtlas.Texture;
             tutorialPlatformSpriteSheet = tutorialPlatformAtlas.Texture;
             spellsSpriteSheet = spiritAttacksAtlas.Texture;
-
+            backgroundSpriteSheet = backgroundAtlas.Texture;
             // Knight movement frames
             knightSingleFrames.Add("Damaged", knightAtlas.GetRegion("Damaged").SourceRectangle);
             
@@ -93,7 +102,9 @@ namespace HollowKnight.Factories
             platformFrames.Add("Path_2", platformAtlas.GetRegion("Path_2").SourceRectangle);
             platformFrames.Add("Path_Stone_3", platformAtlas.GetRegion("Path_Stone_3").SourceRectangle);
             platformFrames.Add("Path_ledge", platformAtlas.GetRegion("Path_ledge").SourceRectangle);
-
+            platformFrames.Add("Bench", backgroundAtlas.GetRegion("Bench").SourceRectangle);
+            backgroundFrames.Add("Background_1", backgroundAtlas.GetRegion("Background_1").SourceRectangle);
+            backgroundFrames.Add("Background_2", backgroundAtlas.GetRegion("Background_2").SourceRectangle);
             for (int i = 1; i <= 10; i++)
             {
                 string key = $"Tutorial_Platform_{i}";
@@ -111,6 +122,13 @@ namespace HollowKnight.Factories
             vengeflyAnimations.Add("Vengefly_Startle", enemyAtlas.GetAnimationFrames("Vengefly_Startle"));
             vengeflyAnimations.Add("Vengefly_Chase", enemyAtlas.GetAnimationFrames("Vengefly_Chase"));
             vengeflyAnimations.Add("Vengefly_Death", enemyAtlas.GetAnimationFrames("Vengefly_Death"));
+
+            // plant frames
+            // plant frames
+            plantAnimations.Add("Plant1_Idle", backgroundAtlas.GetAnimationFrames("Plant1_Idle"));
+            plantAnimations.Add("Plant2_Idle", backgroundAtlas.GetAnimationFrames("Plant2_Idle"));
+            plantSingleFrames.Add("Plant1_Frame0", backgroundAtlas.GetRegion("Plant1_Frame0").SourceRectangle);
+            plantSingleFrames.Add("Plant2_Frame0", backgroundAtlas.GetRegion("Plant2_Frame0").SourceRectangle);
         }
 
         // Consolidated platform factory methods
@@ -263,6 +281,45 @@ namespace HollowKnight.Factories
         public ISprite CreateTextSprite(string text, Vector2 position, Color color)
         {
             return new TextSprite(defaultFont, text, position, color);
+        }
+
+        public ISprite CreatePlant1IdleSprite(Vector2 position)
+        {
+            return new AnimatedSprite(backgroundSpriteSheet, plantAnimations["Plant1_Idle"], position, 0.25, 1.0f);
+        }
+        
+
+        public ISprite CreatePlant1ChoppedSprite(Vector2 position)
+        {
+            return new StaticSprite(backgroundSpriteSheet, plantSingleFrames["Plant1_Frame0"], position, 1.0f);
+        }
+
+
+        public ISprite CreatePlant2IdleSprite(Vector2 position)
+        {
+            return new AnimatedSprite(backgroundSpriteSheet, plantAnimations["Plant2_Idle"], position, 0.25, 1.0f);  
+        }
+    
+
+        public ISprite CreatePlant2ChoppedSprite(Vector2 position)
+        {
+            return new StaticSprite(backgroundSpriteSheet, plantSingleFrames["Plant2_Frame0"], position, 1.0f);   
+        }
+
+        public ISprite CreateBenchSprite(Vector2 position)
+        {
+            return new StaticSprite(backgroundSpriteSheet, platformFrames["Bench"], position, 2.0f);
+        }
+        public ISprite CreateBackgroundSprite(int variant, Vector2 position)
+        {
+            // TODO: Fix constants
+            string key = variant switch
+            {
+                1 => "Background_1",
+                2 => "Background_2",
+                _ => "Background_0"
+            };
+            return new StaticSprite(backgroundSpriteSheet, backgroundFrames[key], position, 1.0f);
         }
     }
 }

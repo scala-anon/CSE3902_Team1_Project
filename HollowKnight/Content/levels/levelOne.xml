@@ -53,6 +53,33 @@
     <Location>2400 700</Location>
 </Item>
 
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Bench</ObjectName>
+    <Location>50 550</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Background_1</ObjectName>
+    <Location>0 0</Location>
+</Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Background_2</ObjectName>
+    <Location>400 300</Location>
+</Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Plant1_Idle</ObjectName>
+    <Location>325 550</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Plant2_Idle</ObjectName>
+    <Location>205 550</Location>
+</Item>
 <!-- Second gap -->
 
 <Item>
