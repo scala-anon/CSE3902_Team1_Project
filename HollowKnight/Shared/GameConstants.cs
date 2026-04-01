@@ -16,6 +16,8 @@ namespace HollowKnight.Shared
         public const float KnightGravity = 900f;
         public const float KnightKnockbackSpeed = 250f;
         public const float KnightKnockbackUpwards = -300f;
+        public const float KnightKnockbackDuration = 0.3f;
+        public const float KnightKnockbackTimer = 0f; // Start at max so not in knockback
 
         // Knight — Combat
         public const double KnightAttackDuration = 0.25;
