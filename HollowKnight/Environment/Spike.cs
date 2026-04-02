@@ -2,6 +2,7 @@ using HollowKnight.Factories;
 using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using HollowKnight.Shared;
 
 namespace HollowKnight.Environment
 {
@@ -12,7 +13,7 @@ namespace HollowKnight.Environment
         Ceiling
     }
 
-    public class Spike : IObject
+    public class Spike : IObject, IHazard
     {
         private ISprite sprite;
         public Vector2 position;
@@ -22,6 +23,8 @@ namespace HollowKnight.Environment
         public bool IsActive => true;
         public string Label => $"Spike_{variant}";
         public Rectangle Bounds { get; }
+        public int Damage => GameConstants.SpikeDamage;
+        public Vector2 Knockback => new Vector2(GameConstants.KnightKnockbackSpeed, GameConstants.KnightKnockbackUpwards);
 
         public Spike(SpikeVariant variant, Vector2 pos)
         {

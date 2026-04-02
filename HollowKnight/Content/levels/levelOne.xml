@@ -159,13 +159,13 @@
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Spike_Floor_1</ObjectName>
-    <Location>2430 690</Location>
+    <Location>2430 600</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Spike_Floor_2</ObjectName>
-    <Location>2570 690</Location>
+    <Location>2570 600</Location>
 </Item>
 
 <!-- ============ Mid-level blocks — higher row for bonus area feel ============ -->

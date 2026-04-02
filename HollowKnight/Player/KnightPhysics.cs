@@ -14,6 +14,8 @@ namespace HollowKnight.Player
         private readonly float gravity = GameConstants.KnightGravity;
         private readonly float knockbackSpeed = GameConstants.KnightKnockbackSpeed;
         private readonly float knockbackUpwards = GameConstants.KnightKnockbackUpwards;
+        private readonly float knockbackDuration = GameConstants.KnightKnockbackDuration;
+        private float knockbackTimer = GameConstants.KnightKnockbackTimer; // Start at max so not in knockback
 
         public KnightPhysics()
         {
@@ -24,6 +26,16 @@ namespace HollowKnight.Player
         public void Update(float dt)
         {
             Velocity.Y += gravity * dt;
+
+            if(knockbackTimer > 0f)
+            {
+                knockbackTimer -=dt;
+                if(knockbackTimer <= 0f)
+                {
+                    knockbackTimer = 0f;
+                    Velocity.X = 0f;
+                }
+            }
         }
 
         public void MoveRight()
@@ -71,6 +83,7 @@ namespace HollowKnight.Player
 
         public void ApplyKnockback(CollisionSide side)
         {
+            knockbackTimer = knockbackDuration;
             switch (side)
             {
                 case CollisionSide.Left:
