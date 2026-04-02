@@ -22,22 +22,29 @@ namespace HollowKnight.Levels
         {
             _platformMap = new Dictionary<string, Func<Vector2, IObject>>
             {
-                ["Tutorial_Platform_1"]  = pos => new TutorialPlatform(1, pos, 146, 147),
-                ["Tutorial_Platform_2"]  = pos => new TutorialPlatform(2, pos, 149, 194),
-                ["Tutorial_Platform_3"]  = pos => new TutorialPlatform(3, pos, 264, 79),
-                ["Tutorial_Platform_4"]  = pos => new TutorialPlatform(4, pos, 89, 56),
-                ["Tutorial_Platform_5"]  = pos => new TutorialPlatform(5, pos, 168, 93),
-                ["Tutorial_Platform_6"]  = pos => new TutorialPlatform(6, pos, 138, 141),
-                ["Tutorial_Platform_7"]  = pos => new TutorialPlatform(7, pos, 138, 228),
-                ["Tutorial_Platform_8"]  = pos => new TutorialPlatform(8, pos, 105, 62),
-                ["Tutorial_Platform_9"]  = pos => new TutorialPlatform(9, pos, 110, 62),
-                ["Tutorial_Platform_10"] = pos => new TutorialPlatform(10, pos, 174, 70),
+                ["Tutorial_Platform_1"]  = pos => new TutorialPlatform(1, pos),
+                ["Tutorial_Platform_2"]  = pos => new TutorialPlatform(2, pos),
+                ["Tutorial_Platform_3"]  = pos => new TutorialPlatform(3, pos),
+                ["Tutorial_Platform_4"]  = pos => new TutorialPlatform(4, pos),
+                ["Tutorial_Platform_5"]  = pos => new TutorialPlatform(5, pos),
+                ["Tutorial_Platform_6"]  = pos => new TutorialPlatform(6, pos),
+                ["Tutorial_Platform_7"]  = pos => new TutorialPlatform(7, pos),
+                ["Tutorial_Platform_8"]  = pos => new TutorialPlatform(8, pos),
+                ["Tutorial_Platform_9"]  = pos => new TutorialPlatform(9, pos),
+                ["Tutorial_Platform_10"] = pos => new TutorialPlatform(10, pos),
+                ["Background_1"]  = pos => new Background(1, pos),
+                ["Background_2"] = pos => new Background(2, pos),
+                // <Region name="Path_1" x="265" y="223" width="1060" height="83" />
                 ["Path_1"]               = pos => new Path(1, pos, 1050, 32, hitOffsetY: 10),
                 ["Path_2"]               = pos => new Path(2, pos, 940, 32, hitOffsetY: 40),
                 ["Path_ledge"]           = pos => new PathLedge(pos),
                 ["Spike_Floor_1"]        = pos => new Spike(SpikeVariant.Floor1, pos),
                 ["Spike_Floor_2"]        = pos => new Spike(SpikeVariant.Floor2, pos),
                 ["Spike_Ceiling"]        = pos => new Spike(SpikeVariant.Ceiling, pos),
+                ["Bench"]               = pos => new Bench(pos),
+                ["Plant1_Idle"]        = pos => new Grass(1,pos, 100, 5, hitOffsetY: 0),
+                ["Plant2_Idle"]        = pos => new Grass(2,pos, 100, 5, hitOffsetY: 0)
+                
             };
 
             _enemyMap = new Dictionary<string, Func<Vector2, IEnemy>>
