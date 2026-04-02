@@ -12,6 +12,12 @@ public class CrawlidStateMachine
     private bool _isTurning = false;
     private float _turnTimer = 0f;
     private const float TurnDuration = GameConstants.CrawlidTurnDuration;
+    private HollowKnight.Interfaces.IObject _platform;
+
+    public void SetPlatform(HollowKnight.Interfaces.IObject platform)
+    {
+        _platform = platform;
+    }
 
     public CrawlidStateMachine(Crawlid enemy)
     {
@@ -51,16 +57,29 @@ public class CrawlidStateMachine
         CurrentCrawlid.position.X += (_movementDirection == Direction.Right ? PatrolSpeed : -PatrolSpeed) * elapsedTime;
         float spriteWidth = CurrentCrawlid.Sprite.GetSize().X;
 
-        if (CurrentCrawlid.position.X + spriteWidth >= GameConstants.DefaultLevelWidth)
+        float minX = 0;
+        float maxX = GameConstants.DefaultLevelWidth;
+
+        if (_platform != null)
         {
-            CurrentCrawlid.position.X = GameConstants.DefaultLevelWidth - spriteWidth;
+            Rectangle pBounds = _platform.Bounds;
+            minX = pBounds.Left;
+            maxX = pBounds.Right;
+            
+            // Snap to platform surface if grounded and not in knockback
+            CurrentCrawlid.position.Y = pBounds.Top - CurrentCrawlid.Sprite.GetSize().Y;
+        }
+
+        if (CurrentCrawlid.position.X + spriteWidth >= maxX)
+        {
+            CurrentCrawlid.position.X = maxX - spriteWidth;
             _movementDirection = Direction.Left;
             CurrentCrawlid.FacingDirection = Direction.Left;
             CrawlidTurn();
         }
-        else if (CurrentCrawlid.position.X <= 0)
+        else if (CurrentCrawlid.position.X <= minX)
         {
-            CurrentCrawlid.position.X = 0;
+            CurrentCrawlid.position.X = minX;
             _movementDirection = Direction.Right;
             CurrentCrawlid.FacingDirection = Direction.Right;
             CrawlidTurn();

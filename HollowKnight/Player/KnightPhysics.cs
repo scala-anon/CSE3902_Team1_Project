@@ -45,6 +45,14 @@ namespace HollowKnight.Player
             }
         }
 
+        public void StopJump()
+        {
+            if (Velocity.Y < 0) // Still ascending
+            {
+                Velocity.Y *= 0.5f; // Cut upward momentum
+            }
+        }
+
         public void Land()
         {
             Velocity.Y = 0;

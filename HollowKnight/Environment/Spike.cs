@@ -20,6 +20,7 @@ namespace HollowKnight.Environment
         private SpikeVariant variant;
 
         public bool IsActive => true;
+        public string Label => $"Spike_{variant}";
         public Rectangle Bounds { get; }
 
         public Spike(SpikeVariant variant, Vector2 pos)

@@ -159,7 +159,7 @@ public class Game1 : Game
                 item.Draw(_spriteBatch);
         }
 
-        _debugOverlay.Draw(_spriteBatch, _knight, _level.Platforms, _level.Enemies, items, _projectileManager, _navigationGrid);
+        _debugOverlay.Draw(_spriteBatch, _knight, _level.Platforms, _level.Enemies, items, _projectileManager, _navigationGrid, _camera);
 
         _spriteBatch.End();
         base.Draw(gameTime);

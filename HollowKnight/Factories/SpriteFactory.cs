@@ -237,9 +237,13 @@ namespace HollowKnight.Factories
         {
             return new AnimatedSprite(enemySpriteSheet, vengeflyAnimations["Vengefly_Chase"], position, 0.1, 1.0f);
         }
-        public ISprite CreateVengeflyDeathSprite(Vector2 position)
+        public ISprite CreateVengeflyDeathAirSprite(Vector2 position)
         {
             return new AnimatedSprite(enemySpriteSheet, vengeflyAnimations["Vengefly_Death"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateVengeflyDeathLandSprite(Vector2 position)
+        {
+            return new StaticSprite(enemySpriteSheet, vengeflyAnimations["Vengefly_Death"][0], position, 1.0f);
         }
 
         // Crawlid factory methods
@@ -257,7 +261,7 @@ namespace HollowKnight.Factories
         }
         public ISprite CreateCrawlidDeathLandSprite(Vector2 position)
         {
-            return new AnimatedSprite(enemySpriteSheet, crawlidAnimations["Crawlid_Death_Land"], position, 0.1, 1.0f);
+            return new StaticSprite(enemySpriteSheet, crawlidAnimations["Crawlid_Death_Land"][0], position, 1.0f);
         }
 
         // Spirit factory methods

@@ -38,6 +38,13 @@ namespace HollowKnight.Commands
         public void Execute() => _knight.Jump();
     }
 
+    public class PlayerStopJumpCommand : ICommand
+    {
+        private readonly TheKnight _knight;
+        public PlayerStopJumpCommand(TheKnight knight) { _knight = knight; }
+        public void Execute() => _knight.StopJump();
+    }
+
     public class PlayerStopMovingHorizontalCommand : ICommand
     {
         private readonly TheKnight _knight;
