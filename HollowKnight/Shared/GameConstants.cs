@@ -61,5 +61,11 @@ namespace HollowKnight.Shared
         public const int CrawlidDamage = 1;
         public const int VengeflyDamage = 1;
         public const int SpikeDamage = 1;
+
+        // Audio
+        public const float NoVolume = 0.0f;
+        public const float MaxVolume = 1.0f;
+        public const float Pan = 0.0f;
+        public const float Pitch = 0.0f;
     }
 }
