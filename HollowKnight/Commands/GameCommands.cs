@@ -25,6 +25,66 @@ namespace HollowKnight.Commands
         public void Execute() => NavigationGrid.GridEnabled = !NavigationGrid.GridEnabled;
     }
 
+    public class TogglePauseCommand : ICommand
+    {
+        private Game1 _game;
+
+        public TogglePauseCommand(Game1 game)
+        {
+            _game = game;
+        }
+
+        public void Execute()
+        {
+            _game.TogglePause();
+        }
+    }
+
+    public class ToggleInventoryCommand : ICommand
+    {
+        private Game1 _game;
+
+        public ToggleInventoryCommand(Game1 game)
+        {
+            _game = game;
+        }
+
+        public void Execute()
+        {
+            _game.ToggleInventory();
+        }
+    }
+
+    public class SetGameOverCommand : ICommand
+    {
+        private Game1 _game;
+
+        public SetGameOverCommand(Game1 game)
+        {
+            _game = game;
+        }
+
+        public void Execute()
+        {
+            _game.SetGameOver();
+        }
+    }
+
+    public class SetWinCommand : ICommand
+    {
+        private Game1 _game;
+
+        public SetWinCommand(Game1 game)
+        {
+            _game = game;
+        }
+
+        public void Execute()
+        {
+            _game.SetWin();
+        }
+    }
+
     public class SwitchRoomCommand : ICommand
     {
         private readonly RoomManager _roomManager;
