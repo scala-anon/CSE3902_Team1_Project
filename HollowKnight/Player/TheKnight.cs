@@ -21,7 +21,7 @@ namespace HollowKnight.Player
         private readonly KnightPhysics physics = new();
         private readonly KnightCombat combat = new();
         private readonly KnightHealth health = new();
-
+        private readonly KnightDash dash = new();        
         private int currentItem;
 
         public KnightState CurrentState { get; private set; } = KnightState.Idle;
@@ -54,6 +54,7 @@ namespace HollowKnight.Player
 
             health.Update(gameTime);
             combat.Update(gameTime, position, Facing, currentSprite);
+            dash.Update(gameTime.ElapsedGameTime.TotalSeconds);
 
             // Resolve game state and animation state together
             if (health.IsHealing)
@@ -68,6 +69,13 @@ namespace HollowKnight.Player
             {
                 CurrentState = KnightState.Attacking;
                 currentSpriteType = combat.AttackType;
+            }
+            else if (dash.IsDashing)
+            {
+                CurrentState = KnightState.Dashing;
+                currentSpriteType = KnightSpriteType.Dashing;
+                physics.ApplyDashVelocity(dash.GetDashDirection());
+                physics.Velocity.Y = 0;
             }
             else if (health.IsDamaged)
             {
@@ -88,6 +96,12 @@ namespace HollowKnight.Player
             {
                 CurrentState = KnightState.Idle;
                 currentSpriteType = KnightSpriteType.Idle;
+            }
+
+            // Stop movement when dash ends
+            if (dash.DashEnded())
+            {
+                physics.StopMovingHorizontal();
             }
 
             currentSprite = sprites[currentSpriteType];
@@ -125,7 +139,7 @@ namespace HollowKnight.Player
         // --- Movement ---
         public void MoveRight()
         {
-            if (combat.IsAttacking) return;
+            if (combat.IsAttacking || dash.IsDashing) return;
             health.CancelHeal();
             Facing = Direction.Right;
             physics.MoveRight();
@@ -133,7 +147,7 @@ namespace HollowKnight.Player
 
         public void MoveLeft()
         {
-            if (combat.IsAttacking) return;
+            if (combat.IsAttacking || dash.IsDashing) return;
             health.CancelHeal();
             Facing = Direction.Left;
             physics.MoveLeft();
@@ -146,6 +160,12 @@ namespace HollowKnight.Player
         {
             health.CancelHeal();
             physics.Jump();
+        }
+
+        public void StartDash()
+        {
+            health.CancelHeal();
+            dash.StartDash(Facing);
         }
 
         public void StopJump()
@@ -185,6 +205,7 @@ namespace HollowKnight.Player
         {
             if (!health.TakeDamage()) return;
             Console.WriteLine("Knight took damage from " + side + " side");
+            dash.CancelDash();
             physics.ApplyKnockback(side);
         }
 

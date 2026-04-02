@@ -35,6 +35,9 @@ namespace HollowKnight.Controllers
             keyboard.RegisterPressedCommand(Keys.Space, new PlayerJumpCommand(knight));
             keyboard.RegisterReleasedCommand(Keys.Space, new PlayerStopJumpCommand(knight));
 
+            //Dash - C
+            keyboard.RegisterPressedCommand(Keys.C, new PlayerDashCommand(knight));
+
             // Attack — Z + direction for slash variants
             keyboard.RegisterComboPressedCommand(Keys.Z, Keys.W, new PlayerUpSlashCommand(knight));
             keyboard.RegisterComboPressedCommand(Keys.Z, Keys.Up, new PlayerUpSlashCommand(knight));

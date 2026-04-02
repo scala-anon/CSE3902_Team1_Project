@@ -76,6 +76,8 @@ namespace HollowKnight.Factories
             knightAnimations.Add("Idle", knightAtlas.GetAnimationFrames("Idle"));
             knightAnimations.Add("Walking", knightAtlas.GetAnimationFrames("Walking"));
             knightAnimations.Add("Jumping", knightAtlas.GetAnimationFrames("Jumping"));
+            //TODO: Add knight dash animation frames when we have them
+            //TODO: Refactor jump animation frames
 
             // Knight abilities frames
             knightAnimations.Add("UpSword", knightAttacksAtlas.GetAnimationFrames("UpSword"));
@@ -182,6 +184,11 @@ namespace HollowKnight.Factories
         public ISprite CreateKnightJumpSprite(Vector2 position)
         {
             return new AnimatedSprite(knightVarietySheet, knightAnimations["Jumping"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateKnightDashSprite(Vector2 position)
+        {
+            //TODO: Updated to dash animation once we have them
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["Walking"], position, 0.05, 1.0f);
         }
         public ISprite CreateKnightUpSwordSprite(Vector2 position)
         {

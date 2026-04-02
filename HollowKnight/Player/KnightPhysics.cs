@@ -11,11 +11,13 @@ namespace HollowKnight.Player
 
         private readonly float moveSpeed = GameConstants.KnightMoveSpeed;
         private readonly float jumpSpeed = GameConstants.KnightJumpSpeed;
+        private readonly float dashSpeed = GameConstants.KnightDashSpeed;
         private readonly float gravity = GameConstants.KnightGravity;
         private readonly float knockbackSpeed = GameConstants.KnightKnockbackSpeed;
         private readonly float knockbackUpwards = GameConstants.KnightKnockbackUpwards;
         private readonly float knockbackDuration = GameConstants.KnightKnockbackDuration;
         private float knockbackTimer = GameConstants.KnightKnockbackTimer; // Start at max so not in knockback
+
 
         public KnightPhysics()
         {
@@ -79,6 +81,18 @@ namespace HollowKnight.Player
         public void StopMovingVertical()
         {
             Velocity.Y = 0;
+        }
+
+        public void StopAllMovement()
+        {
+            Velocity = Vector2.Zero;
+        }
+
+        public void ApplyDashVelocity(Direction direction)
+        {
+            Velocity.X = (direction == Direction.Right) 
+            ? dashSpeed 
+            : -dashSpeed;
         }
 
         public void ApplyKnockback(CollisionSide side)

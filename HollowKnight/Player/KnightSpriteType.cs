@@ -11,6 +11,7 @@ namespace HollowKnight.Player
         Damaged,
         HealPrep,
         HealPost,
-        SpiritCast
+        SpiritCast,
+        Dashing
     }
 }
