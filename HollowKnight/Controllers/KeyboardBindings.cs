@@ -33,6 +33,7 @@ namespace HollowKnight.Controllers
 
             // Jump — Space
             keyboard.RegisterPressedCommand(Keys.Space, new PlayerJumpCommand(knight));
+            keyboard.RegisterReleasedCommand(Keys.Space, new PlayerStopJumpCommand(knight));
 
             // Attack — Z + direction for slash variants
             keyboard.RegisterComboPressedCommand(Keys.Z, Keys.W, new PlayerUpSlashCommand(knight));

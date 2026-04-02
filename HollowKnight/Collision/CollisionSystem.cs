@@ -8,7 +8,6 @@ using HollowKnight.Projectiles;
 using HollowKnight.Abilities;
 using HollowKnight.Pathfinding;
 using HollowKnight.Shared;
-using IHCCollidable = HollowKnight.Collision.ICollidable;
 
 namespace HollowKnight.Collision
 {
@@ -81,14 +80,25 @@ namespace HollowKnight.Collision
             // Block resolution pass
             for (int i = 0; i < platforms.Count; i++)
             {
-                if (platforms[i] is IHCCollidable blockObj)
+                if (platforms[i] is ICollidable blockObj)
                     CollisionManager.ResolvePlayerBlockCollision(knight, blockObj);
             }
 
+            // Block resolution for vengefly enemies (includes dead vengeflies falling)
+            foreach (IEnemy enemy in enemies)
+            {
+                if (!(enemy is Vengefly vengefly)) continue;
+                for (int i = 0; i < platforms.Count; i++)
+                {
+                    if (platforms[i] is ICollidable blockObj)
+                        CollisionManager.ResolveEnemyBlockCollision(vengefly, blockObj);
+                }
+            }
+            
             // Projectile collisions
-            IHCCollidable player = knight;
-            IHCCollidable[] enemyCollidables = CollisionGroupBuilder.GetCollidables(enemies.ToArray());
-            IHCCollidable[] blockCollidables = CollisionGroupBuilder.GetCollidables(platforms.ToArray());
+            ICollidable player = knight;
+            ICollidable[] enemyCollidables = CollisionGroupBuilder.GetCollidables(enemies.ToArray());
+            ICollidable[] blockCollidables = CollisionGroupBuilder.GetCollidables(platforms.ToArray());
 
             CollisionManager.ResolveProjectileCollisions(
                 projectileManager,

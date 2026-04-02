@@ -12,6 +12,7 @@ namespace HollowKnight.Environment
         private Rectangle[] hitBoxes = new Rectangle[1];
 
         public bool IsActive => true;
+        public string Label => "PathLedge";
         public Rectangle Bounds => GetBounds()[0];
 
         public PathLedge(Vector2 pos)

@@ -36,7 +36,9 @@ public class VengeflyStateMachine
         if (CurrentVengeFly.Health <= 0)
         {
             CurrentVengeFly.Dead = true;
-            CurrentVengeFly.SetState(VengeflyState.Death);
+            CurrentVengeFly.SetState(CurrentVengeFly.IsGrounded
+                ? VengeflyState.DeathLand
+                : VengeflyState.DeathAir);
         }
     }
 

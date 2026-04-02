@@ -22,16 +22,16 @@ namespace HollowKnight.Levels
         {
             _platformMap = new Dictionary<string, Func<Vector2, IObject>>
             {
-                ["Tutorial_Platform_1"]  = pos => new TutorialPlatform(1, pos),
-                ["Tutorial_Platform_2"]  = pos => new TutorialPlatform(2, pos),
-                ["Tutorial_Platform_3"]  = pos => new TutorialPlatform(3, pos),
-                ["Tutorial_Platform_4"]  = pos => new TutorialPlatform(4, pos),
-                ["Tutorial_Platform_5"]  = pos => new TutorialPlatform(5, pos),
-                ["Tutorial_Platform_6"]  = pos => new TutorialPlatform(6, pos),
-                ["Tutorial_Platform_7"]  = pos => new TutorialPlatform(7, pos),
-                ["Tutorial_Platform_8"]  = pos => new TutorialPlatform(8, pos),
-                ["Tutorial_Platform_9"]  = pos => new TutorialPlatform(9, pos),
-                ["Tutorial_Platform_10"] = pos => new TutorialPlatform(10, pos),
+                ["Tutorial_Platform_1"]  = pos => new TutorialPlatform(1, pos, 146, 147),
+                ["Tutorial_Platform_2"]  = pos => new TutorialPlatform(2, pos, 149, 194),
+                ["Tutorial_Platform_3"]  = pos => new TutorialPlatform(3, pos, 264, 79),
+                ["Tutorial_Platform_4"]  = pos => new TutorialPlatform(4, pos, 89, 56),
+                ["Tutorial_Platform_5"]  = pos => new TutorialPlatform(5, pos, 168, 93),
+                ["Tutorial_Platform_6"]  = pos => new TutorialPlatform(6, pos, 138, 141),
+                ["Tutorial_Platform_7"]  = pos => new TutorialPlatform(7, pos, 138, 228),
+                ["Tutorial_Platform_8"]  = pos => new TutorialPlatform(8, pos, 105, 62),
+                ["Tutorial_Platform_9"]  = pos => new TutorialPlatform(9, pos, 110, 62),
+                ["Tutorial_Platform_10"] = pos => new TutorialPlatform(10, pos, 174, 70),
                 ["Path_1"]               = pos => new Path(1, pos, 1050, 32, hitOffsetY: 10),
                 ["Path_2"]               = pos => new Path(2, pos, 940, 32, hitOffsetY: 40),
                 ["Path_ledge"]           = pos => new PathLedge(pos),
@@ -73,8 +73,50 @@ namespace HollowKnight.Levels
                     Console.WriteLine($"[LevelLoader] Unknown ObjectType '{objectType}'");
             }
 
+            AssignPlatformsToCrawlid();
             Console.WriteLine($"[LevelLoader] Loaded: {Enemies.Count} enemies, " +
                               $"{Platforms.Count} platforms. Knight spawns at {KnightSpawn}.");
+        }
+
+        private void AssignPlatformsToCrawlid()
+        {
+            foreach (var enemy in Enemies)
+            {
+                IObject assignedPlatform = null;
+                float minVerticalDist = float.MaxValue;
+                
+                // Get bounds of the enemy (first hitbox)
+                Rectangle[] crawlidHitboxes = enemy.GetBounds();
+                if (crawlidHitboxes.Length == 0) continue;
+                Rectangle crawlidBounds = crawlidHitboxes[0];
+                float crawlidCenterX = crawlidBounds.Center.X;
+
+                foreach (var platform in Platforms)
+                {
+                    Rectangle[] pHitboxes = platform.GetBounds();
+                    if (pHitboxes.Length == 0) continue;
+                    Rectangle pBounds = pHitboxes[0];
+
+                    // Check if enemy is horizontally within platform
+                    if (crawlidCenterX >= pBounds.Left && crawlidCenterX <= pBounds.Right)
+                    {
+                        float verticalDist = pBounds.Top - crawlidBounds.Bottom;
+                        
+                        // We want the platform to be BELOW or very close to the enemy
+                        // Tolerance of 10 pixels for existing overlap/float
+                        if (verticalDist >= -10 && verticalDist < minVerticalDist)
+                        {
+                            minVerticalDist = verticalDist;
+                            assignedPlatform = platform;
+                        }
+                    }
+                }
+                
+                if (assignedPlatform != null)
+                {
+                    enemy.SetPlatform(assignedPlatform);
+                }
+            }
         }
 
         private void SpawnPlatform(string name, Vector2 position)

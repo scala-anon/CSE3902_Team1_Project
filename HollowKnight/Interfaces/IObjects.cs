@@ -6,6 +6,7 @@ namespace HollowKnight.Interfaces
 {
     public interface IObject : HollowKnight.Collision.ICollidable
     {
+        public string Label { get; }
         public void Update(GameTime _gameTime);
 
         public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects);

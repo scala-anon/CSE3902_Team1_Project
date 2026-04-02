@@ -148,6 +148,11 @@ namespace HollowKnight.Player
             physics.Jump();
         }
 
+        public void StopJump()
+        {
+            physics.StopJump();
+        }
+
         public void StopMovingHorizontal() => physics.StopMovingHorizontal();
         public void StopMovingVertical() => physics.StopMovingVertical();
         public void Land() => physics.Land();

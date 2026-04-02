@@ -1,3 +1,4 @@
+using HollowKnight.Enemies;
 using HollowKnight.Projectiles;
 using HollowKnight.Player;
 using Microsoft.Xna.Framework;
@@ -67,6 +68,45 @@ namespace HollowKnight.Collision
             }
 
             pm.CullDead();
+        }
+
+        public static void ResolveEnemyBlockCollision(Vengefly vengefly, ICollidable block)
+        {
+            if (vengefly == null || block == null) return;
+            if (!block.IsActive || vengefly.IsGrounded) return;
+
+            Rectangle enemyBounds = vengefly.Bounds;
+            Rectangle blockBounds = block.Bounds;
+
+            if (!enemyBounds.Intersects(blockBounds)) return;
+
+            int overlapLeft   = enemyBounds.Right  - blockBounds.Left;
+            int overlapRight  = blockBounds.Right  - enemyBounds.Left;
+            int overlapTop    = enemyBounds.Bottom - blockBounds.Top;
+            int overlapBottom = blockBounds.Bottom - enemyBounds.Top;
+
+            if (overlapLeft <= 0 || overlapRight <= 0 || overlapTop <= 0 || overlapBottom <= 0) return;
+
+            if (Math.Min(overlapLeft, overlapRight) < Math.Min(overlapTop, overlapBottom))
+            {
+                if (overlapLeft < overlapRight)
+                    vengefly.position.X -= overlapLeft;
+                else
+                    vengefly.position.X += overlapRight;
+            }
+            else
+            {
+                if (overlapTop < overlapBottom)
+                {
+                    vengefly.position.Y -= overlapTop;
+                    if (vengefly.Dead)
+                        vengefly.Land();
+                }
+                else
+                {
+                    vengefly.position.Y += overlapBottom;
+                }
+            }
         }
 
         public static void ResolvePlayerBlockCollision(TheKnight player, ICollidable block)
