@@ -89,11 +89,13 @@ namespace HollowKnight.Graphics
                 if (obj != null)
                 {
                     DebugRenderer.DrawBounds(spriteBatch, obj, DebugRenderer.ColorEnvironment);
-                    
+
                     // Draw block label above the hitbox
-                    string label = obj.Label;
-                    Rectangle bounds = obj.GetBounds()[0];
-                    DebugRenderer.DrawText(spriteBatch, label, new Vector2(bounds.Left, bounds.Top - 20), Color.White);
+                    Rectangle[] objBounds = obj.GetBounds();
+                    if (objBounds.Length > 0)
+                    {
+                        DebugRenderer.DrawText(spriteBatch, obj.Label, new Vector2(objBounds[0].Left, objBounds[0].Top - 20), Color.White);
+                    }
                 }
             }
 
