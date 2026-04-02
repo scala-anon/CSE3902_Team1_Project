@@ -62,6 +62,51 @@ namespace HollowKnight.Shared
         public const int VengeflyDamage = 1;
         public const int SpikeDamage = 1;
 
+        // Sword Hitbox Dimensions
+        public const int SideSlashWidth = 160;
+        public const int SideSlashHeight = 110;
+        public const int UpSlashWidth = 90;
+        public const int UpSlashHeight = 120;
+        public const int DownSlashWidth = 90;
+        public const int DownSlashHeight = 120;
+
+        // Slash Effect Positioning (divisors for fractional offset)
+        public const float SlashEffectRightDivisor = 7f;
+        public const float SlashEffectLeftDivisor = 5f;
+        public const float SlashEffectYDivisor = 10f;
+        public const float UpSlashEffectYDivisor = 4f;
+        public const float DownSlashEffectXDivisor = 10f;
+        public const float DownSlashEffectYDivisor = 3f;
+
+        // Spike Hitboxes — Floor1
+        public const int SpikeFloor1PrimaryY = 50;
+        public const int SpikeFloor1PrimaryW = 165;
+        public const int SpikeFloor1PrimaryH = 45;
+        public const int SpikeFloor1SecondaryX = 60;
+        public const int SpikeFloor1SecondaryW = 75;
+        public const int SpikeFloor1SecondaryH = 50;
+
+        // Spike Hitboxes — Floor2
+        public const int SpikeFloor2PrimaryY = 40;
+        public const int SpikeFloor2PrimaryW = 140;
+        public const int SpikeFloor2PrimaryH = 60;
+        public const int SpikeFloor2SecondaryX = 40;
+        public const int SpikeFloor2SecondaryW = 100;
+        public const int SpikeFloor2SecondaryH = 40;
+
+        // Spike Hitboxes — Ceiling
+        public const int SpikeCeilingPrimaryW = 230;
+        public const int SpikeCeilingPrimaryH = 70;
+        public const int SpikeCeilingSecondaryX = 50;
+        public const int SpikeCeilingSecondaryY = 70;
+        public const int SpikeCeilingSecondaryW = 115;
+        public const int SpikeCeilingSecondaryH = 60;
+
+        // Physics Thresholds
+        public const float JumpMomentumCut = 0.5f;
+        public const float KnockbackVelocityThreshold = 1f;
+        public const int GroundProbeExtension = 1;
+
         // Audio
         public const float NoVolume = 0.0f;
         public const float MaxVolume = 1.0f;

@@ -17,6 +17,7 @@ namespace HollowKnight.Environment
 
     public class Grass : IObject
     {
+        public string Label => $"Grass_{variant}";
         private ISprite sprite;
         private readonly int variant;
         public Vector2 position;

@@ -66,7 +66,8 @@ public partial class Game1
             _level.Enemies,
             _items,
             _projectileManager,
-            _navigationGrid);
+            _navigationGrid,
+            _camera);
     }
 
     private void DrawOverlay()

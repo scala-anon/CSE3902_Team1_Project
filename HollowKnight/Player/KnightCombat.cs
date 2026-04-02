@@ -55,17 +55,17 @@ namespace HollowKnight.Player
                 {
                     case KnightSpriteType.SideSlash:
                         slashPosition.X += facing == Direction.Right
-                            ? knightSize.X - knightSize.X / 7
-                            : -slashEffect.Width + knightSize.X / 5;
-                        slashPosition.Y += knightSize.Y / 10;
+                            ? knightSize.X - knightSize.X / GameConstants.SlashEffectRightDivisor
+                            : -slashEffect.Width + knightSize.X / GameConstants.SlashEffectLeftDivisor;
+                        slashPosition.Y += knightSize.Y / GameConstants.SlashEffectYDivisor;
                         break;
                     case KnightSpriteType.UpSlash:
                         slashPosition.X += (knightSize.X - slashEffect.Width) / 2;
-                        slashPosition.Y -= slashEffect.Height - knightSize.Y / 4;
+                        slashPosition.Y -= slashEffect.Height - knightSize.Y / GameConstants.UpSlashEffectYDivisor;
                         break;
                     case KnightSpriteType.DownSlash:
-                        slashPosition.X += (knightSize.X - slashEffect.Width) / 2 - knightSize.X / 10;
-                        slashPosition.Y += knightSize.Y - knightSize.Y / 3;
+                        slashPosition.X += (knightSize.X - slashEffect.Width) / 2 - knightSize.X / GameConstants.DownSlashEffectXDivisor;
+                        slashPosition.Y += knightSize.Y - knightSize.Y / GameConstants.DownSlashEffectYDivisor;
                         break;
                 }
                 slashEffect.SetPosition(slashPosition);

@@ -61,7 +61,7 @@ namespace HollowKnight.Player
         {
             if (Velocity.Y < 0) // Still ascending
             {
-                Velocity.Y *= 0.5f; // Cut upward momentum
+                Velocity.Y *= GameConstants.JumpMomentumCut;
             }
         }
 

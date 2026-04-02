@@ -12,6 +12,7 @@ namespace HollowKnight.Environment
         public Vector2 position;
         private Rectangle[] hitBoxes = new Rectangle[1];
 
+        public string Label => "Bench";
         public bool IsActive => true;
         public Rectangle Bounds => GetBounds()[0];
 

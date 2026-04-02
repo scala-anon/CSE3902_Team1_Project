@@ -11,6 +11,7 @@ namespace HollowKnight.Environment
         public Vector2 position;
         private Rectangle[] hitBoxes = new Rectangle[0];
 
+        public string Label => "Background";
         public bool IsActive => true;
         public Rectangle Bounds => Rectangle.Empty;
 

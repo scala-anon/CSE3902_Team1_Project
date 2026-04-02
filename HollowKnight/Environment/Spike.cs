@@ -49,16 +49,16 @@ namespace HollowKnight.Environment
             switch (variant)
             {
                 case SpikeVariant.Floor1:
-                    hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y + 50, 165, 45);
-                    hitBoxes[1] = new Rectangle((int)position.X + 60, (int)position.Y, 75, 50);
+                    hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y + GameConstants.SpikeFloor1PrimaryY, GameConstants.SpikeFloor1PrimaryW, GameConstants.SpikeFloor1PrimaryH);
+                    hitBoxes[1] = new Rectangle((int)position.X + GameConstants.SpikeFloor1SecondaryX, (int)position.Y, GameConstants.SpikeFloor1SecondaryW, GameConstants.SpikeFloor1SecondaryH);
                     break;
                 case SpikeVariant.Floor2:
-                    hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y + 40, 140, 60);
-                    hitBoxes[1] = new Rectangle((int)position.X + 40, (int)position.Y, 100, 40);
+                    hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y + GameConstants.SpikeFloor2PrimaryY, GameConstants.SpikeFloor2PrimaryW, GameConstants.SpikeFloor2PrimaryH);
+                    hitBoxes[1] = new Rectangle((int)position.X + GameConstants.SpikeFloor2SecondaryX, (int)position.Y, GameConstants.SpikeFloor2SecondaryW, GameConstants.SpikeFloor2SecondaryH);
                     break;
                 case SpikeVariant.Ceiling:
-                    hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, 230, 70);
-                    hitBoxes[1] = new Rectangle((int)position.X + 50, (int)position.Y + 70, 115, 60);
+                    hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, GameConstants.SpikeCeilingPrimaryW, GameConstants.SpikeCeilingPrimaryH);
+                    hitBoxes[1] = new Rectangle((int)position.X + GameConstants.SpikeCeilingSecondaryX, (int)position.Y + GameConstants.SpikeCeilingSecondaryY, GameConstants.SpikeCeilingSecondaryW, GameConstants.SpikeCeilingSecondaryH);
                     break;
             }
             return hitBoxes;

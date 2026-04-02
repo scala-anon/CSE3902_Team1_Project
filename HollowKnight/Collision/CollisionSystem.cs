@@ -29,11 +29,7 @@ namespace HollowKnight.Collision
                 _handler.Register<Vengefly, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
 
                 // Hitting spikes damages the knight
-                _handler.Register<Spike, TheKnight>(side, (a, b) => 
-                {
-                    Console.WriteLine($"Knight hit a spike");
-                    ((TheKnight)b).TakeDamage(side);
-                });
+                _handler.Register<Spike, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
 
                 // Sword damages enemies
                 _handler.Register<SwordHitbox, Crawlid>(side, (a, b) => ((Crawlid)b).TakeDamage(side));
