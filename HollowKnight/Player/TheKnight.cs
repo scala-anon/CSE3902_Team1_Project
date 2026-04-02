@@ -3,274 +3,207 @@ using System.Collections.Generic;
 using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using HollowKnight.Shared;
+using HollowKnight.Collision;
 
 namespace HollowKnight.Player
 {
-    public class TheKnight : IHollowKnight
+    public class TheKnight : IPlayer
     {
-        private Dictionary<KnightSpriteType, ISprite> sprites;
+        private readonly Dictionary<KnightSpriteType, ISprite> sprites;
         private ISprite currentSprite;
-        private KnightSpriteType currentState;
+        private KnightSpriteType currentSpriteType;
 
+        public Rectangle[] hitBoxes = new Rectangle[1];
         public Direction Facing { get; private set; } = Direction.Right;
-        private Vector2 position;
-        private Vector2 velocity;
+        public Vector2 position;
 
-        private float moveSpeed = 200f;
-        private float jumpSpeed = -700f;
-        private float gravity = 900f;
-        private bool isGrounded;
-
-        private bool isDamaged;
-        private double damagedTimer;
-        private double damagedDuration = 0.4;
+        private readonly KnightPhysics physics = new();
+        private readonly KnightCombat combat = new();
+        private readonly KnightHealth health = new();
 
         private int currentItem;
 
-        private KnightSpriteType attackType;
-        private bool isAttacking;
-        private double attackTimer;
-        private double attackDuration = 0.25;
+        public KnightState CurrentState { get; private set; } = KnightState.Idle;
 
-        private bool isHealing;
-        private bool healApplied;
-        private double healTimer;
-
-        private double healPrepDuration = 0.6;
-        private double healPostDuration = 0.2;
-
-        private int health = 5;
-        private int maxHealth = 9;
+        public bool IsActive => true;
+        public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, currentSprite.Width, currentSprite.Height);
+        public float VelocityY => physics.Velocity.Y;
 
         public TheKnight(Dictionary<KnightSpriteType, ISprite> sprites, Vector2 position)
         {
             this.sprites = sprites;
             this.position = position;
 
-            velocity = Vector2.Zero;
-            isGrounded = false;
-
-            attackType = KnightSpriteType.SideSlash;
-            currentState = KnightSpriteType.Idle;
-            currentSprite = this.sprites[currentState];
+            currentSpriteType = KnightSpriteType.Idle;
+            currentSprite = this.sprites[currentSpriteType];
             currentSprite.SetPosition(position);
         }
+
         public void Update(GameTime gameTime)
         {
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            velocity.Y += gravity * dt;
-            position += velocity * dt;
+            // Update subsystems
+            physics.Update(dt);
+            position += physics.Velocity * dt;
 
-            float groundY = 400f;
+            // Absorb sub-pixel gravity drift when grounded to prevent vertical jitter
+            if (physics.IsGrounded)
+                position.Y = MathF.Floor(position.Y);
 
-            // Checks to see if Knight is in air or grounded
-            if (position.Y >= groundY)
+            health.Update(gameTime);
+            combat.Update(gameTime, position, Facing, currentSprite);
+
+            // Resolve game state and animation state together
+            if (health.IsHealing)
             {
-                position.Y = groundY;
-                velocity.Y = 0;
-                isGrounded = true;
+                CurrentState = KnightState.Healing;
+                KnightSpriteType? healState = health.UpdateHeal(gameTime);
+                if (healState.HasValue)
+                    currentSpriteType = healState.Value;
+                physics.StopMovingHorizontal();
+            }
+            else if (combat.IsAttacking)
+            {
+                CurrentState = KnightState.Attacking;
+                currentSpriteType = combat.AttackType;
+            }
+            else if (health.IsDamaged)
+            {
+                CurrentState = KnightState.Damaged;
+                currentSpriteType = KnightSpriteType.Damaged;
+            }
+            else if (!physics.IsGrounded)
+            {
+                CurrentState = physics.Velocity.Y > 0 ? KnightState.Falling : KnightState.Jumping;
+                currentSpriteType = KnightSpriteType.Jumping;
+            }
+            else if (physics.Velocity.X != 0)
+            {
+                CurrentState = KnightState.Running;
+                currentSpriteType = KnightSpriteType.Walking;
             }
             else
             {
-                isGrounded = false;
+                CurrentState = KnightState.Idle;
+                currentSpriteType = KnightSpriteType.Idle;
             }
 
-            // Checks to see if Knight has been damaged
-            if (isDamaged)
-            {
-                damagedTimer += gameTime.ElapsedGameTime.TotalSeconds;
-
-                if (damagedTimer >= damagedDuration)
-                {
-                    isDamaged = false;
-                    damagedTimer = 0;
-                }
-            }
-
-            // Checks to see is knight is attacking
-            if (isAttacking)
-            {
-                attackTimer += gameTime.ElapsedGameTime.TotalSeconds;
-                if (attackTimer >= attackDuration)
-                {
-                    isAttacking = false;
-                    attackTimer = 0;
-                }
-            }
-
-            // Checks to see if knight is healing then changes currentSprite based on the action/movement of the knight
-            if (isHealing)
-            {
-                UpdateHeal(gameTime);
-            }
-            else 
-            {
-                if (isAttacking)
-                {
-                    currentState = attackType;
-                }
-                else if (isDamaged)
-                {
-                    currentState = KnightSpriteType.Damaged;
-                }
-                else if (!isGrounded)
-                {
-                    currentState = KnightSpriteType.Jumping;
-                }
-                else if (velocity.X != 0)
-                {
-                    currentState = KnightSpriteType.Walking;
-                }
-                else
-                {
-                    currentState = KnightSpriteType.Idle;
-                }
-            }
-            currentSprite = sprites[currentState];
+            currentSprite = sprites[currentSpriteType];
             currentSprite.SetPosition(position);
             currentSprite.Update(gameTime);
         }
+
+        public Rectangle[] GetBounds()
+        {
+            Vector2 size = currentSprite.GetSize();
+            hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
+            return hitBoxes;
+        }
+
+        public Rectangle GetHurtbox()
+        {
+            Rectangle[] bounds = GetBounds();
+            bounds[0].Inflate(-GameConstants.KnightHurtboxShrink, -GameConstants.KnightHurtboxShrink);
+            return bounds[0];
+        }
+
+        public string GetStateName() => CurrentState.ToString();
+        public double GetAttackCooldownRemaining() => combat.GetCooldownRemaining();
+        public double GetInvincibilityCooldownRemaining() => health.GetInvincibilityCooldownRemaining();
+
         public void Draw(SpriteBatch spriteBatch)
         {
-            SpriteEffects effects = (Facing == Direction.Right)
+            SpriteEffects effects = Facing == Direction.Right
                 ? SpriteEffects.None
                 : SpriteEffects.FlipHorizontally;
             currentSprite.Draw(spriteBatch, effects);
+            combat.DrawSlashEffect(spriteBatch, Facing);
         }
+
+        // --- Movement ---
         public void MoveRight()
         {
-            CancelHeal();
+            if (combat.IsAttacking) return;
+            health.CancelHeal();
             Facing = Direction.Right;
-            velocity.X = moveSpeed;
+            physics.MoveRight();
         }
+
         public void MoveLeft()
         {
-            CancelHeal();
+            if (combat.IsAttacking) return;
+            health.CancelHeal();
             Facing = Direction.Left;
-            velocity.X = -moveSpeed;
+            physics.MoveLeft();
         }
-        public void MoveUp()
-        {
-            Console.WriteLine("Camera Move Up");
-        }
-        public void MoveDown()
-        {
-            Console.WriteLine("Camera Move Down");
-        }
-        public void TakeDamage()
-        {
-            Console.WriteLine("Knight took damage");
-            CancelHeal();
-            isDamaged = true;
-            damagedTimer = 0;
-            health = Math.Max(0, health - 1);
-        }
-        public void UseItem(int _itemNumber)
-        {
-            currentItem = _itemNumber;
-            Console.WriteLine($"Using item #{currentItem}");
-        }
+
+        public void MoveUp() => Console.WriteLine("Camera Move Up");
+        public void MoveDown() => Console.WriteLine("Camera Move Down");
+
         public void Jump()
         {
-            CancelHeal();
-            if (isGrounded)
-            {
-                velocity.Y = jumpSpeed;
-                isGrounded = false;
-            }
-        }
-        public void StopMovingHorizontal()
-        {
-            velocity.X = 0;
+            health.CancelHeal();
+            physics.Jump();
         }
 
-        public void StopMovingVertical()
-        {
-            velocity.Y = 0;
-        }
+        public void StopMovingHorizontal() => physics.StopMovingHorizontal();
+        public void StopMovingVertical() => physics.StopMovingVertical();
+        public void Land() => physics.Land();
+
+        // --- Combat ---
         public void SideSlash()
         {
-            CancelHeal();
-            attackType = KnightSpriteType.SideSlash;
-            isAttacking = true;
-            attackTimer = 0;
+            health.CancelHeal();
+            combat.TryStartAttack(KnightSpriteType.SideSlash, position, physics.IsGrounded);
         }
+
         public void UpSlash()
         {
-            CancelHeal();
-            attackType = KnightSpriteType.UpSlash;
-            isAttacking = true;
-            attackTimer = 0;        
+            health.CancelHeal();
+            combat.TryStartAttack(KnightSpriteType.UpSlash, position, physics.IsGrounded);
         }
+
         public void DownSlash()
         {
-            CancelHeal();
-            attackType = KnightSpriteType.DownSlash;
-            isAttacking = true;
-            attackTimer = 0;
+            health.CancelHeal();
+            combat.TryStartAttack(KnightSpriteType.DownSlash, position, physics.IsGrounded);
         }
-        public void StartHeal()
-        {
-            if (isAttacking || !isGrounded)
-                return;
 
-            if (!isHealing)
-            {
-                isHealing = true;
-                healApplied = false;
-                healTimer = 0;
-                velocity.X = 0;
-            }
+        public SwordHitbox GetSwordHitbox() => combat.GetSwordHitbox(GetBounds()[0], Facing);
+
+        // --- Health ---
+        public void TakeDamage() => TakeDamage(CollisionSide.None);
+
+        public void TakeDamage(CollisionSide side)
+        {
+            if (!health.TakeDamage()) return;
+            Console.WriteLine("Knight took damage from " + side + " side");
+            physics.ApplyKnockback(side);
         }
-        public void CancelHeal()
-        {
-            if (!isHealing)
-                return;
 
-            isHealing = false;
-            healApplied = false;
-            healTimer = 0;
+        public void StartHeal() => health.StartHeal(combat.IsAttacking, physics.IsGrounded);
+        public void CancelHeal() => health.CancelHeal();
+
+        // --- Items ---
+        public void UseItem(int itemNumber)
+        {
+            currentItem = itemNumber;
+            Console.WriteLine($"Using item #{currentItem}");
         }
-        public void UpdateHeal(GameTime gameTime)
+
+        public void Collect(CollisionSide side) => Console.WriteLine("Knight picked up a power up!");
+        public void Block(CollisionSide side) => Console.WriteLine("Knight is colliding with a block");
+
+        // --- Position ---
+        public Vector2 GetPosition() => position;
+
+        public void SetPosition(Vector2 newPosition)
         {
-            if (!isHealing)
-                return;
-
-            velocity.X = 0;
-
-            healTimer += gameTime.ElapsedGameTime.TotalSeconds;
-
-            if (healTimer < healPrepDuration)
-            {
-                currentState = KnightSpriteType.HealPrep;
-                return;
-            }
-
-            if(!healApplied)
-            {
-                healApplied = true;
-
-                if (health < maxHealth)
-                {
-                    health++;
-                    Console.WriteLine($"Healed! Health is now {health}");
-                }
-                else 
-                {
-                    Console.WriteLine("Heal finished, but already at max health");
-                }
-            }
-
-            if (healTimer < healPrepDuration + healPostDuration)
-            {
-                currentState = KnightSpriteType.HealPost;
-                return;
-            }
-
-            isHealing = false;
-            healApplied = false;
-            healTimer = 0;
+            position = newPosition;
+            physics.Velocity = Vector2.Zero;
+            currentSprite.SetPosition(position);
         }
     }
 }

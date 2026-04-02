@@ -1,0 +1,108 @@
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using HollowKnight.Collision;
+using HollowKnight.Interfaces;
+using HollowKnight.Player;
+using HollowKnight.Projectiles;
+using HollowKnight.Abilities;
+using HollowKnight.Pathfinding;
+
+namespace HollowKnight.Graphics
+{
+    public class DebugOverlay
+    {
+        private readonly Texture2D _pixel;
+
+        public DebugOverlay(GraphicsDevice graphicsDevice)
+        {
+            _pixel = new Texture2D(graphicsDevice, 1, 1);
+            _pixel.SetData(new[] { Color.White });
+        }
+
+        public void Draw(
+            SpriteBatch spriteBatch,
+            TheKnight knight,
+            List<IObject> platforms,
+            List<IEnemy> enemies,
+            List<Spirit> items,
+            ProjectileManager projectileManager,
+            NavigationGrid navigationGrid)
+        {
+            // Navigation grid
+            if (NavigationGrid.GridEnabled)
+                navigationGrid.Draw(spriteBatch);
+
+            // Enemy debug
+            foreach (IEnemy enemy in enemies)
+            {
+                DebugRenderer.DrawBounds(spriteBatch, enemy, DebugRenderer.ColorEnemy);
+                DrawRectangleOutline(spriteBatch, enemy.GetHurtbox(), Color.DarkRed);
+                DebugRenderer.DrawStateLabel(spriteBatch, enemy, enemy.GetStateName(), DebugRenderer.ColorEnemy);
+
+                if (enemy.GetDetectionRadius() > 0)
+                {
+                    Vector2 center = enemy.GetBounds()[0].Center.ToVector2();
+                    DebugRenderer.DrawRadius(spriteBatch, center, enemy.GetDetectionRadius(), DebugRenderer.ColorTrigger * 0.8f);
+                }
+            }
+
+            // Projectile debug
+            foreach (var p in projectileManager.All)
+                DrawRectangleOutline(spriteBatch, p.Bounds, Color.Red);
+
+            // Item debug
+            foreach (Spirit item in items)
+            {
+                if (item.IsActive)
+                    DebugRenderer.DrawBounds(spriteBatch, item, DebugRenderer.ColorEnvironment);
+            }
+
+            // Knight debug
+            DebugRenderer.DrawBounds(spriteBatch, knight, DebugRenderer.ColorKnight);
+            DebugRenderer.DrawPoint(spriteBatch, knight.GetBounds()[0].Center.ToVector2(), DebugRenderer.ColorMidpoint);
+            DrawRectangleOutline(spriteBatch, knight.Bounds, Color.LimeGreen);
+            DrawRectangleOutline(spriteBatch, knight.GetHurtbox(), Color.DarkRed);
+            DebugRenderer.DrawStateLabel(spriteBatch, knight, knight.GetStateName(), DebugRenderer.ColorKnight);
+
+            string atkText = $"Attack CoolDown: {knight.GetAttackCooldownRemaining():F2}s";
+            string invText = $"Invincibility CoolDown: {knight.GetInvincibilityCooldownRemaining():F2}s";
+            DebugRenderer.DrawText(spriteBatch, atkText, new Vector2(10, 10), Color.White);
+            DebugRenderer.DrawText(spriteBatch, invText, new Vector2(10, 30), Color.White);
+
+            // Sword hitbox debug
+            SwordHitbox swordHitbox = knight.GetSwordHitbox();
+            if (swordHitbox != null)
+                DebugRenderer.DrawBounds(spriteBatch, swordHitbox, DebugRenderer.ColorSword);
+
+            // Platform hitbox debug
+            for (int i = 0; i < platforms.Count; i++)
+            {
+                if (platforms[i] is ICollidable obj)
+                    DrawRectangleOutline(spriteBatch, obj.Bounds, Color.Blue);
+            }
+
+            foreach (IObject obj in platforms)
+            {
+                if (obj != null)
+                    DebugRenderer.DrawBounds(spriteBatch, obj, DebugRenderer.ColorEnvironment);
+            }
+
+            // Enemy pathfinding debug
+            foreach (IEnemy enemy in enemies)
+            {
+                if (enemy == null || !enemy.IsActive) continue;
+                DebugRenderer.DrawPath(spriteBatch, enemy, enemy.GetCurrentPath(), Color.Yellow, Color.Red);
+            }
+        }
+
+        private void DrawRectangleOutline(SpriteBatch spriteBatch, Rectangle rect, Color color, int thickness = 2)
+        {
+            if (!DebugRenderer.hitboxEnabled) return;
+            spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Top, rect.Width, thickness), color);
+            spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Bottom - thickness, rect.Width, thickness), color);
+            spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Top, thickness, rect.Height), color);
+            spriteBatch.Draw(_pixel, new Rectangle(rect.Right - thickness, rect.Top, thickness, rect.Height), color);
+        }
+    }
+}

@@ -3,44 +3,47 @@ using Microsoft.Xna.Framework.Graphics;
 using HollowKnight.Interfaces;
 using HollowKnight.Controllers;
 using HollowKnight.Factories;
-using HollowKnight.Builders;
+using HollowKnight.Levels;
 using HollowKnight.Player;
+using HollowKnight.Projectiles;
+using HollowKnight.Collision;
+using HollowKnight.Environment;
+using HollowKnight.Enemies;
 using System.Collections.Generic;
-using System.IO;
+using HollowKnight.Pathfinding;
+using HollowKnight.Abilities;
+using HollowKnight.Storage;
+using HollowKnight.Shared;
+using HollowKnight.Graphics;
 
 namespace HollowKnight;
 
-/// <summary>
-/// Main game class. Handles initialization, content loading, and the game loop.
-/// </summary>
 public class Game1 : Game
 {
-    private SpriteEffects _spriteEffects;
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-    public int enemy_index = 0;
-    public int enviroment_index = 0;
-    private IEnemy[] Enemies = new IEnemy[2];
-    private IObject[] Objects = new IObject[7];
-    // TODO: Replace with your game's sprite management
-    private ISprite _currentSprite;
+    private NavigationGrid _navigationGrid;
     private List<IController> _controllerList;
+    private List<Spirit> items = new();
 
-   // private IObjects[] enviromentSprites;
-    private int _screenWidth;
-    private int _screenHeight;
-
+    private GameState _gameState = GameState.Playing;
     private TheKnight _knight;
+    private CollisionSystem _collisionSystem;
+    private DebugOverlay _debugOverlay;
+    private ProjectileManager _projectileManager = new();
+    private ProjectileSpawner _projectileSpawner;
+    private KnightProjectile _knightProjectile;
+    private Camera _camera;
+    private RoomManager _roomManager;
+    private LevelLoader _level;
 
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
-
-        // TODO: Set your game's resolution
-        _graphics.PreferredBackBufferWidth = 1280;
-        _graphics.PreferredBackBufferHeight = 720;
+        _graphics.PreferredBackBufferWidth = GameConstants.ScreenWidth;
+        _graphics.PreferredBackBufferHeight = GameConstants.ScreenHeight;
     }
 
     protected override void Initialize()
@@ -52,99 +55,116 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-        // Load all textures and initialize the sprite factory
         SpriteFactory.Instance.LoadAllTextures(Content);
 
-        _screenWidth = _graphics.PreferredBackBufferWidth;
-        _screenHeight = _graphics.PreferredBackBufferHeight;
+        int screenWidth = _graphics.PreferredBackBufferWidth;
+        int screenHeight = _graphics.PreferredBackBufferHeight;
 
-        Vector2 centerPosition = new Vector2(_screenWidth / 2, _screenHeight / 2);
-         
-        loadEnemies();
-        loadEnviroment();
-        
-        
+        _navigationGrid ??= new NavigationGrid(GameConstants.DefaultLevelWidth, GameConstants.DefaultLevelHeight, GraphicsDevice, cellSize: GameConstants.NavGridCellSize);
 
-        var sprites = KnightSpriteBuilder.BuildKnightSprites(centerPosition);
-        _knight = new TheKnight(sprites, centerPosition);
+        Spirit spirit = new Spirit(new Vector2(100, 100));
+        Spirit spirit_2 = new Spirit(new Vector2(-100, -100));
+        items.Add(spirit);
+        items.Add(spirit_2);
 
-        // Setup keyboard controller
+        _level = new LevelLoader();
+        _level.Load("Content/levels/levelOne.xml");
+        LoadObstacles();
+
+        DebugRenderer.Initialize(GraphicsDevice);
+        DebugRenderer.LoadFont(Content.Load<SpriteFont>("fonts/Credits"));
+
+        _collisionSystem = new CollisionSystem();
+        _debugOverlay = new DebugOverlay(GraphicsDevice);
+        _projectileSpawner = new ProjectileSpawner(_projectileManager);
+
+        // Setup knight and camera
+        var sprites = KnightSpriteBuilder.BuildKnightSprites(_level.KnightSpawn);
+        _knight = new TheKnight(sprites, _level.KnightSpawn);
+        _knightProjectile = new KnightProjectile(_knight, _projectileSpawner);
+
+        _camera = new Camera(screenWidth, screenHeight, GameConstants.DefaultLevelWidth, GameConstants.DefaultLevelHeight);
+        _roomManager = new RoomManager(
+            _knight, _camera,
+            screenWidth, screenHeight,
+            GameConstants.DefaultLevelWidth, GameConstants.DefaultLevelHeight);
+
         KeyboardController keyboard = new KeyboardController();
-        KeyboardBindings.BindGameplay(keyboard, _knight, this);
+        KeyboardBindings.BindGameplay(keyboard, _knight, this, _roomManager);
         _controllerList.Add(keyboard);
+        _controllerList.Add(new MouseController(screenWidth, _roomManager));
     }
 
-
-
-    public void loadEnviroment()
+    private void LoadObstacles()
     {
-        IObject Path_1 = new Path_1();
-        Objects[0] = Path_1;
-        IObject Path_2 = new Path_2();
-        Objects[1] = Path_2;
-        IObject Path_3 = new Path_3();
-        Objects[2] = Path_3;
-        IObject Path_Ledge = new Path_ledge();
-        Objects[3] = Path_Ledge;
-        IObject Spike = new Spike();
-        Objects[4] = Spike;
-        IObject FloorSpike = new FloorSpike();
-        Objects[5] = FloorSpike;
-        IObject CeilingSpike = new CeilingSpike();
-        Objects[6] = CeilingSpike;
-    }
-    public void loadEnemies()
-    {
-        IEnemy vengefly_1 = new Vengefly(new Vector2(0, 150));
-        Enemies[0] = vengefly_1;
-        IEnemy crawlid_1 = new Crawlid(new Vector2(0,150));
-        Enemies[1] = crawlid_1;
-    }
-  
-    //Not being used (potentially can be removed)
-    public void SetSprite(ISprite sprite)
-    {
-        if (_currentSprite != null)
+        foreach (IObject obj in _level.Platforms)
         {
-            Vector2 currentPosition = _currentSprite.GetPosition();
-            sprite.SetPosition(currentPosition);
+            if (obj == null) continue;
+            foreach (Rectangle rect in obj.GetBounds())
+                _navigationGrid.AddObstacle(rect);
         }
-        _currentSprite = sprite;
     }
+
     protected override void Update(GameTime gameTime)
     {
-        // Update all controllers
+        // Input is always processed (so pause toggle works)
         foreach (IController controller in _controllerList)
-        {
             controller.Update(gameTime);
+
+        if (_gameState == GameState.Playing)
+        {
+            _knight.Update(gameTime);
+            _roomManager.Update(gameTime);
+
+            _collisionSystem.Update(_knight, _level.Platforms, _level.Enemies, items, _projectileManager, _navigationGrid);
+
+            foreach (IEnemy enemy in _level.Enemies)
+                enemy.Update(gameTime);
+
+            _knightProjectile.Update(gameTime);
+
+            for (int i = 0; i < _level.Platforms.Count; i++)
+            {
+                if (_level.Platforms[i] != null)
+                    _level.Platforms[i].Update(gameTime);
+            }
+
+            _projectileManager.Update(gameTime);
         }
 
-        _knight.Update(gameTime);
-        
-        Enemies[enemy_index].Update(gameTime);
-        Objects[enviroment_index].Update(gameTime);
         base.Update(gameTime);
+    }
+
+    public void TogglePause()
+    {
+        _gameState = _gameState == GameState.Playing ? GameState.Paused : GameState.Playing;
     }
 
     protected override void Draw(GameTime gameTime)
     {
-        // TODO: Change background color to match your game
         GraphicsDevice.Clear(Color.CornflowerBlue);
+        _spriteBatch.Begin(transformMatrix: _camera.GetTransform());
 
-        _spriteBatch.Begin();
-
-        // Draw current sprite
         _knight.Draw(_spriteBatch);
 
-    
-        Enemies[enemy_index].Draw(_spriteBatch, _spriteEffects);
-        Objects[enviroment_index].Draw(_spriteBatch, _spriteEffects);
+        foreach (IObject obj in _level.Platforms)
+            if (obj != null) obj.Draw(_spriteBatch, SpriteEffects.None);
 
+        foreach (IEnemy enemy in _level.Enemies)
+            enemy.Draw(_spriteBatch, SpriteEffects.None);
 
+        foreach (Spirit item in items)
+        {
+            if (item.IsActive)
+                item.Draw(_spriteBatch);
+        }
+
+        _debugOverlay.Draw(_spriteBatch, _knight, _level.Platforms, _level.Enemies, items, _projectileManager, _navigationGrid);
 
         _spriteBatch.End();
-
         base.Draw(gameTime);
     }
+
+    public void SwitchToNextRoom() => _roomManager.SwitchRoomByOffset(1);
+    public void SwitchToPreviousRoom() => _roomManager.SwitchRoomByOffset(-1);
 }

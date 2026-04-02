@@ -16,6 +16,9 @@ namespace HollowKnight.Sprites
         private Vector2 _startPosition;
         private Color _color;
 
+        public int Width => 0;
+        public int Height => 0;
+
         /// <summary>
         /// Create a text sprite.
         /// </summary>
@@ -55,6 +58,11 @@ namespace HollowKnight.Sprites
         public Vector2 GetPosition()
         {
             return _position;
+        }
+
+        public Vector2 GetSize()
+        {
+            return _font?.MeasureString(_text) ?? Vector2.Zero;
         }
     }
 }

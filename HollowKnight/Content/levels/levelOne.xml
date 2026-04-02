@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Level name="LevelOne">
+
+<!-- Player spawn -->
+<Item>
+    <ObjectType>Knight</ObjectType>
+    <ObjectName>Knight</ObjectName>
+    <Location>100 550</Location>
+</Item>
+
+<!-- Test vengeflies near spawn -->
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Vengefly</ObjectName>
+    <Location>300 350</Location>
+</Item>
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Vengefly</ObjectName>
+    <Location>500 250</Location>
+</Item>
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Vengefly</ObjectName>
+    <Location>200 450</Location>
+</Item>
+
+<!-- ============ Ground floor — long continuous path ============ -->
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>0 700</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>1050 700</Location>
+</Item>
+
+<!-- Gap in the ground (pit) — player must jump across -->
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>1350 700</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>2400 700</Location>
+</Item>
+
+<!-- Second gap -->
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>2700 700</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_2</ObjectName>
+    <Location>3750 700</Location>
+</Item>
+
+<!-- Third gap -->
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>4950 700</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>6000 700</Location>
+</Item>
+
+<!-- Fourth gap -->
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_2</ObjectName>
+    <Location>6300 700</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>7240 700</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>8290 700</Location>
+</Item>
+
+<!-- ============ Question-block style platforms (low, reachable from ground) ============ -->
+
+<!-- First block cluster — like the intro blocks in 1-1 -->
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_1</ObjectName>
+    <Location>600 520</Location>
+</Item>
+
+<!-- Block trio -->
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_2</ObjectName>
+    <Location>900 520</Location>
+</Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_3</ObjectName>
+    <Location>1164 520</Location>
+</Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_4</ObjectName>
+    <Location>1428 520</Location>
+</Item>
+
+<!-- ============ First enemies — crawlids on the ground ============ -->
+
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Crawlid</ObjectName>
+    <Location>750 650</Location>
+</Item>
+
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Crawlid</ObjectName>
+    <Location>1500 650</Location>
+</Item>
+
+<!-- ============ Pipe-style step up (stacked platforms) ============ -->
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_5</ObjectName>
+    <Location>2050 620</Location>
+</Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_6</ObjectName>
+    <Location>2050 541</Location>
+</Item>
+
+<!-- ============ Spikes in a pit (like the bottomless pits but with teeth) ============ -->
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Spike_Floor_1</ObjectName>
+    <Location>2430 690</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Spike_Floor_2</ObjectName>
+    <Location>2570 690</Location>
+</Item>
+
+<!-- ============ Mid-level blocks — higher row for bonus area feel ============ -->
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_7</ObjectName>
+    <Location>2900 520</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_8</ObjectName>
+    <Location>3164 520</Location>
+</Item>
+
+<!-- ============ Second pipe step ============ -->
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_9</ObjectName>
+    <Location>3500 620</Location>
+</Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_10</ObjectName>
+    <Location>3500 541</Location>
+</Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_1</ObjectName>
+    <Location>3500 462</Location>
+</Item>
+
+<!-- ============ More ground enemies ============ -->
+
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Crawlid</ObjectName>
+    <Location>3000 650</Location>
+</Item>
+
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Crawlid</ObjectName>
+    <Location>4200 650</Location>
+</Item>
+
+<!-- ============ Staircase section — ascending ledges ============ -->
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_ledge</ObjectName>
+    <Location>4400 650</Location>
+</Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_ledge</ObjectName>
+    <Location>4550 580</Location>
+</Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_ledge</ObjectName>
+    <Location>4700 510</Location>
+</Item>
+
+<!-- ============ Vengefly — airborne threat like Lakitu ============ -->
+
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Vengefly</ObjectName>
+    <Location>4800 300</Location>
+</Item>
+
+<!-- ============ Spike gauntlet — ground spikes with blocks to jump to ============ -->
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Spike_Floor_1</ObjectName>
+    <Location>5100 690</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_2</ObjectName>
+    <Location>5100 540</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Spike_Floor_2</ObjectName>
+    <Location>5300 690</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_3</ObjectName>
+    <Location>5350 540</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Spike_Floor_1</ObjectName>
+    <Location>5500 690</Location>
+</Item>
+
+<!-- ============ Ceiling spikes — low ceiling section ============ -->
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Spike_Ceiling</ObjectName>
+    <Location>5700 350</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Spike_Ceiling</ObjectName>
+    <Location>5930 350</Location>
+</Item>
+
+<!-- ============ Enemy cluster before finale ============ -->
+
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Crawlid</ObjectName>
+    <Location>6100 650</Location>
+</Item>
+
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Crawlid</ObjectName>
+    <Location>6400 650</Location>
+</Item>
+
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Vengefly</ObjectName>
+    <Location>6600 350</Location>
+</Item>
+
+<!-- ============ Tall pipe near end — like the flagpole pipe ============ -->
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_4</ObjectName>
+    <Location>7000 620</Location>
+</Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_5</ObjectName>
+    <Location>7000 541</Location>
+</Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_6</ObjectName>
+    <Location>7000 462</Location>
+</Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_7</ObjectName>
+    <Location>7000 383</Location>
+</Item>
+
+<!-- ============ Final blocks — end of level ============ -->
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_8</ObjectName>
+    <Location>7600 520</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_9</ObjectName>
+    <Location>7864 520</Location>
+</Item>
+
+<!-- Final staircase down -->
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_ledge</ObjectName>
+    <Location>8100 580</Location>
+</Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_ledge</ObjectName>
+    <Location>8250 650</Location>
+</Item>
+
+</Level>
