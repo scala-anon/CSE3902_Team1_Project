@@ -43,6 +43,18 @@
 /build:Audio/hero_run_footsteps_stone.wav
 
 
+#begin Audio/Grass Cut 1.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Grass Cut 1.mp3
+
+#begin Audio/Grass Move 1.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Grass Move 1.mp3
+
 
 
 
