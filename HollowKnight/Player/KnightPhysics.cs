@@ -50,13 +50,15 @@ namespace HollowKnight.Player
             Velocity.X = -moveSpeed;
         }
 
-        public void Jump()
+        public bool Jump()
         {
             if (IsGrounded)
             {
                 Velocity.Y = jumpSpeed;
                 IsGrounded = false;
+                return true;
             }
+            return false;
         }
 
         public void StopJump()

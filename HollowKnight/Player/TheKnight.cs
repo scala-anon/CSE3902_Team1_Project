@@ -119,7 +119,7 @@ namespace HollowKnight.Player
         public Rectangle GetHurtbox()
         {
             Rectangle[] bounds = GetBounds();
-            bounds[0].Inflate(-GameConstants.KnightHurtboxShrink, -GameConstants.KnightHurtboxShrink);
+            bounds[0].Inflate(-CollisionConstants.KnightHurtboxShrink, -CollisionConstants.KnightHurtboxShrink);
             return bounds[0];
         }
 
@@ -158,14 +158,19 @@ namespace HollowKnight.Player
 
         public void Jump()
         {
+            if (dash.IsDashing) return;
+            if (!physics.IsGrounded) return;
             health.CancelHeal();
-            physics.Jump();
+            if (physics.Jump())
+            {
+                dash.OnJump();
+            }
         }
 
         public void StartDash()
         {
             health.CancelHeal();
-            dash.StartDash(Facing);
+            dash.StartDash(Facing, physics.IsGrounded);
         }
 
         public void StopJump()
@@ -175,23 +180,30 @@ namespace HollowKnight.Player
 
         public void StopMovingHorizontal() => physics.StopMovingHorizontal();
         public void StopMovingVertical() => physics.StopMovingVertical();
-        public void Land() => physics.Land();
+        public void Land()
+        {
+            physics.Land();
+            dash.OnLanded();
+        }
 
         // --- Combat ---
         public void SideSlash()
         {
+            if (dash.IsDashing) return;
             health.CancelHeal();
             combat.TryStartAttack(KnightSpriteType.SideSlash, position, physics.IsGrounded);
         }
 
         public void UpSlash()
         {
+            if (dash.IsDashing) return;
             health.CancelHeal();
             combat.TryStartAttack(KnightSpriteType.UpSlash, position, physics.IsGrounded);
         }
 
         public void DownSlash()
         {
+            if (dash.IsDashing) return;
             health.CancelHeal();
             combat.TryStartAttack(KnightSpriteType.DownSlash, position, physics.IsGrounded);
         }
@@ -211,7 +223,11 @@ namespace HollowKnight.Player
 
         public int GetHealth() => health.Health;
 
-        public void StartHeal() => health.StartHeal(combat.IsAttacking, physics.IsGrounded);
+        public void StartHeal()
+        {
+            if (dash.IsDashing) return;
+            health.StartHeal(combat.IsAttacking, physics.IsGrounded);
+        }
         public void CancelHeal() => health.CancelHeal();
 
         // --- Items ---

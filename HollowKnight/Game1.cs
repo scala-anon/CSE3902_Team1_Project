@@ -68,12 +68,13 @@ public partial class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
-        UpdateControllers(gameTime);
-
         switch (_gameState)
         {
             case GameState.Playing:
-                UpdatePlaying(gameTime);
+                // Update collisions BEFORE processing input, so IsGrounded is current
+                UpdateCollisions();
+                UpdateControllers(gameTime);
+                UpdatePlayingLogic(gameTime);
                 break;
 
             case GameState.Paused:

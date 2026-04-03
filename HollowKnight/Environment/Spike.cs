@@ -49,16 +49,16 @@ namespace HollowKnight.Environment
             switch (variant)
             {
                 case SpikeVariant.Floor1:
-                    hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y + GameConstants.SpikeFloor1PrimaryY, GameConstants.SpikeFloor1PrimaryW, GameConstants.SpikeFloor1PrimaryH);
-                    hitBoxes[1] = new Rectangle((int)position.X + GameConstants.SpikeFloor1SecondaryX, (int)position.Y, GameConstants.SpikeFloor1SecondaryW, GameConstants.SpikeFloor1SecondaryH);
+                    hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y + CollisionConstants.SpikeFloor1PrimaryY, CollisionConstants.SpikeFloor1PrimaryW, CollisionConstants.SpikeFloor1PrimaryH);
+                    hitBoxes[1] = new Rectangle((int)position.X + CollisionConstants.SpikeFloor1SecondaryX, (int)position.Y, CollisionConstants.SpikeFloor1SecondaryW, CollisionConstants.SpikeFloor1SecondaryH);
                     break;
                 case SpikeVariant.Floor2:
-                    hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y + GameConstants.SpikeFloor2PrimaryY, GameConstants.SpikeFloor2PrimaryW, GameConstants.SpikeFloor2PrimaryH);
-                    hitBoxes[1] = new Rectangle((int)position.X + GameConstants.SpikeFloor2SecondaryX, (int)position.Y, GameConstants.SpikeFloor2SecondaryW, GameConstants.SpikeFloor2SecondaryH);
+                    hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y + CollisionConstants.SpikeFloor2PrimaryY, CollisionConstants.SpikeFloor2PrimaryW, CollisionConstants.SpikeFloor2PrimaryH);
+                    hitBoxes[1] = new Rectangle((int)position.X + CollisionConstants.SpikeFloor2SecondaryX, (int)position.Y, CollisionConstants.SpikeFloor2SecondaryW, CollisionConstants.SpikeFloor2SecondaryH);
                     break;
                 case SpikeVariant.Ceiling:
-                    hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, GameConstants.SpikeCeilingPrimaryW, GameConstants.SpikeCeilingPrimaryH);
-                    hitBoxes[1] = new Rectangle((int)position.X + GameConstants.SpikeCeilingSecondaryX, (int)position.Y + GameConstants.SpikeCeilingSecondaryY, GameConstants.SpikeCeilingSecondaryW, GameConstants.SpikeCeilingSecondaryH);
+                    hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, CollisionConstants.SpikeCeilingPrimaryW, CollisionConstants.SpikeCeilingPrimaryH);
+                    hitBoxes[1] = new Rectangle((int)position.X + CollisionConstants.SpikeCeilingSecondaryX, (int)position.Y + CollisionConstants.SpikeCeilingSecondaryY, CollisionConstants.SpikeCeilingSecondaryW, CollisionConstants.SpikeCeilingSecondaryH);
                     break;
             }
             return hitBoxes;

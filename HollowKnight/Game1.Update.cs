@@ -13,11 +13,10 @@ public partial class Game1
         }
     }
 
-    private void UpdatePlaying(GameTime gameTime)
+    private void UpdatePlayingLogic(GameTime gameTime)
     {
         UpdateKnight(gameTime);
         UpdateRoom(gameTime);
-        UpdateCollisions();
         UpdateEnemies(gameTime);
         UpdateKnightProjectiles(gameTime);
         UpdatePlatforms(gameTime);

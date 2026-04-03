@@ -8,12 +8,14 @@ namespace HollowKnight.Player
   {
 
     public bool IsDashing {get; private set;}
+    public bool DashAvailable {get; private set;}
     public bool IsOnDashCooldown {get; private set;}
 
     private Direction dashDirection;
     private double dashTimer;
     private double dashCooldownTimer;
     private bool dashJustEnded;
+    private bool isCurrentlyAirborne;
 
     private readonly float dashSpeed = GameConstants.KnightDashSpeed;
     private readonly double dashDuration = GameConstants.KnightDashDuration;
@@ -36,8 +38,8 @@ namespace HollowKnight.Player
 
       if(IsOnDashCooldown)
       {
-        dashCooldownTimer +=dt;
-        if(dashCooldownTimer>= dashCooldown)
+        dashCooldownTimer += dt;
+        if(dashCooldownTimer >= dashCooldown)
         {
           IsOnDashCooldown = false;
           dashCooldownTimer = 0;
@@ -45,22 +47,52 @@ namespace HollowKnight.Player
       }
     }
 
-    public void StartDash(Direction direction)
+    public void StartDash(Direction direction, bool isGrounded)
     {
-      if (IsDashing || IsOnDashCooldown) return;
+      if (IsDashing) return;
 
-      IsDashing = true;
-      IsOnDashCooldown = true;
+      // Airborne: only allow dash if available (one per jump)
+      if (!isGrounded)
+      {
+        if (!DashAvailable) return;
+        IsDashing = true;
+        DashAvailable = false;
+        isCurrentlyAirborne = true;
+      }
+      // Grounded: allow dash with cooldown
+      else
+      {
+        if (IsOnDashCooldown) return;
+        IsDashing = true;
+        IsOnDashCooldown = true;
+        dashCooldownTimer = 0;
+        isCurrentlyAirborne = false;
+      }
+
       dashDirection = direction;
       dashTimer = 0;
-      dashCooldownTimer = 0;
+    }
+
+    public void OnJump()
+    {
+      // Only reset dash availability if cooldown is finished and we're grounded
+      if (!IsOnDashCooldown)
+      {
+        DashAvailable = true;
+        isCurrentlyAirborne = true;
+      }
+    }
+
+    public void OnLanded()
+    {
+      isCurrentlyAirborne = false;
+      // Dash availability will be managed by cooldown on ground
     }
 
     public void CancelDash()
     {
       if (!IsDashing) return;
       IsDashing = false;
-      // dashTimer = 0;
     }
 
     public Direction GetDashDirection() => dashDirection;
