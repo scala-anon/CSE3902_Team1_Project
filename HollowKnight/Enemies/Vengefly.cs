@@ -86,11 +86,11 @@ namespace HollowKnight.Enemies
             SetState(VengeflyState.DeathLand);
         }
 
-        public void TakeDamage() => TakeDamage(CollisionSide.None);
+        public bool TakeDamage() => TakeDamage(CollisionSide.None);
 
-        public void TakeDamage(CollisionSide side)
+        public bool TakeDamage(CollisionSide side)
         {
-            if (_isDamaged) return;
+            if (_isDamaged || Dead) return false;
             _isDamaged = true;
             _damagedTimer = 0;
             switch (side)
@@ -101,6 +101,7 @@ namespace HollowKnight.Enemies
                 case CollisionSide.Bottom: _knockbackVelocity = new Vector2(0, GameConstants.VengeflyVerticalKnockbackSpeed); break;
             }
             ChangeHealth();
+            return true;
         }
 
         public void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects)

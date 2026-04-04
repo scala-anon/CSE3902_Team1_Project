@@ -8,16 +8,24 @@ namespace HollowKnight.Player
     {
         public int Health { get; private set; } = GameConstants.KnightStartHealth;
         public int MaxHealth { get; } = GameConstants.KnightMaxHealth;
+        
+        public int Soul { get; private set; } = GameConstants.KnightStartSoul;
+        public int MaxSoul { get; } = GameConstants.KnightMaxSoul;
+
         public bool IsDamaged { get; private set; }
         public bool IsHealing { get; private set; }
 
         private double damagedTimer;
         private readonly double invincibilityDuration = GameConstants.KnightInvincibilityDuration;
 
-        private bool healApplied;
+        private enum HealPhase { None, Startup, Prep, Post }
+        private HealPhase healPhase = HealPhase.None;
         private double healTimer;
-        private readonly double healPrepDuration = GameConstants.KnightHealPrepDuration;
-        private readonly double healPostDuration = GameConstants.KnightHealPostDuration;
+
+        public void GainSoul()
+        {
+            Soul = Math.Min(MaxSoul, Soul + GameConstants.KnightSoulPerHit);
+        }
 
         public void Update(GameTime gameTime)
         {
@@ -29,8 +37,6 @@ namespace HollowKnight.Player
                     IsDamaged = false;
                     damagedTimer = 0;
                 }
-
-                
             }
         }
 
@@ -48,9 +54,10 @@ namespace HollowKnight.Player
         {
             if (isAttacking || !isGrounded) return;
             if (IsHealing) return;
+            if (Soul < GameConstants.KnightSoulPerHeal) { Console.WriteLine("Not enough soul!"); return; }
 
             IsHealing = true;
-            healApplied = false;
+            healPhase = HealPhase.Startup;
             healTimer = 0;
         }
 
@@ -58,7 +65,7 @@ namespace HollowKnight.Player
         {
             if (!IsHealing) return;
             IsHealing = false;
-            healApplied = false;
+            healPhase = HealPhase.None;
             healTimer = 0;
         }
 
@@ -71,33 +78,58 @@ namespace HollowKnight.Player
 
             healTimer += gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (healTimer < healPrepDuration)
-                return KnightSpriteType.HealPrep;
-
-            if (!healApplied)
+            switch (healPhase)
             {
-                healApplied = true;
-                if (Health < MaxHealth)
-                {
-                    Health++;
-                    Console.WriteLine($"Healed! Health is now {Health}");
-                }
-                else
-                {
-                    Console.WriteLine("Heal finished, but already at max health");
-                }
+                case HealPhase.Startup:
+                    if (healTimer >= GameConstants.KnightHealStartUp)
+                    {
+                        healPhase = HealPhase.Prep;
+                        healTimer = 0;
+                    }
+                    return KnightSpriteType.HealPrep;
+
+                case HealPhase.Prep:
+                    if (healTimer >= GameConstants.KnightHealPrepDuration)
+                    {
+                        Soul -= GameConstants.KnightSoulPerHeal;
+                        if (Health < MaxHealth)
+                        {
+                            Health++;
+                            Console.WriteLine($"Healed! Health is now {Health}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Heal finished, but already at max health (wasted soul)");
+                        }
+                        
+                        healPhase = HealPhase.Post;
+                        healTimer = 0;
+                    }
+                    return KnightSpriteType.HealPrep;
+
+                case HealPhase.Post:
+                    if (healTimer >= GameConstants.KnightHealPostDuration)
+                    {
+                        if (Soul >= GameConstants.KnightSoulPerHeal)
+                        {
+                            healPhase = HealPhase.Prep;
+                            healTimer = 0;
+                        }
+                        else
+                        {
+                            CancelHeal();
+                        }
+                    }
+                    return KnightSpriteType.HealPost;
             }
 
-            if (healTimer < healPrepDuration + healPostDuration)
-                return KnightSpriteType.HealPost;
-
-            IsHealing = false;
-            healApplied = false;
-            healTimer = 0;
             return null;
         }
 
         public double GetInvincibilityCooldownRemaining() =>
             IsDamaged ? Math.Max(0, invincibilityDuration - damagedTimer) : 0;
+
+        public double GetHealCooldownRemaining() =>
+            healPhase == HealPhase.Post ? Math.Max(0, GameConstants.KnightHealPostDuration - healTimer) : 0;
     }
 }

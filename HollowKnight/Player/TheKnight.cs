@@ -112,7 +112,12 @@ namespace HollowKnight.Player
         public Rectangle[] GetBounds()
         {
             Vector2 size = currentSprite.GetSize();
-            hitBoxes[0] = new Rectangle((int)position.X + 10, (int)position.Y + 20, (int)size.X - 20 , (int)size.Y - 10);
+            hitBoxes[0] = new Rectangle(
+                (int)position.X + CollisionConstants.KnightHitboxOffsetX, 
+                (int)position.Y + CollisionConstants.KnightHitboxOffsetY, 
+                (int)size.X - CollisionConstants.KnightHitboxWidthShrink, 
+                (int)size.Y - CollisionConstants.KnightHitboxHeightShrink
+            );
             return hitBoxes;
         }
 
@@ -127,6 +132,9 @@ namespace HollowKnight.Player
         public double GetAttackCooldownRemaining() => combat.GetCooldownRemaining();
         public double GetInvincibilityCooldownRemaining() => health.GetInvincibilityCooldownRemaining();
         public double GetDashCooldownRemaining() => dash.GetDashCooldownRemaining();
+        public double GetHealCooldownRemaining() => health.GetHealCooldownRemaining();
+        public int Soul => health.Soul;
+        public void GainSoul() => health.GainSoul();
 
         public void Draw(SpriteBatch spriteBatch)
         {

@@ -84,11 +84,11 @@ public class Crawlid : IEnemy
         stateMachine.ChangeHealth();
     }
 
-    public void TakeDamage() => TakeDamage(CollisionSide.None);
+    public bool TakeDamage() => TakeDamage(CollisionSide.None);
 
-    public void TakeDamage(CollisionSide side)
+    public bool TakeDamage(CollisionSide side)
     {
-        if (_isDamaged) return;
+        if (_isDamaged) return false;
         _isDamaged = true;
         _damagedTimer = 0;
 
@@ -102,6 +102,7 @@ public class Crawlid : IEnemy
         if (_knockbackVelocity.Y < 0) IsGrounded = false;
 
         ChangeHealth();
+        return true;
     }
 
     public void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects)

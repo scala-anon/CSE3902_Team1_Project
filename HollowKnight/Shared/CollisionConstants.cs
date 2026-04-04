@@ -21,6 +21,12 @@ namespace HollowKnight.Shared
         // Knight Hurtbox
         public const int KnightHurtboxShrink = 6;
 
+        // Knight Hitbox Adjustments
+        public const int KnightHitboxOffsetX = 10;
+        public const int KnightHitboxOffsetY = 20;
+        public const int KnightHitboxWidthShrink = 20;
+        public const int KnightHitboxHeightShrink = 10;
+
         // Sword Hitbox Dimensions
         public const int SideSlashWidth = 160;
         public const int SideSlashHeight = 110;

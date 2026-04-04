@@ -14,6 +14,7 @@ namespace HollowKnight.Collision
     public class CollisionSystem
     {
         private readonly CollisionHandler _handler = new();
+        private TheKnight _currentKnight;
 
         public CollisionSystem()
         {
@@ -32,8 +33,8 @@ namespace HollowKnight.Collision
                 _handler.Register<Spike, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
 
                 // Sword damages enemies
-                _handler.Register<SwordHitbox, Crawlid>(side, (a, b) => ((Crawlid)b).TakeDamage(side));
-                _handler.Register<SwordHitbox, Vengefly>(side, (a, b) => ((Vengefly)b).TakeDamage(side));
+                _handler.Register<SwordHitbox, Crawlid>(side, (a, b) => { if (((Crawlid)b).TakeDamage(side) && _currentKnight != null) _currentKnight.GainSoul(); });
+                _handler.Register<SwordHitbox, Vengefly>(side, (a, b) => { if (((Vengefly)b).TakeDamage(side) && _currentKnight != null) _currentKnight.GainSoul(); });
 
                 // Item pickup
                 _handler.Register<Spirit, TheKnight>(side, (a, b) => ((TheKnight)b).Collect(side));
@@ -48,6 +49,7 @@ namespace HollowKnight.Collision
             ProjectileManager projectileManager,
             NavigationGrid navigationGrid)
         {
+            _currentKnight = knight;
             Vector2 knightPosition = knight.GetBounds()[0].Center.ToVector2();
 
             // Platform collisions

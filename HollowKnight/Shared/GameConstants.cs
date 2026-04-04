@@ -28,12 +28,20 @@ namespace HollowKnight.Shared
         public const float KnightDashDuration = 0.5f;
         public const float KnightDashCooldown = 0.65f;
 
-        // Knight — Health
+        // Knight — Soul Storage/Usage
+        public const int KnightStartSoul = 0;
+        public const int KnightMaxSoul = 99;
+        public const int KnightSoulPerHeal = 33;
+        public const int KnightSoulPerHit = 11;
+
+        //Knight - Health
         public const int KnightStartHealth = 5;
-        public const int KnightMaxHealth = 9;
+        public const int KnightMaxHealth = 5;
         public const double KnightInvincibilityDuration = 1.3;
-        public const double KnightHealPrepDuration = 0.6;
+        public const double KnightHealPrepDuration = 0.6; //actual game is 1.14
         public const double KnightHealPostDuration = 0.2;
+        public const double KnightHealCooldown = 2.0;
+        public const double KnightHealStartUp = 0.25;
 
         // Enemy — Shared
         public const float EnemyKnockbackSpeed = 950f;
