@@ -68,6 +68,7 @@ namespace HollowKnight.Graphics
 
             string atkText = $"Attack CoolDown: {knight.GetAttackCooldownRemaining():F2}s";
             string invText = $"Invincibility CoolDown: {knight.GetInvincibilityCooldownRemaining():F2}s";
+            string dashText = $"Dash CoolDown: {knight.GetDashCooldownRemaining():F2}s";
             string posText = $"Knight Position: ({knight.position.X:F0}, {knight.position.Y:F0})";
             string hpText  = $"Health: {knight.GetHealth()}";
 
@@ -75,8 +76,9 @@ namespace HollowKnight.Graphics
             Vector2 hudBasePos = camera.Position + new Vector2(10, 10);
             DebugRenderer.DrawText(spriteBatch, atkText, hudBasePos, Color.White);
             DebugRenderer.DrawText(spriteBatch, invText, hudBasePos + new Vector2(0, 20), Color.White);
-            DebugRenderer.DrawText(spriteBatch, posText, hudBasePos + new Vector2(0, 40), Color.White);
-            DebugRenderer.DrawText(spriteBatch, hpText,  hudBasePos + new Vector2(0, 60), Color.White);
+            DebugRenderer.DrawText(spriteBatch, dashText, hudBasePos + new Vector2(0, 40), Color.White);
+            DebugRenderer.DrawText(spriteBatch, posText, hudBasePos + new Vector2(0, 60), Color.White);
+            DebugRenderer.DrawText(spriteBatch, hpText,  hudBasePos + new Vector2(0, 80), Color.White);
 
             // Sword hitbox debug
             SwordHitbox swordHitbox = knight.GetSwordHitbox();

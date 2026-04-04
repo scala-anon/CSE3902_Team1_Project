@@ -35,8 +35,7 @@ namespace HollowKnight.Player
           dashTimer= 0;
         }
       }
-
-      if(IsOnDashCooldown)
+      else if(IsOnDashCooldown)
       {
         dashCooldownTimer += dt;
         if(dashCooldownTimer >= dashCooldown)
@@ -59,7 +58,7 @@ namespace HollowKnight.Player
         DashAvailable = false;
         isCurrentlyAirborne = true;
       }
-      // Grounded: allow dash with cooldown
+      // Grounded: dash cooldown
       else
       {
         if (IsOnDashCooldown) return;
@@ -75,7 +74,7 @@ namespace HollowKnight.Player
 
     public void OnJump()
     {
-      // Only reset dash availability if cooldown is finished and we're grounded
+      // reset dash if cooldown is finished and grounded
       if (!IsOnDashCooldown)
       {
         DashAvailable = true;
@@ -86,7 +85,6 @@ namespace HollowKnight.Player
     public void OnLanded()
     {
       isCurrentlyAirborne = false;
-      // Dash availability will be managed by cooldown on ground
     }
 
     public void CancelDash()
@@ -98,5 +96,6 @@ namespace HollowKnight.Player
     public Direction GetDashDirection() => dashDirection;
     public float GetDashSpeed() => dashSpeed;
     public bool DashEnded() => dashJustEnded;
+    public double GetDashCooldownRemaining() => IsOnDashCooldown ? Math.Max(0, dashCooldown - dashCooldownTimer) : 0;
   }
 }

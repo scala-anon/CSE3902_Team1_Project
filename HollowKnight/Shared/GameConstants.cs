@@ -26,7 +26,7 @@ namespace HollowKnight.Shared
         //Knight - Dash
         public const float KnightDashSpeed = 600f;
         public const float KnightDashDuration = 0.5f;
-        public const float KnightDashCooldown = 0.5f;
+        public const float KnightDashCooldown = 0.65f;
 
         // Knight — Health
         public const int KnightStartHealth = 5;
