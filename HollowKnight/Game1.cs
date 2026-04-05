@@ -13,7 +13,7 @@ using HollowKnight.Abilities;
 using HollowKnight.Storage;
 using HollowKnight.Shared;
 using HollowKnight.Graphics;
-using Microsoft.Xna.Framework.Audio;
+using HollowKnight.Audio;
 
 namespace HollowKnight;
 
@@ -36,6 +36,9 @@ public class Game1 : Game
     private RoomManager _roomManager;
     private LevelLoader _level;
 
+    public AudioLoader _audioLoader;
+
+
 
     public Game1()
     {
@@ -49,6 +52,7 @@ public class Game1 : Game
     protected override void Initialize()
     {
         _controllerList = new List<IController>();
+        _audioLoader = new AudioLoader(this.Content);
         base.Initialize();
     }
 
@@ -60,6 +64,9 @@ public class Game1 : Game
 
         int screenWidth = _graphics.PreferredBackBufferWidth;
         int screenHeight = _graphics.PreferredBackBufferHeight;
+
+        _audioLoader.loadAudio();
+
 
         _navigationGrid ??= new NavigationGrid(GameConstants.DefaultLevelWidth, GameConstants.DefaultLevelHeight, GraphicsDevice, cellSize: GameConstants.NavGridCellSize);
 
