@@ -27,6 +27,7 @@ namespace HollowKnight.Player
         private readonly Vector2 baseSize;
 
         public KnightState CurrentState { get; private set; } = KnightState.Idle;
+        public KnightProjectile Projectiles { get; set; }
 
         public bool IsActive => true;
         public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, (int)baseSize.X, (int)baseSize.Y);
@@ -249,6 +250,27 @@ namespace HollowKnight.Player
             health.StartHeal(combat.IsAttacking, physics.IsGrounded);
         }
         public void CancelHeal() => health.CancelHeal();
+
+        // --- Spells ---
+        public void CastSpell()
+        {
+            if (health.Soul >= 24)
+            {
+                health.ConsumeSoul(24);
+                Console.WriteLine("Casting spell! Remaining soul: " + health.Soul);
+                Projectiles?.Fire();
+                // TODO: Add spellcast animation
+            }
+            else
+            {
+                Console.WriteLine("Not enough soul to cast spell!");
+            }
+        }
+
+        public void GiveFullSoul()
+        {
+            health.GiveFullSoul();
+        }
 
         // --- Items ---
         public void UseItem(int itemNumber)

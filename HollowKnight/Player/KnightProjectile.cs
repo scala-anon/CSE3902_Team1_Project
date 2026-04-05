@@ -22,13 +22,7 @@ namespace HollowKnight.Player
 
         public void Update(GameTime gameTime)
         {
-            _projectileTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            if (_projectileTimer >= _projectileInterval)
-            {
-                _projectileTimer = 0f;
-                Fire();
-            }
+            // Projectiles now fired with the Fire() method
         }
 
         public void Fire()

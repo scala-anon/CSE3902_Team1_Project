@@ -67,6 +67,7 @@ public partial class Game1
         var sprites = KnightSpriteBuilder.BuildKnightSprites(_level.KnightSpawn);
         _knight = new TheKnight(sprites, _level.KnightSpawn);
         _knightProjectile = new KnightProjectile(_knight, _projectileSpawner);
+        _knight.Projectiles = _knightProjectile;
     }
 
     private void InitializeCameraAndRooms()

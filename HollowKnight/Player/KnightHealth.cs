@@ -27,6 +27,16 @@ namespace HollowKnight.Player
             Soul = Math.Min(MaxSoul, Soul + GameConstants.KnightSoulPerHit);
         }
 
+        public void ConsumeSoul(int amount)
+        {
+            Soul = Math.Max(0, Soul - amount);
+        }
+        
+        public void GiveFullSoul()
+        {
+            Soul = MaxSoul;
+        }
+
         public void Update(GameTime gameTime)
         {
             if (IsDamaged)

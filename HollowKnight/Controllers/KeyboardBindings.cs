@@ -9,6 +9,8 @@ namespace HollowKnight.Controllers
     {
         public static void BindGameplay(KeyboardController keyboard, TheKnight knight, Game1 game, RoomManager roomManager)
         {
+            //TODO: remove developer keybinding and change ability and movement binds if needed
+
             // Move Left — A and Left Arrow
             keyboard.RegisterHeldCommand(Keys.A, new PlayerMoveLeftCommand(knight));
             keyboard.RegisterHeldCommand(Keys.Left, new PlayerMoveLeftCommand(knight));
@@ -38,6 +40,9 @@ namespace HollowKnight.Controllers
             //Dash - C
             keyboard.RegisterPressedCommand(Keys.C, new PlayerDashCommand(knight));
 
+            //SpellCasting - T 
+            keyboard.RegisterPressedCommand(Keys.T, new PlayerSpellCastCommand(knight));
+
             // Attack — Z + direction for slash variants
             keyboard.RegisterComboPressedCommand(Keys.Z, Keys.W, new PlayerUpSlashCommand(knight));
             keyboard.RegisterComboPressedCommand(Keys.Z, Keys.Up, new PlayerUpSlashCommand(knight));
@@ -57,6 +62,9 @@ namespace HollowKnight.Controllers
             // Cycle Items
             keyboard.RegisterPressedCommand(Keys.U, new CycleItemPreviousCommand());
             keyboard.RegisterPressedCommand(Keys.I, new CycleItemNextCommand());
+
+            // Give Soul (debug) - Using Y because U is taken
+            keyboard.RegisterPressedCommand(Keys.Y, new PlayerGiveSoulCommand(knight));
 
             // GameState
             keyboard.RegisterPressedCommand(Keys.P, new TogglePauseCommand(game));
