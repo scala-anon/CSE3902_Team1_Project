@@ -44,6 +44,13 @@ namespace HollowKnight.Player
             return true;
         }
 
+        public void ResetHealth()
+        {
+            Health = MaxHealth;
+            IsDamaged = false;
+            CancelHeal();
+        }
+
         public void StartHeal(bool isAttacking, bool isGrounded)
         {
             if (isAttacking || !isGrounded) return;
