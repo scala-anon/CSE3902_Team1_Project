@@ -83,6 +83,7 @@ namespace HollowKnight.Collision
             }
 
             // Block resolution pass
+            knight.SetAirborne();
             for (int i = 0; i < platforms.Count; i++)
             {
                 if (platforms[i] is ICollidable blockObj)

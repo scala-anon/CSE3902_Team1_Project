@@ -24,10 +24,12 @@ namespace HollowKnight.Player
         private readonly KnightDash dash = new();        
         private int currentItem;
 
+        private readonly Vector2 baseSize;
+
         public KnightState CurrentState { get; private set; } = KnightState.Idle;
 
         public bool IsActive => true;
-        public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, currentSprite.Width, currentSprite.Height);
+        public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, (int)baseSize.X, (int)baseSize.Y);
         public float VelocityY => physics.Velocity.Y;
 
         public TheKnight(Dictionary<KnightSpriteType, ISprite> sprites, Vector2 position)
@@ -38,6 +40,8 @@ namespace HollowKnight.Player
             currentSpriteType = KnightSpriteType.Idle;
             currentSprite = this.sprites[currentSpriteType];
             currentSprite.SetPosition(position);
+
+            baseSize = this.sprites[KnightSpriteType.Idle].GetSize();
         }
 
         public void Update(GameTime gameTime)
@@ -105,18 +109,23 @@ namespace HollowKnight.Player
             }
 
             currentSprite = sprites[currentSpriteType];
-            currentSprite.SetPosition(position);
+            
+            // Align the visual sprite's bottom to match the fixed hitbox bottom, keeping feet on the ground
+            Vector2 currentSize = currentSprite.GetSize();
+            float spriteOffsetY = baseSize.Y - currentSize.Y;
+            
+            currentSprite.SetPosition(new Vector2(position.X, position.Y + spriteOffsetY));
             currentSprite.Update(gameTime);
         }
 
         public Rectangle[] GetBounds()
         {
-            Vector2 size = currentSprite.GetSize();
+            // Lock hitbox size to baseSize to prevent physics jitter during animation state changes
             hitBoxes[0] = new Rectangle(
                 (int)position.X + CollisionConstants.KnightHitboxOffsetX, 
                 (int)position.Y + CollisionConstants.KnightHitboxOffsetY, 
-                (int)size.X - CollisionConstants.KnightHitboxWidthShrink, 
-                (int)size.Y - CollisionConstants.KnightHitboxHeightShrink
+                (int)baseSize.X - CollisionConstants.KnightHitboxWidthShrink, 
+                (int)baseSize.Y - CollisionConstants.KnightHitboxHeightShrink
             );
             return hitBoxes;
         }
@@ -194,6 +203,8 @@ namespace HollowKnight.Player
             physics.Land();
             dash.OnLanded();
         }
+
+        public void SetAirborne() => physics.SetAirborne();
 
         // --- Combat ---
         public void SideSlash()

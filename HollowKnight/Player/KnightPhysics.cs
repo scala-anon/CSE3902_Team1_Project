@@ -75,6 +75,11 @@ namespace HollowKnight.Player
             IsGrounded = true;
         }
 
+        public void SetAirborne()
+        {
+            IsGrounded = false;
+        }
+
         public void StopMovingHorizontal()
         {
             Velocity.X = 0;
