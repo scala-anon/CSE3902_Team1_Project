@@ -7,14 +7,13 @@ using HollowKnight.Levels;
 using HollowKnight.Player;
 using HollowKnight.Projectiles;
 using HollowKnight.Collision;
-using HollowKnight.Environment;
-using HollowKnight.Enemies;
 using System.Collections.Generic;
 using HollowKnight.Pathfinding;
 using HollowKnight.Abilities;
 using HollowKnight.Storage;
 using HollowKnight.Shared;
 using HollowKnight.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 namespace HollowKnight;
 
@@ -37,6 +36,7 @@ public class Game1 : Game
     private RoomManager _roomManager;
     private LevelLoader _level;
 
+
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -56,6 +56,7 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         SpriteFactory.Instance.LoadAllTextures(Content);
+        
 
         int screenWidth = _graphics.PreferredBackBufferWidth;
         int screenHeight = _graphics.PreferredBackBufferHeight;
@@ -93,6 +94,8 @@ public class Game1 : Game
         KeyboardBindings.BindGameplay(keyboard, _knight, this, _roomManager);
         _controllerList.Add(keyboard);
         _controllerList.Add(new MouseController(screenWidth, _roomManager));
+
+
     }
 
     private void LoadObstacles()

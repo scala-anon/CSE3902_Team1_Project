@@ -12,6 +12,51 @@
 
 
 #---------------------------------- Content ---------------------------------#
+#begin Audio/hero_damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/hero_damage.wav
+
+#begin Audio/hero_dash.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/hero_dash.wav
+
+#begin Audio/hero_fireball.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/hero_fireball.wav
+
+#begin Audio/hero_jump.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/hero_jump.wav
+
+#begin Audio/hero_run_footsteps_stone.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/hero_run_footsteps_stone.wav
+
+
+#begin Audio/Grass Cut 1.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Grass Cut 1.mp3
+
+#begin Audio/Grass Move 1.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Grass Move 1.mp3
+
+
+
 
 # TODO: Add your sprite sheets here using the format below:
 # #begin sprites/your_sprite_sheet.png
