@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas>
+    <Texture>sprites/HollowKnightSheet</Texture>
+    <Regions>
+        <Region name="HudPortrait" x="818" y="812" width="123" height="118" />
+        <Region name="HealthMaskEmpty" x="177" y="888" width="44" height="63" />
+        <Region name="HealthMaskFull" x="258" y="885" width="44" height="68" />
+    </Regions>
+</TextureAtlas>

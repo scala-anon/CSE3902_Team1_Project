@@ -19,6 +19,8 @@ public partial class Game1
     private void InitializeRendering()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
+        _overlayPixel = new Texture2D(GraphicsDevice, 1, 1);
+        _overlayPixel.SetData(new[] { Color.White });
     }
 
     private void InitializeSharedResources()
@@ -28,7 +30,7 @@ public partial class Game1
 
     private void InitializeNavigationGrid()
     {
-        _navigationGrid ??= new NavigationGrid(
+        _navigationGrid = new NavigationGrid(
             GameConstants.DefaultLevelWidth,
             GameConstants.DefaultLevelHeight,
             GraphicsDevice,
@@ -52,7 +54,10 @@ public partial class Game1
     private void InitializeDebug()
     {
         DebugRenderer.Initialize(GraphicsDevice);
-        DebugRenderer.LoadFont(Content.Load<SpriteFont>("fonts/Credits"));
+        _hudFont = Content.Load<SpriteFont>("fonts/Credits");
+        DebugRenderer.LoadFont(_hudFont);
+        TextureAtlas hudAtlas = TextureAtlas.FromFile(Content, "sprites/hud-atlas.xml");
+        _healthHud = new HealthHud(hudAtlas);
         _debugOverlay = new DebugOverlay(GraphicsDevice);
     }
 
@@ -91,6 +96,7 @@ public partial class Game1
 
     private void InitializeControllers()
     {
+        _controllerList.Clear();
         int screenWidth = _graphics.PreferredBackBufferWidth;
 
         KeyboardController keyboard = new KeyboardController();
@@ -114,5 +120,18 @@ public partial class Game1
                 _navigationGrid.AddObstacle(rect);
             }
         }
+    }
+
+    private void RestartGame()
+    {
+        InitializeNavigationGrid();
+        _projectileManager.Clear();
+        InitializeItems();
+        InitializeLevel();
+        InitializeGameplaySystems();
+        InitializePlayerAndProjectiles();
+        InitializeCameraAndRooms();
+        InitializeControllers();
+        SetPlaying();
     }
 }

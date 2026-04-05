@@ -189,6 +189,8 @@ namespace HollowKnight.Player
         }
 
         public int GetHealth() => health.Health;
+        public int GetMaxHealth() => health.MaxHealth;
+        public bool IsDead() => health.Health <= 0;
 
         public void StartHeal() => health.StartHeal(combat.IsAttacking, physics.IsGrounded);
         public void CancelHeal() => health.CancelHeal();

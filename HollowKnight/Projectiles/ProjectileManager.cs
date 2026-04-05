@@ -41,5 +41,10 @@ namespace HollowKnight.Projectiles
         {
             _projectiles.RemoveAll(p => !p.Alive);
         }
+
+        public void Clear()
+        {
+            _projectiles.Clear();
+        }
     }
 }

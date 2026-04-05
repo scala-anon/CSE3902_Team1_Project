@@ -70,6 +70,14 @@ public partial class Game1 : Game
     {
         UpdateControllers(gameTime);
 
+        if (_restartRequested)
+        {
+            _restartRequested = false;
+            RestartGame();
+            base.Update(gameTime);
+            return;
+        }
+
         switch (_gameState)
         {
             case GameState.Playing:

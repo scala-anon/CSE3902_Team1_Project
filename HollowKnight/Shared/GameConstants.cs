@@ -25,7 +25,7 @@ namespace HollowKnight.Shared
 
         // Knight — Health
         public const int KnightStartHealth = 5;
-        public const int KnightMaxHealth = 9;
+        public const int KnightMaxHealth = 5;
         public const double KnightInvincibilityDuration = 1.3;
         public const double KnightHealPrepDuration = 0.6;
         public const double KnightHealPostDuration = 0.2;

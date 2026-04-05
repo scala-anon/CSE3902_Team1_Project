@@ -18,6 +18,11 @@ public partial class Game1
         UpdateKnight(gameTime);
         UpdateRoom(gameTime);
         UpdateCollisions();
+        if (_knight.IsDead())
+        {
+            SetGameOver();
+            return;
+        }
         UpdateEnemies(gameTime);
         UpdateKnightProjectiles(gameTime);
         UpdatePlatforms(gameTime);

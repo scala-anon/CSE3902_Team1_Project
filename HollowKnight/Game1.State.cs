@@ -43,6 +43,16 @@ public partial class Game1
         _gameState = GameState.Playing;
     }
 
+    public bool AllowsGameplayInput()
+    {
+        return _gameState == GameState.Playing;
+    }
+
+    public void ResetGame()
+    {
+        _restartRequested = true;
+    }
+
     public void SwitchToNextRoom()
     {
         _roomManager.SwitchRoomByOffset(1);

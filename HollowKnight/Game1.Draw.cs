@@ -74,25 +74,63 @@ public partial class Game1
     {
         _spriteBatch.Begin();
 
+        if (_gameState != GameState.GameOver)
+        {
+            _healthHud.Draw(_spriteBatch, _knight.GetHealth(), _knight.GetMaxHealth());
+        }
+
         switch (_gameState)
         {
             case GameState.Paused:
-                DebugRenderer.DrawText(_spriteBatch, "PAUSED", new Vector2(350, 100), Color.White);
+                DrawCenteredOverlay(PauseTitle, PausePrompt, ScreenTint, Color.White);
                 break;
 
             case GameState.Inventory:
-                DebugRenderer.DrawText(_spriteBatch, "INVENTORY", new Vector2(330, 100), Color.White);
+                DrawCenteredOverlay(InventoryTitle, InventoryPrompt, InventoryTint, Color.White);
                 break;
 
             case GameState.GameOver:
-                DebugRenderer.DrawText(_spriteBatch, "GAME OVER", new Vector2(320, 100), Color.Red);
+                DrawCenteredOverlay(GameOverTitle, GameOverPrompt, ScreenTint, Color.White);
                 break;
 
             case GameState.Win:
-                DebugRenderer.DrawText(_spriteBatch, "YOU WIN", new Vector2(340, 100), Color.Yellow);
+                DrawCenteredOverlay(WinTitle, string.Empty, ScreenTint, Color.Yellow);
                 break;
         }
 
         _spriteBatch.End();
+    }
+
+    private void DrawCenteredOverlay(string title, string prompt, Color tint, Color titleColor)
+    {
+        Rectangle overlayBounds = new(
+            0,
+            0,
+            GraphicsDevice.PresentationParameters.BackBufferWidth,
+            GraphicsDevice.PresentationParameters.BackBufferHeight);
+        _spriteBatch.Draw(_overlayPixel, overlayBounds, tint);
+
+        Vector2 titleSize = _hudFont.MeasureString(title);
+        Vector2 promptSize = prompt is null ? Vector2.Zero : _hudFont.MeasureString(prompt);
+        Vector2 screenCenter = new(overlayBounds.Width / 2f, overlayBounds.Height / 2f);
+        bool hasPrompt = !string.IsNullOrEmpty(prompt);
+        float blockHeight = hasPrompt
+            ? titleSize.Y + OverlayTextLineSpacing + promptSize.Y
+            : titleSize.Y;
+        float blockTop = screenCenter.Y - blockHeight / 2f;
+
+        Vector2 titlePosition = new(
+            screenCenter.X - titleSize.X / 2f,
+            blockTop);
+
+        _spriteBatch.DrawString(_hudFont, title, titlePosition, titleColor);
+
+        if (hasPrompt)
+        {
+            Vector2 promptPosition = new(
+                screenCenter.X - promptSize.X / 2f,
+                blockTop + titleSize.Y + OverlayTextLineSpacing);
+            _spriteBatch.DrawString(_hudFont, prompt!, promptPosition, Color.White);
+        }
     }
 }

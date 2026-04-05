@@ -85,6 +85,41 @@ namespace HollowKnight.Commands
         }
     }
 
+    public class RestartGameCommand : ICommand
+    {
+        private readonly Game1 _game;
+
+        public RestartGameCommand(Game1 game)
+        {
+            _game = game;
+        }
+
+        public void Execute()
+        {
+            _game.ResetGame();
+        }
+    }
+
+    public class GameplayOnlyCommand : ICommand
+    {
+        private readonly Game1 _game;
+        private readonly ICommand _innerCommand;
+
+        public GameplayOnlyCommand(Game1 game, ICommand innerCommand)
+        {
+            _game = game;
+            _innerCommand = innerCommand;
+        }
+
+        public void Execute()
+        {
+            if (_game.AllowsGameplayInput())
+            {
+                _innerCommand.Execute();
+            }
+        }
+    }
+
     public class SwitchRoomCommand : ICommand
     {
         private readonly RoomManager _roomManager;
