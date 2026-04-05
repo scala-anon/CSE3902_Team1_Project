@@ -10,6 +10,7 @@ public class VengeflyStateMachine
     private Vengefly CurrentVengeFly;
 
     private const float DetectionRadius = GameConstants.VengeflyDetectionRadius;
+    private const float ChaseRadius = GameConstants.VengeflyChaseRadius;
     private const float PatrolSpeed = GameConstants.VengeflyPatrolSpeed;
     private const float ChaseSpeed = GameConstants.VengeflyChaseSpeed;
     private const double StartleDuration = GameConstants.VengeflyStartleDuration;
@@ -29,6 +30,7 @@ public class VengeflyStateMachine
     }
 
     public float GetDetectionRadius() => DetectionRadius;
+    public float GetChaseRadius() => ChaseRadius;
 
     public void ChangeHealth()
     {
@@ -48,10 +50,11 @@ public class VengeflyStateMachine
         float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
         Vector2 enemyCenter = CurrentVengeFly.GetBounds()[0].Center.ToVector2();
         float distanceFromKnight = Vector2.Distance(enemyCenter, CurrentVengeFly.knightPosition);
-        bool knightInRange = distanceFromKnight <= DetectionRadius;
+        bool knightInDetectionRange = distanceFromKnight <= DetectionRadius;
+        bool knightInChaseRange = distanceFromKnight <= ChaseRadius;
 
         // State transitions
-        if (knightInRange && CurrentVengeFly.State == VengeflyState.Idle)
+        if (knightInDetectionRange && CurrentVengeFly.State == VengeflyState.Idle)
         {
             CurrentVengeFly.SetState(VengeflyState.Startle);
             _startleTimer = 0;
@@ -62,9 +65,10 @@ public class VengeflyStateMachine
             if (_startleTimer >= StartleDuration)
                 CurrentVengeFly.SetState(VengeflyState.Chase);
         }
-        else if (CurrentVengeFly.State == VengeflyState.Chase && !knightInRange)
+        else if (CurrentVengeFly.State == VengeflyState.Chase && !knightInChaseRange)
         {
             CurrentVengeFly.SetState(VengeflyState.Idle);
+            _currentPath.Clear();
         }
 
         // Movement

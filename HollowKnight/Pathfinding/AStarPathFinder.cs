@@ -39,10 +39,12 @@ namespace HollowKnight.Pathfinding
             }
 
             List<Node> openList = new List<Node>();
-            HashSet<string> closedList = new HashSet<string>();
+            HashSet<int> closedList = new HashSet<int>();
+            Dictionary<int, Node> nodeMap = new Dictionary<int, Node>();
 
             Node startNode = new Node { X = startX, Y = startY, G = 0, H = GetOctileDistance(startX, startY, targetX, targetY) };
             openList.Add(startNode);
+            nodeMap[startX + startY * grid.cols] = startNode;
 
             int maxIterations = 1000; // Failsafe to prevent infinite loops / lag
             int currentIteration = 0;
@@ -53,12 +55,20 @@ namespace HollowKnight.Pathfinding
             {
                 currentIteration++;
 
-                // Get node with lowest F cost
-                openList.Sort((a, b) => a.F.CompareTo(b.F));
-                current = openList[0];
-                openList.RemoveAt(0);
+                // Get node with lowest F cost efficiently (O(N) instead of O(N log N))
+                int lowestIndex = 0;
+                for (int i = 1; i < openList.Count; i++)
+                {
+                    if (openList[i].F < openList[lowestIndex].F)
+                    {
+                        lowestIndex = i;
+                    }
+                }
+                current = openList[lowestIndex];
+                openList[lowestIndex] = openList[openList.Count - 1]; // Swap with last element
+                openList.RemoveAt(openList.Count - 1); // O(1) removal
 
-                string currentKey = $"{current.X},{current.Y}";
+                int currentKey = current.X + current.Y * grid.cols;
                 closedList.Add(currentKey);
 
                 // Found target
@@ -78,7 +88,7 @@ namespace HollowKnight.Pathfinding
 
                     if (!grid.IsWalkable(neighborX, neighborY)) continue;
 
-                    string neighborKey = $"{neighborX},{neighborY}";
+                    int neighborKey = neighborX + neighborY * grid.cols;
                     if (closedList.Contains(neighborKey)) continue;
 
                     // 1.4 for diagonal, 1.0 for straight using pythagorean theorem.
@@ -86,13 +96,14 @@ namespace HollowKnight.Pathfinding
                     int moveCost = (dx[i] != 0 && dy[i] != 0) ? 14 : 10; 
                     int newCostToNeighbor = current.G + moveCost;
 
-                    Node neighborNode = openList.Find(n => n.X == neighborX && n.Y == neighborY);
+                    nodeMap.TryGetValue(neighborKey, out Node neighborNode);
                     if (neighborNode == null || newCostToNeighbor < neighborNode.G)
                     {
                         if (neighborNode == null)
                         {
                             neighborNode = new Node { X = neighborX, Y = neighborY };
                             openList.Add(neighborNode);
+                            nodeMap[neighborKey] = neighborNode;
                         }
                         
                         neighborNode.G = newCostToNeighbor;

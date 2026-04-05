@@ -73,6 +73,7 @@ public class Vengefly : IEnemy
     public void SetNavigationGrid(NavigationGrid grid) => stateMachine.SetNavigationGrid(grid);
     public List<Vector2> GetCurrentPath() => stateMachine.GetCurrentPath();
     public float GetDetectionRadius() => stateMachine.GetDetectionRadius();
+    public float GetChaseRadius() => stateMachine.GetChaseRadius();
     public void SetPlatform(IObject platform) { } // Flying enemy doesn't need platform
     public bool IsActive => !Dead;
     public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, Sprite.Width, Sprite.Height);
