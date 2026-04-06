@@ -55,6 +55,17 @@
 /processorParam:Quality=Best
 /build:Audio/Grass Move 1.mp3
 
+#begin Audio/hero_land_soft.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/hero_land_soft.wav
+
+#begin Audio/hero_unsheath.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/hero_unsheath.wav
 
 
 

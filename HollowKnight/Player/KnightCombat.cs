@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using HollowKnight.Interfaces;
 using HollowKnight.Shared;
 using HollowKnight.Factories;
+using HollowKnight.Audio;
+using Microsoft.Xna.Framework.Audio;
 
 namespace HollowKnight.Player
 {
@@ -92,6 +94,9 @@ namespace HollowKnight.Player
                 KnightSpriteType.DownSlash => SpriteFactory.Instance.CreateDownSlashEffect(position),
                 _ => null
             };
+
+            SoundEffect Attack = AudioLoader.Instance.Get_Hero_Attack();
+            AudioManager.Instance.PlaySoundEffect(Attack); 
 
             return true;
         }

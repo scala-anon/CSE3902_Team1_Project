@@ -3,6 +3,8 @@ using HollowKnight.Interfaces;
 using HollowKnight.Collision;
 using HollowKnight.Pathfinding;
 using HollowKnight.Levels;
+using HollowKnight.Audio;
+using System.IO;
 
 namespace HollowKnight.Commands
 {
@@ -38,6 +40,29 @@ namespace HollowKnight.Commands
 
         public void Execute() => _roomManager.SwitchRoomByOffset(_offset);
     }
+
+    public class ToggleMuteCommand : ICommand
+    {
+        private bool muted = false;
+        public ToggleMuteCommand()
+        {
+            
+        }
+    
+        public void Execute()
+        {
+            if (muted == false)
+            {
+                AudioManager.Instance.MuteAudio();
+                muted = true;
+            }
+            else
+            {
+                AudioManager.Instance.UnmuteAudio();
+                muted = false;
+            }
+        } 
+    } 
 
     public class JumpToRoomCommand : ICommand
     {

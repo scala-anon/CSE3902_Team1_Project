@@ -7,19 +7,19 @@ namespace HollowKnight.Audio
     public static class SoundId 
     {
         // Player
-        // PlayerAttack,
-        public const string PlayerJump = "hero_jump.wav";
-       
-        public const string PlayerDamage = "hero_dash.wav";
+        public const string PlayerAttack = "Audio/hero_unsheath";
+        public const string PlayerJump = "Audio/hero_jump";
+       public const string PlayerLand = "Audio/hero_land_soft";
+        public const string PlayerDamage = "Audio/hero_dash";
       
-        public const string PlayerDash = "her_dash.wav";
+        public const string PlayerDash = "Audio/hero_dash";
        
-        public const string PlayerRun = "hero_run_foosteps_stone.wav";
+        public const string PlayerRun = "Audio/hero_run_footsteps_stone";
         // PlayerHeal,
         // PlayerDeath,
 
       
-        public const string GrassCut = "Grass Cut 1.mp3";
+        public const string GrassCut = "Audio/Grass Cut 1";
 
 
         // Enemies

@@ -16,7 +16,6 @@ using HollowKnight.Graphics;
 using HollowKnight.Audio;
 
 namespace HollowKnight;
-
 public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
@@ -24,7 +23,6 @@ public class Game1 : Game
     private NavigationGrid _navigationGrid;
     private List<IController> _controllerList;
     private List<Spirit> items = new();
-
     private GameState _gameState = GameState.Playing;
     private TheKnight _knight;
     private CollisionSystem _collisionSystem;
@@ -35,7 +33,7 @@ public class Game1 : Game
     private Camera _camera;
     private RoomManager _roomManager;
     private LevelLoader _level;
-
+    public AudioManager _audio;
     public AudioLoader _audioLoader;
 
 
@@ -52,7 +50,7 @@ public class Game1 : Game
     protected override void Initialize()
     {
         _controllerList = new List<IController>();
-        _audioLoader = new AudioLoader(this.Content);
+        _audio = AudioManager.Instance;
         base.Initialize();
     }
 
@@ -65,7 +63,7 @@ public class Game1 : Game
         int screenWidth = _graphics.PreferredBackBufferWidth;
         int screenHeight = _graphics.PreferredBackBufferHeight;
 
-        _audioLoader.loadAudio();
+        AudioLoader.Instance.loadAudio(Content);
 
 
         _navigationGrid ??= new NavigationGrid(GameConstants.DefaultLevelWidth, GameConstants.DefaultLevelHeight, GraphicsDevice, cellSize: GameConstants.NavGridCellSize);
@@ -138,6 +136,7 @@ public class Game1 : Game
                 if (_level.Platforms[i] != null)
                     _level.Platforms[i].Update(gameTime);
             }
+            _audio.Update();
 
             _projectileManager.Update(gameTime);
         }

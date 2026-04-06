@@ -1,6 +1,9 @@
 using Microsoft.Xna.Framework;
 using HollowKnight.Shared;
 using HollowKnight.Collision;
+using HollowKnight.Audio;
+using Microsoft.Xna.Framework.Audio;
+using System.Linq.Expressions;
 
 namespace HollowKnight.Player
 {
@@ -9,6 +12,7 @@ namespace HollowKnight.Player
         public Vector2 Velocity;
         public bool IsGrounded { get; private set; }
 
+        private bool isJumping = false;
         private readonly float moveSpeed = GameConstants.KnightMoveSpeed;
         private readonly float jumpSpeed = GameConstants.KnightJumpSpeed;
         private readonly float gravity = GameConstants.KnightGravity;
@@ -42,6 +46,9 @@ namespace HollowKnight.Player
             {
                 Velocity.Y = jumpSpeed;
                 IsGrounded = false;
+                isJumping = true;
+                SoundEffect jump = AudioLoader.Instance.Get_Hero_Jump();
+                AudioManager.Instance.PlaySoundEffect(jump);
             }
         }
 
@@ -49,6 +56,14 @@ namespace HollowKnight.Player
         {
             Velocity.Y = 0;
             IsGrounded = true;
+            if (isJumping == true)
+            {
+                SoundEffect land = AudioLoader.Instance.Get_Hero_Land();
+                AudioManager.Instance.PlaySoundEffect(land);
+                isJumping = false;
+            }
+            
+
         }
 
         public void StopMovingHorizontal()
