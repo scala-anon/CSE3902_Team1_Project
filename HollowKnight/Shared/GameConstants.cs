@@ -82,6 +82,11 @@ namespace HollowKnight.Shared
         public const float DownSlashEffectXDivisor = 10f;
         public const float DownSlashEffectYDivisor = 3f;
 
+        // Cast Pulse Effect
+        public const double KnightCastPulseDuration = 0.4;
+        public const float CastPulseYDivisor = 2f;
+        public const float KnightCastKnockbackSpeed = 90f;
+
         // Physics Thresholds
         public const float JumpMomentumCut = 0.5f;
         public const float KnockbackVelocityThreshold = 1f;

@@ -51,6 +51,8 @@ namespace HollowKnight.Player
 
             // Update subsystems
             physics.Update(dt);
+            if (combat.IsCastPulseActive)
+                physics.StopMovingVertical();
             position += physics.Velocity * dt;
 
             // Absorb sub-pixel gravity drift when grounded to prevent vertical jitter
@@ -85,6 +87,11 @@ namespace HollowKnight.Player
             {
                 CurrentState = KnightState.Damaged;
                 currentSpriteType = KnightSpriteType.Damaged;
+            }
+            else if (combat.IsCastPulseActive)
+            {
+                CurrentState = KnightState.Spellcasting;
+                currentSpriteType = KnightSpriteType.SpiritCast;
             }
             else if (!physics.IsGrounded)
             {
@@ -142,6 +149,7 @@ namespace HollowKnight.Player
         public double GetInvincibilityCooldownRemaining() => health.GetInvincibilityCooldownRemaining();
         public double GetDashCooldownRemaining() => dash.GetDashCooldownRemaining();
         public double GetHealCooldownRemaining() => health.GetHealCooldownRemaining();
+        public double GetCastCooldownRemaining() => combat.GetCastCooldownRemaining();
         public int Soul => health.Soul;
         public void GainSoul() => health.GainSoul();
 
@@ -152,12 +160,13 @@ namespace HollowKnight.Player
                 : SpriteEffects.FlipHorizontally;
             currentSprite.Draw(spriteBatch, effects);
             combat.DrawSlashEffect(spriteBatch, Facing);
+            combat.DrawCastPulseEffect(spriteBatch, Facing);
         }
 
         // --- Movement ---
         public void MoveRight()
         {
-            if (combat.IsAttacking || dash.IsDashing) return;
+            if (combat.IsAttacking || dash.IsDashing || combat.IsCastPulseActive) return;
             health.CancelHeal();
             Facing = Direction.Right;
             physics.MoveRight();
@@ -165,7 +174,7 @@ namespace HollowKnight.Player
 
         public void MoveLeft()
         {
-            if (combat.IsAttacking || dash.IsDashing) return;
+            if (combat.IsAttacking || dash.IsDashing || combat.IsCastPulseActive) return;
             health.CancelHeal();
             Facing = Direction.Left;
             physics.MoveLeft();
@@ -253,16 +262,12 @@ namespace HollowKnight.Player
         // --- Spells ---
         public void CastSpell()
         {
-            if (health.Soul >= 36)
-            {
-                health.ConsumeSoul(36);
-                Console.WriteLine("Casting spell! Remaining soul: " + health.Soul);
-                Projectiles?.Fire();
-            }
-            else
-            {
-                Console.WriteLine("Not enough soul to cast spell");
-            }
+            if (health.Soul < 36) { Console.WriteLine("Not enough soul to cast spell"); return; }
+            if (!combat.TryStartCastPulse(position)) return;
+            health.ConsumeSoul(36);
+            Console.WriteLine("Casting spell! Remaining soul: " + health.Soul);
+            physics.ApplyCastKnockback(Facing);
+            Projectiles?.Fire();
         }
 
         public void GiveFullSoul()

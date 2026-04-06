@@ -70,6 +70,7 @@ namespace HollowKnight.Graphics
             string invText = $"Invincibility CoolDown: {knight.GetInvincibilityCooldownRemaining():F2}s";
             string dashText = $"Dash CoolDown: {knight.GetDashCooldownRemaining():F2}s";
             string healText = $"Heal CoolDown: {knight.GetHealCooldownRemaining():F2}s";
+            string castText = $"Cast CoolDown: {knight.GetCastCooldownRemaining():F2}s";
             string posText = $"Knight Position: ({knight.position.X:F0}, {knight.position.Y:F0})";
             string hpText  = $"Health: {knight.GetHealth()}";
             string soulText = $"Soul: {knight.Soul}";
@@ -80,9 +81,10 @@ namespace HollowKnight.Graphics
             DebugRenderer.DrawText(spriteBatch, invText, hudBasePos + new Vector2(0, 20), Color.White);
             DebugRenderer.DrawText(spriteBatch, dashText, hudBasePos + new Vector2(0, 40), Color.White);
             DebugRenderer.DrawText(spriteBatch, healText, hudBasePos + new Vector2(0, 60), Color.White);
-            DebugRenderer.DrawText(spriteBatch, posText, hudBasePos + new Vector2(0, 80), Color.White);
-            DebugRenderer.DrawText(spriteBatch, hpText,  hudBasePos + new Vector2(0, 100), Color.White);
-            DebugRenderer.DrawText(spriteBatch, soulText,  hudBasePos + new Vector2(0, 120), Color.White);
+            DebugRenderer.DrawText(spriteBatch, castText, hudBasePos + new Vector2(0, 80), Color.White);
+            DebugRenderer.DrawText(spriteBatch, posText, hudBasePos + new Vector2(0, 100), Color.White);
+            DebugRenderer.DrawText(spriteBatch, hpText,  hudBasePos + new Vector2(0, 120), Color.White);
+            DebugRenderer.DrawText(spriteBatch, soulText, hudBasePos + new Vector2(0, 140), Color.White);
 
             // Sword hitbox debug
             SwordHitbox swordHitbox = knight.GetSwordHitbox();
