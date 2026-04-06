@@ -15,7 +15,7 @@ namespace HollowKnight.Projectiles
         public void Spawn(Vector2 spawnPosition, Vector2 direction, float speed, ProjectileFaction faction)
         {
             _projectileManager.Spawn(
-                new Projectile(spawnPosition, direction * speed, faction)
+                new VengefulSpiritProjectile(spawnPosition, direction * speed, faction)
             );
         }
     }

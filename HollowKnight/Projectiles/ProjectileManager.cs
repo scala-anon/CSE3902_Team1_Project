@@ -34,6 +34,8 @@ namespace HollowKnight.Projectiles
                 Vector2 stepMove = totalMove / steps;
                 for (int s = 0; s < steps && p.Alive; s++)
                     p.Step(stepMove);
+
+                p.Update(gameTime);
             }
         }
 

@@ -16,6 +16,7 @@ public partial class Game1
         DrawKnight();
         DrawPlatforms();
         DrawEnemies();
+        DrawProjectiles();
         DrawItems();
         DrawDebugOverlay();
 
@@ -54,6 +55,14 @@ public partial class Game1
             {
                 item.Draw(_spriteBatch);
             }
+        }
+    }
+
+    private void DrawProjectiles()
+    {
+        foreach (var p in _projectileManager.All)
+        {
+            p.Draw(_spriteBatch, Direction.Right);
         }
     }
 

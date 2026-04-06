@@ -39,7 +39,7 @@ namespace HollowKnight.Collision
                 {
                     if (ProjectileHitsCollidable(p, blocks[i]))
                     {
-                        p.Alive = false;
+                        p.OnCollide();
                     }
                 }
 
@@ -51,7 +51,10 @@ namespace HollowKnight.Collision
                         if (ProjectileHitsCollidable(p, enemies[i]))
                         {
                             onEnemyHit?.Invoke(i);
-                            p.Alive = false;
+                            if (!p.PiercesEnemies)
+                            {
+                                p.OnCollide();
+                            }
                         }
                     }
                 }
@@ -62,7 +65,7 @@ namespace HollowKnight.Collision
                     if (ProjectileHitsCollidable(p, player))
                     {
                         onPlayerHit?.Invoke();
-                        p.Alive = false;
+                        p.OnCollide();
                     }
                 }
             }

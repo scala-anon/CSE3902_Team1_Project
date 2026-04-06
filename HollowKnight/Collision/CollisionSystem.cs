@@ -112,7 +112,7 @@ namespace HollowKnight.Collision
                 enemyCollidables,
                 blockCollidables,
                 onPlayerHit: () => knight.TakeDamage(),
-                onEnemyHit: (enemyIndex) => { }
+                onEnemyHit: (enemyIndex) => { enemies[enemyIndex].TakeDamage(); }
             );
 
             // Item collisions
