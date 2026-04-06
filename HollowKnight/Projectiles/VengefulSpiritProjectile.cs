@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using HollowKnight.Factories;
 using HollowKnight.Interfaces;
 using HollowKnight.Shared;
+using HollowKnight.Collision;
 
 namespace HollowKnight.Projectiles
 {
@@ -12,18 +13,18 @@ namespace HollowKnight.Projectiles
         private State _state = State.Moving;
         private ISprite _currentSprite;
         private Direction _facing;
-        
+
         private double _impactTimer;
         private readonly double _impactDuration = 0.5; // ~ 5 frames
 
         public override bool PiercesEnemies => true;
-        private const int LeadingHitboxWidth = 40; 
-        private const int NoseOffsetRight = 220; 
-        private const int NoseOffsetLeft = 0;  
-        
-        // Use these to manually push the explosion graphic around based on facing direction
+        private const int LeadingHitboxWidth = 35;
+        private const int NoseOffsetRight = 220;
+        private const int NoseOffsetLeft = 0;
+
         private const int CollisionOffsetRight = 152;
         private const int CollisionOffsetLeft = 0;
+        private const int CollisionOffsetY = -47; // Move collision effect higher on screen
 
         public override Rectangle Bounds
         {
@@ -45,11 +46,11 @@ namespace HollowKnight.Projectiles
         {
             _facing = velocity.X >= 0 ? Direction.Right : Direction.Left;
             _currentSprite = SpriteFactory.Instance.CreateSpiritMovingSprite(position);
-            
+
             Vector2 size = _currentSprite.GetSize();
             Width = (int)size.X;
             Height = (int)size.Y;
-            
+
             // Adjust position so it spawns centered to the knight
             Position.Y -= Height / 2f;
             _currentSprite.SetPosition(Position);
@@ -65,7 +66,7 @@ namespace HollowKnight.Projectiles
                     Alive = false;
                 }
             }
-            
+
             _currentSprite.SetPosition(Position);
             _currentSprite.Update(gameTime);
         }
@@ -73,7 +74,8 @@ namespace HollowKnight.Projectiles
         public override void Draw(SpriteBatch spriteBatch, Direction facing)
         {
             if (!Alive) return;
-            
+            if (_state == State.Moving && !HasMoved) return;
+
             SpriteEffects effects;
             if (_state == State.Moving)
             {
@@ -84,32 +86,40 @@ namespace HollowKnight.Projectiles
                 // If moving left, use right-facing explosion. If moving right, use left-facing explosion.
                 effects = _facing == Direction.Left ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             }
-            
+
             _currentSprite.Draw(spriteBatch, effects);
         }
 
-        public override void OnCollide()
+        public override void OnCollide(ICollidable target, CollisionSide side)
         {
             if (_state == State.Moving)
             {
                 _state = State.Impacting;
                 _impactTimer = 0;
-                
-                // We must update the actual Property `Position` here so that
-                // the `Update()` method doesn't aggressively snap it back to 
-                // the pre-offset coordinates on the next frame!
-                if (_facing == Direction.Right)
+
+                // Position the effect at the collision point on the target's edge
+                switch (side)
                 {
-                    Position.X += CollisionOffsetRight; 
+                    case CollisionSide.Left:
+                        Position.X = target.Bounds.Right - Width / 2;
+                        break;
+                    case CollisionSide.Right:
+                        Position.X = target.Bounds.Left - Width / 2;
+                        break;
+                    case CollisionSide.Top:
+                        Position.Y = target.Bounds.Bottom - Height / 2;
+                        break;
+                    case CollisionSide.Bottom:
+                        Position.Y = target.Bounds.Top - Height / 2;
+                        break;
                 }
-                else
-                {
-                    Position.X += CollisionOffsetLeft; 
-                }
-                
+
+                // Adjust Y to show effect higher on screen
+                Position.Y += CollisionOffsetY;
+
                 // Stop the projectile from moving further
                 Velocity = Vector2.Zero;
-                
+
                 _currentSprite = SpriteFactory.Instance.CreateSpiritCollisionSprite(Position);
             }
         }

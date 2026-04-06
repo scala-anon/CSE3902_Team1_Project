@@ -61,7 +61,6 @@ namespace HollowKnight.Player
             combat.Update(gameTime, position, Facing, currentSprite);
             dash.Update(gameTime.ElapsedGameTime.TotalSeconds);
 
-            // Resolve game state and animation state together
             if (health.IsHealing)
             {
                 CurrentState = KnightState.Healing;

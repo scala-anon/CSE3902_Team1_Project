@@ -37,9 +37,10 @@ namespace HollowKnight.Collision
                 // Blocks first: projectile dies on impact
                 for (int i = 0; i < blocks.Length && p.Alive; i++)
                 {
-                    if (ProjectileHitsCollidable(p, blocks[i]))
+                    CollisionSide side = CollisionDetector.Detect(p, blocks[i]);
+                    if (side != CollisionSide.None)
                     {
-                        p.OnCollide();
+                        p.OnCollide(blocks[i], side);
                     }
                 }
 
@@ -48,12 +49,13 @@ namespace HollowKnight.Collision
                 {
                     for (int i = 0; i < enemies.Length && p.Alive; i++)
                     {
-                        if (ProjectileHitsCollidable(p, enemies[i]))
+                        CollisionSide side = CollisionDetector.Detect(p, enemies[i]);
+                        if (side != CollisionSide.None)
                         {
                             onEnemyHit?.Invoke(i);
                             if (!p.PiercesEnemies)
                             {
-                                p.OnCollide();
+                                p.OnCollide(enemies[i], side);
                             }
                         }
                     }
@@ -62,10 +64,11 @@ namespace HollowKnight.Collision
                 // Player hits (enemy faction only)
                 if (p.Faction == ProjectileFaction.Enemy && p.Alive)
                 {
-                    if (ProjectileHitsCollidable(p, player))
+                    CollisionSide side = CollisionDetector.Detect(p, player);
+                    if (side != CollisionSide.None)
                     {
                         onPlayerHit?.Invoke();
-                        p.OnCollide();
+                        p.OnCollide(player, side);
                     }
                 }
             }
@@ -76,8 +79,8 @@ namespace HollowKnight.Collision
         private static (int left, int right, int top, int bottom) CalculateOverlaps(Rectangle a, Rectangle b)
         {
             return (
-                a.Right  - b.Left,
-                b.Right  - a.Left,
+                a.Right - b.Left,
+                b.Right - a.Left,
                 a.Bottom - b.Top,
                 b.Bottom - a.Top
             );

@@ -17,6 +17,7 @@ namespace HollowKnight.Projectiles
         public int Damage = 1;
         public bool Alive = true;
         public bool IsActive => Alive;
+        public bool HasMoved = false;
 
         private Rectangle[] hitBoxes = new Rectangle[1];
         public ProjectileFaction Faction;
@@ -47,6 +48,10 @@ namespace HollowKnight.Projectiles
         public void Step(Vector2 delta)
         {
             Position += delta;
+            if (delta.LengthSquared() > 0)
+            {
+                HasMoved = true;
+            }
         }
 
         public virtual void Draw(SpriteBatch spriteBatch, Direction facing)
@@ -54,7 +59,7 @@ namespace HollowKnight.Projectiles
             // Base projectile has no visual representation
         }
 
-        public virtual void OnCollide()
+        public virtual void OnCollide(ICollidable target, CollisionSide side)
         {
             Alive = false;
         }
