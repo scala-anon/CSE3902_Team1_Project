@@ -1,6 +1,7 @@
 
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Media;
 
 namespace HollowKnight.Audio
 {
@@ -14,6 +15,7 @@ namespace HollowKnight.Audio
         private SoundEffect grass_cut;
         private SoundEffect hero_attack;
         private SoundEffect hero_land;
+        private Song mantisLords;
         private static AudioLoader instance = new AudioLoader();
 
         public static AudioLoader Instance
@@ -23,6 +25,7 @@ namespace HollowKnight.Audio
         
         public void loadAudio(ContentManager Content)
         {
+            #region SFX
             hero_jump = Content.Load<SoundEffect>(SoundId.PlayerJump);
             hero_take_damage = Content.Load<SoundEffect>(SoundId.PlayerDamage);
             hero_dash = Content.Load<SoundEffect>(SoundId.PlayerDash);
@@ -30,8 +33,22 @@ namespace HollowKnight.Audio
             grass_cut = Content.Load<SoundEffect>(SoundId.GrassCut);
             hero_attack = Content.Load<SoundEffect>(SoundId.PlayerAttack);
             hero_land = Content.Load<SoundEffect>(SoundId.PlayerLand);
+            #endregion SFX
+
+            #region Music
+            mantisLords = Content.Load<Song>(SoundId.MantisLordsMusic);
+            #endregion Music
+        }
+        
+        #region Get Music
+        public Song Get_Mantis_Lords_Music()
+        {
+            return mantisLords;
         }
 
+        #endregion Get Music
+
+        #region Get SFX
         public SoundEffect Get_Hero_Attack()
         {
             return hero_attack;
@@ -65,7 +82,7 @@ namespace HollowKnight.Audio
         {
             return grass_cut;
         }
-
+        #endregion Get SFX
 
     }
 }

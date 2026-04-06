@@ -189,11 +189,12 @@ namespace HollowKnight.Audio
             {
                 MediaPlayer.Stop();
             }
-
+            MediaPlayer.Volume = GameConstants.SongVolume;
             MediaPlayer.Play(song);
             MediaPlayer.IsRepeating = isRepeating;
 
         }
+        
 
         /// <summary>
         /// Pauses all audio

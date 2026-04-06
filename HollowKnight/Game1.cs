@@ -14,6 +14,7 @@ using HollowKnight.Storage;
 using HollowKnight.Shared;
 using HollowKnight.Graphics;
 using HollowKnight.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace HollowKnight;
 public class Game1 : Game
@@ -33,11 +34,7 @@ public class Game1 : Game
     private Camera _camera;
     private RoomManager _roomManager;
     private LevelLoader _level;
-    public AudioManager _audio;
-    public AudioLoader _audioLoader;
-
-
-
+   
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -50,7 +47,6 @@ public class Game1 : Game
     protected override void Initialize()
     {
         _controllerList = new List<IController>();
-        _audio = AudioManager.Instance;
         base.Initialize();
     }
 
@@ -60,10 +56,18 @@ public class Game1 : Game
         SpriteFactory.Instance.LoadAllTextures(Content);
         
 
+        
+
+
+
+
         int screenWidth = _graphics.PreferredBackBufferWidth;
         int screenHeight = _graphics.PreferredBackBufferHeight;
 
         AudioLoader.Instance.loadAudio(Content);
+
+        Song ML = AudioLoader.Instance.Get_Mantis_Lords_Music();
+        AudioManager.Instance.PlaySong(ML);
 
 
         _navigationGrid ??= new NavigationGrid(GameConstants.DefaultLevelWidth, GameConstants.DefaultLevelHeight, GraphicsDevice, cellSize: GameConstants.NavGridCellSize);
@@ -136,7 +140,7 @@ public class Game1 : Game
                 if (_level.Platforms[i] != null)
                     _level.Platforms[i].Update(gameTime);
             }
-            _audio.Update();
+            AudioManager.Instance.Update();
 
             _projectileManager.Update(gameTime);
         }

@@ -12,61 +12,68 @@
 
 
 #---------------------------------- Content ---------------------------------#
-#begin Audio/hero_damage.wav
+#begin Audio/sfx/hero_damage.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/hero_damage.wav
+/build:Audio/sfx/hero_damage.wav
 
-#begin Audio/hero_dash.wav
+#begin Audio/sfx/hero_dash.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/hero_dash.wav
+/build:Audio/sfx/hero_dash.wav
 
-#begin Audio/hero_fireball.wav
+#begin Audio/sfx/hero_fireball.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/hero_fireball.wav
+/build:Audio/sfx/hero_fireball.wav
 
-#begin Audio/hero_jump.wav
+#begin Audio/sfx/hero_jump.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/hero_jump.wav
+/build:Audio/sfx/hero_jump.wav
 
-#begin Audio/hero_run_footsteps_stone.wav
+#begin Audio/sfx/hero_run_footsteps_stone.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/hero_run_footsteps_stone.wav
+/build:Audio/sfx/hero_run_footsteps_stone.wav
 
 
-#begin Audio/Grass Cut 1.mp3
+#begin Audio/sfx/Grass Cut 1.mp3
 /importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Grass Cut 1.mp3
+/build:Audio/sfx/Grass Cut 1.mp3
 
-#begin Audio/Grass Move 1.mp3
+#begin Audio/sfx/Grass Move 1.mp3
 /importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Grass Move 1.mp3
+/build:Audio/sfx/Grass Move 1.mp3
 
-#begin Audio/hero_land_soft.wav
+#begin Audio/sfx/hero_land_soft.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/hero_land_soft.wav
+/build:Audio/sfx/hero_land_soft.wav
 
-#begin Audio/hero_unsheath.wav
+#begin Audio/sfx/hero_unsheath.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/hero_unsheath.wav
+/build:Audio/sfx/hero_unsheath.wav
 
+#Song files
+
+#begin Audio/Music/Hollow Knight OST - Mantis Lords 4.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/Hollow Knight OST - Mantis Lords 4.mp3
 
 
 # TODO: Add your sprite sheets here using the format below:

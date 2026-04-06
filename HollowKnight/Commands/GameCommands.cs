@@ -43,25 +43,10 @@ namespace HollowKnight.Commands
 
     public class ToggleMuteCommand : ICommand
     {
-        private bool muted = false;
-        public ToggleMuteCommand()
-        {
-            
-        }
+        public ToggleMuteCommand(){ }
     
-        public void Execute()
-        {
-            if (muted == false)
-            {
-                AudioManager.Instance.MuteAudio();
-                muted = true;
-            }
-            else
-            {
-                AudioManager.Instance.UnmuteAudio();
-                muted = false;
-            }
-        } 
+        public void Execute() => AudioManager.Instance.ToggleMute();
+         
     } 
 
     public class JumpToRoomCommand : ICommand
