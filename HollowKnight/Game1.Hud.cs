@@ -18,6 +18,7 @@ public partial class Game1
 
     private SpriteFont _hudFont;
     private HealthHud _healthHud;
+    private SoulHud _soulHud;
     private Texture2D _overlayPixel;
     private bool _restartRequested;
 

@@ -9,6 +9,11 @@ namespace HollowKnight;
 
 public partial class Game1
 {
+    internal void DrawPausedStateOverlay() => DrawCenteredOverlay(PauseTitle, PausePrompt, ScreenTint, Color.White);
+    internal void DrawInventoryStateOverlay() => DrawCenteredOverlay(InventoryTitle, InventoryPrompt, InventoryTint, Color.White);
+    internal void DrawGameOverStateOverlay() => DrawCenteredOverlay(GameOverTitle, GameOverPrompt, ScreenTint, Color.White);
+    internal void DrawWinStateOverlay() => DrawCenteredOverlay(WinTitle, string.Empty, ScreenTint, Color.Yellow);
+
     private void DrawWorld()
     {
         _spriteBatch.Begin(transformMatrix: _camera.GetTransform());
@@ -74,29 +79,13 @@ public partial class Game1
     {
         _spriteBatch.Begin();
 
-        if (_gameState != GameState.GameOver)
+        if (_gameState.ShowsHealthHud)
         {
             _healthHud.Draw(_spriteBatch, _knight.GetHealth(), _knight.GetMaxHealth());
+            _soulHud.Draw(_spriteBatch, _knight.GetSoul(), _knight.GetMaxSoul());
         }
 
-        switch (_gameState)
-        {
-            case GameState.Paused:
-                DrawCenteredOverlay(PauseTitle, PausePrompt, ScreenTint, Color.White);
-                break;
-
-            case GameState.Inventory:
-                DrawCenteredOverlay(InventoryTitle, InventoryPrompt, InventoryTint, Color.White);
-                break;
-
-            case GameState.GameOver:
-                DrawCenteredOverlay(GameOverTitle, GameOverPrompt, ScreenTint, Color.White);
-                break;
-
-            case GameState.Win:
-                DrawCenteredOverlay(WinTitle, string.Empty, ScreenTint, Color.Yellow);
-                break;
-        }
+        _gameState.DrawOverlay(this, _spriteBatch);
 
         _spriteBatch.End();
     }

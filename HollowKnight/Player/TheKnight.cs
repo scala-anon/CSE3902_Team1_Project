@@ -21,6 +21,7 @@ namespace HollowKnight.Player
         private readonly KnightPhysics physics = new();
         private readonly KnightCombat combat = new();
         private readonly KnightHealth health = new();
+        private readonly KnightSoul soul = new();
 
         private int currentItem;
 
@@ -190,7 +191,11 @@ namespace HollowKnight.Player
 
         public int GetHealth() => health.Health;
         public int GetMaxHealth() => health.MaxHealth;
+        public int GetSoul() => soul.Soul;
+        public int GetMaxSoul() => soul.MaxSoul;
+        public float GetSoulFillRatio() => soul.GetFillRatio();
         public bool IsDead() => health.Health <= 0;
+        public void GainSoul(int amount) => soul.AddSoul(amount);
 
         public void StartHeal() => health.StartHeal(combat.IsAttacking, physics.IsGrounded);
         public void CancelHeal() => health.CancelHeal();
@@ -202,7 +207,11 @@ namespace HollowKnight.Player
             Console.WriteLine($"Using item #{currentItem}");
         }
 
-        public void Collect(CollisionSide side) => Console.WriteLine("Knight picked up a power up!");
+        public void Collect(CollisionSide side)
+        {
+            soul.AddSoul(GameConstants.SpiritPickupSoul);
+            Console.WriteLine($"Knight collected soul. Soul is now {soul.Soul}/{soul.MaxSoul}");
+        }
         public void Block(CollisionSide side) => Console.WriteLine("Knight is colliding with a block");
 
         // --- Position ---

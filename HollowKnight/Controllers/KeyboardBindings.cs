@@ -69,6 +69,7 @@ namespace HollowKnight.Controllers
 
             // Damage (debug)
             keyboard.RegisterPressedCommand(Keys.E, Gameplay(game, new PlayerTakeDamageCommand(knight)));
+            keyboard.RegisterPressedCommand(Keys.T, Gameplay(game, new PlayerGainSoulCommand(knight, 11)));
 
             // Debug room switching
             keyboard.RegisterComboPressedCommand(Keys.Right, Keys.LeftControl, Gameplay(game, new SwitchRoomCommand(roomManager, 1)));

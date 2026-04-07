@@ -58,6 +58,7 @@ public partial class Game1
         DebugRenderer.LoadFont(_hudFont);
         TextureAtlas hudAtlas = TextureAtlas.FromFile(Content, "sprites/hud-atlas.xml");
         _healthHud = new HealthHud(hudAtlas);
+        _soulHud = new SoulHud(hudAtlas);
         _debugOverlay = new DebugOverlay(GraphicsDevice);
     }
 

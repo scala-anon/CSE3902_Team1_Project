@@ -31,6 +31,11 @@ namespace HollowKnight.Shared
         public const double KnightHealPostDuration = 0.2;
         public const int KnightHurtboxShrink = 6;
 
+        // Knight — Soul
+        public const int KnightStartSoul = 0;
+        public const int KnightMaxSoul = 99;
+        public const int SpiritPickupSoul = 33;
+
         // Enemy — Shared
         public const float EnemyKnockbackSpeed = 950f;
         public const float EnemyKnockbackDecay = 8f;

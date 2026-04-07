@@ -23,7 +23,7 @@ public partial class Game1 : Game
     private List<IController> _controllerList;
     private readonly List<Spirit> _items = new();
 
-    private GameState _gameState = GameState.Playing;
+    private GameState _gameState = new PlayingState();
 
     private TheKnight _knight;
     private CollisionSystem _collisionSystem;
@@ -78,28 +78,7 @@ public partial class Game1 : Game
             return;
         }
 
-        switch (_gameState)
-        {
-            case GameState.Playing:
-                UpdatePlaying(gameTime);
-                break;
-
-            case GameState.Paused:
-                UpdatePaused(gameTime);
-                break;
-
-            case GameState.Inventory:
-                UpdateInventory(gameTime);
-                break;
-
-            case GameState.GameOver:
-                UpdateGameOver(gameTime);
-                break;
-
-            case GameState.Win:
-                UpdateWin(gameTime);
-                break;
-        }
+        _gameState.Update(this, gameTime);
 
         base.Update(gameTime);
     }
