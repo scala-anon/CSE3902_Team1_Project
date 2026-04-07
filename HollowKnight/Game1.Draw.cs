@@ -100,7 +100,7 @@ public partial class Game1
         _spriteBatch.Draw(_overlayPixel, overlayBounds, tint);
 
         Vector2 titleSize = _hudFont.MeasureString(title);
-        Vector2 promptSize = prompt is null ? Vector2.Zero : _hudFont.MeasureString(prompt);
+        Vector2 promptSize = _hudFont.MeasureString(prompt);
         Vector2 screenCenter = new(overlayBounds.Width / 2f, overlayBounds.Height / 2f);
         bool hasPrompt = !string.IsNullOrEmpty(prompt);
         float blockHeight = hasPrompt
