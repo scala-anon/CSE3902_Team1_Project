@@ -6,46 +6,46 @@ public partial class Game1
 {
     public void TogglePause()
     {
-        if (_gameState == GameState.Playing)
+        if (_gameState is PlayingState)
         {
-            _gameState = GameState.Paused;
+            _gameState = new PausedState();
         }
-        else if (_gameState == GameState.Paused)
+        else if (_gameState is PausedState)
         {
-            _gameState = GameState.Playing;
+            _gameState = new PlayingState();
         }
     }
 
     public void ToggleInventory()
     {
-        if (_gameState == GameState.Playing)
+        if (_gameState is PlayingState)
         {
-            _gameState = GameState.Inventory;
+            _gameState = new InventoryState();
         }
-        else if (_gameState == GameState.Inventory)
+        else if (_gameState is InventoryState)
         {
-            _gameState = GameState.Playing;
+            _gameState = new PlayingState();
         }
     }
 
     public void SetGameOver()
     {
-        _gameState = GameState.GameOver;
+        _gameState = new GameOverState();
     }
 
     public void SetWin()
     {
-        _gameState = GameState.Win;
+        _gameState = new WinState();
     }
 
     public void SetPlaying()
     {
-        _gameState = GameState.Playing;
+        _gameState = new PlayingState();
     }
 
     public bool AllowsGameplayInput()
     {
-        return _gameState == GameState.Playing;
+        return _gameState is PlayingState;
     }
 
     public void ResetGame()

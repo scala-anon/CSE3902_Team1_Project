@@ -13,49 +13,17 @@ public partial class Game1
         }
     }
 
-    private void UpdatePlaying(GameTime gameTime)
-    {
-        UpdateKnight(gameTime);
-        UpdateRoom(gameTime);
-        UpdateCollisions();
-        if (_knight.IsDead())
-        {
-            SetGameOver();
-            return;
-        }
-        UpdateEnemies(gameTime);
-        UpdateKnightProjectiles(gameTime);
-        UpdatePlatforms(gameTime);
-        UpdateProjectiles(gameTime);
-    }
-
-    private void UpdatePaused(GameTime gameTime)
-    {
-    }
-
-    private void UpdateInventory(GameTime gameTime)
-    {
-    }
-
-    private void UpdateGameOver(GameTime gameTime)
-    {
-    }
-
-    private void UpdateWin(GameTime gameTime)
-    {
-    }
-
-    private void UpdateKnight(GameTime gameTime)
+    internal void UpdateKnight(GameTime gameTime)
     {
         _knight.Update(gameTime);
     }
 
-    private void UpdateRoom(GameTime gameTime)
+    internal void UpdateRoom(GameTime gameTime)
     {
         _roomManager.Update(gameTime);
     }
 
-    private void UpdateCollisions()
+    internal void UpdateCollisions()
     {
         _collisionSystem.Update(
             _knight,
@@ -66,7 +34,9 @@ public partial class Game1
             _navigationGrid);
     }
 
-    private void UpdateEnemies(GameTime gameTime)
+    internal bool KnightIsDead() => _knight.IsDead();
+
+    internal void UpdateEnemies(GameTime gameTime)
     {
         foreach (IEnemy enemy in _level.Enemies)
         {
@@ -74,12 +44,12 @@ public partial class Game1
         }
     }
 
-    private void UpdateKnightProjectiles(GameTime gameTime)
+    internal void UpdateKnightProjectiles(GameTime gameTime)
     {
         _knightProjectile.Update(gameTime);
     }
 
-    private void UpdatePlatforms(GameTime gameTime)
+    internal void UpdatePlatforms(GameTime gameTime)
     {
         foreach (IObject platform in _level.Platforms)
         {
@@ -90,7 +60,7 @@ public partial class Game1
         }
     }
 
-    private void UpdateProjectiles(GameTime gameTime)
+    internal void UpdateProjectiles(GameTime gameTime)
     {
         _projectileManager.Update(gameTime);
     }

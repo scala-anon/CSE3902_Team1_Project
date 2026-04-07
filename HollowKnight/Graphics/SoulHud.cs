@@ -1,6 +1,6 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using HollowKnight.Shared;
 
 namespace HollowKnight.Graphics
 {
@@ -8,13 +8,6 @@ namespace HollowKnight.Graphics
     {
         private readonly Texture2D texture;
         private readonly Rectangle gaugeSource;
-
-        private const int GaugeWidth = 34;
-        private const int GaugeHeight = 34;
-        private const int GaugeX = 78;
-        private const int GaugeY = 72;
-
-        private static readonly Color SoulEmptyColor = new(28, 32, 44, 255);
 
         public SoulHud(TextureAtlas atlas)
         {
@@ -25,33 +18,9 @@ namespace HollowKnight.Graphics
         public void Draw(SpriteBatch spriteBatch, int currentSoul, int maxSoul)
         {
             float fillRatio = maxSoul <= 0 ? 0f : MathHelper.Clamp(currentSoul / (float)maxSoul, 0f, 1f);
-            Rectangle gaugeTarget = new(GaugeX, GaugeY, GaugeWidth, GaugeHeight);
-
-            spriteBatch.Draw(texture, gaugeTarget, gaugeSource, SoulEmptyColor);
-            DrawSoulFill(spriteBatch, gaugeTarget, fillRatio);
-        }
-
-        private void DrawSoulFill(SpriteBatch spriteBatch, Rectangle gaugeTarget, float fillRatio)
-        {
-            int fillPixels = (int)Math.Round(gaugeTarget.Height * fillRatio);
-            if (fillPixels <= 0 || gaugeTarget.Height <= 0)
-            {
-                return;
-            }
-
-            int sourceFillHeight = (int)Math.Round(gaugeSource.Height * fillRatio);
-            Rectangle filledSource = new(
-                gaugeSource.X,
-                gaugeSource.Bottom - sourceFillHeight,
-                gaugeSource.Width,
-                sourceFillHeight);
-            Rectangle filledTarget = new(
-                gaugeTarget.X,
-                gaugeTarget.Bottom - fillPixels,
-                gaugeTarget.Width,
-                fillPixels);
-
-            spriteBatch.Draw(texture, filledTarget, filledSource, Color.White);
+            Rectangle gaugeTarget = new(HudConstants.SoulGaugeX, HudConstants.SoulGaugeY, HudConstants.SoulGaugeWidth, HudConstants.SoulGaugeHeight);
+            Color soulColor = Color.Lerp(HudConstants.SoulGaugeMinColor, Color.White, fillRatio);
+            spriteBatch.Draw(texture, gaugeTarget, gaugeSource, soulColor);
         }
     }
 }

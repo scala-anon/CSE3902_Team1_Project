@@ -45,4 +45,18 @@ namespace HollowKnight.Commands
         public PlayerHealCancelCommand(TheKnight knight) { _knight = knight; }
         public void Execute() => _knight.CancelHeal();
     }
+
+    public class PlayerGainSoulCommand : ICommand
+    {
+        private readonly TheKnight _knight;
+        private readonly int _amount;
+
+        public PlayerGainSoulCommand(TheKnight knight, int amount)
+        {
+            _knight = knight;
+            _amount = amount;
+        }
+
+        public void Execute() => _knight.GainSoul(_amount);
+    }
 }

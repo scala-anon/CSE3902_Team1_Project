@@ -195,6 +195,7 @@ namespace HollowKnight.Player
         public int GetMaxSoul() => soul.MaxSoul;
         public float GetSoulFillRatio() => soul.GetFillRatio();
         public bool IsDead() => health.Health <= 0;
+        public void GainSoul(int amount) => soul.AddSoul(amount);
 
         public void StartHeal() => health.StartHeal(combat.IsAttacking, physics.IsGrounded);
         public void CancelHeal() => health.CancelHeal();

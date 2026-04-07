@@ -32,7 +32,7 @@ namespace HollowKnight.Shared
         public const int KnightHurtboxShrink = 6;
 
         // Knight — Soul
-        public const int KnightStartSoul = 66;
+        public const int KnightStartSoul = 0;
         public const int KnightMaxSoul = 99;
         public const int SpiritPickupSoul = 33;
 
