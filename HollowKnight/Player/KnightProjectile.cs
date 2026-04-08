@@ -12,7 +12,7 @@ namespace HollowKnight.Player
 
         private float _projectileTimer = 0f;
         private readonly float _projectileInterval = 2f;
-        private readonly float _projectileSpeed = 400f;
+        private readonly float _projectileSpeed = 800f;
 
         public KnightProjectile(TheKnight knight, ProjectileSpawner spawner)
         {
