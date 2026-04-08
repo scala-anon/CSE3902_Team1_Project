@@ -136,14 +136,6 @@ namespace HollowKnight.Pathfinding
             return path;
         }
 
-        /*
-        private static int GetManhattanDistance(int x1, int y1, int x2, int y2)
-        {
-            // Multiplying by 10 to make integer math easier
-            return 10 * (Math.Abs(x1 - x2) + Math.Abs(y1 - y2));
-        }
-        */
-        
         private static bool IsAreaWalkable(NavigationGrid grid, int cx, int cy, Vector2? entityBounds)
         {
             if (!grid.IsWalkable(cx, cy)) return false;

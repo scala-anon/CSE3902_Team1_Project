@@ -45,7 +45,7 @@ namespace HollowKnight.Shared
         public const float VengeflyDetectionRadius = 500f;
         public const float VengeflyChaseRadius = 1200f; //prev 800, 1200 causes lag
         public const float VengeflyPatrolSpeed = 75f;
-        public const float VengeflyChaseSpeed = 100f;
+        public const float VengeflyChaseSpeed = 120f;
         public const double VengeflyStartleDuration = 0.5;
         public const float VengeflyPathUpdateInterval = 0.3f;
         public const float VengeflyKnockbackUpComponent = -150f;
