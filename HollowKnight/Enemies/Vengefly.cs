@@ -120,7 +120,7 @@ public class Vengefly : IEnemy
             {
                 _knockbackVelocity.Y += DeathGravity * dt;
                 _knockbackVelocity.X *= (1f - KnockbackDecay * dt);
-                if (Math.Abs(_knockbackVelocity.X) < 1f) _knockbackVelocity.X = 0;
+                if (Math.Abs(_knockbackVelocity.X) < GameConstants.KnockbackVelocityThreshold) _knockbackVelocity.X = 0;
 
                 position += _knockbackVelocity * dt;
 
@@ -153,7 +153,7 @@ public class Vengefly : IEnemy
         {
             position += _knockbackVelocity * dt;
             _knockbackVelocity *= (1f - KnockbackDecay * dt);
-            if (_knockbackVelocity.Length() < 1f)
+            if (_knockbackVelocity.Length() < GameConstants.KnockbackVelocityThreshold)
                 _knockbackVelocity = Vector2.Zero;
         }
 
