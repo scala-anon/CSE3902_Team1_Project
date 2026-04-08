@@ -61,6 +61,7 @@ public class VengeflyStateMachine
         }
         else if (CurrentVengeFly.State == VengeflyState.Startle)
         {
+            
             _startleTimer += elapsedTime;
             if (_startleTimer >= StartleDuration)
                 CurrentVengeFly.SetState(VengeflyState.Chase);
@@ -110,7 +111,15 @@ public class VengeflyStateMachine
 
                 if (enemyInGrid && knightInGrid)
                 {
-                    _currentPath = AStarPathFinder.FindPath(_grid, enemyCenter, CurrentVengeFly.knightPosition);
+                    Vector2 enemySize = new Vector2(CurrentVengeFly.Bounds.Width, CurrentVengeFly.Bounds.Height);
+                    _currentPath = AStarPathFinder.FindPath(_grid, enemyCenter, CurrentVengeFly.knightPosition, enemySize);
+                    
+                    // Fallback to center point routing if the full bounds route is blocked (e.g. Knight is near a wall making the destination area invalid)
+                    if (_currentPath.Count == 0)
+                    {
+                        _currentPath = AStarPathFinder.FindPath(_grid, enemyCenter, CurrentVengeFly.knightPosition, null);
+                    }
+                    
                     useAStar = _currentPath.Count > 0;
                 }
                 else
@@ -126,7 +135,11 @@ public class VengeflyStateMachine
             if (useAStar && _currentPath.Count > 0)
             {
                 Vector2 targetWaypoint = _currentPath[0];
-                if (Vector2.Distance(enemyCenter, targetWaypoint) < GameConstants.PathReachedThreshold)
+                
+                // Use a dynamic threshold based on the enemy's size to ensure large enemies don't get stuck pushing into walls to reach a waypoint
+                float reachRadius = System.Math.Max(GameConstants.PathReachedThreshold, CurrentVengeFly.Bounds.Width / 1.5f);
+                
+                if (Vector2.Distance(enemyCenter, targetWaypoint) < reachRadius)
                 {
                     _currentPath.RemoveAt(0);
                     if (_currentPath.Count > 0) targetWaypoint = _currentPath[0];

@@ -16,7 +16,7 @@ namespace HollowKnight.Pathfinding
             public Node Parent { get; set; }
         }
 
-        public static List<Vector2> FindPath(NavigationGrid grid, Vector2 startPixel, Vector2 targetPixel)
+        public static List<Vector2> FindPath(NavigationGrid grid, Vector2 startPixel, Vector2 targetPixel, Vector2? entityBounds = null)
         {
             List<Vector2> path = new List<Vector2>();
 
@@ -86,8 +86,17 @@ namespace HollowKnight.Pathfinding
                     int neighborX = current.X + dx[i];
                     int neighborY = current.Y + dy[i];
 
-                    if (!grid.IsWalkable(neighborX, neighborY)) continue;
-
+                    if (!IsAreaWalkable(grid, neighborX, neighborY, entityBounds)) continue;
+                    
+                    // Prevent corner-cutting for diagonal movements
+                    if (dx[i] != 0 && dy[i] != 0)
+                    {
+                        if (!IsAreaWalkable(grid, current.X, neighborY, entityBounds) || !IsAreaWalkable(grid, neighborX, current.Y, entityBounds))
+                        {
+                            continue;
+                        }
+                    }
+                    
                     int neighborKey = neighborX + neighborY * grid.cols;
                     if (closedList.Contains(neighborKey)) continue;
 
@@ -135,6 +144,29 @@ namespace HollowKnight.Pathfinding
         }
         */
         
+        private static bool IsAreaWalkable(NavigationGrid grid, int cx, int cy, Vector2? entityBounds)
+        {
+            if (!grid.IsWalkable(cx, cy)) return false;
+            if (!entityBounds.HasValue) return true;
+
+            int cellsX = (int)Math.Ceiling(entityBounds.Value.X / grid.cellSize) - 1; // subtract 1 to ensure some leniency
+            int cellsY = (int)Math.Ceiling(entityBounds.Value.Y / grid.cellSize) - 1;
+            
+            if (cellsX <= 0 && cellsY <= 0) return true;
+
+            int halfX = cellsX / 2;
+            int halfY = cellsY / 2;
+
+            for (int x = cx - halfX; x <= cx + halfX; x++)
+            {
+                for (int y = cy - halfY; y <= cy + halfY; y++)
+                {
+                    if (!grid.IsWalkable(x, y)) return false;
+                }
+            }
+            return true;
+        }
+
         private static int GetOctileDistance(int x1, int y1, int x2, int y2)
         {
             int dx = Math.Abs(x1 - x2);
