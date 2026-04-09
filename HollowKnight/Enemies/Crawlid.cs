@@ -7,6 +7,8 @@ using HollowKnight.Collision;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using HollowKnight.Pathfinding;
+using HollowKnight.Audio;
+using Microsoft.Xna.Framework.Audio;
 
 namespace HollowKnight.Enemies
 {
@@ -42,6 +44,8 @@ public class Crawlid : IEnemy
     private const float DeathGravity = GameConstants.EnemyDeathGravity;
     private const float ScreenFloor = GameConstants.ScreenHeight;
 
+    private SoundEffect WalkSE;
+
     public bool IsGrounded { get; private set; } = true;
     public bool IsActive => Alive;
 
@@ -51,8 +55,10 @@ public class Crawlid : IEnemy
 
     private Rectangle[] hitBoxes = new Rectangle[1];
 
+    private bool audioPlayed = false;
     public Crawlid(Vector2 position)
     {
+        WalkSE = AudioLoader.Instance.Get_Crawler_Walk();
         this.position = position;
         sprites = new Dictionary<CrawlidState, ISprite>
         {
@@ -172,6 +178,12 @@ public class Crawlid : IEnemy
             if (_knockbackVelocity.Length() < 1f)
                 _knockbackVelocity = Vector2.Zero;
         }
+        
+        if (audioPlayed == false)
+            {
+                AudioManager.Instance.PlaySoundEffect(WalkSE, GameConstants.MaxVolume, GameConstants.Pitch, GameConstants.Pan, false);
+                audioPlayed = true;
+            }
 
         stateMachine.Update(gameTime);
         Sprite.SetPosition(position);

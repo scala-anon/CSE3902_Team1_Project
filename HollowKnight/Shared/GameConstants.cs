@@ -58,8 +58,9 @@ namespace HollowKnight.Shared
         // Audio 
         public const float NoVolume = 0.0f;
         public const float MaxVolume = 1.0f;
+        public const float HalfVolume = .5f;
         public const float Pan = 0.0f;
         public const float Pitch = 0.0f;
-        public const float SongVolume = 0.5f;
+        public const float SongVolume = 0.1f;
     }
 }

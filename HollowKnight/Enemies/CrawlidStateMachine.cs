@@ -1,5 +1,7 @@
+using HollowKnight.Audio;
 using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 
 namespace HollowKnight.Enemies
 {
@@ -21,6 +23,8 @@ public class CrawlidStateMachine
     public void ChangeHealth()
     {
         CurrentCrawlid.Health--;
+        SoundEffect CrawlidDamage = AudioLoader.Instance.Get_Enemy_Damage();
+        AudioManager.Instance.PlaySoundEffect(CrawlidDamage, GameConstants.MaxVolume, GameConstants.Pitch, GameConstants.Pan, false);
         if (CurrentCrawlid.Health <= 0)
         {
             CurrentCrawlid.Alive = false;

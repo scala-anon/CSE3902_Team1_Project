@@ -96,7 +96,7 @@ namespace HollowKnight.Player
             };
 
             SoundEffect Attack = AudioLoader.Instance.Get_Hero_Attack();
-            AudioManager.Instance.PlaySoundEffect(Attack); 
+            AudioManager.Instance.PlaySoundEffect(Attack, GameConstants.HalfVolume, GameConstants.Pitch, GameConstants.Pan, false); 
 
             return true;
         }

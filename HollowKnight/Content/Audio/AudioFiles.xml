@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<XnaContent>
+    <Item>
+        <FilePath>Audio/sfx/Grass Cut 1</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/sfx/hero_damage</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/sfx/Grass Move 1</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/sfx/hero_dash</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/sfx/hero_fireball</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/sfx/hero_jump</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/sfx/hero_land_soft</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/sfx/hero_run_footsteps_stone</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/sfx/hero_unsheath</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/sfx/Crawler</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/sfx/Enemy Damage</FilePath>
+    </Item>
+</XnaContent>

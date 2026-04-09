@@ -1,4 +1,8 @@
 
+using System;
+using System.Collections.Generic;
+using System.Reflection.Metadata;
+using System.Xml.Linq;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Media;
@@ -8,32 +12,38 @@ namespace HollowKnight.Audio
     public class AudioLoader
     {
 
-        private SoundEffect hero_jump;
-        private SoundEffect hero_take_damage;
-        private SoundEffect hero_dash;
-        private SoundEffect hero_run;
-        private SoundEffect grass_cut;
-        private SoundEffect hero_attack;
-        private SoundEffect hero_land;
+        private readonly Dictionary<string, SoundEffect>sfx;
         private Song mantisLords;
+
+        private AudioLoader()
+        {
+            sfx = new Dictionary<string, SoundEffect>();
+
+        }
         private static AudioLoader instance = new AudioLoader();
 
         public static AudioLoader Instance
         {
             get {return instance;}
         }
+
+        
         
         public void loadAudio(ContentManager Content)
         {
-            #region SFX
-            hero_jump = Content.Load<SoundEffect>(SoundId.PlayerJump);
-            hero_take_damage = Content.Load<SoundEffect>(SoundId.PlayerDamage);
-            hero_dash = Content.Load<SoundEffect>(SoundId.PlayerDash);
-            hero_run = Content.Load<SoundEffect>(SoundId.PlayerRun);
-            grass_cut = Content.Load<SoundEffect>(SoundId.GrassCut);
-            hero_attack = Content.Load<SoundEffect>(SoundId.PlayerAttack);
-            hero_land = Content.Load<SoundEffect>(SoundId.PlayerLand);
-            #endregion SFX
+            XDocument AudioDoc = XDocument.Load("Content/Audio/AudioFiles.xml");
+            XElement root = AudioDoc.Root;
+            
+
+            foreach (XElement item in root.Descendants("Item"))
+            {
+                var file_path = (string)item.Element("FilePath");
+                SoundEffect sound = Content.Load<SoundEffect>(file_path);
+                
+                sfx.Add(file_path, sound);
+                
+            }
+            
 
             #region Music
             mantisLords = Content.Load<Song>(SoundId.MantisLordsMusic);
@@ -49,38 +59,49 @@ namespace HollowKnight.Audio
         #endregion Get Music
 
         #region Get SFX
+
+        public SoundEffect Get_Crawler_Walk()
+        {
+            return sfx[SoundId.CrawlidWalk];
+        }
+
+        public SoundEffect Get_Enemy_Damage()
+        {
+            return sfx[SoundId.EnemyDamage];
+        }
         public SoundEffect Get_Hero_Attack()
         {
-            return hero_attack;
+            
+            return sfx[SoundId.PlayerAttack];
         }
 
         public SoundEffect Get_Hero_Land()
         {
-            return hero_land;
+            return sfx[SoundId.PlayerLand];
         }
         public SoundEffect Get_Hero_Jump()
         {
-            return hero_jump;
+            return sfx[SoundId.PlayerJump];
         }
 
         public SoundEffect Get_Hero_Take_Damage()
         {
-            return hero_take_damage;
+            return sfx[SoundId.PlayerDamage];
         }
 
         public SoundEffect Get_Hero_Dash()
         {
-            return hero_dash;
+            return sfx[SoundId.PlayerDash];
         }
 
         public SoundEffect Get_Hero_Run()
         {
-            return hero_run;
+            return sfx[SoundId.PlayerRun];
         }
 
         public SoundEffect Get_Grass_Cut()
         {
-            return grass_cut;
+            return sfx[SoundId.GrassCut];
         }
         #endregion Get SFX
 

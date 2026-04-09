@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace HollowKnight.Audio
 {
@@ -16,6 +17,9 @@ namespace HollowKnight.Audio
         // PlayerHeal,
         // PlayerDeath,
         public const string GrassCut = "Audio/sfx/Grass Cut 1";
+
+        public const string EnemyDamage = "Audio/sfx/Enemy Damage";
+        public const string CrawlidWalk = "Audio/sfx/Crawler";
 
         public const string MantisLordsMusic = "Audio/Music/Hollow Knight OST - Mantis Lords 4";
 

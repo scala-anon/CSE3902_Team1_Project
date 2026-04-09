@@ -2,6 +2,8 @@ using HollowKnight.Shared;
 using HollowKnight.Pathfinding;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using HollowKnight.Audio;
 
 namespace HollowKnight.Enemies
 {
@@ -33,6 +35,8 @@ public class VengeflyStateMachine
     public void ChangeHealth()
     {
         CurrentVengeFly.Health--;
+        SoundEffect damage = AudioLoader.Instance.Get_Enemy_Damage();
+        AudioManager.Instance.PlaySoundEffect(damage, GameConstants.MaxVolume, GameConstants.Pitch, GameConstants.Pan, false);
         if (CurrentVengeFly.Health <= 0)
         {
             CurrentVengeFly.Dead = true;

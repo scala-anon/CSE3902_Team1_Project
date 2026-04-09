@@ -55,6 +55,18 @@
 /processorParam:Quality=Best
 /build:Audio/sfx/Grass Move 1.mp3
 
+#begin Audio/sfx/Crawler.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx/Crawler.mp3
+
+#begin Audio/sfx/Enemy Damage.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx/Enemy Damage.mp3
+
 #begin Audio/sfx/hero_land_soft.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -182,7 +194,12 @@
 #begin sprites/platform-atlas.xml
 /copy:sprites/platform-atlas.xml
 
+#begin Audio/AudioFiles.xml
+/copy:Audio/AudioFiles.xml
+
 #begin fonts/Credits.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /build:fonts/Credits.spritefont
+
+
