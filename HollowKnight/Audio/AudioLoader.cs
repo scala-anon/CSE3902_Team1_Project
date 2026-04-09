@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Reflection.Metadata;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework.Audio;
@@ -13,11 +14,13 @@ namespace HollowKnight.Audio
     {
 
         private readonly Dictionary<string, SoundEffect>sfx;
+        private readonly Dictionary<string, Song>songs;
         private Song mantisLords;
 
         private AudioLoader()
         {
             sfx = new Dictionary<string, SoundEffect>();
+            songs = new Dictionary<string, Song>();
 
         }
         private static AudioLoader instance = new AudioLoader();
@@ -43,17 +46,25 @@ namespace HollowKnight.Audio
                 sfx.Add(file_path, sound);
                 
             }
-            
 
-            #region Music
-            mantisLords = Content.Load<Song>(SoundId.MantisLordsMusic);
-            #endregion Music
+            XDocument SongDoc = XDocument.Load("Content/Audio/SongFiles.xml");
+            XElement songRoot = SongDoc.Root;
+
+            foreach (XElement item in songRoot.Descendants("Item"))
+            {
+                var file_path = (string)item.Element("FilePath");
+                Song song = Content.Load<Song>(file_path);
+
+                songs.Add(file_path, song);
+                
+            }
+            
         }
         
         #region Get Music
         public Song Get_Mantis_Lords_Music()
         {
-            return mantisLords;
+            return songs[SoundId.MantisLordsMusic];
         }
 
         #endregion Get Music

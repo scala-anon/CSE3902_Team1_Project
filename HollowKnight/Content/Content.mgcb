@@ -197,6 +197,9 @@
 #begin Audio/AudioFiles.xml
 /copy:Audio/AudioFiles.xml
 
+#begin Audio/SongFiles.xml
+/copy:Audio/SongFiles.xml
+
 #begin fonts/Credits.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
