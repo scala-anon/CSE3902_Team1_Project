@@ -92,6 +92,22 @@ namespace HollowKnight.Shared
         public const float KnockbackVelocityThreshold = 1f;
         public const int GroundProbeExtension = 1;
 
+        // Projectile — Base
+        public const int ProjectileDefaultSize = 12;
+        public const int ProjectileDefaultDamage = 1;
+        public const float ProjectileAntiTunnelingStep = 5f;
+
+        // Projectile — Knight (Vengeful Spirit)
+        public const float KnightProjectileInterval = 2f;
+        public const float KnightProjectileSpeed = 800f;
+        public const float KnightProjectileSpawnOffsetRight = 20f;
+        public const float KnightProjectileSpawnOffsetLeft = 180f;
+        public const double VengefulSpiritImpactDuration = 0.5;
+
+        // Projectile — Enemy
+        public const float EnemyProjectileInterval = 3f;
+        public const float EnemyProjectileSpeed = 250f;
+
         // Audio
         public const float NoVolume = 0.0f;
         public const float MaxVolume = 1.0f;

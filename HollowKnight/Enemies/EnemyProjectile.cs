@@ -1,5 +1,6 @@
 using HollowKnight.Collision;
 using HollowKnight.Projectiles;
+using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 
 namespace HollowKnight.Enemies
@@ -10,8 +11,8 @@ namespace HollowKnight.Enemies
         private readonly ProjectileSpawner _spawner;
 
         private float _timer = 0f;
-        private readonly float _interval = 3f;
-        private readonly float _speed = 250f;
+        private readonly float _interval = GameConstants.EnemyProjectileInterval;
+        private readonly float _speed = GameConstants.EnemyProjectileSpeed;
 
         public EnemyProjectile(ICollidable enemy, ProjectileSpawner spawner)
         {

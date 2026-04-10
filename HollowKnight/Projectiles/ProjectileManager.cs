@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 
 namespace HollowKnight.Projectiles
@@ -27,7 +28,7 @@ namespace HollowKnight.Projectiles
 
                 // anti-tunneling: move in small steps
                 Vector2 totalMove = p.Velocity * dt;
-                const float maxStep = 5f;
+                float maxStep = GameConstants.ProjectileAntiTunnelingStep;
                 int steps = (int)Math.Ceiling(totalMove.Length() / maxStep);
                 if (steps < 1) steps = 1;
 

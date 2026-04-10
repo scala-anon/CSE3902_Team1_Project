@@ -15,16 +15,9 @@ namespace HollowKnight.Projectiles
         private Direction _facing;
 
         private double _impactTimer;
-        private readonly double _impactDuration = 0.5; // ~ 5 frames
+        private readonly double _impactDuration = GameConstants.VengefulSpiritImpactDuration;
 
         public override bool PiercesEnemies => true;
-        private const int LeadingHitboxWidth = 35;
-        private const int NoseOffsetRight = 220;
-        private const int NoseOffsetLeft = 0;
-
-        private const int CollisionOffsetRight = 152;
-        private const int CollisionOffsetLeft = 0;
-        private const int CollisionOffsetY = -47; // Move collision effect higher on screen
 
         public override Rectangle Bounds
         {
@@ -32,11 +25,11 @@ namespace HollowKnight.Projectiles
             {
                 if (_facing == Direction.Right)
                 {
-                    return new Rectangle((int)Position.X + NoseOffsetRight, (int)Position.Y, LeadingHitboxWidth, Height);
+                    return new Rectangle((int)Position.X + CollisionConstants.VengefulSpiritNoseOffsetRight, (int)Position.Y, CollisionConstants.VengefulSpiritLeadingHitboxWidth, Height);
                 }
                 else
                 {
-                    return new Rectangle((int)Position.X + NoseOffsetLeft, (int)Position.Y, LeadingHitboxWidth, Height);
+                    return new Rectangle((int)Position.X + CollisionConstants.VengefulSpiritNoseOffsetLeft, (int)Position.Y, CollisionConstants.VengefulSpiritLeadingHitboxWidth, Height);
                 }
             }
         }
@@ -115,7 +108,7 @@ namespace HollowKnight.Projectiles
                 }
 
                 // Adjust Y to show effect higher on screen
-                Position.Y += CollisionOffsetY;
+                Position.Y += CollisionConstants.VengefulSpiritCollisionOffsetY;
 
                 // Stop the projectile from moving further
                 Velocity = Vector2.Zero;

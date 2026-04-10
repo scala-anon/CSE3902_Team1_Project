@@ -11,10 +11,10 @@ namespace HollowKnight.Projectiles
     {
         public Vector2 Position;
         public Vector2 Velocity;
-        public int Width = 12;
-        public int Height = 12;
+        public int Width = GameConstants.ProjectileDefaultSize;
+        public int Height = GameConstants.ProjectileDefaultSize;
 
-        public int Damage = 1;
+        public int Damage = GameConstants.ProjectileDefaultDamage;
         public bool Alive = true;
         public bool IsActive => Alive;
         public bool HasMoved = false;

@@ -59,6 +59,12 @@ namespace HollowKnight.Shared
         public const int SpikeCeilingSecondaryW = 115;
         public const int SpikeCeilingSecondaryH = 60;
 
+        // Vengeful Spirit Projectile Hitbox
+        public const int VengefulSpiritLeadingHitboxWidth = 35;
+        public const int VengefulSpiritNoseOffsetRight = 220;
+        public const int VengefulSpiritNoseOffsetLeft = 0;
+        public const int VengefulSpiritCollisionOffsetY = -47;
+
         // Physics/Collision Thresholds
         public const float GroundProbeExtension = 1;
     }
