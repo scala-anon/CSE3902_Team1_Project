@@ -51,7 +51,7 @@ public partial class Game1
         _items.Add(new Spirit(new Vector2(-100, -100)));
     }
 
-    private const string CurrentLevel = "Content/levels/levelOne.xml";
+    private const string CurrentLevel = "Content/levels/roomOne.xml";
 
     private void InitializeLevel()
     {
