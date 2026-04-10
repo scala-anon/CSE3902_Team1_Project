@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
+using System.Net;
+using HollowKnight.Factories;
 using HollowKnight.Shared;
 using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 
 namespace HollowKnight.Audio
@@ -18,7 +17,7 @@ namespace HollowKnight.Audio
     
     
     //TODO create dispose method and impliment IDispossable
-    public class AudioManager
+    public class AudioManager : IDisposable
     {
 
     //Sound effect instances created so they can be pasued, unpaused, and/or disposed        
@@ -87,12 +86,15 @@ namespace HollowKnight.Audio
 
     public bool IsDisposed {get; private set;}
 
-
-    //Constructor
     public AudioManager()
         {
             _activateSoundEffectInstances = new List<SoundEffectInstance>();
+        }
 
+    private static AudioManager instance = new AudioManager();
+    public static AudioManager Instance
+        {
+            get { return instance; }
         }
 
         //Finalizer -> called when object is collected by garbage collector
@@ -187,6 +189,7 @@ namespace HollowKnight.Audio
                 MediaPlayer.Stop();
             }
 
+            MediaPlayer.Volume = GameConstants.SongVolume;
             MediaPlayer.Play(song);
             MediaPlayer.IsRepeating = isRepeating;
 

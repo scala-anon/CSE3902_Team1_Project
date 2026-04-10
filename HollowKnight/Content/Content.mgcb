@@ -12,35 +12,35 @@
 
 
 #---------------------------------- Content ---------------------------------#
-#begin Audio/hero_damage.wav
+#begin Audio/sfx/hero_damage.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/hero_damage.wav
+/build:Audio/sfx/hero_damage.wav
 
-#begin Audio/hero_dash.wav
+#begin Audio/sfx/hero_dash.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/hero_dash.wav
+/build:Audio/sfx/hero_dash.wav
 
-#begin Audio/hero_fireball.wav
+#begin Audio/sfx/hero_fireball.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/hero_fireball.wav
+/build:Audio/sfx/hero_fireball.wav
 
-#begin Audio/hero_jump.wav
+#begin Audio/sfx/hero_jump.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/hero_jump.wav
+/build:Audio/sfx/hero_jump.wav
 
-#begin Audio/hero_run_footsteps_stone.wav
+#begin Audio/sfx/hero_run_footsteps_stone.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/hero_run_footsteps_stone.wav
+/build:Audio/sfx/hero_run_footsteps_stone.wav
 
 
 
