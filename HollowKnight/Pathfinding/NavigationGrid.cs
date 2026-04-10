@@ -1,4 +1,5 @@
 using System;
+using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -14,7 +15,7 @@ namespace HollowKnight.Pathfinding
 
     private Texture2D _pixel; 
 
-    public NavigationGrid(int screenWidth, int screenHeight, GraphicsDevice graphicsDevice, int cellSize = 32)
+    public NavigationGrid(int screenWidth, int screenHeight, GraphicsDevice graphicsDevice, int cellSize = GameConstants.NavGridDefaultCellSize)
     {
       this.cellSize = cellSize;
       cols = screenWidth / cellSize;
@@ -50,7 +51,7 @@ namespace HollowKnight.Pathfinding
 
     public void Draw(SpriteBatch spriteBatch)
     {
-      Color lineColor = Color.White * 0.2f; // transparency
+      Color lineColor = Color.White * GameConstants.NavGridOverlayOpacity; // transparency
 
       //Vertical lines
       for(int x=0; x<=cols; x++)

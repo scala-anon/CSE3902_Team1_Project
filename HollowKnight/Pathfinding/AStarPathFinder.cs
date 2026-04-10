@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 
 namespace HollowKnight.Pathfinding
@@ -16,7 +17,7 @@ namespace HollowKnight.Pathfinding
             public Node Parent { get; set; }
         }
 
-        public static List<Vector2> FindPath(NavigationGrid grid, Vector2 startPixel, Vector2 targetPixel)
+        public static List<Vector2> FindPath(NavigationGrid grid, Vector2 startPixel, Vector2 targetPixel, Vector2? entityBounds = null)
         {
             List<Vector2> path = new List<Vector2>();
 
@@ -39,12 +40,14 @@ namespace HollowKnight.Pathfinding
             }
 
             List<Node> openList = new List<Node>();
-            HashSet<string> closedList = new HashSet<string>();
+            HashSet<int> closedList = new HashSet<int>();
+            Dictionary<int, Node> nodeMap = new Dictionary<int, Node>();
 
             Node startNode = new Node { X = startX, Y = startY, G = 0, H = GetOctileDistance(startX, startY, targetX, targetY) };
             openList.Add(startNode);
+            nodeMap[startX + startY * grid.cols] = startNode;
 
-            int maxIterations = 1000; // Failsafe to prevent infinite loops / lag
+            int maxIterations = GameConstants.AStarMaxIterations; // Failsafe to prevent infinite loops / lag
             int currentIteration = 0;
 
             Node current = null;
@@ -53,12 +56,20 @@ namespace HollowKnight.Pathfinding
             {
                 currentIteration++;
 
-                // Get node with lowest F cost
-                openList.Sort((a, b) => a.F.CompareTo(b.F));
-                current = openList[0];
-                openList.RemoveAt(0);
+                // Get node with lowest F cost efficiently (O(N) instead of O(N log N))
+                int lowestIndex = 0;
+                for (int i = 1; i < openList.Count; i++)
+                {
+                    if (openList[i].F < openList[lowestIndex].F)
+                    {
+                        lowestIndex = i;
+                    }
+                }
+                current = openList[lowestIndex];
+                openList[lowestIndex] = openList[openList.Count - 1]; // Swap with last element
+                openList.RemoveAt(openList.Count - 1); // O(1) removal
 
-                string currentKey = $"{current.X},{current.Y}";
+                int currentKey = current.X + current.Y * grid.cols;
                 closedList.Add(currentKey);
 
                 // Found target
@@ -76,23 +87,33 @@ namespace HollowKnight.Pathfinding
                     int neighborX = current.X + dx[i];
                     int neighborY = current.Y + dy[i];
 
-                    if (!grid.IsWalkable(neighborX, neighborY)) continue;
-
-                    string neighborKey = $"{neighborX},{neighborY}";
+                    if (!IsAreaWalkable(grid, neighborX, neighborY, entityBounds)) continue;
+                    
+                    // Prevent corner-cutting for diagonal movements
+                    if (dx[i] != 0 && dy[i] != 0)
+                    {
+                        if (!IsAreaWalkable(grid, current.X, neighborY, entityBounds) || !IsAreaWalkable(grid, neighborX, current.Y, entityBounds))
+                        {
+                            continue;
+                        }
+                    }
+                    
+                    int neighborKey = neighborX + neighborY * grid.cols;
                     if (closedList.Contains(neighborKey)) continue;
 
                     // 1.4 for diagonal, 1.0 for straight using pythagorean theorem.
-                    //using 10 and 14 since it is easier for integer math
-                    int moveCost = (dx[i] != 0 && dy[i] != 0) ? 14 : 10; 
+                    // Using integers (14/10) since it is easier for integer math
+                    int moveCost = (dx[i] != 0 && dy[i] != 0) ? GameConstants.AStarDiagonalMoveCost : GameConstants.AStarStraightMoveCost;
                     int newCostToNeighbor = current.G + moveCost;
 
-                    Node neighborNode = openList.Find(n => n.X == neighborX && n.Y == neighborY);
+                    nodeMap.TryGetValue(neighborKey, out Node neighborNode);
                     if (neighborNode == null || newCostToNeighbor < neighborNode.G)
                     {
                         if (neighborNode == null)
                         {
                             neighborNode = new Node { X = neighborX, Y = neighborY };
                             openList.Add(neighborNode);
+                            nodeMap[neighborKey] = neighborNode;
                         }
                         
                         neighborNode.G = newCostToNeighbor;
@@ -116,23 +137,38 @@ namespace HollowKnight.Pathfinding
             return path;
         }
 
-        /*
-        private static int GetManhattanDistance(int x1, int y1, int x2, int y2)
+        private static bool IsAreaWalkable(NavigationGrid grid, int cx, int cy, Vector2? entityBounds)
         {
-            // Multiplying by 10 to make integer math easier
-            return 10 * (Math.Abs(x1 - x2) + Math.Abs(y1 - y2));
+            if (!grid.IsWalkable(cx, cy)) return false;
+            if (!entityBounds.HasValue) return true;
+
+            int cellsX = (int)Math.Ceiling(entityBounds.Value.X / grid.cellSize) - 1; // subtract 1 to ensure some leniency
+            int cellsY = (int)Math.Ceiling(entityBounds.Value.Y / grid.cellSize) - 1;
+            
+            if (cellsX <= 0 && cellsY <= 0) return true;
+
+            int halfX = cellsX / 2;
+            int halfY = cellsY / 2;
+
+            for (int x = cx - halfX; x <= cx + halfX; x++)
+            {
+                for (int y = cy - halfY; y <= cy + halfY; y++)
+                {
+                    if (!grid.IsWalkable(x, y)) return false;
+                }
+            }
+            return true;
         }
-        */
-        
+
         private static int GetOctileDistance(int x1, int y1, int x2, int y2)
         {
             int dx = Math.Abs(x1 - x2);
             int dy = Math.Abs(y1 - y2);
 
-            // Uses integer approximation of diagonal cost (14) vs straight cost (10).
-            // Formula: 10 * (dx + dy) + (14 - 20) * min(dx, dy)
-            // Simplified: 10 * max + 4 * min
-            return 10 * Math.Max(dx, dy) + 4 * Math.Min(dx, dy);
+            // Uses integer approximation of diagonal cost vs straight cost.
+            // Formula: StraightCost * max + (DiagonalCost - StraightCost) * min
+            int diagCorrection = GameConstants.AStarDiagonalMoveCost - GameConstants.AStarStraightMoveCost;
+            return GameConstants.AStarStraightMoveCost * Math.Max(dx, dy) + diagCorrection * Math.Min(dx, dy);
         }
         
     }

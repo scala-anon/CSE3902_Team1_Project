@@ -33,13 +33,8 @@ namespace HollowKnight.Enemies
 
         private bool _isDamaged;
         private double _damagedTimer;
-        private const double DamagedDuration = GameConstants.EnemyDamagedDuration;
 
         private Vector2 _knockbackVelocity;
-        private const float KnockbackSpeed = GameConstants.EnemyKnockbackSpeed;
-        private const float KnockbackDecay = GameConstants.EnemyKnockbackDecay;
-        private const float DeathGravity = GameConstants.EnemyDeathGravity;
-        private const float ScreenFloor = GameConstants.ScreenHeight;
         public bool IsGrounded { get; private set; } = false;
 
         public Vector2 knightPosition = new Vector2(-9999, -9999);
@@ -73,11 +68,21 @@ namespace HollowKnight.Enemies
         public void SetNavigationGrid(NavigationGrid grid) => stateMachine.SetNavigationGrid(grid);
         public List<Vector2> GetCurrentPath() => stateMachine.GetCurrentPath();
         public float GetDetectionRadius() => stateMachine.GetDetectionRadius();
+        public float GetChaseRadius() => stateMachine.GetChaseRadius();
         public void SetPlatform(IObject platform) { } // Flying enemy doesn't need platform
         public bool IsActive => !Dead;
         public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, Sprite.Width, Sprite.Height);
 
         public void ChangeHealth() => stateMachine.ChangeHealth();
+
+        public void Kill()
+        {
+            if (Dead) return;
+            Health = 0;
+            Dead = true;
+            _isDamaged = false;
+            SetState(VengeflyState.DeathAir);
+        }
 
         public void Land()
         {
@@ -90,13 +95,13 @@ namespace HollowKnight.Enemies
 
         public bool TakeDamage(CollisionSide side)
         {
-            if (_isDamaged || Dead) return false;
+            if (_isDamaged) return false;
             _isDamaged = true;
             _damagedTimer = 0;
             switch (side)
             {
-                case CollisionSide.Left: _knockbackVelocity = new Vector2(-KnockbackSpeed, GameConstants.VengeflyKnockbackUpComponent); break;
-                case CollisionSide.Right: _knockbackVelocity = new Vector2(KnockbackSpeed, GameConstants.VengeflyKnockbackUpComponent); break;
+                case CollisionSide.Left: _knockbackVelocity = new Vector2(-GameConstants.EnemyKnockbackSpeed, GameConstants.VengeflyKnockbackUpComponent); break;
+                case CollisionSide.Right: _knockbackVelocity = new Vector2(GameConstants.EnemyKnockbackSpeed, GameConstants.VengeflyKnockbackUpComponent); break;
                 case CollisionSide.Top: _knockbackVelocity = new Vector2(0, -GameConstants.VengeflyVerticalKnockbackSpeed); break;
                 case CollisionSide.Bottom: _knockbackVelocity = new Vector2(0, GameConstants.VengeflyVerticalKnockbackSpeed); break;
             }
@@ -116,19 +121,18 @@ namespace HollowKnight.Enemies
 
             if (Dead)
             {
-                //this is for vengefly airborne death physics
                 if (!IsGrounded)
                 {
-                    _knockbackVelocity.Y += DeathGravity * dt;
-                    _knockbackVelocity.X *= (1f - KnockbackDecay * dt);
-                    if (Math.Abs(_knockbackVelocity.X) < GameConstants.KnockbackVelocityThreshold) _knockbackVelocity.X = 0;
+                    _knockbackVelocity.Y += GameConstants.EnemyDeathGravity * dt;
+                    _knockbackVelocity.X *= (1f - GameConstants.EnemyKnockbackDecay * dt);
+                    if (Math.Abs(_knockbackVelocity.X) < GameConstants.EnemyKnockbackStopThreshold) _knockbackVelocity.X = 0;
 
                     position += _knockbackVelocity * dt;
 
                     float spriteHeight = Sprite.GetSize().Y;
-                    if (position.Y + spriteHeight >= ScreenFloor)
+                    if (position.Y + spriteHeight >= GameConstants.ScreenHeight)
                     {
-                        position.Y = ScreenFloor - spriteHeight;
+                        position.Y = GameConstants.ScreenHeight - spriteHeight;
                         _knockbackVelocity = Vector2.Zero;
                         IsGrounded = true;
                         SetState(VengeflyState.DeathLand);
@@ -143,7 +147,7 @@ namespace HollowKnight.Enemies
             if (_isDamaged)
             {
                 _damagedTimer += dt;
-                if (_damagedTimer >= DamagedDuration)
+                if (_damagedTimer >= GameConstants.EnemyDamagedDuration)
                 {
                     _isDamaged = false;
                     _damagedTimer = 0;
@@ -153,8 +157,8 @@ namespace HollowKnight.Enemies
             if (_knockbackVelocity != Vector2.Zero)
             {
                 position += _knockbackVelocity * dt;
-                _knockbackVelocity *= (1f - KnockbackDecay * dt);
-                if (_knockbackVelocity.Length() < GameConstants.KnockbackVelocityThreshold)
+                _knockbackVelocity *= (1f - GameConstants.EnemyKnockbackDecay * dt);
+                if (_knockbackVelocity.Length() < GameConstants.EnemyKnockbackStopThreshold)
                     _knockbackVelocity = Vector2.Zero;
             }
 

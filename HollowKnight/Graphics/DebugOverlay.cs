@@ -46,6 +46,12 @@ namespace HollowKnight.Graphics
                     Vector2 center = enemy.GetBounds()[0].Center.ToVector2();
                     DebugRenderer.DrawRadius(spriteBatch, center, enemy.GetDetectionRadius(), DebugRenderer.ColorTrigger * 0.8f);
                 }
+                
+                if (enemy.GetChaseRadius() > 0)
+                {
+                    Vector2 center = enemy.GetBounds()[0].Center.ToVector2();
+                    DebugRenderer.DrawRadius(spriteBatch, center, enemy.GetChaseRadius(), Color.Yellow * 0.5f);
+                }
             }
 
             // Projectile debug

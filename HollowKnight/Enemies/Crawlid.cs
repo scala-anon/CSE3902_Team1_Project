@@ -77,6 +77,7 @@ public class Crawlid : IEnemy
     public void SetNavigationGrid(NavigationGrid grid) { }
     public List<Vector2> GetCurrentPath() { return null; }
     public float GetDetectionRadius() => 0f;
+    public float GetChaseRadius() => 0f;
     public void SetPlatform(IObject platform) => stateMachine.SetPlatform(platform);
 
     public void ChangeHealth()

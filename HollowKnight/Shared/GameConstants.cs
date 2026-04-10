@@ -46,6 +46,7 @@ namespace HollowKnight.Shared
         // Enemy — Shared
         public const float EnemyKnockbackSpeed = 950f;
         public const float EnemyKnockbackDecay = 8f;
+        public const float EnemyKnockbackStopThreshold = 1f;
         public const float EnemyDeathGravity = 600f;
         public const double EnemyDamagedDuration = 0.4;
         public const int EnemyHurtboxGrow = 6;
@@ -57,15 +58,19 @@ namespace HollowKnight.Shared
 
         // Vengefly
         public const float VengeflyDetectionRadius = 500f;
-        public const float VengeflyPatrolSpeed = 95f; //prev 75
-        public const float VengeflyChaseSpeed = 130f; //prev 100
+        public const float VengeflyChaseRadius = 1200f; //prev 800, 1200 causes lag
+        public const float VengeflyPatrolSpeed = 75f;
+        public const float VengeflyChaseSpeed = 120f;
         public const double VengeflyStartleDuration = 0.5;
         public const float VengeflyPathUpdateInterval = 0.3f;
         public const float VengeflyKnockbackUpComponent = -150f;
         public const float VengeflyVerticalKnockbackSpeed = 250f; //used for death
+        public const float VengeflyWaypointReachDivisor = 1.5f;
 
         // Navigation
         public const int NavGridCellSize = 12;
+        public const int NavGridDefaultCellSize = 32;
+        public const float NavGridOverlayOpacity = 0.2f;
         public const float PathReachedThreshold = 10f;
 
         //Damage
@@ -113,5 +118,10 @@ namespace HollowKnight.Shared
         public const float MaxVolume = 1.0f;
         public const float Pan = 0.0f;
         public const float Pitch = 0.0f;
+
+        // A* Pathfinding
+        public const int AStarMaxIterations = 1000;
+        public const int AStarStraightMoveCost = 10;
+        public const int AStarDiagonalMoveCost = 14;
     }
 }
