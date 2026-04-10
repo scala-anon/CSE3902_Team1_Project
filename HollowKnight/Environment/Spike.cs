@@ -24,7 +24,7 @@ namespace HollowKnight.Environment
         public string Label => $"Spike_{variant}";
         public Rectangle Bounds { get; }
         public int Damage => GameConstants.SpikeDamage;
-        public Vector2 Knockback => new Vector2(GameConstants.KnightKnockbackSpeed, GameConstants.KnightKnockbackUpwards);
+        public Vector2 Knockback => new Vector2(KnightConstants.KnightKnockbackSpeed, KnightConstants.KnightKnockbackUpwards);
 
         public Spike(SpikeVariant variant, Vector2 pos)
         {

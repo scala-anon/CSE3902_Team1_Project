@@ -7,11 +7,9 @@ public class CrawlidStateMachine
 {
     private Crawlid CurrentCrawlid;
 
-    private const float PatrolSpeed = GameConstants.CrawlidPatrolSpeed;
     private Direction _movementDirection = Direction.Right;
     private bool _isTurning = false;
     private float _turnTimer = 0f;
-    private const float TurnDuration = GameConstants.CrawlidTurnDuration;
     private HollowKnight.Interfaces.IObject _platform;
 
     public void SetPlatform(HollowKnight.Interfaces.IObject platform)
@@ -44,7 +42,7 @@ public class CrawlidStateMachine
         if (_isTurning)
         {
             _turnTimer += elapsedTime;
-            if (_turnTimer >= TurnDuration)
+            if (_turnTimer >= EnemyConstants.CrawlidTurnDuration)
             {
                 _isTurning = false;
                 _turnTimer = 0f;
@@ -54,7 +52,7 @@ public class CrawlidStateMachine
             return;
         }
 
-        CurrentCrawlid.position.X += (_movementDirection == Direction.Right ? PatrolSpeed : -PatrolSpeed) * elapsedTime;
+        CurrentCrawlid.position.X += (_movementDirection == Direction.Right ? EnemyConstants.CrawlidPatrolSpeed : -EnemyConstants.CrawlidPatrolSpeed) * elapsedTime;
         float spriteWidth = CurrentCrawlid.Sprite.GetSize().X;
 
         float minX = 0;

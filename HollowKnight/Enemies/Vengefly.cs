@@ -28,7 +28,7 @@ namespace HollowKnight.Enemies
         public bool Dead { get; set; }
         public Direction FacingDirection { get; set; } = Direction.Left;
 
-        public int Health { get; set; } = GameConstants.EnemyDefaultHealth;
+        public int Health { get; set; } = EnemyConstants.EnemyDefaultHealth;
         public bool IsDamaged => _isDamaged;
 
         private bool _isDamaged;
@@ -37,7 +37,7 @@ namespace HollowKnight.Enemies
         private Vector2 _knockbackVelocity;
         public bool IsGrounded { get; private set; } = false;
 
-        public Vector2 knightPosition = new Vector2(-9999, -9999);
+        public Vector2 knightPosition = new Vector2(GameConstants.InvalidPositionSentinel, GameConstants.InvalidPositionSentinel);
 
         private VengeflyStateMachine stateMachine;
         public ISprite Sprite { get; private set; }
@@ -100,10 +100,10 @@ namespace HollowKnight.Enemies
             _damagedTimer = 0;
             switch (side)
             {
-                case CollisionSide.Left: _knockbackVelocity = new Vector2(-GameConstants.EnemyKnockbackSpeed, GameConstants.VengeflyKnockbackUpComponent); break;
-                case CollisionSide.Right: _knockbackVelocity = new Vector2(GameConstants.EnemyKnockbackSpeed, GameConstants.VengeflyKnockbackUpComponent); break;
-                case CollisionSide.Top: _knockbackVelocity = new Vector2(0, -GameConstants.VengeflyVerticalKnockbackSpeed); break;
-                case CollisionSide.Bottom: _knockbackVelocity = new Vector2(0, GameConstants.VengeflyVerticalKnockbackSpeed); break;
+                case CollisionSide.Left: _knockbackVelocity = new Vector2(-EnemyConstants.EnemyKnockbackSpeed, EnemyConstants.VengeflyKnockbackUpComponent); break;
+                case CollisionSide.Right: _knockbackVelocity = new Vector2(EnemyConstants.EnemyKnockbackSpeed, EnemyConstants.VengeflyKnockbackUpComponent); break;
+                case CollisionSide.Top: _knockbackVelocity = new Vector2(0, -EnemyConstants.VengeflyVerticalKnockbackSpeed); break;
+                case CollisionSide.Bottom: _knockbackVelocity = new Vector2(0, EnemyConstants.VengeflyVerticalKnockbackSpeed); break;
             }
             ChangeHealth();
             return true;
@@ -123,9 +123,9 @@ namespace HollowKnight.Enemies
             {
                 if (!IsGrounded)
                 {
-                    _knockbackVelocity.Y += GameConstants.EnemyDeathGravity * dt;
-                    _knockbackVelocity.X *= (1f - GameConstants.EnemyKnockbackDecay * dt);
-                    if (Math.Abs(_knockbackVelocity.X) < GameConstants.EnemyKnockbackStopThreshold) _knockbackVelocity.X = 0;
+                    _knockbackVelocity.Y += EnemyConstants.EnemyDeathGravity * dt;
+                    _knockbackVelocity.X *= (1f - EnemyConstants.EnemyKnockbackDecay * dt);
+                    if (Math.Abs(_knockbackVelocity.X) < EnemyConstants.EnemyKnockbackStopThreshold) _knockbackVelocity.X = 0;
 
                     position += _knockbackVelocity * dt;
 
@@ -147,7 +147,7 @@ namespace HollowKnight.Enemies
             if (_isDamaged)
             {
                 _damagedTimer += dt;
-                if (_damagedTimer >= GameConstants.EnemyDamagedDuration)
+                if (_damagedTimer >= EnemyConstants.EnemyDamagedDuration)
                 {
                     _isDamaged = false;
                     _damagedTimer = 0;
@@ -157,8 +157,8 @@ namespace HollowKnight.Enemies
             if (_knockbackVelocity != Vector2.Zero)
             {
                 position += _knockbackVelocity * dt;
-                _knockbackVelocity *= (1f - GameConstants.EnemyKnockbackDecay * dt);
-                if (_knockbackVelocity.Length() < GameConstants.EnemyKnockbackStopThreshold)
+                _knockbackVelocity *= (1f - EnemyConstants.EnemyKnockbackDecay * dt);
+                if (_knockbackVelocity.Length() < EnemyConstants.EnemyKnockbackStopThreshold)
                     _knockbackVelocity = Vector2.Zero;
             }
 
@@ -177,7 +177,7 @@ namespace HollowKnight.Enemies
         public Rectangle GetHurtbox()
         {
             Rectangle[] bounds = GetBounds();
-            bounds[0].Inflate(GameConstants.EnemyHurtboxGrow, GameConstants.EnemyHurtboxGrow);
+            bounds[0].Inflate(EnemyConstants.EnemyHurtboxGrow, EnemyConstants.EnemyHurtboxGrow);
             return bounds[0];
         }
 

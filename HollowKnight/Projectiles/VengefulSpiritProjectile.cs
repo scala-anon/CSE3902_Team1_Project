@@ -15,7 +15,7 @@ namespace HollowKnight.Projectiles
         private Direction _facing;
 
         private double _impactTimer;
-        private readonly double _impactDuration = GameConstants.VengefulSpiritImpactDuration;
+        private readonly double _impactDuration = KnightConstants.VengefulSpiritImpactDuration;
 
         public override bool PiercesEnemies => true;
 

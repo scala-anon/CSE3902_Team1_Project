@@ -28,19 +28,14 @@ public class Crawlid : IEnemy
     public ISprite Sprite { get; private set; }
 
     public bool Alive { get; set; } = true;
-    public int Health { get; set; } = GameConstants.EnemyDefaultHealth;
+    public int Health { get; set; } = EnemyConstants.EnemyDefaultHealth;
 
     public bool IsDamaged => _isDamaged;
 
     private bool _isDamaged;
     private double _damagedTimer;
-    private const double DamagedDuration = GameConstants.EnemyDamagedDuration;
 
     private Vector2 _knockbackVelocity;
-    private const float KnockbackSpeed = GameConstants.EnemyKnockbackSpeed;
-    private const float KnockbackDecay = GameConstants.EnemyKnockbackDecay;
-    private const float DeathGravity = GameConstants.EnemyDeathGravity;
-    private const float ScreenFloor = GameConstants.ScreenHeight;
 
     public bool IsGrounded { get; private set; } = true;
     public bool IsActive => Alive;
@@ -95,8 +90,8 @@ public class Crawlid : IEnemy
 
         switch (side)
         {
-            case CollisionSide.Left: _knockbackVelocity = new Vector2(-KnockbackSpeed, 0f); break;
-            case CollisionSide.Right: _knockbackVelocity = new Vector2(KnockbackSpeed, 0f); break;
+            case CollisionSide.Left: _knockbackVelocity = new Vector2(-EnemyConstants.EnemyKnockbackSpeed, 0f); break;
+            case CollisionSide.Right: _knockbackVelocity = new Vector2(EnemyConstants.EnemyKnockbackSpeed, 0f); break;
             case CollisionSide.Top: _knockbackVelocity = new Vector2(0, 0f); break;
             case CollisionSide.Bottom: _knockbackVelocity = new Vector2(0, 0f); break;
         }
@@ -124,7 +119,7 @@ public class Crawlid : IEnemy
     public Rectangle GetHurtbox()
     {
         Rectangle[] bounds = GetBounds();
-        bounds[0].Inflate(GameConstants.EnemyHurtboxGrow, GameConstants.EnemyHurtboxGrow);
+        bounds[0].Inflate(EnemyConstants.EnemyHurtboxGrow, EnemyConstants.EnemyHurtboxGrow);
         return bounds[0];
     }
 
@@ -138,16 +133,16 @@ public class Crawlid : IEnemy
         {
             if (!IsGrounded)
             {
-                _knockbackVelocity.Y += DeathGravity * dt;
-                _knockbackVelocity.X *= (1f - KnockbackDecay * dt);
+                _knockbackVelocity.Y += EnemyConstants.EnemyDeathGravity * dt;
+                _knockbackVelocity.X *= (1f - EnemyConstants.EnemyKnockbackDecay * dt);
                 if (Math.Abs(_knockbackVelocity.X) < GameConstants.KnockbackVelocityThreshold) _knockbackVelocity.X = 0;
 
                 position += _knockbackVelocity * dt;
 
                 float spriteHeight = Sprite.GetSize().Y;
-                if (position.Y + spriteHeight >= ScreenFloor)
+                if (position.Y + spriteHeight >= GameConstants.ScreenHeight)
                 {
-                    position.Y = ScreenFloor - spriteHeight;
+                    position.Y = GameConstants.ScreenHeight - spriteHeight;
                     _knockbackVelocity = Vector2.Zero;
                     IsGrounded = true;
                     SetState(CrawlidState.DeathLand);
@@ -161,7 +156,7 @@ public class Crawlid : IEnemy
         if (_isDamaged)
         {
             _damagedTimer += dt;
-            if (_damagedTimer >= DamagedDuration)
+            if (_damagedTimer >= EnemyConstants.EnemyDamagedDuration)
             {
                 _isDamaged = false;
                 _damagedTimer = 0;
@@ -171,7 +166,7 @@ public class Crawlid : IEnemy
         if (_knockbackVelocity != Vector2.Zero)
         {
             position += _knockbackVelocity * dt;
-            _knockbackVelocity *= (1f - KnockbackDecay * dt);
+            _knockbackVelocity *= (1f - EnemyConstants.EnemyKnockbackDecay * dt);
             if (_knockbackVelocity.Length() < GameConstants.KnockbackVelocityThreshold)
                 _knockbackVelocity = Vector2.Zero;
         }

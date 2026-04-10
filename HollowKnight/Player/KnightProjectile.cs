@@ -30,10 +30,10 @@ namespace HollowKnight.Player
                 : new Vector2(-1f, 0f);
 
             Vector2 spawn = _knight.Facing == Direction.Right
-                ? new Vector2(_knight.Bounds.Right - GameConstants.KnightProjectileSpawnOffsetRight, _knight.Bounds.Top + _knight.Bounds.Height / 2f)
-                : new Vector2(_knight.Bounds.Left - GameConstants.KnightProjectileSpawnOffsetLeft, _knight.Bounds.Top + _knight.Bounds.Height / 2f);
+                ? new Vector2(_knight.Bounds.Right - KnightConstants.KnightProjectileSpawnOffsetRight, _knight.Bounds.Top + _knight.Bounds.Height / 2f)
+                : new Vector2(_knight.Bounds.Left - KnightConstants.KnightProjectileSpawnOffsetLeft, _knight.Bounds.Top + _knight.Bounds.Height / 2f);
 
-            _spawner.Spawn(spawn, direction, GameConstants.KnightProjectileSpeed, ProjectileFaction.Player);
+            _spawner.Spawn(spawn, direction, KnightConstants.KnightProjectileSpeed, ProjectileFaction.Player);
         }
     }
 }

@@ -35,16 +35,9 @@ public class MantisLord : IEnemy
 
     private bool _isDamaged;
     private double _damagedTimer;
-    private const double DamagedDuration = EnemyConstants.EnemyDamagedDuration;
-
-    private Vector2 _knockbackVelocity;
-    private const float KnockbackSpeed = EnemyConstants.EnemyKnockbackSpeed;
-    private const float KnockbackDecay = EnemyConstants.EnemyKnockbackDecay;
-    private const float DeathGravity = EnemyConstants.EnemyDeathGravity;
-    private const float ScreenFloor = GameConstants.ScreenHeight;
     public bool IsGrounded { get; private set; } = false;
 
-    public Vector2 knightPosition = new Vector2(-9999, -9999);
+    public Vector2 knightPosition = new Vector2(GameConstants.InvalidPositionSentinel, GameConstants.InvalidPositionSentinel);
 
     public ISprite Sprite { get; private set; }
     public List<Vector2> GetCurrentPath() { return null; }

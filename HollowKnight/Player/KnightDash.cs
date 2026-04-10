@@ -25,7 +25,7 @@ namespace HollowKnight.Player
       if (IsDashing)
       {
         dashTimer += dt;
-        if(dashTimer >= GameConstants.KnightDashDuration)
+        if(dashTimer >= KnightConstants.KnightDashDuration)
         {
           IsDashing = false;
           dashJustEnded = true;
@@ -35,7 +35,7 @@ namespace HollowKnight.Player
       else if(IsOnDashCooldown)
       {
         dashCooldownTimer += dt;
-        if(dashCooldownTimer >= GameConstants.KnightDashCooldown)
+        if(dashCooldownTimer >= KnightConstants.KnightDashCooldown)
         {
           IsOnDashCooldown = false;
           dashCooldownTimer = 0;
@@ -91,8 +91,8 @@ namespace HollowKnight.Player
     }
 
     public Direction GetDashDirection() => dashDirection;
-    public float GetDashSpeed() => GameConstants.KnightDashSpeed;
+    public float GetDashSpeed() => KnightConstants.KnightDashSpeed;
     public bool DashEnded() => dashJustEnded;
-    public double GetDashCooldownRemaining() => IsOnDashCooldown ? Math.Max(0, GameConstants.KnightDashCooldown - dashCooldownTimer) : 0;
+    public double GetDashCooldownRemaining() => IsOnDashCooldown ? Math.Max(0, KnightConstants.KnightDashCooldown - dashCooldownTimer) : 0;
   }
 }

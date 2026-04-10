@@ -22,11 +22,11 @@ namespace HollowKnight.Player
         private bool isCastPulseActive;
         public bool IsCastPulseActive => isCastPulseActive;
         private double castPulseTimer;
-        private readonly double castPulseDuration = GameConstants.KnightCastPulseDuration;
+        private readonly double castPulseDuration = KnightConstants.KnightCastPulseDuration;
 
         public bool IsCastOnCooldown { get; private set; }
         private double castCooldownTimer;
-        private readonly double castCooldown = GameConstants.KnightCastPulseDuration * 2;
+        private readonly double castCooldown = KnightConstants.KnightCastPulseDuration * 2;
 
         public void Update(GameTime gameTime, Vector2 position, Direction facing, ISprite currentSprite)
         {
@@ -42,7 +42,7 @@ namespace HollowKnight.Player
         {
             if (!IsAttacking) return;
             attackTimer += dt;
-            if (attackTimer >= GameConstants.KnightAttackDuration)
+            if (attackTimer >= KnightConstants.KnightAttackDuration)
             {
                 IsAttacking = false;
                 attackTimer = 0;
@@ -55,7 +55,7 @@ namespace HollowKnight.Player
         {
             if (!IsAttackOnCooldown) return;
             attackCooldownTimer += dt;
-            if (attackCooldownTimer >= GameConstants.KnightAttackCooldown)
+            if (attackCooldownTimer >= KnightConstants.KnightAttackCooldown)
             {
                 IsAttackOnCooldown = false;
                 attackCooldownTimer = 0;
@@ -83,17 +83,17 @@ namespace HollowKnight.Player
             {
                 case KnightSpriteType.SideSlash:
                     slashPosition.X += facing == Direction.Right
-                        ? knightSize.X - knightSize.X / GameConstants.SlashEffectRightDivisor
-                        : -slashEffect.Width + knightSize.X / GameConstants.SlashEffectLeftDivisor;
-                    slashPosition.Y += knightSize.Y / GameConstants.SlashEffectYDivisor;
+                        ? knightSize.X - knightSize.X / KnightConstants.SlashEffectRightDivisor
+                        : -slashEffect.Width + knightSize.X / KnightConstants.SlashEffectLeftDivisor;
+                    slashPosition.Y += knightSize.Y / KnightConstants.SlashEffectYDivisor;
                     break;
                 case KnightSpriteType.UpSlash:
                     slashPosition.X += (knightSize.X - slashEffect.Width) / 2;
-                    slashPosition.Y -= slashEffect.Height - knightSize.Y / GameConstants.UpSlashEffectYDivisor;
+                    slashPosition.Y -= slashEffect.Height - knightSize.Y / KnightConstants.UpSlashEffectYDivisor;
                     break;
                 case KnightSpriteType.DownSlash:
-                    slashPosition.X += (knightSize.X - slashEffect.Width) / 2 - knightSize.X / GameConstants.DownSlashEffectXDivisor;
-                    slashPosition.Y += knightSize.Y - knightSize.Y / GameConstants.DownSlashEffectYDivisor;
+                    slashPosition.X += (knightSize.X - slashEffect.Width) / 2 - knightSize.X / KnightConstants.DownSlashEffectXDivisor;
+                    slashPosition.Y += knightSize.Y - knightSize.Y / KnightConstants.DownSlashEffectYDivisor;
                     break;
             }
             slashEffect.SetPosition(slashPosition);
@@ -115,7 +115,7 @@ namespace HollowKnight.Player
             pulsePosition.X += facing == Direction.Right
                 ? 0
                 : -castPulseEffect.Width + knightSize.X;
-            pulsePosition.Y += (knightSize.Y - castPulseEffect.Height) / GameConstants.CastPulseYDivisor;
+            pulsePosition.Y += (knightSize.Y - castPulseEffect.Height) / KnightConstants.CastPulseYDivisor;
             castPulseEffect.SetPosition(pulsePosition);
             castPulseEffect.Update(gameTime);
         }
@@ -150,7 +150,7 @@ namespace HollowKnight.Player
         }
 
         public double GetCooldownRemaining() =>
-            IsAttackOnCooldown ? System.Math.Max(0, GameConstants.KnightAttackCooldown - attackCooldownTimer) : 0;
+            IsAttackOnCooldown ? System.Math.Max(0, KnightConstants.KnightAttackCooldown - attackCooldownTimer) : 0;
 
         public double GetCastCooldownRemaining() =>
             IsCastOnCooldown ? System.Math.Max(0, castCooldown - castCooldownTimer) : 0;

@@ -9,7 +9,7 @@ namespace HollowKnight.Player
         public Vector2 Velocity;
         public bool IsGrounded { get; private set; }
 
-        private float knockbackTimer = GameConstants.KnightKnockbackTimer;
+        private float knockbackTimer = KnightConstants.KnightKnockbackTimer;
 
 
         public KnightPhysics()
@@ -20,7 +20,7 @@ namespace HollowKnight.Player
 
         public void Update(float dt)
         {
-            Velocity.Y += GameConstants.KnightGravity * dt;
+            Velocity.Y += KnightConstants.KnightGravity * dt;
 
             if(knockbackTimer > 0f)
             {
@@ -35,19 +35,19 @@ namespace HollowKnight.Player
 
         public void MoveRight()
         {
-            Velocity.X = GameConstants.KnightMoveSpeed;
+            Velocity.X = KnightConstants.KnightMoveSpeed;
         }
 
         public void MoveLeft()
         {
-            Velocity.X = -GameConstants.KnightMoveSpeed;
+            Velocity.X = -KnightConstants.KnightMoveSpeed;
         }
 
         public bool Jump()
         {
             if (IsGrounded)
             {
-                Velocity.Y = GameConstants.KnightJumpSpeed;
+                Velocity.Y = KnightConstants.KnightJumpSpeed;
                 IsGrounded = false;
                 return true;
             }
@@ -90,37 +90,37 @@ namespace HollowKnight.Player
 
         public void ApplyCastKnockback(Direction facing)
         {
-            knockbackTimer = (float)GameConstants.KnightCastPulseDuration;
+            knockbackTimer = (float)KnightConstants.KnightCastPulseDuration;
             Velocity.X = facing == Direction.Right
-                ? -GameConstants.KnightCastKnockbackSpeed
-                : GameConstants.KnightCastKnockbackSpeed;
+                ? -KnightConstants.KnightCastKnockbackSpeed
+                : KnightConstants.KnightCastKnockbackSpeed;
         }
 
         public void ApplyDashVelocity(Direction direction)
         {
             Velocity.X = (direction == Direction.Right)
-            ? GameConstants.KnightDashSpeed
-            : -GameConstants.KnightDashSpeed;
+            ? KnightConstants.KnightDashSpeed
+            : -KnightConstants.KnightDashSpeed;
         }
 
         public void ApplyKnockback(CollisionSide side)
         {
-            knockbackTimer = GameConstants.KnightKnockbackDuration;
+            knockbackTimer = KnightConstants.KnightKnockbackDuration;
             switch (side)
             {
                 case CollisionSide.Left:
-                    Velocity.X = -GameConstants.KnightKnockbackSpeed;
-                    Velocity.Y = GameConstants.KnightKnockbackUpwards;
+                    Velocity.X = -KnightConstants.KnightKnockbackSpeed;
+                    Velocity.Y = KnightConstants.KnightKnockbackUpwards;
                     break;
                 case CollisionSide.Right:
-                    Velocity.X = GameConstants.KnightKnockbackSpeed;
-                    Velocity.Y = GameConstants.KnightKnockbackUpwards;
+                    Velocity.X = KnightConstants.KnightKnockbackSpeed;
+                    Velocity.Y = KnightConstants.KnightKnockbackUpwards;
                     break;
                 case CollisionSide.Top:
-                    Velocity.Y = GameConstants.KnightKnockbackUpwards;
+                    Velocity.Y = KnightConstants.KnightKnockbackUpwards;
                     break;
                 case CollisionSide.Bottom:
-                    Velocity.Y = -GameConstants.KnightKnockbackUpwards;
+                    Velocity.Y = -KnightConstants.KnightKnockbackUpwards;
                     break;
             }
         }

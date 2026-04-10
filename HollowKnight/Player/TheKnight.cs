@@ -276,10 +276,10 @@ namespace HollowKnight.Player
         // --- Spells ---
         public void CastSpell()
         {
-            if (health.Soul < 36) { Console.WriteLine("Not enough soul to cast spell"); return; }
+            if (health.Soul < KnightConstants.KnightSpellCastSoulCost) { Console.WriteLine("Not enough soul to cast spell"); return; }
             if (!combat.TryStartCastPulse(position)) return;
             sprites[KnightSpriteType.SpiritCast].Reset();
-            health.ConsumeSoul(36);
+            health.ConsumeSoul(KnightConstants.KnightSpellCastSoulCost);
             Console.WriteLine("Casting spell! Remaining soul: " + health.Soul);
             physics.ApplyCastKnockback(Facing);
             Projectiles?.Fire();

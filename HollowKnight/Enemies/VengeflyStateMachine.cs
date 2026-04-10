@@ -23,8 +23,8 @@ public class VengeflyStateMachine
         CurrentVengeFly = vengeFly;
     }
 
-    public float GetDetectionRadius() => GameConstants.VengeflyDetectionRadius;
-    public float GetChaseRadius() => GameConstants.VengeflyChaseRadius;
+    public float GetDetectionRadius() => EnemyConstants.VengeflyDetectionRadius;
+    public float GetChaseRadius() => EnemyConstants.VengeflyChaseRadius;
 
     public void ChangeHealth()
     {
@@ -44,8 +44,8 @@ public class VengeflyStateMachine
         float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
         Vector2 enemyCenter = CurrentVengeFly.GetBounds()[0].Center.ToVector2();
         float distanceFromKnight = Vector2.Distance(enemyCenter, CurrentVengeFly.knightPosition);
-        bool knightInDetectionRange = distanceFromKnight <= GameConstants.VengeflyDetectionRadius;
-        bool knightInChaseRange = distanceFromKnight <= GameConstants.VengeflyChaseRadius;
+        bool knightInDetectionRange = distanceFromKnight <= EnemyConstants.VengeflyDetectionRadius;
+        bool knightInChaseRange = distanceFromKnight <= EnemyConstants.VengeflyChaseRadius;
 
         // State transitions
         if (knightInDetectionRange && CurrentVengeFly.State == VengeflyState.Idle)
@@ -57,7 +57,7 @@ public class VengeflyStateMachine
         {
             
             _startleTimer += elapsedTime;
-            if (_startleTimer >= GameConstants.VengeflyStartleDuration)
+            if (_startleTimer >= EnemyConstants.VengeflyStartleDuration)
                 CurrentVengeFly.SetState(VengeflyState.Chase);
         }
         else if (CurrentVengeFly.State == VengeflyState.Chase && !knightInChaseRange)
@@ -69,7 +69,7 @@ public class VengeflyStateMachine
         // Movement
         if (CurrentVengeFly.State == VengeflyState.Idle)
         {
-            CurrentVengeFly.position.X += (_patrolDirection == Direction.Right ? GameConstants.VengeflyPatrolSpeed : -GameConstants.VengeflyPatrolSpeed) * elapsedTime;
+            CurrentVengeFly.position.X += (_patrolDirection == Direction.Right ? EnemyConstants.VengeflyPatrolSpeed : -EnemyConstants.VengeflyPatrolSpeed) * elapsedTime;
             CurrentVengeFly.FacingDirection = _patrolDirection;
             float spriteWidth = CurrentVengeFly.Sprite.GetSize().X;
 
@@ -92,7 +92,7 @@ public class VengeflyStateMachine
 
             // Try A* if grid exists and both positions are within grid bounds
             bool useAStar = false;
-            if (_grid != null && _pathUpdateTimer >= GameConstants.VengeflyPathUpdateInterval || _currentPath.Count == 0)
+            if (_grid != null && _pathUpdateTimer >= EnemyConstants.VengeflyPathUpdateInterval || _currentPath.Count == 0)
             {
                 _pathUpdateTimer = 0f;
                 int gridPixelWidth = _grid.cols * _grid.cellSize;
@@ -131,7 +131,7 @@ public class VengeflyStateMachine
                 Vector2 targetWaypoint = _currentPath[0];
                 
                 // Use a dynamic threshold based on the enemy's size to ensure large enemies don't get stuck pushing into walls to reach a waypoint
-                float reachRadius = System.Math.Max(GameConstants.PathReachedThreshold, CurrentVengeFly.Bounds.Width / GameConstants.VengeflyWaypointReachDivisor);
+                float reachRadius = System.Math.Max(GameConstants.PathReachedThreshold, CurrentVengeFly.Bounds.Width / EnemyConstants.VengeflyWaypointReachDivisor);
                 
                 if (Vector2.Distance(enemyCenter, targetWaypoint) < reachRadius)
                 {
@@ -143,7 +143,7 @@ public class VengeflyStateMachine
                 if (dir != Vector2.Zero)
                 {
                     dir.Normalize();
-                    CurrentVengeFly.position += dir * GameConstants.VengeflyChaseSpeed * elapsedTime;
+                    CurrentVengeFly.position += dir * EnemyConstants.VengeflyChaseSpeed * elapsedTime;
                     if (dir.X > 0) CurrentVengeFly.FacingDirection = Direction.Right;
                     else if (dir.X < 0) CurrentVengeFly.FacingDirection = Direction.Left;
                 }
@@ -155,7 +155,7 @@ public class VengeflyStateMachine
                 if (dir != Vector2.Zero)
                 {
                     dir.Normalize();
-                    CurrentVengeFly.position += dir * GameConstants.VengeflyChaseSpeed * elapsedTime;
+                    CurrentVengeFly.position += dir * EnemyConstants.VengeflyChaseSpeed * elapsedTime;
                     if (dir.X > 0) CurrentVengeFly.FacingDirection = Direction.Right;
                     else if (dir.X < 0) CurrentVengeFly.FacingDirection = Direction.Left;
                 }
