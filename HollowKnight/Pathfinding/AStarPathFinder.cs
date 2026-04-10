@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 
 namespace HollowKnight.Pathfinding
@@ -46,7 +47,7 @@ namespace HollowKnight.Pathfinding
             openList.Add(startNode);
             nodeMap[startX + startY * grid.cols] = startNode;
 
-            int maxIterations = 1000; // Failsafe to prevent infinite loops / lag
+            int maxIterations = GameConstants.AStarMaxIterations; // Failsafe to prevent infinite loops / lag
             int currentIteration = 0;
 
             Node current = null;
@@ -101,8 +102,8 @@ namespace HollowKnight.Pathfinding
                     if (closedList.Contains(neighborKey)) continue;
 
                     // 1.4 for diagonal, 1.0 for straight using pythagorean theorem.
-                    //using 10 and 14 since it is easier for integer math
-                    int moveCost = (dx[i] != 0 && dy[i] != 0) ? 14 : 10; 
+                    // Using integers (14/10) since it is easier for integer math
+                    int moveCost = (dx[i] != 0 && dy[i] != 0) ? GameConstants.AStarDiagonalMoveCost : GameConstants.AStarStraightMoveCost;
                     int newCostToNeighbor = current.G + moveCost;
 
                     nodeMap.TryGetValue(neighborKey, out Node neighborNode);
@@ -164,10 +165,10 @@ namespace HollowKnight.Pathfinding
             int dx = Math.Abs(x1 - x2);
             int dy = Math.Abs(y1 - y2);
 
-            // Uses integer approximation of diagonal cost (14) vs straight cost (10).
-            // Formula: 10 * (dx + dy) + (14 - 20) * min(dx, dy)
-            // Simplified: 10 * max + 4 * min
-            return 10 * Math.Max(dx, dy) + 4 * Math.Min(dx, dy);
+            // Uses integer approximation of diagonal cost vs straight cost.
+            // Formula: StraightCost * max + (DiagonalCost - StraightCost) * min
+            int diagCorrection = GameConstants.AStarDiagonalMoveCost - GameConstants.AStarStraightMoveCost;
+            return GameConstants.AStarStraightMoveCost * Math.Max(dx, dy) + diagCorrection * Math.Min(dx, dy);
         }
         
     }

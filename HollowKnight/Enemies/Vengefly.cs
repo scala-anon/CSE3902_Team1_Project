@@ -33,13 +33,8 @@ public class Vengefly : IEnemy
 
     private bool _isDamaged;
     private double _damagedTimer;
-    private const double DamagedDuration = GameConstants.EnemyDamagedDuration;
 
     private Vector2 _knockbackVelocity;
-    private const float KnockbackSpeed = GameConstants.EnemyKnockbackSpeed;
-    private const float KnockbackDecay = GameConstants.EnemyKnockbackDecay;
-    private const float DeathGravity = GameConstants.EnemyDeathGravity;
-    private const float ScreenFloor = GameConstants.ScreenHeight;
     public bool IsGrounded { get; private set; } = false;
 
     public Vector2 knightPosition = new Vector2(-9999, -9999);
@@ -118,14 +113,14 @@ public class Vengefly : IEnemy
         {
             if (!IsGrounded)
             {
-                _knockbackVelocity.Y += DeathGravity * dt;
-                _knockbackVelocity.X *= (1f - KnockbackDecay * dt);
-                if (Math.Abs(_knockbackVelocity.X) < 1f) _knockbackVelocity.X = 0;
+                _knockbackVelocity.Y += GameConstants.EnemyDeathGravity * dt;
+                _knockbackVelocity.X *= (1f - GameConstants.EnemyKnockbackDecay * dt);
+                if (Math.Abs(_knockbackVelocity.X) < GameConstants.EnemyKnockbackStopThreshold) _knockbackVelocity.X = 0;
 
                 position += _knockbackVelocity * dt;
 
                 float spriteHeight = Sprite.GetSize().Y;
-                if (position.Y + spriteHeight >= ScreenFloor)
+                if (position.Y + spriteHeight >= GameConstants.ScreenHeight)
                 {
                     position.Y = ScreenFloor - spriteHeight;
                     _knockbackVelocity = Vector2.Zero;
@@ -142,7 +137,7 @@ public class Vengefly : IEnemy
         if (_isDamaged)
         {
             _damagedTimer += dt;
-            if (_damagedTimer >= DamagedDuration)
+            if (_damagedTimer >= GameConstants.EnemyDamagedDuration)
             {
                 _isDamaged = false;
                 _damagedTimer = 0;
@@ -152,8 +147,8 @@ public class Vengefly : IEnemy
         if (_knockbackVelocity != Vector2.Zero)
         {
             position += _knockbackVelocity * dt;
-            _knockbackVelocity *= (1f - KnockbackDecay * dt);
-            if (_knockbackVelocity.Length() < 1f)
+            _knockbackVelocity *= (1f - GameConstants.EnemyKnockbackDecay * dt);
+            if (_knockbackVelocity.Length() < GameConstants.EnemyKnockbackStopThreshold)
                 _knockbackVelocity = Vector2.Zero;
         }
 

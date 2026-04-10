@@ -32,6 +32,7 @@ namespace HollowKnight.Shared
         // Enemy — Shared
         public const float EnemyKnockbackSpeed = 950f;
         public const float EnemyKnockbackDecay = 8f;
+        public const float EnemyKnockbackStopThreshold = 1f;
         public const float EnemyDeathGravity = 600f;
         public const double EnemyDamagedDuration = 0.4;
         public const int EnemyHurtboxGrow = 6;
@@ -50,9 +51,17 @@ namespace HollowKnight.Shared
         public const float VengeflyPathUpdateInterval = 0.3f;
         public const float VengeflyKnockbackUpComponent = -150f;
         public const float VengeflyVerticalKnockbackSpeed = 250f;
+        public const float VengeflyWaypointReachDivisor = 1.5f;
 
         // Navigation
         public const int NavGridCellSize = 12;
+        public const int NavGridDefaultCellSize = 32;
+        public const float NavGridOverlayOpacity = 0.2f;
         public const float PathReachedThreshold = 10f;
+
+        // A* Pathfinding
+        public const int AStarMaxIterations = 1000;
+        public const int AStarStraightMoveCost = 10;
+        public const int AStarDiagonalMoveCost = 14;
     }
 }
