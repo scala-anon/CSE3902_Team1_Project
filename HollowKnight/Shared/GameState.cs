@@ -3,6 +3,11 @@ namespace HollowKnight.Shared
     public enum GameState
     {
         Playing,
-        Paused
+        Paused,
+        Inventory,
+        GameOver,
+        Win
     }
+
+    
 }

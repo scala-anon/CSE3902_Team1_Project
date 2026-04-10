@@ -12,6 +12,39 @@
 
 
 #---------------------------------- Content ---------------------------------#
+#begin Audio/hero_damage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/hero_damage.wav
+
+#begin Audio/hero_dash.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/hero_dash.wav
+
+#begin Audio/hero_fireball.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/hero_fireball.wav
+
+#begin Audio/hero_jump.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/hero_jump.wav
+
+#begin Audio/hero_run_footsteps_stone.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/hero_run_footsteps_stone.wav
+
+
+
+
 
 # TODO: Add your sprite sheets here using the format below:
 # #begin sprites/your_sprite_sheet.png
@@ -98,6 +131,19 @@
 /processorParam:TextureFormat=Color
 /build:sprites/platformSpriteSheet2.png
 
+#begin sprites/backgroundSpriteSheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:sprites/backgroundSpriteSheet.png
+
+
 #begin sprites/knight_movement-atlas.xml
 /copy:sprites/knight_movement-atlas.xml
 
@@ -118,6 +164,10 @@
 
 #begin sprites/platform-atlas.xml
 /copy:sprites/platform-atlas.xml
+
+#begin sprites/background-atlas.xml
+/copy:sprites/background-atlas.xml
+
 
 #begin fonts/Credits.spritefont
 /importer:FontDescriptionImporter

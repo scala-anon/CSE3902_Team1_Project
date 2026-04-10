@@ -188,6 +188,8 @@ namespace HollowKnight.Player
             physics.ApplyKnockback(side);
         }
 
+        public int GetHealth() => health.Health;
+
         public void StartHeal() => health.StartHeal(combat.IsAttacking, physics.IsGrounded);
         public void CancelHeal() => health.CancelHeal();
 

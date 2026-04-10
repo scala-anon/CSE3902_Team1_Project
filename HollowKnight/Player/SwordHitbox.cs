@@ -31,20 +31,20 @@ namespace HollowKnight.Player
       switch (attackType)
       {
         case KnightSpriteType.SideSlash:
-          width = 160; //prev. 60
-          height = 110; //prev 90
+          width = GameConstants.SideSlashWidth;
+          height = GameConstants.SideSlashHeight;
           xOffset = facing == Direction.Right ? knightBounds.Width : -width;
           yOffset = (knightBounds.Height-height)/2;
           break;
         case KnightSpriteType.UpSlash:
-          width = 90; //prev 75
-          height = 120; //prev 75
+          width = GameConstants.UpSlashWidth;
+          height = GameConstants.UpSlashHeight;
           xOffset = (knightBounds.Width - width) / 2;
           yOffset = -height;
           break;
         case KnightSpriteType.DownSlash:
-          width = 90; //prev75
-          height = 120; //prev 75
+          width = GameConstants.DownSlashWidth;
+          height = GameConstants.DownSlashHeight;
           xOffset = (knightBounds.Width - width) / 2;
           yOffset = knightBounds.Height;
           break;

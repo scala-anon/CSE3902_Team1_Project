@@ -91,8 +91,8 @@ public class Vengefly : IEnemy
         _damagedTimer = 0;
         switch (side)
         {
-            case CollisionSide.Left: _knockbackVelocity = new Vector2(-KnockbackSpeed, GameConstants.VengeflyKnockbackUpComponent); break;
-            case CollisionSide.Right: _knockbackVelocity = new Vector2(KnockbackSpeed, GameConstants.VengeflyKnockbackUpComponent); break;
+            case CollisionSide.Left: _knockbackVelocity = new Vector2(-GameConstants.EnemyKnockbackSpeed, GameConstants.VengeflyKnockbackUpComponent); break;
+            case CollisionSide.Right: _knockbackVelocity = new Vector2(GameConstants.EnemyKnockbackSpeed, GameConstants.VengeflyKnockbackUpComponent); break;
             case CollisionSide.Top: _knockbackVelocity = new Vector2(0, -GameConstants.VengeflyVerticalKnockbackSpeed); break;
             case CollisionSide.Bottom: _knockbackVelocity = new Vector2(0, GameConstants.VengeflyVerticalKnockbackSpeed); break;
         }
@@ -122,7 +122,7 @@ public class Vengefly : IEnemy
                 float spriteHeight = Sprite.GetSize().Y;
                 if (position.Y + spriteHeight >= GameConstants.ScreenHeight)
                 {
-                    position.Y = ScreenFloor - spriteHeight;
+                    position.Y = GameConstants.ScreenHeight - spriteHeight;
                     _knockbackVelocity = Vector2.Zero;
                     IsGrounded = true;
                     SetState(VengeflyState.DeathLand);

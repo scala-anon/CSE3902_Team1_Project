@@ -1,6 +1,7 @@
 using HollowKnight.Enemies;
 using HollowKnight.Projectiles;
 using HollowKnight.Player;
+using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -38,7 +39,6 @@ namespace HollowKnight.Collision
                 {
                     if (ProjectileHitsCollidable(p, blocks[i]))
                     {
-                        Console.WriteLine("Projective Collided with Object");
                         p.Alive = false;
                     }
                 }
@@ -70,6 +70,16 @@ namespace HollowKnight.Collision
             pm.CullDead();
         }
 
+        private static (int left, int right, int top, int bottom) CalculateOverlaps(Rectangle a, Rectangle b)
+        {
+            return (
+                a.Right  - b.Left,
+                b.Right  - a.Left,
+                a.Bottom - b.Top,
+                b.Bottom - a.Top
+            );
+        }
+
         public static void ResolveEnemyBlockCollision(Vengefly vengefly, ICollidable block)
         {
             if (vengefly == null || block == null) return;
@@ -80,10 +90,7 @@ namespace HollowKnight.Collision
 
             if (!enemyBounds.Intersects(blockBounds)) return;
 
-            int overlapLeft   = enemyBounds.Right  - blockBounds.Left;
-            int overlapRight  = blockBounds.Right  - enemyBounds.Left;
-            int overlapTop    = enemyBounds.Bottom - blockBounds.Top;
-            int overlapBottom = blockBounds.Bottom - enemyBounds.Top;
+            var (overlapLeft, overlapRight, overlapTop, overlapBottom) = CalculateOverlaps(enemyBounds, blockBounds);
 
             if (overlapLeft <= 0 || overlapRight <= 0 || overlapTop <= 0 || overlapBottom <= 0) return;
 
@@ -120,15 +127,11 @@ namespace HollowKnight.Collision
             Rectangle playerBounds = player.Bounds;
             Rectangle blockBounds = block.Bounds;
 
-            // Use a 1px downward extension so "resting on surface" (touching) is detected
-            Rectangle probe = new Rectangle(playerBounds.X, playerBounds.Y, playerBounds.Width, playerBounds.Height + 1);
+            Rectangle probe = new Rectangle(playerBounds.X, playerBounds.Y, playerBounds.Width, playerBounds.Height + GameConstants.GroundProbeExtension);
             if (!probe.Intersects(blockBounds))
                 return;
 
-            int overlapLeft = playerBounds.Right - blockBounds.Left;
-            int overlapRight = blockBounds.Right - playerBounds.Left;
-            int overlapTop = playerBounds.Bottom - blockBounds.Top;
-            int overlapBottom = blockBounds.Bottom - playerBounds.Top;
+            var (overlapLeft, overlapRight, overlapTop, overlapBottom) = CalculateOverlaps(playerBounds, blockBounds);
 
             // Skip if no actual overlap on original bounds (only the probe touched)
             // This means the knight is resting on top — just re-confirm grounding

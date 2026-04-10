@@ -53,6 +53,33 @@
     <Location>2400 700</Location>
 </Item>
 
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Bench</ObjectName>
+    <Location>50 550</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Background_1</ObjectName>
+    <Location>0 0</Location>
+</Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Background_2</ObjectName>
+    <Location>400 300</Location>
+</Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Plant1_Idle</ObjectName>
+    <Location>325 550</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Plant2_Idle</ObjectName>
+    <Location>205 550</Location>
+</Item>
 <!-- Second gap -->
 
 <Item>
@@ -159,13 +186,13 @@
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Spike_Floor_1</ObjectName>
-    <Location>2430 690</Location>
+    <Location>2430 600</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Spike_Floor_2</ObjectName>
-    <Location>2570 690</Location>
+    <Location>2570 600</Location>
 </Item>
 
 <!-- ============ Mid-level blocks — higher row for bonus area feel ============ -->

@@ -32,12 +32,19 @@ namespace HollowKnight.Levels
                 ["Tutorial_Platform_8"]  = pos => new TutorialPlatform(8, pos, 105, 62),
                 ["Tutorial_Platform_9"]  = pos => new TutorialPlatform(9, pos, 110, 62),
                 ["Tutorial_Platform_10"] = pos => new TutorialPlatform(10, pos, 174, 70),
+                ["Background_1"]  = pos => new Background(1, pos),
+                ["Background_2"] = pos => new Background(2, pos),
+                // <Region name="Path_1" x="265" y="223" width="1060" height="83" />
                 ["Path_1"]               = pos => new Path(1, pos, 1050, 32, hitOffsetY: 10),
                 ["Path_2"]               = pos => new Path(2, pos, 940, 32, hitOffsetY: 40),
                 ["Path_ledge"]           = pos => new PathLedge(pos),
                 ["Spike_Floor_1"]        = pos => new Spike(SpikeVariant.Floor1, pos),
                 ["Spike_Floor_2"]        = pos => new Spike(SpikeVariant.Floor2, pos),
                 ["Spike_Ceiling"]        = pos => new Spike(SpikeVariant.Ceiling, pos),
+                ["Bench"]               = pos => new Bench(pos),
+                ["Plant1_Idle"]        = pos => new Grass(1,pos, 100, 5, hitOffsetY: 0),
+                ["Plant2_Idle"]        = pos => new Grass(2,pos, 100, 5, hitOffsetY: 0)
+                
             };
 
             _enemyMap = new Dictionary<string, Func<Vector2, IEnemy>>
