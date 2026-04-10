@@ -69,26 +69,18 @@ public partial class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
-        // Always process input so pause/unpause/quit work in any state
-        UpdateControllers(gameTime);
-
         switch (_gameState)
         {
             case GameState.Playing:
+                // Collisions first so IsGrounded is current when input checks it
                 UpdateCollisions();
+                UpdateControllers(gameTime);
                 UpdatePlayingLogic(gameTime);
                 break;
 
-            case GameState.Paused:
-                break;
-
-            case GameState.Inventory:
-                break;
-
-            case GameState.GameOver:
-                break;
-
-            case GameState.Win:
+            default:
+                // Non-playing states still need input for pause/unpause/quit
+                UpdateControllers(gameTime);
                 break;
         }
 
