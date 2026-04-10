@@ -115,7 +115,7 @@ namespace HollowKnight.Player
         public Rectangle[] GetBounds()
         {
             Vector2 size = currentSprite.GetSize();
-            hitBoxes[0] = new Rectangle((int)position.X + 10, (int)position.Y + 20, (int)size.X - 20 , (int)size.Y - 10);
+            hitBoxes[0] = new Rectangle((int)position.X + CollisionConstants.KnightHitboxXOffset, (int)position.Y + CollisionConstants.KnightHitboxYOffset, (int)size.X - CollisionConstants.KnightHitboxWidthShrink, (int)size.Y - CollisionConstants.KnightHitboxHeightShrink);
             return hitBoxes;
         }
 

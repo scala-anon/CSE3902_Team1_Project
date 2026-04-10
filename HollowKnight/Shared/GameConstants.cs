@@ -28,6 +28,11 @@ namespace HollowKnight.Shared
         public const float KnightDashDuration = 0.5f;
         public const float KnightDashCooldown = 0.65f;
 
+        // Knight — Projectile
+        public const float KnightProjectileInterval = 2f;
+        public const float KnightProjectileSpeed = 400f;
+        public const float KnightProjectileSpawnOffset = 12f;
+
         // Knight — Health
         public const int KnightStartHealth = 5;
         public const int KnightMaxHealth = 9;

@@ -17,9 +17,6 @@ namespace HollowKnight.Player
     private bool dashJustEnded;
     private bool isCurrentlyAirborne;
 
-    private readonly float dashSpeed = GameConstants.KnightDashSpeed;
-    private readonly double dashDuration = GameConstants.KnightDashDuration;
-    private readonly double dashCooldown = GameConstants.KnightDashCooldown;
 
 
     public void Update(double dt)
@@ -28,7 +25,7 @@ namespace HollowKnight.Player
       if (IsDashing)
       {
         dashTimer += dt;
-        if(dashTimer >= dashDuration)
+        if(dashTimer >= GameConstants.KnightDashDuration)
         {
           IsDashing = false;
           dashJustEnded = true;
@@ -38,7 +35,7 @@ namespace HollowKnight.Player
       else if(IsOnDashCooldown)
       {
         dashCooldownTimer += dt;
-        if(dashCooldownTimer >= dashCooldown)
+        if(dashCooldownTimer >= GameConstants.KnightDashCooldown)
         {
           IsOnDashCooldown = false;
           dashCooldownTimer = 0;
@@ -94,8 +91,8 @@ namespace HollowKnight.Player
     }
 
     public Direction GetDashDirection() => dashDirection;
-    public float GetDashSpeed() => dashSpeed;
+    public float GetDashSpeed() => GameConstants.KnightDashSpeed;
     public bool DashEnded() => dashJustEnded;
-    public double GetDashCooldownRemaining() => IsOnDashCooldown ? Math.Max(0, dashCooldown - dashCooldownTimer) : 0;
+    public double GetDashCooldownRemaining() => IsOnDashCooldown ? Math.Max(0, GameConstants.KnightDashCooldown - dashCooldownTimer) : 0;
   }
 }

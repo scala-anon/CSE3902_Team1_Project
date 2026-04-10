@@ -12,19 +12,16 @@ namespace HollowKnight.Player
         public bool IsHealing { get; private set; }
 
         private double damagedTimer;
-        private readonly double invincibilityDuration = GameConstants.KnightInvincibilityDuration;
 
         private bool healApplied;
         private double healTimer;
-        private readonly double healPrepDuration = GameConstants.KnightHealPrepDuration;
-        private readonly double healPostDuration = GameConstants.KnightHealPostDuration;
 
         public void Update(GameTime gameTime)
         {
             if (IsDamaged)
             {
                 damagedTimer += gameTime.ElapsedGameTime.TotalSeconds;
-                if (damagedTimer >= invincibilityDuration)
+                if (damagedTimer >= GameConstants.KnightInvincibilityDuration)
                 {
                     IsDamaged = false;
                     damagedTimer = 0;
@@ -78,7 +75,7 @@ namespace HollowKnight.Player
 
             healTimer += gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (healTimer < healPrepDuration)
+            if (healTimer < GameConstants.KnightHealPrepDuration)
                 return KnightSpriteType.HealPrep;
 
             if (!healApplied)
@@ -95,7 +92,7 @@ namespace HollowKnight.Player
                 }
             }
 
-            if (healTimer < healPrepDuration + healPostDuration)
+            if (healTimer < GameConstants.KnightHealPrepDuration + GameConstants.KnightHealPostDuration)
                 return KnightSpriteType.HealPost;
 
             IsHealing = false;
@@ -105,6 +102,6 @@ namespace HollowKnight.Player
         }
 
         public double GetInvincibilityCooldownRemaining() =>
-            IsDamaged ? Math.Max(0, invincibilityDuration - damagedTimer) : 0;
+            IsDamaged ? Math.Max(0, GameConstants.KnightInvincibilityDuration - damagedTimer) : 0;
     }
 }

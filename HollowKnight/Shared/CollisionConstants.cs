@@ -18,6 +18,12 @@ namespace HollowKnight.Shared
         public static readonly Color DebugColorMidpoint = Color.Magenta;
         public static readonly Color DebugColorSword = Color.Cyan;
 
+        // Knight Hitbox Offsets (trimming applied in GetBounds)
+        public const int KnightHitboxXOffset = 10;
+        public const int KnightHitboxYOffset = 20;
+        public const int KnightHitboxWidthShrink = 20;
+        public const int KnightHitboxHeightShrink = 10;
+
         // Knight Hurtbox
         public const int KnightHurtboxShrink = 6;
 
