@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas>
+    <Texture>sprites/MantisLordSpriteSheet</Texture>
+    <Regions>
+
+        <Region name="Throne_Idle" x="3" y="22" width="105" height="333" />
+
+        <Region name="Throne_Gesture_0" x="144" y="22" width="119" height="397" />
+        <Region name="Throne_Gesture_1" x="267" y="22" width="119" height="397" />
+        <Region name="Throne_Gesture_2" x="390" y="22" width="119" height="397" />
+        <Region name="Throne_Gesture_3" x="513" y="22" width="119" height="397" />
+        <Region name="Throne_Gesture_4" x="636" y="22" width="119" height="397" />
+        <Region name="Throne_Gesture_5" x="791" y="22" width="108" height="397" />
+        <Region name="Throne_Gesture_6" x="903" y="22" width="108" height="397" />
+        <Region name="Throne_Gesture_7" x="1015" y="22" width="108" height="397" />
+
+        <Region name="Throne_Stand_0" x="1159" y="22" width="101" height="471" />
+        <Region name="Throne_Stand_1" x="1264" y="22" width="101" height="471" />
+        <Region name="Throne_Stand_2" x="1369" y="22" width="101" height="471" />
+
+        <Region name="Look_0" x="2269" y="22" width="101" height="477" />
+        <Region name="Look_1" x="2374" y="22" width="101" height="477" />
+
+        <Region name="Throne_Leave_0" x="3" y="522" width="213" height="563" />
+        <Region name="Throne_Leave_1" x="220" y="522" width="213" height="563" />
+        <Region name="Throne_Leave_2" x="437" y="522" width="213" height="563" />
+        <Region name="Throne_Leave_3" x="654" y="522" width="213" height="563" />
+
+        <Region name="Throne_Wounded_0" x="903" y="522" width="124" height="579" />
+        <Region name="Throne_Wounded_1" x="1031" y="522" width="124" height="579" />
+        <Region name="Throne_Wounded_2" x="1159" y="522" width="124" height="579" />
+        <Region name="Throne_Wounded_3" x="1287" y="522" width="124" height="579" />
+        <Region name="Throne_Wounded_4" x="1415" y="522" width="124" height="579" />
+        <Region name="Throne_Wounded_5" x="1543" y="522" width="124" height="579" />
+        <Region name="Throne_Wounded_6" x="1671" y="522" width="124" height="579" />
+
+        <Region name="Throne_Bow_0" x="1831" y="522" width="115" height="477" />
+        <Region name="Throne_Bow_1" x="1950" y="522" width="115" height="477" />
+        <Region name="Throne_Bow_2" x="2069" y="522" width="115" height="477" />
+        <Region name="Throne_Bow_3" x="2188" y="522" width="115" height="477" />
+        <Region name="Throne_Bow_4" x="2307" y="522" width="115" height="477" />
+        <Region name="Throne_Bow_5" x="2426" y="522" width="115" height="477" />
+        <Region name="Throne_Bow_6" x="2545" y="522" width="115" height="477" />
+        <Region name="Throne_Bow_7" x="2664" y="522" width="115" height="477" />
+        <Region name="Throne_Bow_8" x="2783" y="522" width="115" height="477" />
+        <Region name="Throne_Bow_9" x="2902" y="522" width="115" height="477" />
+
+        <Region name="Wall_Arrive_0" x="3" y="1124" width="423" height="790" />
+        <Region name="Wall_Arrive_1" x="430" y="1124" width="423" height="790" />
+        <Region name="Wall_Arrive_2" x="857" y="1124" width="423" height="790" />
+        <Region name="Wall_Arrive_3" x="1284" y="1124" width="423" height="790" />
+        <Region name="Wall_Arrive_4" x="1711" y="1124" width="423" height="790" />
+        <Region name="Wall_Arrive_5" x="2138" y="1124" width="423" height="790" />
+        <Region name="Wall_Arrive_6" x="2565" y="1124" width="423" height="790" />
+        <Region name="Wall_Arrive_7" x="3" y="1918" width="423" height="790" />
+        <Region name="Wall_Arrive_8" x="430" y="1918" width="423" height="790" />
+
+        <Region name="Wall_Ready_0" x="3" y="2731" width="469" height="591" />
+        <Region name="Wall_Ready_1" x="476" y="2731" width="469" height="591" />
+        <Region name="Wall_Ready_2" x="949" y="2731" width="469" height="591" />
+
+        <Region name="Throw_0" x="3" y="3345" width="614" height="570" />
+        <Region name="Throw_1" x="621" y="3345" width="614" height="570" />
+        <Region name="Throw_2" x="1239" y="3345" width="614" height="570" />
+        <Region name="Throw_3" x="1857" y="3345" width="614" height="570" />
+
+        <Region name="Air_Projectile_0" x="3" y="3938" width="298" height="98" />
+        <Region name="Air_Projectile_1" x="305" y="3938" width="298" height="98" />
+        <Region name="Air_Projectile_2" x="607" y="3938" width="298" height="98" />
+
+        <Region name="Wall_Leave_0" x="3" y="4059" width="233" height="507" />
+        <Region name="Wall_Leave_1" x="240" y="4059" width="233" height="507" />
+        <Region name="Wall_Leave_2" x="509" y="4059" width="616" height="484" />
+        <Region name="Wall_Leave_3" x="1129" y="4059" width="616" height="484" />
+        <Region name="Wall_Leave_4" x="1749" y="4059" width="616" height="484" />
+
+        <Region name="Dash_Arrive_0" x="3" y="4589" width="516" height="556" />
+        <Region name="Dash_Arrive_1" x="523" y="4589" width="516" height="556" />
+        <Region name="Dash_Arrive_2" x="1043" y="4589" width="516" height="556" />
+        <Region name="Dash_Arrive_3" x="1563" y="4589" width="516" height="556" />
+        <Region name="Dash_Arrive_4" x="2083" y="4589" width="516" height="556" />
+        <Region name="Dash_Arrive_5" x="2603" y="4589" width="516" height="556" />
+
+        <Region name="Dash_Anticipate_0" x="3" y="5168" width="530" height="297" />
+        <Region name="Dash_Anticipate_1" x="537" y="5168" width="530" height="297" />
+        <Region name="Dash_Anticipate_2" x="1071" y="5168" width="530" height="297" />
+        <Region name="Dash_Anticipate_3" x="1605" y="5168" width="530" height="297" />
+
+        <Region name="Dash_0" x="3" y="5488" width="583" height="187" />
+        <Region name="Dash_1" x="590" y="5488" width="583" height="187" />
+        <Region name="Dash_2" x="1177" y="5488" width="583" height="187" />
+
+        <Region name="Dash_Recover_0" x="3" y="5698" width="526" height="256" />
+        <Region name="Dash_Recover_1" x="533" y="5698" width="526" height="256" />
+        <Region name="Dash_Recover_2" x="1063" y="5698" width="526" height="256" />
+        <Region name="Dash_Recover_3" x="1593" y="5698" width="526" height="256" />
+        <Region name="Dash_Recover_4" x="2123" y="5698" width="526" height="256" />
+        <Region name="Dash_Recover_5" x="3" y="5958" width="526" height="256" />
+        <Region name="Dash_Recover_6" x="533" y="5958" width="526" height="256" />
+        <Region name="Dash_Recover_7" x="1063" y="5958" width="526" height="256" />
+
+        <Region name="Dash_Leave_0" x="3" y="6237" width="597" height="556" />
+        <Region name="Dash_Leave_1" x="604" y="6237" width="597" height="556" />
+        <Region name="Dash_Leave_2" x="1205" y="6237" width="597" height="556" />
+        <Region name="Dash_Leave_3" x="1806" y="6237" width="597" height="556" />
+
+        <Region name="DStab_Arrive_0" x="3" y="6816" width="765" height="642" />
+        <Region name="DStab_Arrive_1" x="772" y="6816" width="765" height="642" />
+        <Region name="DStab_Arrive_2" x="1541" y="6816" width="765" height="642" />
+        <Region name="DStab_Arrive_3" x="2310" y="6816" width="765" height="642" />
+        <Region name="DStab_Arrive_4" x="3" y="7462" width="765" height="642" />
+        <Region name="DStab_Arrive_5" x="772" y="7462" width="765" height="642" />
+        <Region name="DStab_Arrive_6" x="1541" y="7462" width="765" height="642" />
+        <Region name="DStab_Arrive_7" x="2310" y="7462" width="765" height="642" />
+        <Region name="DStab_Arrive_8" x="3" y="8108" width="765" height="642" />
+        <Region name="DStab_Arrive_9" x="772" y="8108" width="765" height="642" />
+        <Region name="DStab_Arrive_10" x="1541" y="8108" width="765" height="642" />
+
+        <Region name="DStab_0" x="3" y="8773" width="120" height="626" />
+        <Region name="DStab_1" x="127" y="8773" width="120" height="626" />
+
+        <Region name="DStab_Land_0" x="3" y="9422" width="481" height="522" />
+        <Region name="DStab_Land_1" x="488" y="9422" width="481" height="522" />
+        <Region name="DStab_Land_2" x="973" y="9422" width="481" height="522" />
+        <Region name="DStab_Land_3" x="1458" y="9422" width="481" height="522" />
+        <Region name="DStab_Land_4" x="1943" y="9422" width="481" height="522" />
+        <Region name="DStab_Land_5" x="2428" y="9422" width="481" height="522" />
+
+        <Region name="DStab_Leave_0" x="3" y="9967" width="553" height="371" />
+        <Region name="DStab_Leave_1" x="560" y="9967" width="553" height="371" />
+
+        <Region name="Death_0" x="3" y="10361" width="423" height="488" />
+        <Region name="Death_1" x="430" y="10361" width="423" height="488" />
+        <Region name="Death_2" x="857" y="10361" width="423" height="488" />
+        <Region name="Death_3" x="1284" y="10361" width="423" height="488" />
+        <Region name="Death_4" x="1711" y="10361" width="423" height="488" />
+
+        <Region name="Death_Leave_One_0" x="3" y="10872" width="366" height="345" />
+        <Region name="Death_Leave_One_1" x="373" y="10872" width="366" height="345" />
+
+        <Region name="Death_Leave_Two_0" x="775" y="10872" width="184" height="597" />
+        <Region name="Death_Leave_Two_1" x="963" y="10872" width="184" height="597" />
+        <Region name="Death_Leave_Two_2" x="1151" y="10872" width="184" height="597" />
+
+    </Regions>
+</TextureAtlas>

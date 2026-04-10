@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Level name="roomOne">
+
+
+<Item>
+    <ObjectType>Knight</ObjectType>
+    <ObjectName>Knight</ObjectName>
+    <Location>1500 100</Location>
+</Item>
+
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>MantisLord</ObjectName>
+    <Location>1800 600</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>0 2000</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Wall_0</ObjectName>
+    <Location>800 2000</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>1000 2000</Location>
+</Item>
+
+</Level>

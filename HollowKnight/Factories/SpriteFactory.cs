@@ -17,6 +17,7 @@ namespace HollowKnight.Factories
         private Texture2D tutorialPlatformSpriteSheet;
         private Texture2D spellsSpriteSheet;
         private Texture2D backgroundSpriteSheet;
+        private Texture2D mantisLordSpriteSheet;
 
         private SpriteFont defaultFont;
 
@@ -32,6 +33,9 @@ namespace HollowKnight.Factories
         private readonly Dictionary<string, Rectangle[]> plantAnimations;
 
         private readonly Dictionary<string, Rectangle> backgroundFrames;
+
+        private readonly Dictionary<string, Rectangle> mantisLordFrames;
+        private readonly Dictionary<string, Rectangle[]> mantisLordAnimations;
 
         private static SpriteFactory instance = new SpriteFactory();
 
@@ -52,6 +56,8 @@ namespace HollowKnight.Factories
             plantSingleFrames = new Dictionary<string, Rectangle>();
             plantAnimations = new Dictionary<string, Rectangle[]>();
             backgroundFrames = new Dictionary<string, Rectangle>();
+            mantisLordFrames = new Dictionary<string, Rectangle>();
+            mantisLordAnimations = new Dictionary<string, Rectangle[]>();
         }
 
         public void LoadAllTextures(ContentManager content)
@@ -65,19 +71,19 @@ namespace HollowKnight.Factories
             TextureAtlas platformAtlas = TextureAtlas.FromFile(content, "sprites/platform-atlas.xml");
             TextureAtlas tutorialPlatformAtlas = TextureAtlas.FromFile(content, "sprites/tutorial-platform-atlas.xml");
             TextureAtlas backgroundAtlas = TextureAtlas.FromFile(content, "sprites/background-atlas.xml");
+            TextureAtlas mantisLordAtlas = TextureAtlas.FromFile(content, "sprites/mantisLords-atlas.xml");
             enemySpriteSheet = enemyAtlas.Texture;
             platformSpriteSheet = platformAtlas.Texture;
             tutorialPlatformSpriteSheet = tutorialPlatformAtlas.Texture;
             spellsSpriteSheet = spiritAttacksAtlas.Texture;
             backgroundSpriteSheet = backgroundAtlas.Texture;
+            mantisLordSpriteSheet = mantisLordAtlas.Texture;
             // Knight movement frames
             knightSingleFrames.Add("Damaged", knightAtlas.GetRegion("Damaged").SourceRectangle);
             
             knightAnimations.Add("Idle", knightAtlas.GetAnimationFrames("Idle"));
             knightAnimations.Add("Walking", knightAtlas.GetAnimationFrames("Walking"));
             knightAnimations.Add("Jumping", knightAtlas.GetAnimationFrames("Jumping"));
-            //TODO: Add knight dash animation frames when we have them
-            //TODO: Refactor jump animation frames
 
             // Knight abilities frames
             knightAnimations.Add("UpSword", knightAttacksAtlas.GetAnimationFrames("UpSword"));
@@ -107,6 +113,11 @@ namespace HollowKnight.Factories
             platformFrames.Add("Bench", backgroundAtlas.GetRegion("Bench").SourceRectangle);
             backgroundFrames.Add("Background_1", backgroundAtlas.GetRegion("Background_1").SourceRectangle);
             backgroundFrames.Add("Background_2", backgroundAtlas.GetRegion("Background_2").SourceRectangle);
+            backgroundFrames.Add("Wall_0", backgroundAtlas.GetRegion("Wall_0").SourceRectangle);
+            backgroundFrames.Add("Wall_1", backgroundAtlas.GetRegion("Wall_1").SourceRectangle);
+            backgroundFrames.Add("Wall_2", backgroundAtlas.GetRegion("Wall_2").SourceRectangle);
+            backgroundFrames.Add("Door_0", backgroundAtlas.GetRegion("Door_0").SourceRectangle);
+            backgroundFrames.Add("Door_1", backgroundAtlas.GetRegion("Door_1").SourceRectangle);
             for (int i = 1; i <= 10; i++)
             {
                 string key = $"Tutorial_Platform_{i}";
@@ -131,6 +142,31 @@ namespace HollowKnight.Factories
             plantAnimations.Add("Plant2_Idle", backgroundAtlas.GetAnimationFrames("Plant2_Idle"));
             plantSingleFrames.Add("Plant1_Frame0", backgroundAtlas.GetRegion("Plant1_Frame0").SourceRectangle);
             plantSingleFrames.Add("Plant2_Frame0", backgroundAtlas.GetRegion("Plant2_Frame0").SourceRectangle);
+
+            // Mantis Lord frames
+            mantisLordFrames.Add("Throne_Idle", mantisLordAtlas.GetRegion("Throne_Idle").SourceRectangle);
+            mantisLordAnimations.Add("Throne_Gesture", mantisLordAtlas.GetAnimationFrames("Throne_Gesture"));
+            mantisLordAnimations.Add("Throne_Stand", mantisLordAtlas.GetAnimationFrames("Throne_Stand"));
+            mantisLordAnimations.Add("Look", mantisLordAtlas.GetAnimationFrames("Look"));
+            mantisLordAnimations.Add("Throne_Leave", mantisLordAtlas.GetAnimationFrames("Throne_Leave"));
+            mantisLordAnimations.Add("Throne_Wounded", mantisLordAtlas.GetAnimationFrames("Throne_Wounded"));
+            mantisLordAnimations.Add("Throne_Bow", mantisLordAtlas.GetAnimationFrames("Throne_Bow"));
+            mantisLordAnimations.Add("Wall_Arrive", mantisLordAtlas.GetAnimationFrames("Wall_Arrive"));
+            mantisLordAnimations.Add("Wall_Ready", mantisLordAtlas.GetAnimationFrames("Wall_Ready"));
+            mantisLordAnimations.Add("Throw", mantisLordAtlas.GetAnimationFrames("Throw"));
+            mantisLordAnimations.Add("Wall_Leave", mantisLordAtlas.GetAnimationFrames("Wall_Leave"));
+            mantisLordAnimations.Add("Dash_Arrive", mantisLordAtlas.GetAnimationFrames("Dash_Arrive"));
+            mantisLordAnimations.Add("Dash_Anticipate", mantisLordAtlas.GetAnimationFrames("Dash_Anticipate"));
+            mantisLordAnimations.Add("Dash", mantisLordAtlas.GetAnimationFrames("Dash"));
+            mantisLordAnimations.Add("Dash_Recover", mantisLordAtlas.GetAnimationFrames("Dash_Recover"));
+            mantisLordAnimations.Add("Dash_Leave", mantisLordAtlas.GetAnimationFrames("Dash_Leave"));
+            mantisLordAnimations.Add("DStab_Arrive", mantisLordAtlas.GetAnimationFrames("DStab_Arrive"));
+            mantisLordAnimations.Add("DStab", mantisLordAtlas.GetAnimationFrames("DStab"));
+            mantisLordAnimations.Add("DStab_Land", mantisLordAtlas.GetAnimationFrames("DStab_Land"));
+            mantisLordAnimations.Add("DStab_Leave", mantisLordAtlas.GetAnimationFrames("DStab_Leave"));
+            mantisLordAnimations.Add("Death", mantisLordAtlas.GetAnimationFrames("Death"));
+            mantisLordAnimations.Add("Death_Leave_One", mantisLordAtlas.GetAnimationFrames("Death_Leave_One"));
+            mantisLordAnimations.Add("Death_Leave_Two", mantisLordAtlas.GetAnimationFrames("Death_Leave_Two"));
         }
 
         // Consolidated platform factory methods
@@ -278,15 +314,15 @@ namespace HollowKnight.Factories
         }
         public ISprite CreateSpiritMovingSprite(Vector2 position)
         {
-            return new AnimatedSprite(spellsSpriteSheet, spiritAnimations["MovingSpirit"], position, 0.1, 1.0f);
+            return new AnimatedSprite(spellsSpriteSheet, spiritAnimations["MovingSpirit"], position, 0.1, 2.0f);
         }
         public ISprite CreateSpiritPulseSprite(Vector2 position)
         {
-            return new AnimatedSprite(spellsSpriteSheet, spiritAnimations["Pulse"], position, 0.1, 1.0f);
+            return new AnimatedSprite(spellsSpriteSheet, spiritAnimations["Pulse"], position, 0.1, 2.0f);
         }
         public ISprite CreateSpiritCollisionSprite(Vector2 position)
         {
-            return new AnimatedSprite(spellsSpriteSheet, spiritAnimations["Collision"], position, 0.1, 1.0f);
+            return new AnimatedSprite(spellsSpriteSheet, spiritAnimations["Collision"], position, 0.1, 2.0f);
         }
 
         public ISprite CreateTextSprite(string text, Vector2 position, Color color)
@@ -331,6 +367,122 @@ namespace HollowKnight.Factories
                 _ => "Background_0"
             };
             return new StaticSprite(backgroundSpriteSheet, backgroundFrames[key], position, 1.0f);
+        }
+
+        public ISprite CreateWallSprite(int variant, Vector2 position)
+        {
+            string key = variant switch
+            {
+                0 => "Wall_0",
+                1 => "Wall_1",
+                2 => "Wall_2",
+                _ => "Wall_0"
+            };
+            return new StaticSprite(backgroundSpriteSheet, backgroundFrames[key], position, 1.25f);
+        }
+
+        public ISprite CreateDoorSprite(Vector2 position)
+        {
+            return new StaticSprite(backgroundSpriteSheet, backgroundFrames["Door_0"], position, 1.25f);
+        }
+
+        public ISprite CreateDoorHitSprite(Vector2 position)
+        {
+            return new StaticSprite(backgroundSpriteSheet, backgroundFrames["Door_1"], position, 1.25f);
+        }
+
+        // Mantis Lord factory methods
+        public ISprite CreateMantisThroneIdle(Vector2 position)
+        {
+            return new StaticSprite(mantisLordSpriteSheet, mantisLordFrames["Throne_Idle"], position, 1.00f);
+        }
+        public ISprite CreateThroneGesture(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Throne_Gesture"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateThroneStand(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Throne_Stand"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateMantisLook(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Look"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateThroneLeave(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Throne_Leave"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateThroneWounded(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Throne_Wounded"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateThroneBow(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Throne_Bow"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateWallArrive(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Wall_Arrive"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateWallReady(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Wall_Ready"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateMantisThrow(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Throw"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateWallLeave(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Wall_Leave"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateMantisDashArrive(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Dash_Arrive"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateMantisDashAnticipate(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Dash_Anticipate"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateMantisDash(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Dash"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateMantisDashRecover(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Dash_Recover"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateMantisDashLeave(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Dash_Leave"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateMantisDStabArrive(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["DStab_Arrive"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateMantisDStab(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["DStab"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateMantisDStabLand(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["DStab_Land"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateMantisDStabLeave(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["DStab_Leave"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateMantisDeath(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Death"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateMantisDeathLeaveOne(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Death_Leave_One"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateMantisDeathLeaveTwo(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Death_Leave_Two"], position, 0.1, 1.0f);
         }
     }
 }
