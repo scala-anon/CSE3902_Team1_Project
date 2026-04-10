@@ -3,6 +3,7 @@ using HollowKnight.Interfaces;
 using HollowKnight.Collision;
 using HollowKnight.Pathfinding;
 using HollowKnight.Levels;
+using HollowKnight.Audio;
 
 namespace HollowKnight.Commands
 {
@@ -111,5 +112,10 @@ namespace HollowKnight.Commands
         }
 
         public void Execute() => _roomManager.JumpToRoomIndex(_roomIndex);
+    }
+
+    public class ToggleMuteCommand : ICommand
+    {
+        public void Execute() => AudioManager.Instance.ToggleMute();
     }
 }

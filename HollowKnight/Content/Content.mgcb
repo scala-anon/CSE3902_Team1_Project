@@ -42,8 +42,53 @@
 /processorParam:Quality=Best
 /build:Audio/sfx/hero_run_footsteps_stone.wav
 
+#begin Audio/sfx/Grass Cut 1.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx/Grass Cut 1.mp3
 
+#begin Audio/sfx/Grass Move 1.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx/Grass Move 1.mp3
 
+#begin Audio/sfx/Crawler.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx/Crawler.mp3
+
+#begin Audio/sfx/Enemy Damage.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx/Enemy Damage.mp3
+
+#begin Audio/sfx/hero_land_soft.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx/hero_land_soft.wav
+
+#begin Audio/sfx/hero_unsheath.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx/hero_unsheath.wav
+
+#begin Audio/Music/Hollow Knight OST - Mantis Lords 4.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/Hollow Knight OST - Mantis Lords 4.mp3
+
+#begin Audio/AudioFiles.xml
+/copy:Audio/AudioFiles.xml
+
+#begin Audio/SongFiles.xml
+/copy:Audio/SongFiles.xml
 
 
 # TODO: Add your sprite sheets here using the format below:

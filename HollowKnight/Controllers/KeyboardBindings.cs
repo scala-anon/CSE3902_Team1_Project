@@ -90,6 +90,9 @@ namespace HollowKnight.Controllers
             keyboard.RegisterPressedCommand(Keys.H, new ToggleHitboxesCommand(game));
             keyboard.RegisterPressedCommand(Keys.G, new ToggleGridCommand(game));
 
+            // Audio
+            keyboard.RegisterPressedCommand(Keys.M, new ToggleMuteCommand());
+
             // Quit
             keyboard.RegisterPressedCommand(Keys.Q, new QuitCommand(game));
         }

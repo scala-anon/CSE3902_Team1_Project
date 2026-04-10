@@ -1,10 +1,16 @@
 using Microsoft.Xna.Framework;
 using HollowKnight.Interfaces;
+using HollowKnight.Audio;
 
 namespace HollowKnight;
 
 public partial class Game1
 {
+    private void UpdateAudio()
+    {
+        AudioManager.Instance.Update();
+    }
+
     private void UpdateControllers(GameTime gameTime)
     {
         foreach (IController controller in _controllerList)

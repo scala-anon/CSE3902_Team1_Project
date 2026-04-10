@@ -11,6 +11,8 @@ using HollowKnight.Pathfinding;
 using HollowKnight.Shared;
 using HollowKnight.Graphics;
 using HollowKnight.Abilities;
+using HollowKnight.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace HollowKnight;
 
@@ -24,6 +26,13 @@ public partial class Game1
     private void InitializeSharedResources()
     {
         SpriteFactory.Instance.LoadAllTextures(Content);
+    }
+
+    private void InitializeAudio()
+    {
+        AudioLoader.Instance.loadAudio(Content);
+        Song music = AudioLoader.Instance.Get_Mantis_Lords_Music();
+        AudioManager.Instance.PlaySong(music);
     }
 
     private void InitializeNavigationGrid()

@@ -64,6 +64,7 @@ public partial class Game1 : Game
         InitializePlayerAndProjectiles();
         InitializeCameraAndRooms();
         InitializeControllers();
+        InitializeAudio();
     }
 
     protected override void Update(GameTime gameTime)
@@ -94,6 +95,7 @@ public partial class Game1 : Game
                 break;
         }
 
+        UpdateAudio();
         base.Update(gameTime);
     }
 

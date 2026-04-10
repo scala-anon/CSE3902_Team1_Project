@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using HollowKnight.Shared;
 using HollowKnight.Collision;
+using HollowKnight.Audio;
+using Microsoft.Xna.Framework.Audio;
 
 namespace HollowKnight.Player
 {
@@ -193,6 +195,7 @@ namespace HollowKnight.Player
             health.CancelHeal();
             if (physics.Jump())
             {
+                AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Hero_Jump());
                 dash.OnJump();
             }
         }
@@ -200,6 +203,7 @@ namespace HollowKnight.Player
         public void StartDash()
         {
             health.CancelHeal();
+            AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Hero_Dash());
             dash.StartDash(Facing, physics.IsGrounded);
         }
 
@@ -223,6 +227,7 @@ namespace HollowKnight.Player
         {
             if (dash.IsDashing) return;
             health.CancelHeal();
+            AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Hero_Attack());
             combat.TryStartAttack(KnightSpriteType.SideSlash, position, physics.IsGrounded);
         }
 
@@ -248,6 +253,7 @@ namespace HollowKnight.Player
         public void TakeDamage(CollisionSide side)
         {
             if (!health.TakeDamage()) return;
+            AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Hero_Take_Damage());
             Console.WriteLine("Knight took damage from " + side + " side");
             dash.CancelDash();
             
