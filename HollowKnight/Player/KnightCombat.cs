@@ -13,8 +13,6 @@ namespace HollowKnight.Player
         public bool IsAttackOnCooldown { get; private set; }
 
         private double attackTimer;
-        private readonly double attackDuration = GameConstants.KnightAttackDuration;
-        private readonly double attackCooldown = GameConstants.KnightAttackCooldown;
         private double attackCooldownTimer;
 
         private ISprite slashEffect;
@@ -44,7 +42,7 @@ namespace HollowKnight.Player
         {
             if (!IsAttacking) return;
             attackTimer += dt;
-            if (attackTimer >= attackDuration)
+            if (attackTimer >= GameConstants.KnightAttackDuration)
             {
                 IsAttacking = false;
                 attackTimer = 0;
@@ -57,7 +55,7 @@ namespace HollowKnight.Player
         {
             if (!IsAttackOnCooldown) return;
             attackCooldownTimer += dt;
-            if (attackCooldownTimer >= attackCooldown)
+            if (attackCooldownTimer >= GameConstants.KnightAttackCooldown)
             {
                 IsAttackOnCooldown = false;
                 attackCooldownTimer = 0;
@@ -152,7 +150,7 @@ namespace HollowKnight.Player
         }
 
         public double GetCooldownRemaining() =>
-            IsAttackOnCooldown ? System.Math.Max(0, attackCooldown - attackCooldownTimer) : 0;
+            IsAttackOnCooldown ? System.Math.Max(0, GameConstants.KnightAttackCooldown - attackCooldownTimer) : 0;
 
         public double GetCastCooldownRemaining() =>
             IsCastOnCooldown ? System.Math.Max(0, castCooldown - castCooldownTimer) : 0;

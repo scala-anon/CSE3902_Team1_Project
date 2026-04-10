@@ -16,7 +16,6 @@ namespace HollowKnight.Player
         public bool IsHealing { get; private set; }
 
         private double damagedTimer;
-        private readonly double invincibilityDuration = GameConstants.KnightInvincibilityDuration;
 
         private enum HealPhase { None, Startup, Prep, Post }
         private HealPhase healPhase = HealPhase.None;
@@ -31,7 +30,7 @@ namespace HollowKnight.Player
         {
             Soul = Math.Max(0, Soul - amount);
         }
-        
+
         public void GiveFullSoul()
         {
             Soul = MaxSoul;
@@ -42,7 +41,7 @@ namespace HollowKnight.Player
             if (IsDamaged)
             {
                 damagedTimer += gameTime.ElapsedGameTime.TotalSeconds;
-                if (damagedTimer >= invincibilityDuration)
+                if (damagedTimer >= GameConstants.KnightInvincibilityDuration)
                 {
                     IsDamaged = false;
                     damagedTimer = 0;
@@ -58,6 +57,13 @@ namespace HollowKnight.Player
             Health = Math.Max(0, Health - 1);
             CancelHeal();
             return true;
+        }
+
+        public void ResetHealth()
+        {
+            Health = MaxHealth;
+            IsDamaged = false;
+            CancelHeal();
         }
 
         public void StartHeal(bool isAttacking, bool isGrounded)
@@ -136,7 +142,7 @@ namespace HollowKnight.Player
         }
 
         public double GetInvincibilityCooldownRemaining() =>
-            IsDamaged ? Math.Max(0, invincibilityDuration - damagedTimer) : 0;
+            IsDamaged ? Math.Max(0, GameConstants.KnightInvincibilityDuration - damagedTimer) : 0;
 
         public double GetHealCooldownRemaining() =>
             healPhase == HealPhase.Post ? Math.Max(0, GameConstants.KnightHealPostDuration - healTimer) : 0;

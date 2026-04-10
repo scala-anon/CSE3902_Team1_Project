@@ -33,10 +33,13 @@ namespace HollowKnight.Player
         public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, (int)baseSize.X, (int)baseSize.Y);
         public float VelocityY => physics.Velocity.Y;
 
+        private Vector2 benchSpawnPoint;
+
         public TheKnight(Dictionary<KnightSpriteType, ISprite> sprites, Vector2 position)
         {
             this.sprites = sprites;
             this.position = position;
+            benchSpawnPoint = position;
 
             currentSpriteType = KnightSpriteType.Idle;
             currentSprite = this.sprites[currentSpriteType];
@@ -129,9 +132,9 @@ namespace HollowKnight.Player
         {
             // Lock hitbox size to baseSize to prevent physics jitter during animation state changes
             hitBoxes[0] = new Rectangle(
-                (int)position.X + CollisionConstants.KnightHitboxOffsetX, 
-                (int)position.Y + CollisionConstants.KnightHitboxOffsetY, 
-                (int)baseSize.X - CollisionConstants.KnightHitboxWidthShrink, 
+                (int)position.X + CollisionConstants.KnightHitboxOffsetX,
+                (int)position.Y + CollisionConstants.KnightHitboxOffsetY,
+                (int)baseSize.X - CollisionConstants.KnightHitboxWidthShrink,
                 (int)baseSize.Y - CollisionConstants.KnightHitboxHeightShrink
             );
             return hitBoxes;
@@ -247,7 +250,18 @@ namespace HollowKnight.Player
             if (!health.TakeDamage()) return;
             Console.WriteLine("Knight took damage from " + side + " side");
             dash.CancelDash();
-            physics.ApplyKnockback(side);
+            
+            if (health.Health == 0)
+            {
+                Console.WriteLine("Knight died. Respawning at most recent bench.");
+                SetPosition(benchSpawnPoint);
+                physics.Velocity = Vector2.Zero;
+                health.ResetHealth();
+            }
+            else
+            {
+                physics.ApplyKnockback(side);
+            }
         }
 
         public int GetHealth() => health.Health;
