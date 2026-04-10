@@ -10,8 +10,9 @@ namespace HollowKnight.Levels
 {
     public class LevelLoader
     {
-        public List<IEnemy> Enemies     { get; } = new();
-        public List<IObject> Platforms   { get; } = new();
+        public List<IEnemy> Enemies        { get; } = new();
+        public List<IObject> Backgrounds   { get; } = new();
+        public List<IObject> Platforms     { get; } = new();
         public Vector2 KnightSpawn { get; private set; } = Vector2.Zero;
 
         private readonly Dictionary<string, Func<Vector2, IObject>> _platformMap;
@@ -43,14 +44,18 @@ namespace HollowKnight.Levels
                 ["Spike_Ceiling"]        = pos => new Spike(SpikeVariant.Ceiling, pos),
                 ["Bench"]               = pos => new Bench(pos),
                 ["Plant1_Idle"]        = pos => new Grass(1,pos, 100, 5, hitOffsetY: 0),
-                ["Plant2_Idle"]        = pos => new Grass(2,pos, 100, 5, hitOffsetY: 0)
-                
+                ["Plant2_Idle"]        = pos => new Grass(2,pos, 100, 5, hitOffsetY: 0),
+                ["Wall_0"]             = pos => new Wall(0, pos, 80, 200),
+                ["Wall_1"]             = pos => new Wall(1, pos, 80, 200),
+                ["Wall_2"]             = pos => new Wall(2, pos, 80, 200),
+                ["Door_0"]             = pos => new Door(pos, 60, 150),
             };
 
             _enemyMap = new Dictionary<string, Func<Vector2, IEnemy>>
             {
-                ["Crawlid"]  = pos => new Crawlid(pos),
-                ["Vengefly"] = pos => new Vengefly(pos),
+                ["Crawlid"]    = pos => new Crawlid(pos),
+                ["Vengefly"]   = pos => new Vengefly(pos),
+                ["MantisLord"] = pos => new MantisLord(pos),
             };
 
             _spawnMap = new Dictionary<string, Action<string, Vector2>>
@@ -126,6 +131,11 @@ namespace HollowKnight.Levels
             }
         }
 
+        private static readonly HashSet<string> BackgroundNames = new()
+        {
+            "Background_1", "Background_2"
+        };
+
         private void SpawnPlatform(string name, Vector2 position)
         {
             if (!_platformMap.TryGetValue(name, out var create))
@@ -133,7 +143,12 @@ namespace HollowKnight.Levels
                 Console.WriteLine($"[LevelLoader] Unknown platform '{name}' at {position}");
                 return;
             }
-            Platforms.Add(create(position));
+
+            IObject obj = create(position);
+            if (BackgroundNames.Contains(name))
+                Backgrounds.Add(obj);
+            else
+                Platforms.Add(obj);
         }
 
         private void SpawnEnemy(string name, Vector2 position)
