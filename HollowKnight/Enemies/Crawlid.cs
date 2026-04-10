@@ -1,179 +1,62 @@
-using System;
 using System.Collections.Generic;
 using HollowKnight.Factories;
 using HollowKnight.Interfaces;
 using HollowKnight.Shared;
 using HollowKnight.Collision;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using HollowKnight.Pathfinding;
 
 namespace HollowKnight.Enemies
 {
-public enum CrawlidState
-{
-    Idle,
-    Turn,
-    DeathAir,
-    DeathLand
-}
+    public enum CrawlidState { Idle, Turn, DeathAir, DeathLand }
 
-public class Crawlid : IEnemy
-{
-    public CrawlidState State { get; set; } = CrawlidState.Idle;
-
-    private CrawlidStateMachine stateMachine;
-    private readonly Dictionary<CrawlidState, ISprite> sprites;
-
-    public ISprite Sprite { get; private set; }
-
-    public bool Alive { get; set; } = true;
-    public int Health { get; set; } = EnemyConstants.EnemyDefaultHealth;
-
-    public bool IsDamaged => _isDamaged;
-
-    private bool _isDamaged;
-    private double _damagedTimer;
-
-    private Vector2 _knockbackVelocity;
-
-    public bool IsGrounded { get; private set; } = true;
-    public bool IsActive => Alive;
-
-    public Vector2 position;
-
-    public Direction FacingDirection { get; set; } = Direction.Right;
-
-    private Rectangle[] hitBoxes = new Rectangle[1];
-
-    public Crawlid(Vector2 position)
+    public class Crawlid : BaseEnemy
     {
-        this.position = position;
-        sprites = new Dictionary<CrawlidState, ISprite>
+        public CrawlidState State { get; set; } = CrawlidState.Idle;
+        public bool Alive { get; set; } = true;
+        public override bool IsActive => Alive;
+
+        private readonly Dictionary<CrawlidState, ISprite> sprites;
+        private CrawlidStateMachine stateMachine;
+
+        public Crawlid(Vector2 position)
         {
-            [CrawlidState.Idle] = SpriteFactory.Instance.CreateCrawlidIdleSprite(position),
-            [CrawlidState.Turn] = SpriteFactory.Instance.CreateCrawlidTurnSprite(position),
-            [CrawlidState.DeathAir] = SpriteFactory.Instance.CreateCrawlidDeathAirSprite(position),
-            [CrawlidState.DeathLand] = SpriteFactory.Instance.CreateCrawlidDeathLandSprite(position),
-        };
-        Sprite = sprites[CrawlidState.Idle];
-        stateMachine = new CrawlidStateMachine(this);
-    }
-
-    public void SetState(CrawlidState newState)
-    {
-        State = newState;
-        Sprite = sprites[newState];
-    }
-
-    public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, Sprite.Width, Sprite.Height);
-
-    public void SetKnightPosition(Vector2 knightPosition) { }
-    public void SetNavigationGrid(NavigationGrid grid) { }
-    public List<Vector2> GetCurrentPath() { return null; }
-    public float GetDetectionRadius() => 0f;
-    public float GetChaseRadius() => 0f;
-    public void SetPlatform(IObject platform) => stateMachine.SetPlatform(platform);
-
-    public void ChangeHealth()
-    {
-        stateMachine.ChangeHealth();
-    }
-
-    public bool TakeDamage() => TakeDamage(CollisionSide.None);
-
-    public bool TakeDamage(CollisionSide side)
-    {
-        if (_isDamaged) return false;
-        _isDamaged = true;
-        _damagedTimer = 0;
-
-        switch (side)
-        {
-            case CollisionSide.Left: _knockbackVelocity = new Vector2(-EnemyConstants.EnemyKnockbackSpeed, 0f); break;
-            case CollisionSide.Right: _knockbackVelocity = new Vector2(EnemyConstants.EnemyKnockbackSpeed, 0f); break;
-            case CollisionSide.Top: _knockbackVelocity = new Vector2(0, 0f); break;
-            case CollisionSide.Bottom: _knockbackVelocity = new Vector2(0, 0f); break;
-        }
-        if (_knockbackVelocity.Y < 0) IsGrounded = false;
-
-        ChangeHealth();
-        return true;
-    }
-
-    public void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects)
-    {
-        SpriteEffects effects = FacingDirection == Direction.Right
-            ? SpriteEffects.FlipHorizontally
-            : SpriteEffects.None;
-        Sprite.Draw(spriteBatch, effects);
-    }
-
-    public Rectangle[] GetBounds()
-    {
-        Vector2 size = Sprite.GetSize();
-        hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
-        return hitBoxes;
-    }
-
-    public Rectangle GetHurtbox()
-    {
-        Rectangle[] bounds = GetBounds();
-        bounds[0].Inflate(EnemyConstants.EnemyHurtboxGrow, EnemyConstants.EnemyHurtboxGrow);
-        return bounds[0];
-    }
-
-    public string GetStateName() => stateMachine.GetStateName();
-
-    public void Update(GameTime gameTime)
-    {
-        float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-        if (!Alive)
-        {
-            if (!IsGrounded)
+            this.position = position;
+            IsGrounded = true;
+            FacingDirection = Direction.Right;
+            sprites = new Dictionary<CrawlidState, ISprite>
             {
-                _knockbackVelocity.Y += EnemyConstants.EnemyDeathGravity * dt;
-                _knockbackVelocity.X *= (1f - EnemyConstants.EnemyKnockbackDecay * dt);
-                if (Math.Abs(_knockbackVelocity.X) < GameConstants.KnockbackVelocityThreshold) _knockbackVelocity.X = 0;
-
-                position += _knockbackVelocity * dt;
-
-                float spriteHeight = Sprite.GetSize().Y;
-                if (position.Y + spriteHeight >= GameConstants.ScreenHeight)
-                {
-                    position.Y = GameConstants.ScreenHeight - spriteHeight;
-                    _knockbackVelocity = Vector2.Zero;
-                    IsGrounded = true;
-                    SetState(CrawlidState.DeathLand);
-                }
-            }
-            Sprite.SetPosition(position);
-            Sprite.Update(gameTime);
-            return;
+                [CrawlidState.Idle] = SpriteFactory.Instance.CreateCrawlidIdleSprite(position),
+                [CrawlidState.Turn] = SpriteFactory.Instance.CreateCrawlidTurnSprite(position),
+                [CrawlidState.DeathAir] = SpriteFactory.Instance.CreateCrawlidDeathAirSprite(position),
+                [CrawlidState.DeathLand] = SpriteFactory.Instance.CreateCrawlidDeathLandSprite(position),
+            };
+            Sprite = sprites[CrawlidState.Idle];
+            stateMachine = new CrawlidStateMachine(this);
         }
 
-        if (_isDamaged)
+        public void SetState(CrawlidState newState)
         {
-            _damagedTimer += dt;
-            if (_damagedTimer >= EnemyConstants.EnemyDamagedDuration)
+            State = newState;
+            Sprite = sprites[newState];
+        }
+
+        public override void SetPlatform(IObject platform) => stateMachine.SetPlatform(platform);
+        public override string GetStateName() => stateMachine.GetStateName();
+        public void ChangeHealth() => stateMachine.ChangeHealth();
+
+        protected override void ApplyKnockback(CollisionSide side)
+        {
+            switch (side)
             {
-                _isDamaged = false;
-                _damagedTimer = 0;
+                case CollisionSide.Left: _knockbackVelocity = new Vector2(-EnemyConstants.EnemyKnockbackSpeed, 0f); break;
+                case CollisionSide.Right: _knockbackVelocity = new Vector2(EnemyConstants.EnemyKnockbackSpeed, 0f); break;
+                default: _knockbackVelocity = Vector2.Zero; break;
             }
+            if (_knockbackVelocity.Y < 0) IsGrounded = false;
         }
 
-        if (_knockbackVelocity != Vector2.Zero)
-        {
-            position += _knockbackVelocity * dt;
-            _knockbackVelocity *= (1f - EnemyConstants.EnemyKnockbackDecay * dt);
-            if (_knockbackVelocity.Length() < GameConstants.KnockbackVelocityThreshold)
-                _knockbackVelocity = Vector2.Zero;
-        }
-
-        stateMachine.Update(gameTime);
-        Sprite.SetPosition(position);
-        Sprite.Update(gameTime);
+        protected override void OnDeath(bool grounded) => SetState(CrawlidState.DeathLand);
+        protected override void OnHealthChanged() => ChangeHealth();
+        protected override void UpdateAlive(GameTime gameTime, float dt) => stateMachine.Update(gameTime);
     }
-}
 }

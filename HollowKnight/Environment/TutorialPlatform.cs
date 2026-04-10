@@ -1,22 +1,14 @@
 using HollowKnight.Factories;
-using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace HollowKnight.Environment
 {
-    public class TutorialPlatform : IObject
+    public class TutorialPlatform : BaseEnvironmentObject
     {
-        private ISprite sprite;
-        public Vector2 position;
-        private Rectangle[] hitBoxes = new Rectangle[1];
         private int id;
         private int width;
         private int height;
-        
-        public bool IsActive => true;
-        public string Label => $"TutorialPlatform_{id}";
-        public Rectangle Bounds => GetBounds()[0];
+        public override string Label => $"TutorialPlatform_{id}";
 
         public TutorialPlatform(int id, Vector2 pos, int width, int height)
         {
@@ -24,20 +16,11 @@ namespace HollowKnight.Environment
             position = pos;
             this.width = width;
             this.height = height;
+            hitBoxes = new Rectangle[1];
             sprite = SpriteFactory.Instance.CreateTutorialPlatformSprite(id, position);
         }
 
-        public void Update(GameTime gameTime)
-        {
-            sprite.Update(gameTime);
-        }
-
-        public void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects)
-        {
-            sprite.Draw(spriteBatch, spriteEffects);
-        }
-
-        public Rectangle[] GetBounds()
+        public override Rectangle[] GetBounds()
         {
             hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, width, height);
             return hitBoxes;
