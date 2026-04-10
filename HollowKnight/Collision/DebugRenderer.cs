@@ -50,6 +50,16 @@ namespace HollowKnight.Collision
             spriteBatch.DrawString(_font, text, position, color);
         }
 
+        public static void DrawOverlayText(SpriteBatch spriteBatch, string text, Vector2 position, Color color, float scale = 1f)
+        {
+            if (_font == null) return;
+            Vector2 size = _font.MeasureString(text) * scale;
+            Vector2 centered = new Vector2(
+                (spriteBatch.GraphicsDevice.Viewport.Width - size.X) / 2,
+                (spriteBatch.GraphicsDevice.Viewport.Height - size.Y) / 3);
+            spriteBatch.DrawString(_font, text, centered, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+        }
+
 
         // Draws the bounding box of a single ICollidable object.
         public static void DrawBounds(SpriteBatch spriteBatch, ICollidable obj, Color color)

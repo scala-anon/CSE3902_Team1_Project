@@ -12,12 +12,16 @@ public partial class Game1
     private void DrawWorld()
     {
         // Layer 1: Backgrounds (behind everything, no interaction)
-        _spriteBatch.Begin(transformMatrix: _camera.GetTransform());
+        _spriteBatch.Begin(
+                samplerState: SamplerState.PointClamp,
+                transformMatrix: _camera.GetTransform());
         DrawBackgrounds();
         _spriteBatch.End();
 
         // Layer 2: Platforms, enemies, knight, projectiles, items
-        _spriteBatch.Begin(transformMatrix: _camera.GetTransform());
+        _spriteBatch.Begin(
+                samplerState: SamplerState.PointClamp,
+                transformMatrix: _camera.GetTransform());
         DrawPlatforms();
         DrawEnemies();
         DrawProjectiles();
@@ -93,24 +97,28 @@ public partial class Game1
 
     private void DrawOverlay()
     {
+        if (_gameState == GameState.Playing) return;
+
         _spriteBatch.Begin();
 
         switch (_gameState)
         {
             case GameState.Paused:
-                DebugRenderer.DrawText(_spriteBatch, "PAUSED", new Vector2(350, 100), Color.White);
+                DebugRenderer.DrawOverlayText(_spriteBatch, "PAUSED", Vector2.Zero, Color.White, 3f);
+                DebugRenderer.DrawOverlayText(_spriteBatch, "\n\n\nPress P to resume", Vector2.Zero, Color.Gray, 1f);
                 break;
 
             case GameState.Inventory:
-                DebugRenderer.DrawText(_spriteBatch, "INVENTORY", new Vector2(330, 100), Color.White);
+                DebugRenderer.DrawOverlayText(_spriteBatch, "INVENTORY", Vector2.Zero, Color.White, 3f);
+                DebugRenderer.DrawOverlayText(_spriteBatch, "\n\n\nPress Tab to close", Vector2.Zero, Color.Gray, 1f);
                 break;
 
             case GameState.GameOver:
-                DebugRenderer.DrawText(_spriteBatch, "GAME OVER", new Vector2(320, 100), Color.Red);
+                DebugRenderer.DrawOverlayText(_spriteBatch, "GAME OVER", Vector2.Zero, Color.Red, 3f);
                 break;
 
             case GameState.Win:
-                DebugRenderer.DrawText(_spriteBatch, "YOU WIN", new Vector2(340, 100), Color.Yellow);
+                DebugRenderer.DrawOverlayText(_spriteBatch, "YOU WIN", Vector2.Zero, Color.Yellow, 3f);
                 break;
         }
 
