@@ -5,73 +5,90 @@ using Microsoft.Xna.Framework;
 
 namespace HollowKnight.Enemies
 {
-public class VengeflyStateMachine
-{
-    private Vengefly CurrentVengeFly;
-
-    private Direction _patrolDirection = Direction.Right;
-    private double _startleTimer = 0;
-    private NavigationGrid _grid;
-    private List<Vector2> _currentPath = new List<Vector2>();
-    private float _pathUpdateTimer = 0f;
-
-    public void SetNavigationGrid(NavigationGrid grid) { _grid = grid; }
-    public List<Vector2> GetCurrentPath() { return _currentPath; }
-
-    public VengeflyStateMachine(Vengefly vengeFly)
+    public class VengeflyStateMachine
     {
-        CurrentVengeFly = vengeFly;
-    }
+        private Vengefly CurrentVengeFly;
 
-    public float GetDetectionRadius() => EnemyConstants.VengeflyDetectionRadius;
-    public float GetChaseRadius() => EnemyConstants.VengeflyChaseRadius;
+        private Direction _patrolDirection = Direction.Right;
+        private double _startleTimer = 0;
+        private NavigationGrid _grid;
+        private List<Vector2> _currentPath = new List<Vector2>();
+        private float _pathUpdateTimer = 0f;
 
-    public void ChangeHealth()
-    {
-        CurrentVengeFly.Health--;
-        if (CurrentVengeFly.Health <= 0)
-        {
-            CurrentVengeFly.Dead = true;
-            CurrentVengeFly.SetState(CurrentVengeFly.IsGrounded
-                ? VengeflyState.DeathLand
-                : VengeflyState.DeathAir);
-        }
-    }
+        public void SetNavigationGrid(NavigationGrid grid) => _grid = grid;
+        public List<Vector2> GetCurrentPath() => _currentPath;
 
-    public void Update(GameTime gameTime)
-    {
-        if (CurrentVengeFly.Dead || CurrentVengeFly.IsDamaged) return;
-        float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-        Vector2 enemyCenter = CurrentVengeFly.GetBounds()[0].Center.ToVector2();
-        float distanceFromKnight = Vector2.Distance(enemyCenter, CurrentVengeFly.knightPosition);
-        bool knightInDetectionRange = distanceFromKnight <= EnemyConstants.VengeflyDetectionRadius;
-        bool knightInChaseRange = distanceFromKnight <= EnemyConstants.VengeflyChaseRadius;
-
-        // State transitions
-        if (knightInDetectionRange && CurrentVengeFly.State == VengeflyState.Idle)
+        public VengeflyStateMachine(Vengefly vengeFly)
         {
-            CurrentVengeFly.SetState(VengeflyState.Startle);
-            _startleTimer = 0;
-        }
-        else if (CurrentVengeFly.State == VengeflyState.Startle)
-        {
-            
-            _startleTimer += elapsedTime;
-            if (_startleTimer >= EnemyConstants.VengeflyStartleDuration)
-                CurrentVengeFly.SetState(VengeflyState.Chase);
-        }
-        else if (CurrentVengeFly.State == VengeflyState.Chase && !knightInChaseRange)
-        {
-            CurrentVengeFly.SetState(VengeflyState.Idle);
-            _currentPath.Clear();
+            CurrentVengeFly = vengeFly;
         }
 
-        // Movement
-        if (CurrentVengeFly.State == VengeflyState.Idle)
+        public float GetDetectionRadius() => EnemyConstants.VengeflyDetectionRadius;
+        public float GetChaseRadius() => EnemyConstants.VengeflyChaseRadius;
+
+        public void ChangeHealth()
         {
-            CurrentVengeFly.position.X += (_patrolDirection == Direction.Right ? EnemyConstants.VengeflyPatrolSpeed : -EnemyConstants.VengeflyPatrolSpeed) * elapsedTime;
+            CurrentVengeFly.Health--;
+            if (CurrentVengeFly.Health <= 0)
+            {
+                CurrentVengeFly.Dead = true;
+                CurrentVengeFly.SetState(CurrentVengeFly.IsGrounded
+                    ? VengeflyState.DeathLand
+                    : VengeflyState.DeathAir);
+            }
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            if (CurrentVengeFly.Dead || CurrentVengeFly.IsDamaged) return;
+            float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Vector2 enemyCenter = CurrentVengeFly.GetCenter();
+            float distanceFromKnight = Vector2.Distance(enemyCenter, CurrentVengeFly.knightPosition);
+            bool knightInDetectionRange = distanceFromKnight <= EnemyConstants.VengeflyDetectionRadius;
+            bool knightInChaseRange = distanceFromKnight <= EnemyConstants.VengeflyChaseRadius;
+
+            UpdateStateTransitions(knightInDetectionRange, knightInChaseRange, elapsedTime);
+            UpdateMovement(elapsedTime, enemyCenter);
+            CurrentVengeFly.UpdateSpritePosition();
+        }
+
+        private void UpdateStateTransitions(bool knightInDetectionRange, bool knightInChaseRange, float elapsedTime)
+        {
+            if (knightInDetectionRange && CurrentVengeFly.State == VengeflyState.Idle)
+            {
+                CurrentVengeFly.SetState(VengeflyState.Startle);
+                _startleTimer = 0;
+            }
+            else if (CurrentVengeFly.State == VengeflyState.Startle)
+            {
+                _startleTimer += elapsedTime;
+                if (_startleTimer >= EnemyConstants.VengeflyStartleDuration)
+                    CurrentVengeFly.SetState(VengeflyState.Chase);
+            }
+            else if (CurrentVengeFly.State == VengeflyState.Chase && !knightInChaseRange)
+            {
+                CurrentVengeFly.SetState(VengeflyState.Idle);
+                _currentPath.Clear();
+            }
+        }
+
+        private void UpdateMovement(float elapsedTime, Vector2 enemyCenter)
+        {
+            if (CurrentVengeFly.State == VengeflyState.Idle)
+                UpdatePatrol(elapsedTime);
+            else if (CurrentVengeFly.State == VengeflyState.Chase)
+                UpdateChase(elapsedTime, enemyCenter);
+        }
+
+        private void UpdatePatrol(float elapsedTime)
+        {
+            float speed = _patrolDirection == Direction.Right
+                ? EnemyConstants.VengeflyPatrolSpeed
+                : -EnemyConstants.VengeflyPatrolSpeed;
+            CurrentVengeFly.position.X += speed * elapsedTime;
             CurrentVengeFly.FacingDirection = _patrolDirection;
-            float spriteWidth = CurrentVengeFly.Sprite.GetSize().X;
+
+            float spriteWidth = CurrentVengeFly.SpriteSize.X;
 
             if (CurrentVengeFly.position.X + spriteWidth >= GameConstants.DefaultLevelWidth)
             {
@@ -86,85 +103,76 @@ public class VengeflyStateMachine
                 CurrentVengeFly.FacingDirection = Direction.Right;
             }
         }
-        else if (CurrentVengeFly.State == VengeflyState.Chase)
+
+        private void UpdateChase(float elapsedTime, Vector2 enemyCenter)
         {
             _pathUpdateTimer += elapsedTime;
+            bool useAStar = TryUpdatePath(enemyCenter);
 
-            // Try A* if grid exists and both positions are within grid bounds
-            bool useAStar = false;
-            if (_grid != null && _pathUpdateTimer >= EnemyConstants.VengeflyPathUpdateInterval || _currentPath.Count == 0)
-            {
-                _pathUpdateTimer = 0f;
-                int gridPixelWidth = _grid.cols * _grid.cellSize;
-                int gridPixelHeight = _grid.rows * _grid.cellSize;
-
-                bool enemyInGrid = enemyCenter.X >= 0 && enemyCenter.X < gridPixelWidth
-                                && enemyCenter.Y >= 0 && enemyCenter.Y < gridPixelHeight;
-                bool knightInGrid = CurrentVengeFly.knightPosition.X >= 0 && CurrentVengeFly.knightPosition.X < gridPixelWidth
-                                 && CurrentVengeFly.knightPosition.Y >= 0 && CurrentVengeFly.knightPosition.Y < gridPixelHeight;
-
-                if (enemyInGrid && knightInGrid)
-                {
-                    Vector2 enemySize = new Vector2(CurrentVengeFly.Bounds.Width, CurrentVengeFly.Bounds.Height);
-                    _currentPath = AStarPathFinder.FindPath(_grid, enemyCenter, CurrentVengeFly.knightPosition, enemySize);
-                    
-                    // Fallback to center point routing if the full bounds route is blocked (e.g. Knight is near a wall making the destination area invalid)
-                    if (_currentPath.Count == 0)
-                    {
-                        _currentPath = AStarPathFinder.FindPath(_grid, enemyCenter, CurrentVengeFly.knightPosition, null);
-                    }
-                    
-                    useAStar = _currentPath.Count > 0;
-                }
-                else
-                {
-                    _currentPath.Clear();
-                }
-            }
-            else if (_currentPath.Count > 0)
-            {
-                useAStar = true;
-            }
-
+            Vector2 dir;
             if (useAStar && _currentPath.Count > 0)
             {
                 Vector2 targetWaypoint = _currentPath[0];
-                
-                // Use a dynamic threshold based on the enemy's size to ensure large enemies don't get stuck pushing into walls to reach a waypoint
-                float reachRadius = System.Math.Max(GameConstants.PathReachedThreshold, CurrentVengeFly.Bounds.Width / EnemyConstants.VengeflyWaypointReachDivisor);
-                
+                float reachRadius = System.Math.Max(
+                    GameConstants.PathReachedThreshold,
+                    CurrentVengeFly.Bounds.Width / EnemyConstants.VengeflyWaypointReachDivisor);
+
                 if (Vector2.Distance(enemyCenter, targetWaypoint) < reachRadius)
                 {
                     _currentPath.RemoveAt(0);
                     if (_currentPath.Count > 0) targetWaypoint = _currentPath[0];
                 }
 
-                Vector2 dir = targetWaypoint - enemyCenter;
-                if (dir != Vector2.Zero)
-                {
-                    dir.Normalize();
-                    CurrentVengeFly.position += dir * EnemyConstants.VengeflyChaseSpeed * elapsedTime;
-                    if (dir.X > 0) CurrentVengeFly.FacingDirection = Direction.Right;
-                    else if (dir.X < 0) CurrentVengeFly.FacingDirection = Direction.Left;
-                }
+                dir = targetWaypoint - enemyCenter;
             }
             else
             {
-                // Straight-line fallback
-                Vector2 dir = CurrentVengeFly.knightPosition - enemyCenter;
-                if (dir != Vector2.Zero)
-                {
-                    dir.Normalize();
-                    CurrentVengeFly.position += dir * EnemyConstants.VengeflyChaseSpeed * elapsedTime;
-                    if (dir.X > 0) CurrentVengeFly.FacingDirection = Direction.Right;
-                    else if (dir.X < 0) CurrentVengeFly.FacingDirection = Direction.Left;
-                }
+                dir = CurrentVengeFly.knightPosition - enemyCenter;
+            }
+
+            if (dir != Vector2.Zero)
+            {
+                dir.Normalize();
+                CurrentVengeFly.position += dir * EnemyConstants.VengeflyChaseSpeed * elapsedTime;
+                if (dir.X > 0) CurrentVengeFly.FacingDirection = Direction.Right;
+                else if (dir.X < 0) CurrentVengeFly.FacingDirection = Direction.Left;
             }
         }
 
-        CurrentVengeFly.Sprite.SetPosition(CurrentVengeFly.position);
-    }
+        private bool TryUpdatePath(Vector2 enemyCenter)
+        {
+            if (_grid == null) return false;
 
-    public string GetStateName() => CurrentVengeFly.State.ToString();
-}
+            if (_pathUpdateTimer >= EnemyConstants.VengeflyPathUpdateInterval || _currentPath.Count == 0)
+            {
+                _pathUpdateTimer = 0f;
+                int gridPixelWidth = _grid.cols * _grid.cellSize;
+                int gridPixelHeight = _grid.rows * _grid.cellSize;
+                Vector2 knightPos = CurrentVengeFly.knightPosition;
+
+                bool enemyInGrid = enemyCenter.X >= 0 && enemyCenter.X < gridPixelWidth
+                                && enemyCenter.Y >= 0 && enemyCenter.Y < gridPixelHeight;
+                bool knightInGrid = knightPos.X >= 0 && knightPos.X < gridPixelWidth
+                                 && knightPos.Y >= 0 && knightPos.Y < gridPixelHeight;
+
+                if (enemyInGrid && knightInGrid)
+                {
+                    Vector2 enemySize = new Vector2(CurrentVengeFly.Bounds.Width, CurrentVengeFly.Bounds.Height);
+                    _currentPath = AStarPathFinder.FindPath(_grid, enemyCenter, knightPos, enemySize);
+
+                    if (_currentPath.Count == 0)
+                        _currentPath = AStarPathFinder.FindPath(_grid, enemyCenter, knightPos, null);
+
+                    return _currentPath.Count > 0;
+                }
+
+                _currentPath.Clear();
+                return false;
+            }
+
+            return _currentPath.Count > 0;
+        }
+
+        public string GetStateName() => CurrentVengeFly.State.ToString();
+    }
 }

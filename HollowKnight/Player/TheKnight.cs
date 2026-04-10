@@ -33,7 +33,7 @@ namespace HollowKnight.Player
 
         public bool IsActive => true;
         public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, (int)baseSize.X, (int)baseSize.Y);
-        public float VelocityY => physics.Velocity.Y;
+        public float VelocityY => physics.VelocityY;
 
         private Vector2 benchSpawnPoint;
 
@@ -86,7 +86,7 @@ namespace HollowKnight.Player
                 CurrentState = KnightState.Dashing;
                 currentSpriteType = KnightSpriteType.Dashing;
                 physics.ApplyDashVelocity(dash.GetDashDirection());
-                physics.Velocity.Y = 0;
+                physics.ZeroVerticalVelocity();
             }
             else if (health.IsDamaged)
             {
@@ -100,10 +100,10 @@ namespace HollowKnight.Player
             }
             else if (!physics.IsGrounded)
             {
-                CurrentState = physics.Velocity.Y > 0 ? KnightState.Falling : KnightState.Jumping;
+                CurrentState = physics.IsFalling ? KnightState.Falling : KnightState.Jumping;
                 currentSpriteType = KnightSpriteType.Jumping;
             }
-            else if (physics.Velocity.X != 0)
+            else if (physics.IsMovingHorizontally)
             {
                 CurrentState = KnightState.Running;
                 currentSpriteType = KnightSpriteType.Walking;

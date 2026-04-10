@@ -28,10 +28,8 @@ namespace HollowKnight.Enemies
             {
                 _timer = 0f;
 
-                Vector2 spawn = new Vector2(
-                    _enemy.Bounds.Center.X,
-                    _enemy.Bounds.Center.Y
-                );
+                Rectangle bounds = _enemy.Bounds;
+                Vector2 spawn = bounds.Center.ToVector2();
 
                 _spawner.Spawn(spawn, direction, _speed, ProjectileFaction.Enemy);
             }

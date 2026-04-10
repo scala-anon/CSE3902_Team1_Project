@@ -8,6 +8,11 @@ namespace HollowKnight.Player
     {
         public Vector2 Velocity;
         public bool IsGrounded { get; private set; }
+        public float VelocityX => Velocity.X;
+        public float VelocityY => Velocity.Y;
+        public bool IsMovingHorizontally => Velocity.X != 0;
+        public bool IsAscending => Velocity.Y < 0;
+        public bool IsFalling => Velocity.Y > 0;
 
         private float knockbackTimer = KnightConstants.KnightKnockbackTimer;
 
@@ -78,10 +83,8 @@ namespace HollowKnight.Player
             Velocity.X = 0;
         }
 
-        public void StopMovingVertical()
-        {
-            Velocity.Y = 0;
-        }
+        public void StopMovingVertical() => Velocity.Y = 0;
+        public void ZeroVerticalVelocity() => Velocity.Y = 0;
 
         public void StopAllMovement()
         {

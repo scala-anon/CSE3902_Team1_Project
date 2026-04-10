@@ -31,6 +31,11 @@ namespace HollowKnight.Enemies
         public Rectangle Bounds => new Rectangle(
             (int)position.X, (int)position.Y, Sprite.Width, Sprite.Height);
 
+        // Helpers to avoid deep access chains (e.g. enemy.Sprite.GetSize().X)
+        public Vector2 SpriteSize => Sprite.GetSize();
+        public void UpdateSpritePosition() => Sprite.SetPosition(position);
+        public Vector2 GetCenter() => new Vector2(Bounds.Center.X, Bounds.Center.Y);
+
         // --- Subclass hooks ---
         protected abstract void ApplyKnockback(CollisionSide side);
         protected abstract void OnDeath(bool grounded);
