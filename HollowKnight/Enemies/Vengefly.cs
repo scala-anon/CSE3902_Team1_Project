@@ -75,6 +75,15 @@ public class Vengefly : IEnemy
 
     public void ChangeHealth() => stateMachine.ChangeHealth();
 
+    public void Kill()
+    {
+        if (Dead) return;
+        Health = 0;
+        Dead = true;
+        _isDamaged = false;
+        SetState(VengeflyState.DeathAir);
+    }
+
     public void Land()
     {
         _knockbackVelocity = Vector2.Zero;

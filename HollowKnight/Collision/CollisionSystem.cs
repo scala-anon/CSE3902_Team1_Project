@@ -31,6 +31,9 @@ namespace HollowKnight.Collision
                 // Hitting spikes damages the knight
                 _handler.Register<Spike, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
 
+                // Spikes instantly kill vengefly
+                _handler.Register<Spike, Vengefly>(side, (a, b) => ((Vengefly)b).Kill());
+
                 // Sword damages enemies
                 _handler.Register<SwordHitbox, Crawlid>(side, (a, b) => ((Crawlid)b).TakeDamage(side));
                 _handler.Register<SwordHitbox, Vengefly>(side, (a, b) => ((Vengefly)b).TakeDamage(side));
@@ -66,6 +69,18 @@ namespace HollowKnight.Collision
                 if (!enemy.IsActive) continue;
                 CollisionSide side = CollisionDetector.Detect(enemy, knight);
                 _handler.HandleCollision(enemy, knight, side);
+            }
+
+            // Spike collisions with enemies
+            foreach (IEnemy enemy in enemies)
+            {
+                if (!enemy.IsActive) continue;
+                foreach (IObject obj in platforms)
+                {
+                    if (!(obj is Spike spike)) continue;
+                    CollisionSide side = CollisionDetector.Detect(spike, enemy);
+                    _handler.HandleCollision(spike, enemy, side);
+                }
             }
 
             // Sword collisions
