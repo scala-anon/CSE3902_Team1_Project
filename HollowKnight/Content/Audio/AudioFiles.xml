@@ -33,4 +33,7 @@
     <Item>
         <FilePath>Audio/sfx/Enemy Damage</FilePath>
     </Item>
+    <Item>
+        <FilePath>Audio/sfx/Fly Flying</FilePath>
+    </Item>
 </XnaContent>

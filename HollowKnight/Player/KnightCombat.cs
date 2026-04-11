@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using HollowKnight.Interfaces;
 using HollowKnight.Shared;
 using HollowKnight.Factories;
+using HollowKnight.Audio;
 
 namespace HollowKnight.Player
 {
@@ -71,7 +72,7 @@ namespace HollowKnight.Player
                 IsCastOnCooldown = false;
                 castCooldownTimer = 0;
             }
-        }
+        }                        
 
         private void UpdateSlashEffect(GameTime gameTime, Vector2 position, Direction facing, ISprite currentSprite)
         {
@@ -139,6 +140,7 @@ namespace HollowKnight.Player
                 KnightSpriteType.DownSlash => SpriteFactory.Instance.CreateDownSlashEffect(position),
                 _ => null
             };
+            AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Hero_Attack());
 
             return true;
         }

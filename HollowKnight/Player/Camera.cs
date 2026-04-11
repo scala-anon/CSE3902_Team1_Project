@@ -48,5 +48,6 @@ namespace HollowKnight
         {
             Follow(target);
         }
+
     }
 }

@@ -66,6 +66,12 @@
 /processorParam:Quality=Best
 /build:Audio/sfx/Enemy Damage.mp3
 
+#begin Audio/sfx/Fly Flying.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx/Fly Flying.mp3
+
 #begin Audio/sfx/hero_land_soft.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -83,6 +89,12 @@
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:Audio/Music/Hollow Knight OST - Mantis Lords 4.mp3
+
+#begin Audio/Music/EnterHollownest.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/EnterHollownest.mp3
 
 #begin Audio/AudioFiles.xml
 /copy:Audio/AudioFiles.xml
@@ -227,6 +239,12 @@
 
 #begin sprites/mantisLords-atlas.xml
 /copy:sprites/mantisLords-atlas.xml
+
+#begin levels/roomOne.xml
+/copy:levels/roomOne.xml
+
+#begin levels/levelOne.xml
+/copy:levels/levelOne.xml
 
 
 #begin fonts/Credits.spritefont

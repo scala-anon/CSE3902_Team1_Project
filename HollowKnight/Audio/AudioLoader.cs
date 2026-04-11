@@ -1,8 +1,5 @@
 
-using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Reflection.Metadata;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -15,8 +12,6 @@ namespace HollowKnight.Audio
 
         private readonly Dictionary<string, SoundEffect>sfx;
         private readonly Dictionary<string, Song>songs;
-        private Song mantisLords;
-
         private AudioLoader()
         {
             sfx = new Dictionary<string, SoundEffect>();
@@ -67,9 +62,19 @@ namespace HollowKnight.Audio
             return songs[SoundId.MantisLordsMusic];
         }
 
+        public Song Get_Enter_Hollownest()
+        {
+            return songs[SoundId.EnterHollownest];
+        }
+
         #endregion Get Music
 
         #region Get SFX
+
+        public SoundEffect Get_Vengefly_Fly()
+        {
+            return sfx[SoundId.VengeFlyFly];
+        }
 
         public SoundEffect Get_Crawler_Walk()
         {
@@ -86,6 +91,10 @@ namespace HollowKnight.Audio
             return sfx[SoundId.PlayerAttack];
         }
 
+        public SoundEffect Get_Hero_Fireball()
+        {
+            return sfx[SoundId.PlayerFireball];
+        }
         public SoundEffect Get_Hero_Land()
         {
             return sfx[SoundId.PlayerLand];

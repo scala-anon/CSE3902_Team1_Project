@@ -1,3 +1,5 @@
+using System;
+using HollowKnight.Audio;
 using HollowKnight.Interfaces;
 using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
@@ -6,6 +8,7 @@ namespace HollowKnight.Enemies
 {
     public class CrawlidStateMachine
     {
+        private int frameCounter = 0;
         private Crawlid CurrentCrawlid;
         private Direction _movementDirection = Direction.Right;
         private bool _isTurning = false;
@@ -22,6 +25,7 @@ namespace HollowKnight.Enemies
         public void ChangeHealth()
         {
             CurrentCrawlid.Health--;
+            AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Enemy_Damage());
             if (CurrentCrawlid.Health <= 0)
             {
                 CurrentCrawlid.Alive = false;
@@ -36,6 +40,13 @@ namespace HollowKnight.Enemies
             if (!CurrentCrawlid.Alive || CurrentCrawlid.IsDamaged) return;
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+            if (frameCounter % 180 == 0)
+            {
+                AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Crawler_Walk());
+                
+            }
+
+            frameCounter++;
             if (_isTurning)
             {
                 _turnTimer += elapsedTime;

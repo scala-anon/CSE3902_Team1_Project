@@ -54,6 +54,7 @@ public partial class Game1 : Game
 
     protected override void LoadContent()
     {
+        InitializeAudio();
         InitializeRendering();
         InitializeSharedResources();
         InitializeNavigationGrid();
@@ -64,7 +65,7 @@ public partial class Game1 : Game
         InitializePlayerAndProjectiles();
         InitializeCameraAndRooms();
         InitializeControllers();
-        InitializeAudio();
+        
     }
 
     protected override void Update(GameTime gameTime)
