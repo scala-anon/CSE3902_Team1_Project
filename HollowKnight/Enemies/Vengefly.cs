@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using HollowKnight.Factories;
 using HollowKnight.Interfaces;
@@ -6,175 +5,78 @@ using HollowKnight.Shared;
 using HollowKnight.Collision;
 using HollowKnight.Pathfinding;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace HollowKnight.Enemies
 {
-public enum VengeflyState
-{
-    Idle,
-    Startle,
-    Chase,
-    DeathAir,
-    DeathLand
-}
+    public enum VengeflyState { Idle, Startle, Chase, DeathAir, DeathLand }
 
-public class Vengefly : IEnemy
-{
-    private Rectangle[] hitBoxes = new Rectangle[1];
-    private readonly Dictionary<VengeflyState, ISprite> sprites;
-
-    public VengeflyState State { get; set; } = VengeflyState.Idle;
-    public bool Dead { get; set; }
-    public Direction FacingDirection { get; set; } = Direction.Left;
-
-    public int Health { get; set; } = GameConstants.EnemyDefaultHealth;
-    public bool IsDamaged => _isDamaged;
-
-    private bool _isDamaged;
-    private double _damagedTimer;
-    private const double DamagedDuration = GameConstants.EnemyDamagedDuration;
-
-    private Vector2 _knockbackVelocity;
-    private const float KnockbackSpeed = GameConstants.EnemyKnockbackSpeed;
-    private const float KnockbackDecay = GameConstants.EnemyKnockbackDecay;
-    private const float DeathGravity = GameConstants.EnemyDeathGravity;
-    private const float ScreenFloor = GameConstants.ScreenHeight;
-    public bool IsGrounded { get; private set; } = false;
-
-    public Vector2 knightPosition = new Vector2(-9999, -9999);
-
-    private VengeflyStateMachine stateMachine;
-    public ISprite Sprite { get; private set; }
-    public Vector2 position;
-
-    public Vengefly(Vector2 position)
+    public class Vengefly : BaseEnemy
     {
-        this.position = position;
-        sprites = new Dictionary<VengeflyState, ISprite>
+        public VengeflyState State { get; set; } = VengeflyState.Idle;
+        public bool Dead { get; set; }
+        public override bool IsActive => !Dead;
+
+        private readonly Dictionary<VengeflyState, ISprite> sprites;
+        private VengeflyStateMachine stateMachine;
+
+        public Vengefly(Vector2 position)
         {
-            [VengeflyState.Idle] = SpriteFactory.Instance.CreateVengeflyIdleSprite(position),
-            [VengeflyState.Startle] = SpriteFactory.Instance.CreateVengeflyStartleSprite(position),
-            [VengeflyState.Chase] = SpriteFactory.Instance.CreateVengeflyChaseSprite(position),
-            [VengeflyState.DeathAir] = SpriteFactory.Instance.CreateVengeflyDeathAirSprite(position),
-            [VengeflyState.DeathLand] = SpriteFactory.Instance.CreateVengeflyDeathLandSprite(position),
-        };
-        Sprite = sprites[VengeflyState.Idle];
-        stateMachine = new VengeflyStateMachine(this);
-    }
-
-    public void SetState(VengeflyState newState)
-    {
-        State = newState;
-        Sprite = sprites[newState];
-    }
-
-    public void SetKnightPosition(Vector2 knightPosition) => this.knightPosition = knightPosition;
-    public void SetNavigationGrid(NavigationGrid grid) => stateMachine.SetNavigationGrid(grid);
-    public List<Vector2> GetCurrentPath() => stateMachine.GetCurrentPath();
-    public float GetDetectionRadius() => stateMachine.GetDetectionRadius();
-    public void SetPlatform(IObject platform) { } // Flying enemy doesn't need platform
-    public bool IsActive => !Dead;
-    public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, Sprite.Width, Sprite.Height);
-
-    public void ChangeHealth() => stateMachine.ChangeHealth();
-
-    public void Land()
-    {
-        _knockbackVelocity = Vector2.Zero;
-        IsGrounded = true;
-        SetState(VengeflyState.DeathLand);
-    }
-
-    public void TakeDamage() => TakeDamage(CollisionSide.None);
-
-    public void TakeDamage(CollisionSide side)
-    {
-        if (_isDamaged) return;
-        _isDamaged = true;
-        _damagedTimer = 0;
-        switch (side)
-        {
-            case CollisionSide.Left: _knockbackVelocity = new Vector2(-KnockbackSpeed, GameConstants.VengeflyKnockbackUpComponent); break;
-            case CollisionSide.Right: _knockbackVelocity = new Vector2(KnockbackSpeed, GameConstants.VengeflyKnockbackUpComponent); break;
-            case CollisionSide.Top: _knockbackVelocity = new Vector2(0, -GameConstants.VengeflyVerticalKnockbackSpeed); break;
-            case CollisionSide.Bottom: _knockbackVelocity = new Vector2(0, GameConstants.VengeflyVerticalKnockbackSpeed); break;
-        }
-        ChangeHealth();
-    }
-
-    public void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects)
-    {
-        SpriteEffects effects = FacingDirection == Direction.Right ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-        Sprite.Draw(spriteBatch, effects);
-    }
-
-    public void Update(GameTime gameTime)
-    {
-        float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-        if (Dead)
-        {
-            if (!IsGrounded)
+            this.position = position;
+            IsGrounded = false;
+            sprites = new Dictionary<VengeflyState, ISprite>
             {
-                _knockbackVelocity.Y += DeathGravity * dt;
-                _knockbackVelocity.X *= (1f - KnockbackDecay * dt);
-                if (Math.Abs(_knockbackVelocity.X) < GameConstants.KnockbackVelocityThreshold) _knockbackVelocity.X = 0;
-
-                position += _knockbackVelocity * dt;
-
-                float spriteHeight = Sprite.GetSize().Y;
-                if (position.Y + spriteHeight >= ScreenFloor)
-                {
-                    position.Y = ScreenFloor - spriteHeight;
-                    _knockbackVelocity = Vector2.Zero;
-                    IsGrounded = true;
-                    SetState(VengeflyState.DeathLand);
-                }
-            }
-
-            Sprite.SetPosition(position);
-            Sprite.Update(gameTime);
-            return;
+                [VengeflyState.Idle] = SpriteFactory.Instance.CreateVengeflyIdleSprite(position),
+                [VengeflyState.Startle] = SpriteFactory.Instance.CreateVengeflyStartleSprite(position),
+                [VengeflyState.Chase] = SpriteFactory.Instance.CreateVengeflyChaseSprite(position),
+                [VengeflyState.DeathAir] = SpriteFactory.Instance.CreateVengeflyDeathAirSprite(position),
+                [VengeflyState.DeathLand] = SpriteFactory.Instance.CreateVengeflyDeathLandSprite(position),
+            };
+            Sprite = sprites[VengeflyState.Idle];
+            stateMachine = new VengeflyStateMachine(this);
         }
 
-        if (_isDamaged)
+        public void SetState(VengeflyState newState)
         {
-            _damagedTimer += dt;
-            if (_damagedTimer >= DamagedDuration)
+            State = newState;
+            Sprite = sprites[newState];
+        }
+
+        public override void SetNavigationGrid(NavigationGrid grid) => stateMachine.SetNavigationGrid(grid);
+        public override List<Vector2> GetCurrentPath() => stateMachine.GetCurrentPath();
+        public override float GetDetectionRadius() => stateMachine.GetDetectionRadius();
+        public override float GetChaseRadius() => stateMachine.GetChaseRadius();
+        public override string GetStateName() => stateMachine.GetStateName();
+        public void ChangeHealth() => stateMachine.ChangeHealth();
+
+        public void Kill()
+        {
+            if (Dead) return;
+            Health = 0;
+            Dead = true;
+            _isDamaged = false;
+            SetState(VengeflyState.DeathAir);
+        }
+
+        public void Land()
+        {
+            _knockbackVelocity = Vector2.Zero;
+            IsGrounded = true;
+            SetState(VengeflyState.DeathLand);
+        }
+
+        protected override void ApplyKnockback(CollisionSide side)
+        {
+            switch (side)
             {
-                _isDamaged = false;
-                _damagedTimer = 0;
+                case CollisionSide.Left: _knockbackVelocity = new Vector2(-EnemyConstants.EnemyKnockbackSpeed, EnemyConstants.VengeflyKnockbackUpComponent); break;
+                case CollisionSide.Right: _knockbackVelocity = new Vector2(EnemyConstants.EnemyKnockbackSpeed, EnemyConstants.VengeflyKnockbackUpComponent); break;
+                case CollisionSide.Top: _knockbackVelocity = new Vector2(0, -EnemyConstants.VengeflyVerticalKnockbackSpeed); break;
+                case CollisionSide.Bottom: _knockbackVelocity = new Vector2(0, EnemyConstants.VengeflyVerticalKnockbackSpeed); break;
             }
         }
 
-        if (_knockbackVelocity != Vector2.Zero)
-        {
-            position += _knockbackVelocity * dt;
-            _knockbackVelocity *= (1f - KnockbackDecay * dt);
-            if (_knockbackVelocity.Length() < GameConstants.KnockbackVelocityThreshold)
-                _knockbackVelocity = Vector2.Zero;
-        }
-
-        stateMachine.Update(gameTime);
-        Sprite.SetPosition(position);
-        Sprite.Update(gameTime);
+        protected override void OnDeath(bool grounded) => SetState(VengeflyState.DeathLand);
+        protected override void OnHealthChanged() => ChangeHealth();
+        protected override void UpdateAlive(GameTime gameTime, float dt) => stateMachine.Update(gameTime);
     }
-
-    public Rectangle[] GetBounds()
-    {
-        Vector2 size = Sprite.GetSize();
-        hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
-        return hitBoxes;
-    }
-
-    public Rectangle GetHurtbox()
-    {
-        Rectangle[] bounds = GetBounds();
-        bounds[0].Inflate(GameConstants.EnemyHurtboxGrow, GameConstants.EnemyHurtboxGrow);
-        return bounds[0];
-    }
-
-    public string GetStateName() => stateMachine.GetStateName();
-}
 }

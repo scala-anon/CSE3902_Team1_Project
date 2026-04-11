@@ -15,9 +15,9 @@ namespace HollowKnight.Shared
     {
         public override void Update(Game1 game, GameTime gameTime)
         {
+            game.CheckTransitions();
             game.UpdateKnight(gameTime);
             game.UpdateRoom(gameTime);
-            game.UpdateCollisions();
             if (game.KnightIsDead())
             {
                 game.SetGameOver();

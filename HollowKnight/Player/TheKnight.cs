@@ -5,6 +5,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using HollowKnight.Shared;
 using HollowKnight.Collision;
+using HollowKnight.Audio;
+using Microsoft.Xna.Framework.Audio;
+
 
 namespace HollowKnight.Player
 {
@@ -22,23 +25,31 @@ namespace HollowKnight.Player
         private readonly KnightCombat combat = new();
         private readonly KnightHealth health = new();
         private readonly KnightSoul soul = new();
-
+        private readonly KnightDash dash = new();
         private int currentItem;
 
+        private readonly Vector2 baseSize;
+
         public KnightState CurrentState { get; private set; } = KnightState.Idle;
+        public KnightProjectile Projectiles { get; set; }
 
         public bool IsActive => true;
-        public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, currentSprite.Width, currentSprite.Height);
-        public float VelocityY => physics.Velocity.Y;
+        public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, (int)baseSize.X, (int)baseSize.Y);
+        public float VelocityY => physics.VelocityY;
+
+        private Vector2 benchSpawnPoint;
 
         public TheKnight(Dictionary<KnightSpriteType, ISprite> sprites, Vector2 position)
         {
             this.sprites = sprites;
             this.position = position;
+            benchSpawnPoint = position;
 
             currentSpriteType = KnightSpriteType.Idle;
             currentSprite = this.sprites[currentSpriteType];
             currentSprite.SetPosition(position);
+
+            baseSize = this.sprites[KnightSpriteType.Idle].GetSize();
         }
 
         public void Update(GameTime gameTime)
@@ -47,6 +58,8 @@ namespace HollowKnight.Player
 
             // Update subsystems
             physics.Update(dt);
+            if (combat.IsCastPulseActive)
+                physics.StopMovingVertical();
             position += physics.Velocity * dt;
 
             // Absorb sub-pixel gravity drift when grounded to prevent vertical jitter
@@ -55,8 +68,8 @@ namespace HollowKnight.Player
 
             health.Update(gameTime);
             combat.Update(gameTime, position, Facing, currentSprite);
+            dash.Update(gameTime.ElapsedGameTime.TotalSeconds);
 
-            // Resolve game state and animation state together
             if (health.IsHealing)
             {
                 CurrentState = KnightState.Healing;
@@ -70,17 +83,29 @@ namespace HollowKnight.Player
                 CurrentState = KnightState.Attacking;
                 currentSpriteType = combat.AttackType;
             }
+            else if (dash.IsDashing)
+            {
+                CurrentState = KnightState.Dashing;
+                currentSpriteType = KnightSpriteType.Dashing;
+                physics.ApplyDashVelocity(dash.GetDashDirection());
+                physics.ZeroVerticalVelocity();
+            }
             else if (health.IsDamaged)
             {
                 CurrentState = KnightState.Damaged;
                 currentSpriteType = KnightSpriteType.Damaged;
             }
+            else if (combat.IsCastPulseActive)
+            {
+                CurrentState = KnightState.Spellcasting;
+                currentSpriteType = KnightSpriteType.SpiritCast;
+            }
             else if (!physics.IsGrounded)
             {
-                CurrentState = physics.Velocity.Y > 0 ? KnightState.Falling : KnightState.Jumping;
+                CurrentState = physics.IsFalling ? KnightState.Falling : KnightState.Jumping;
                 currentSpriteType = KnightSpriteType.Jumping;
             }
-            else if (physics.Velocity.X != 0)
+            else if (physics.IsMovingHorizontally)
             {
                 CurrentState = KnightState.Running;
                 currentSpriteType = KnightSpriteType.Walking;
@@ -91,28 +116,49 @@ namespace HollowKnight.Player
                 currentSpriteType = KnightSpriteType.Idle;
             }
 
+            // Stop movement when dash ends
+            if (dash.DashEnded())
+            {
+                physics.StopMovingHorizontal();
+            }
+
             currentSprite = sprites[currentSpriteType];
-            currentSprite.SetPosition(position);
+            
+            // Align the visual sprite's bottom to match the fixed hitbox bottom, keeping feet on the ground
+            Vector2 currentSize = currentSprite.GetSize();
+            float spriteOffsetY = baseSize.Y - currentSize.Y;
+            
+            currentSprite.SetPosition(new Vector2(position.X, position.Y + spriteOffsetY));
             currentSprite.Update(gameTime);
         }
 
         public Rectangle[] GetBounds()
         {
-            Vector2 size = currentSprite.GetSize();
-            hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
+            // Lock hitbox size to baseSize to prevent physics jitter during animation state changes
+            hitBoxes[0] = new Rectangle(
+                (int)position.X + CollisionConstants.KnightHitboxOffsetX,
+                (int)position.Y + CollisionConstants.KnightHitboxOffsetY,
+                (int)baseSize.X - CollisionConstants.KnightHitboxWidthShrink,
+                (int)baseSize.Y - CollisionConstants.KnightHitboxHeightShrink
+            );
             return hitBoxes;
         }
 
         public Rectangle GetHurtbox()
         {
             Rectangle[] bounds = GetBounds();
-            bounds[0].Inflate(-GameConstants.KnightHurtboxShrink, -GameConstants.KnightHurtboxShrink);
+            bounds[0].Inflate(-CollisionConstants.KnightHurtboxShrink, -CollisionConstants.KnightHurtboxShrink);
             return bounds[0];
         }
 
         public string GetStateName() => CurrentState.ToString();
         public double GetAttackCooldownRemaining() => combat.GetCooldownRemaining();
         public double GetInvincibilityCooldownRemaining() => health.GetInvincibilityCooldownRemaining();
+        public double GetDashCooldownRemaining() => dash.GetDashCooldownRemaining();
+        public double GetHealCooldownRemaining() => health.GetHealCooldownRemaining();
+        public double GetCastCooldownRemaining() => combat.GetCastCooldownRemaining();
+        public int Soul => health.Soul;
+        public void GainSoul() => health.GainSoul();
 
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -121,12 +167,13 @@ namespace HollowKnight.Player
                 : SpriteEffects.FlipHorizontally;
             currentSprite.Draw(spriteBatch, effects);
             combat.DrawSlashEffect(spriteBatch, Facing);
+            combat.DrawCastPulseEffect(spriteBatch, Facing);
         }
 
         // --- Movement ---
         public void MoveRight()
         {
-            if (combat.IsAttacking) return;
+            if (combat.IsAttacking || dash.IsDashing || combat.IsCastPulseActive) return;
             health.CancelHeal();
             Facing = Direction.Right;
             physics.MoveRight();
@@ -134,7 +181,7 @@ namespace HollowKnight.Player
 
         public void MoveLeft()
         {
-            if (combat.IsAttacking) return;
+            if (combat.IsAttacking || dash.IsDashing || combat.IsCastPulseActive) return;
             health.CancelHeal();
             Facing = Direction.Left;
             physics.MoveLeft();
@@ -145,8 +192,21 @@ namespace HollowKnight.Player
 
         public void Jump()
         {
+            if (dash.IsDashing) return;
+            if (!physics.IsGrounded) return;
             health.CancelHeal();
-            physics.Jump();
+            if (physics.Jump())
+            {
+                AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Hero_Jump());
+                dash.OnJump();
+            }
+        }
+
+        public void StartDash()
+        {
+            health.CancelHeal();
+            AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Hero_Dash());
+            dash.StartDash(Facing, physics.IsGrounded);
         }
 
         public void StopJump()
@@ -156,23 +216,33 @@ namespace HollowKnight.Player
 
         public void StopMovingHorizontal() => physics.StopMovingHorizontal();
         public void StopMovingVertical() => physics.StopMovingVertical();
-        public void Land() => physics.Land();
+        public void Land()
+        {
+            physics.Land();
+            dash.OnLanded();
+        }
+
+        public void SetAirborne() => physics.SetAirborne();
 
         // --- Combat ---
         public void SideSlash()
         {
+            if (dash.IsDashing) return;
             health.CancelHeal();
+            
             combat.TryStartAttack(KnightSpriteType.SideSlash, position, physics.IsGrounded);
         }
 
         public void UpSlash()
         {
+            if (dash.IsDashing) return;
             health.CancelHeal();
             combat.TryStartAttack(KnightSpriteType.UpSlash, position, physics.IsGrounded);
         }
 
         public void DownSlash()
         {
+            if (dash.IsDashing) return;
             health.CancelHeal();
             combat.TryStartAttack(KnightSpriteType.DownSlash, position, physics.IsGrounded);
         }
@@ -185,8 +255,21 @@ namespace HollowKnight.Player
         public void TakeDamage(CollisionSide side)
         {
             if (!health.TakeDamage()) return;
+            AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Hero_Take_Damage());
             Console.WriteLine("Knight took damage from " + side + " side");
-            physics.ApplyKnockback(side);
+            dash.CancelDash();
+            
+            if (health.Health == 0)
+            {
+                Console.WriteLine("Knight died. Respawning at most recent bench.");
+                SetPosition(benchSpawnPoint);
+                physics.Velocity = Vector2.Zero;
+                health.ResetHealth();
+            }
+            else
+            {
+                physics.ApplyKnockback(side);
+            }
         }
 
         public int GetHealth() => health.Health;
@@ -197,8 +280,29 @@ namespace HollowKnight.Player
         public bool IsDead() => health.Health <= 0;
         public void GainSoul(int amount) => soul.AddSoul(amount);
 
-        public void StartHeal() => health.StartHeal(combat.IsAttacking, physics.IsGrounded);
+        public void StartHeal()
+        {
+            if (dash.IsDashing) return;
+            health.StartHeal(combat.IsAttacking, physics.IsGrounded);
+        }
         public void CancelHeal() => health.CancelHeal();
+
+        // --- Spells ---
+        public void CastSpell()
+        {
+            if (health.Soul < KnightConstants.KnightSpellCastSoulCost) { Console.WriteLine("Not enough soul to cast spell"); return; }
+            if (!combat.TryStartCastPulse(position)) return;
+            sprites[KnightSpriteType.SpiritCast].Reset();
+            health.ConsumeSoul(KnightConstants.KnightSpellCastSoulCost);
+            Console.WriteLine("Casting spell! Remaining soul: " + health.Soul);
+            physics.ApplyCastKnockback(Facing);
+            Projectiles?.Fire();
+        }
+
+        public void GiveFullSoul()
+        {
+            health.GiveFullSoul();
+        }
 
         // --- Items ---
         public void UseItem(int itemNumber)

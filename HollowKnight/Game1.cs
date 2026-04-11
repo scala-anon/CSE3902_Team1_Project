@@ -54,6 +54,7 @@ public partial class Game1 : Game
 
     protected override void LoadContent()
     {
+        InitializeAudio();
         InitializeRendering();
         InitializeSharedResources();
         InitializeNavigationGrid();
@@ -64,10 +65,15 @@ public partial class Game1 : Game
         InitializePlayerAndProjectiles();
         InitializeCameraAndRooms();
         InitializeControllers();
+        
     }
 
     protected override void Update(GameTime gameTime)
     {
+        // Collisions first so IsGrounded is current when input checks it
+        if (_gameState is PlayingState)
+            UpdateCollisions();
+
         UpdateControllers(gameTime);
 
         if (_restartRequested)
@@ -79,7 +85,7 @@ public partial class Game1 : Game
         }
 
         _gameState.Update(this, gameTime);
-
+        UpdateAudio();
         base.Update(gameTime);
     }
 

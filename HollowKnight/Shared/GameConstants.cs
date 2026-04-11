@@ -3,21 +3,21 @@ namespace HollowKnight.Shared
     public static class GameConstants
     {
         // Screen
-        public const int ScreenWidth = 1440;
-        public const int ScreenHeight = 810;
+        public const int ScreenWidth = 1920;
+        public const int ScreenHeight = 1080;
 
         // Level
-        public const int DefaultLevelWidth = 9500;
-        public const int DefaultLevelHeight = 720;
+        public const int DefaultLevelWidth = 7000;
+        public const int DefaultLevelHeight = 3400;
 
         // Knight — Physics
-        public const float KnightMoveSpeed = 250f; //prev 200
+        public const float KnightMoveSpeed = 250f;
         public const float KnightJumpSpeed = -700f;
         public const float KnightGravity = 900f;
         public const float KnightKnockbackSpeed = 250f;
         public const float KnightKnockbackUpwards = -300f;
         public const float KnightKnockbackDuration = 0.3f;
-        public const float KnightKnockbackTimer = 0f; // Start at max so not in knockback
+        public const float KnightKnockbackTimer = 0f;
 
         // Knight — Combat
         public const double KnightAttackDuration = 0.25;
@@ -45,27 +45,22 @@ namespace HollowKnight.Shared
         public const int EnemyDefaultHealth = 3;
 
         // Crawlid
-        public const float CrawlidPatrolSpeed = 175f; //prev 120
+        public const float CrawlidPatrolSpeed = 175f;
         public const float CrawlidTurnDuration = 0.08f;
 
         // Vengefly
         public const float VengeflyDetectionRadius = 500f;
-        public const float VengeflyPatrolSpeed = 95f; //prev 75
-        public const float VengeflyChaseSpeed = 130f; //prev 100
+        public const float VengeflyPatrolSpeed = 95f;
+        public const float VengeflyChaseSpeed = 130f;
         public const double VengeflyStartleDuration = 0.5;
         public const float VengeflyPathUpdateInterval = 0.3f;
         public const float VengeflyKnockbackUpComponent = -150f;
-        public const float VengeflyVerticalKnockbackSpeed = 250f; //used for death
+        public const float VengeflyVerticalKnockbackSpeed = 250f;
 
-        // Navigation
-        public const int NavGridCellSize = 12;
-        public const float PathReachedThreshold = 10f;
-
-        //Damage
+        // Damage
         public const int KnightDamage = 1;
         public const int CrawlidDamage = 1;
         public const int VengeflyDamage = 1;
-        public const int SpikeDamage = 1;
 
         // Sword Hitbox Dimensions
         public const int SideSlashWidth = 160;
@@ -75,7 +70,7 @@ namespace HollowKnight.Shared
         public const int DownSlashWidth = 90;
         public const int DownSlashHeight = 120;
 
-        // Slash Effect Positioning (divisors for fractional offset)
+        // Slash Effect Positioning
         public const float SlashEffectRightDivisor = 7f;
         public const float SlashEffectLeftDivisor = 5f;
         public const float SlashEffectYDivisor = 10f;
@@ -107,15 +102,36 @@ namespace HollowKnight.Shared
         public const int SpikeCeilingSecondaryW = 115;
         public const int SpikeCeilingSecondaryH = 60;
 
+        // Navigation
+        public const int NavGridCellSize = 12;
+        public const int NavGridDefaultCellSize = 32;
+        public const float NavGridOverlayOpacity = 0.2f;
+        public const float PathReachedThreshold = 10f;
+
         // Physics Thresholds
         public const float JumpMomentumCut = 0.5f;
         public const float KnockbackVelocityThreshold = 1f;
         public const int GroundProbeExtension = 1;
+
+        // Environment Damage
+        public const int SpikeDamage = 1;
+        public const int InvalidPositionSentinel = -9999;
+
+        // Projectile — Base
+        public const int ProjectileDefaultSize = 12;
+        public const int ProjectileDefaultDamage = 1;
+        public const float ProjectileAntiTunnelingStep = 5f;
 
         // Audio
         public const float NoVolume = 0.0f;
         public const float MaxVolume = 1.0f;
         public const float Pan = 0.0f;
         public const float Pitch = 0.0f;
+        public const float SongVolume = 0.1f;
+
+        // A* Pathfinding
+        public const int AStarMaxIterations = 1000;
+        public const int AStarStraightMoveCost = 10;
+        public const int AStarDiagonalMoveCost = 14;
     }
 }

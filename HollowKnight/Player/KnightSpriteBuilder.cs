@@ -22,6 +22,7 @@ namespace HollowKnight.Player
                 [KnightSpriteType.HealPrep] = SpriteFactory.Instance.CreateKnightHealPrepSprite(position),
                 [KnightSpriteType.HealPost] = SpriteFactory.Instance.CreateKnightHealPostSprite(position),
                 [KnightSpriteType.SpiritCast] = SpriteFactory.Instance.CreateSpiritCastSprite(position),
+                [KnightSpriteType.Dashing] = SpriteFactory.Instance.CreateKnightDashSprite(position),
 
             };
         }

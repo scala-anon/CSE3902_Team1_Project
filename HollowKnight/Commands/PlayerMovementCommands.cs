@@ -58,4 +58,22 @@ namespace HollowKnight.Commands
         public PlayerStopMovingVerticalCommand(TheKnight knight) { _knight = knight; }
         public void Execute() => _knight.StopMovingVertical();
     }
+
+    public class PlayerStopMovingCommand : ICommand
+    {
+        private readonly TheKnight _knight;
+        public PlayerStopMovingCommand(TheKnight knight) { _knight = knight; }
+        public void Execute()
+        {
+            _knight.StopMovingHorizontal();
+            _knight.StopMovingVertical();
+        }
+    }
+
+    public class PlayerDashCommand : ICommand
+    {
+        private readonly TheKnight _knight;
+        public PlayerDashCommand(TheKnight knight) { _knight = knight; }
+        public void Execute() => _knight.StartDash();
+    }
 }

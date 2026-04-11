@@ -11,11 +11,14 @@ using HollowKnight.Pathfinding;
 using HollowKnight.Shared;
 using HollowKnight.Graphics;
 using HollowKnight.Abilities;
+using HollowKnight.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace HollowKnight;
 
 public partial class Game1
 {
+    private Camera camera;
     private void InitializeRendering()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -26,6 +29,13 @@ public partial class Game1
     private void InitializeSharedResources()
     {
         SpriteFactory.Instance.LoadAllTextures(Content);
+    }
+
+    private void InitializeAudio()
+    {
+        AudioLoader.Instance.loadAudio(Content);
+        Song music = AudioLoader.Instance.Get_Enter_Hollownest();
+        AudioManager.Instance.PlaySong(music);
     }
 
     private void InitializeNavigationGrid()
@@ -44,10 +54,26 @@ public partial class Game1
         _items.Add(new Spirit(new Vector2(-100, -100)));
     }
 
+    private const string Room1 = "Content/levels/roomOne.xml";
+    private const string Room2 = "Content/levels/roomTwo.xml";
+
+    private int _currentRoom = 1;
+
     private void InitializeLevel()
     {
         _level = new LevelLoader();
-        _level.Load("Content/levels/levelOne.xml");
+        _level.Load(Room1);
+        _currentRoom = 1;
+        LoadObstacles();
+    }
+
+    public void TransitionToRoom(int roomNumber)
+    {
+        _level = new LevelLoader();
+        _level.Load(roomNumber == 1 ? Room1 : Room2);
+        _currentRoom = roomNumber;
+
+        _knight.SetPosition(_level.KnightSpawn);
         LoadObstacles();
     }
 
@@ -73,6 +99,7 @@ public partial class Game1
         var sprites = KnightSpriteBuilder.BuildKnightSprites(_level.KnightSpawn);
         _knight = new TheKnight(sprites, _level.KnightSpawn);
         _knightProjectile = new KnightProjectile(_knight, _projectileSpawner);
+        _knight.Projectiles = _knightProjectile;
     }
 
     private void InitializeCameraAndRooms()
@@ -93,6 +120,8 @@ public partial class Game1
             screenHeight,
             GameConstants.DefaultLevelWidth,
             GameConstants.DefaultLevelHeight);
+
+            camera = _camera;
     }
 
     private void InitializeControllers()

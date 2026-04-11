@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using HollowKnight.Shared;
 
 namespace HollowKnight.Collision
 {
@@ -13,12 +14,12 @@ namespace HollowKnight.Collision
         private static SpriteFont _font;
         public static bool hitboxEnabled { get; set; } = false;
 
-        public static readonly Color ColorKnight      = Color.DodgerBlue;
-        public static readonly Color ColorEnemy       = Color.OrangeRed;
-        public static readonly Color ColorEnvironment = Color.LimeGreen;
-        public static readonly Color ColorTrigger     = Color.Yellow;
-        public static readonly Color ColorMidpoint    = Color.Magenta;
-        public static readonly Color ColorSword       = Color.Cyan;
+        public static readonly Color ColorKnight      = CollisionConstants.DebugColorKnight;
+        public static readonly Color ColorEnemy       = CollisionConstants.DebugColorEnemy;
+        public static readonly Color ColorEnvironment = CollisionConstants.DebugColorEnvironment;
+        public static readonly Color ColorTrigger     = CollisionConstants.DebugColorTrigger;
+        public static readonly Color ColorMidpoint    = CollisionConstants.DebugColorMidpoint;
+        public static readonly Color ColorSword       = CollisionConstants.DebugColorSword;
 
         /// <summary>
         /// Creates the internal 1x1 pixel texture.
@@ -40,13 +41,23 @@ namespace HollowKnight.Collision
         {
             if(!hitboxEnabled || _font ==null) return;
             Rectangle bounds = obj.GetBounds()[0];
-            spriteBatch.DrawString(_font, label, new Vector2(bounds.Left, bounds.Top -16 ), Color.White); //16 for offset above hitbox
+            spriteBatch.DrawString(_font, label, new Vector2(bounds.Left, bounds.Top - CollisionConstants.DebugTextOffsetY), Color.White);
         }
 
         public static void DrawText(SpriteBatch spriteBatch, string text, Vector2 position, Color color)
         {
             if (!hitboxEnabled || _font == null) return;
             spriteBatch.DrawString(_font, text, position, color);
+        }
+
+        public static void DrawOverlayText(SpriteBatch spriteBatch, string text, Vector2 position, Color color, float scale = 1f)
+        {
+            if (_font == null) return;
+            Vector2 size = _font.MeasureString(text) * scale;
+            Vector2 centered = new Vector2(
+                (spriteBatch.GraphicsDevice.Viewport.Width - size.X) / 2,
+                (spriteBatch.GraphicsDevice.Viewport.Height - size.Y) / 3);
+            spriteBatch.DrawString(_font, text, centered, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
         }
 
 
@@ -76,11 +87,11 @@ namespace HollowKnight.Collision
             }
         }
 
-        public static void DrawRadius(SpriteBatch spriteBatch, Vector2 center, float radius, Color color, int segments = 32) //more segments -> smoother circle (expensive to draw)
+        public static void DrawRadius(SpriteBatch spriteBatch, Vector2 center, float radius, Color color, int segments = CollisionConstants.DebugCircleSegments)
         {
             if(!hitboxEnabled || _pixel == null) return;
 
-            float step = MathHelper.TwoPi / segments; //angle between each segment in radians
+            float step = MathHelper.TwoPi / segments;
             for(int i=0; i<segments; i++)
             {
                 //find endpoints of a segment on circle, then draw a line between them
@@ -121,23 +132,21 @@ namespace HollowKnight.Collision
         {
             foreach (Rectangle rectangle in rect)
             {
-                const int BorderThickness = 2;
+                spriteBatch.Draw(_pixel, rectangle, color * 0.25f);
 
-            spriteBatch.Draw(_pixel, rectangle, color * 0.25f);
-
-            // Solid border
-            spriteBatch.Draw(_pixel, new Rectangle(rectangle.Left, rectangle.Top, rectangle.Width, BorderThickness), color);
-            spriteBatch.Draw(_pixel, new Rectangle(rectangle.Left, rectangle.Bottom - BorderThickness,rectangle.Width, BorderThickness), color);
-            spriteBatch.Draw(_pixel, new Rectangle(rectangle.Left, rectangle.Top, BorderThickness, rectangle.Height), color);
-            spriteBatch.Draw(_pixel, new Rectangle(rectangle.Right - BorderThickness, rectangle.Top, BorderThickness,rectangle.Height),color);
+                // Solid border
+                spriteBatch.Draw(_pixel, new Rectangle(rectangle.Left, rectangle.Top, rectangle.Width, CollisionConstants.DebugBorderThickness), color);
+                spriteBatch.Draw(_pixel, new Rectangle(rectangle.Left, rectangle.Bottom - CollisionConstants.DebugBorderThickness, rectangle.Width, CollisionConstants.DebugBorderThickness), color);
+                spriteBatch.Draw(_pixel, new Rectangle(rectangle.Left, rectangle.Top, CollisionConstants.DebugBorderThickness, rectangle.Height), color);
+                spriteBatch.Draw(_pixel, new Rectangle(rectangle.Right - CollisionConstants.DebugBorderThickness, rectangle.Top, CollisionConstants.DebugBorderThickness, rectangle.Height), color);
             }
-            
         }
 
-        public static void DrawPoint(SpriteBatch spriteBatch, Vector2 center, Color color, int size = 6)
+        public static void DrawPoint(SpriteBatch spriteBatch, Vector2 center, Color color, int size = CollisionConstants.DebugPointDefaultSize)
         {
             if(!hitboxEnabled || _pixel == null) return;
-            spriteBatch.Draw(_pixel, new Rectangle((int)(center.X - size/2), (int)(center.Y - size/2), size, size), color);
+            int halfSize = size / 2;
+            spriteBatch.Draw(_pixel, new Rectangle((int)(center.X - halfSize), (int)(center.Y - halfSize), size, size), color);
         }
     }
 }

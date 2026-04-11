@@ -1,3 +1,4 @@
+using HollowKnight.Audio;
 using HollowKnight.Player;
 using HollowKnight.Projectiles;
 using HollowKnight.Shared;
@@ -11,8 +12,6 @@ namespace HollowKnight.Player
         private readonly ProjectileSpawner _spawner;
 
         private float _projectileTimer = 0f;
-        private readonly float _projectileInterval = 2f;
-        private readonly float _projectileSpeed = 400f;
 
         public KnightProjectile(TheKnight knight, ProjectileSpawner spawner)
         {
@@ -22,26 +21,21 @@ namespace HollowKnight.Player
 
         public void Update(GameTime gameTime)
         {
-            _projectileTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            if (_projectileTimer >= _projectileInterval)
-            {
-                _projectileTimer = 0f;
-                Fire();
-            }
+            // Projectiles now fired with the Fire() method
         }
 
         public void Fire()
         {
+            AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Hero_Fireball());
             Vector2 direction = _knight.Facing == Direction.Right
                 ? new Vector2(1f, 0f)
                 : new Vector2(-1f, 0f);
 
             Vector2 spawn = _knight.Facing == Direction.Right
-                ? new Vector2(_knight.Bounds.Right, _knight.Bounds.Top + _knight.Bounds.Height / 2f)
-                : new Vector2(_knight.Bounds.Left - 12f, _knight.Bounds.Top + _knight.Bounds.Height / 2f);
+                ? new Vector2(_knight.Bounds.Right - KnightConstants.KnightProjectileSpawnOffsetRight, _knight.Bounds.Top + _knight.Bounds.Height / 2f)
+                : new Vector2(_knight.Bounds.Left - KnightConstants.KnightProjectileSpawnOffsetLeft, _knight.Bounds.Top + _knight.Bounds.Height / 2f);
 
-            _spawner.Spawn(spawn, direction, _projectileSpeed, ProjectileFaction.Player);
+            _spawner.Spawn(spawn, direction, KnightConstants.KnightProjectileSpeed, ProjectileFaction.Player);
         }
     }
 }

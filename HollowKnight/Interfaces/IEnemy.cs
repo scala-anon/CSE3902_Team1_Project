@@ -22,8 +22,9 @@ public interface IEnemy : ICollidable
     Rectangle GetHurtbox(); // hitbox for taking/dealing damage
 
     float GetDetectionRadius(); //Detection radius for different enemy states
+    float GetChaseRadius(); //Chase radius for tracking out-of-range
 
-    void TakeDamage();
-    void TakeDamage(CollisionSide side);
+    bool TakeDamage();
+    bool TakeDamage(CollisionSide side);
     void SetPlatform(IObject platform);
 }

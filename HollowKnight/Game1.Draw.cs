@@ -16,15 +16,32 @@ public partial class Game1
 
     private void DrawWorld()
     {
-        _spriteBatch.Begin(transformMatrix: _camera.GetTransform());
+        // Layer 1: Backgrounds (behind everything, no interaction)
+        _spriteBatch.Begin(
+                samplerState: SamplerState.PointClamp,
+                transformMatrix: _camera.GetTransform());
+        DrawBackgrounds();
+        _spriteBatch.End();
 
-        DrawKnight();
+        // Layer 2: Platforms, enemies, knight, projectiles, items
+        _spriteBatch.Begin(
+                samplerState: SamplerState.PointClamp,
+                transformMatrix: _camera.GetTransform());
         DrawPlatforms();
         DrawEnemies();
+        DrawProjectiles();
         DrawItems();
+        DrawKnight();
         DrawDebugOverlay();
-
         _spriteBatch.End();
+    }
+
+    private void DrawBackgrounds()
+    {
+        foreach (IObject bg in _level.Backgrounds)
+        {
+            bg.Draw(_spriteBatch, SpriteEffects.None);
+        }
     }
 
     private void DrawKnight()
@@ -62,6 +79,14 @@ public partial class Game1
         }
     }
 
+    private void DrawProjectiles()
+    {
+        foreach (var p in _projectileManager.All)
+        {
+            p.Draw(_spriteBatch, Direction.Right);
+        }
+    }
+
     private void DrawDebugOverlay()
     {
         _debugOverlay.Draw(
@@ -77,6 +102,8 @@ public partial class Game1
 
     private void DrawOverlay()
     {
+        if (_gameState is PlayingState) return;
+
         _spriteBatch.Begin();
 
         if (_gameState.ShowsHealthHud)

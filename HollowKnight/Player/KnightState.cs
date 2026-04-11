@@ -6,7 +6,9 @@ namespace HollowKnight.Player
         Running,
         Jumping,
         Falling,
-        Attacking,
+        Attacking, //for nail atttack
+        Spellcasting, //for fireball
+        Dashing,
         Healing,
         Damaged,
         Dead
