@@ -53,13 +53,6 @@ public partial class Game1
 
     private const string Room1 = "Content/levels/roomOne.xml";
     private const string Room2 = "Content/levels/roomTwo.xml";
-    // private void InitializeLevel()
-    // {
-    //     _level = new LevelLoader();
-    //     _level.Load(Room1);
-    //     _level.Load(Room2);
-    //     LoadObstacles();
-    // }
 
     private int _currentRoom = 1;
 

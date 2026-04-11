@@ -16,7 +16,7 @@ namespace HollowKnight.Environment
 
         public override Rectangle[] GetBounds()
         {
-            hitBoxes[0] = new Rectangle(0, 0, 0,0);
+            hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, 100, 32);
             return hitBoxes;
         }
     }
