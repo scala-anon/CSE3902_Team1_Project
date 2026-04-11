@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas>
+	<Texture>sprites/MantisVillageAssets</Texture>
+	<Regions>
+		<!-- Generated Regions -->
+        <Region name="Brick_1" x="4179" y="62" width="272" height="62" />
+        <Region name="Brick_2" x="4511" y="73" width="122" height="39" />
+        <Region name="Brick_3" x="4214" y="195" width="274" height="132" />
+        <Region name="Brick_4" x="4488" y="161" width="227" height="61" />
+        <Region name="Brick_5" x="4448" y="161" width="345" height="139" />
+        <Region name="Brick_6" x="4503" y="317" width="197" height="127" />
+        <Region name="Brick_7" x="4826" y="37" width="81" height="302" />
+        <Region name="Brick_8" x="4782" y="375" width="78" height="280" />
+
+        <Region name="MantisThrone_1" x="5129" y="1413" width="119" height="613" />
+        <Region name="MantisThrone_2" x="5153" y="269" width="112" height="374" />
+
+        <Region name="Floor_1" x="5387" y="797" width="249" height="141" />
+        <Region name="Floor_2" x="5731" y="803" width="249" height="141" />
+        <Region name="Floor_3" x="4586" y="2547" width="625" height="141" />
+
+        <Region name="Flag_1" x="4443" y="729" width="119" height="622" />
+        <Region name="Flag_2" x="4688" y="723" width="102" height="622" />
+        <Region name="Flag_3" x="4906" y="719" width="121" height="621" />
+        <Region name="Flag_4" x="5122" y="720" width="104" height="621" />
+
+        <Region name="Village_1" x="4352" y="1496" width="243" height="507" />
+        <Region name="Village_2" x="4717" y="1509" width="262" height="511" />
+        <Region name="Village_3" x="5378" y="1537" width="161" height="520" />
+    </Regions>
+</TextureAtlas>

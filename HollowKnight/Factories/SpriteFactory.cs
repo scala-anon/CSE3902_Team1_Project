@@ -18,6 +18,7 @@ namespace HollowKnight.Factories
         private Texture2D spellsSpriteSheet;
         private Texture2D backgroundSpriteSheet;
         private Texture2D mantisLordSpriteSheet;
+        private Texture2D mantisVillageSpriteSheet;
 
         private SpriteFont defaultFont;
 
@@ -36,6 +37,7 @@ namespace HollowKnight.Factories
 
         private readonly Dictionary<string, Rectangle> mantisLordFrames;
         private readonly Dictionary<string, Rectangle[]> mantisLordAnimations;
+        private readonly Dictionary<string, Rectangle> mantisVillageFrames;
 
         private static SpriteFactory instance = new SpriteFactory();
 
@@ -58,6 +60,7 @@ namespace HollowKnight.Factories
             backgroundFrames = new Dictionary<string, Rectangle>();
             mantisLordFrames = new Dictionary<string, Rectangle>();
             mantisLordAnimations = new Dictionary<string, Rectangle[]>();
+            mantisVillageFrames = new Dictionary<string, Rectangle>();
         }
 
         public void LoadAllTextures(ContentManager content)
@@ -72,12 +75,14 @@ namespace HollowKnight.Factories
             TextureAtlas tutorialPlatformAtlas = TextureAtlas.FromFile(content, "sprites/tutorial-platform-atlas.xml");
             TextureAtlas backgroundAtlas = TextureAtlas.FromFile(content, "sprites/background-atlas.xml");
             TextureAtlas mantisLordAtlas = TextureAtlas.FromFile(content, "sprites/mantisLords-atlas.xml");
+            TextureAtlas mantisVillageAtlas = TextureAtlas.FromFile(content,"sprites/village-atlas.xml");
             enemySpriteSheet = enemyAtlas.Texture;
             platformSpriteSheet = platformAtlas.Texture;
             tutorialPlatformSpriteSheet = tutorialPlatformAtlas.Texture;
             spellsSpriteSheet = spiritAttacksAtlas.Texture;
             backgroundSpriteSheet = backgroundAtlas.Texture;
             mantisLordSpriteSheet = mantisLordAtlas.Texture;
+            mantisVillageSpriteSheet = mantisVillageAtlas.Texture;
             // Knight movement frames
             knightSingleFrames.Add("Damaged", knightAtlas.GetRegion("Damaged").SourceRectangle);
             
@@ -167,6 +172,32 @@ namespace HollowKnight.Factories
             mantisLordAnimations.Add("Death", mantisLordAtlas.GetAnimationFrames("Death"));
             mantisLordAnimations.Add("Death_Leave_One", mantisLordAtlas.GetAnimationFrames("Death_Leave_One"));
             mantisLordAnimations.Add("Death_Leave_Two", mantisLordAtlas.GetAnimationFrames("Death_Leave_Two"));
+
+            for (int i = 1; i <= 8; i++)
+            {
+                string key = $"Brick_{i}";
+                mantisVillageFrames.Add(key, mantisVillageAtlas.GetRegion(key).SourceRectangle);
+            }
+            for (int i = 1; i <= 2; i++)
+            {
+                string key = $"MantisThrone_{i}";
+                mantisVillageFrames.Add(key, mantisVillageAtlas.GetRegion(key).SourceRectangle);
+            }
+            for (int i = 1; i <= 3; i++)
+            {
+                string key = $"Floor_{i}";
+                mantisVillageFrames.Add(key, mantisVillageAtlas.GetRegion(key).SourceRectangle);
+            }
+            for (int i = 1; i <= 4; i++)
+            {
+                string key = $"Flag_{i}";
+                mantisVillageFrames.Add(key, mantisVillageAtlas.GetRegion(key).SourceRectangle);
+            }
+            for (int i = 1; i <= 3; i++)
+            {
+                string key = $"Village_{i}";
+                mantisVillageFrames.Add(key, mantisVillageAtlas.GetRegion(key).SourceRectangle);
+            }
         }
 
         // Consolidated platform factory methods
@@ -483,6 +514,66 @@ namespace HollowKnight.Factories
         public ISprite CreateMantisDeathLeaveTwo(Vector2 position)
         {
             return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Death_Leave_Two"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateBrickSprite(int variant, Vector2 position)
+        {
+            string key = variant switch
+            {
+                1 => "Brick_1",
+                2 => "Brick_2",
+                3 => "Brick_3",
+                4 => "Brick_4",
+                5 => "Brick_5",
+                6 => "Brick_6",
+                7 => "Brick_7",
+                8 => "Brick_8",
+                _ => "Brick_1"
+            };
+            return new StaticSprite(mantisVillageSpriteSheet, mantisVillageFrames[key], position, 1.0f);
+        }
+        public ISprite CreateMantisThroneSprite(int variant, Vector2 position)
+        {
+            string key = variant switch
+            {
+                1 => "MantisThrone_1",
+                2 => "MantisThrone_2",
+                _ => "MantisThrone_1"
+            };
+            return new StaticSprite(mantisVillageSpriteSheet, mantisVillageFrames[key], position, 1.0f);
+        }
+        public ISprite CreateFloorSprite(int variant, Vector2 position)
+        {
+            string key = variant switch
+            {
+                1 => "Floor_1",
+                2 => "Floor_2",
+                3 => "Floor_3",
+                _ => "Floor_1"
+            };
+            return new StaticSprite(mantisVillageSpriteSheet, mantisVillageFrames[key], position, 1.0f);
+        }
+        public ISprite CreateFlagSprite(int variant, Vector2 position)
+        {
+            string key = variant switch
+            {
+                1 => "Flag_1",
+                2 => "Flag_2",
+                3 => "Flag_3",
+                4 => "Flag_4",
+                _ => "Flag_1"
+            };
+            return new StaticSprite(mantisVillageSpriteSheet, mantisVillageFrames[key], position, 1.0f);
+        }
+        public ISprite CreateVillageSprite(int variant, Vector2 position)
+        {
+            string key = variant switch
+            {
+                1 => "Village_1",
+                2 => "Village_2",
+                3 => "Village_3",
+                _ => "Village_1"
+            };
+            return new StaticSprite(mantisVillageSpriteSheet, mantisVillageFrames[key], position, 1.0f);
         }
     }
 }

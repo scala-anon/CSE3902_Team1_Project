@@ -51,12 +51,13 @@ public partial class Game1
         _items.Add(new Spirit(new Vector2(-100, -100)));
     }
 
-    private const string CurrentLevel = "Content/levels/roomOne.xml";
-
+    private const string Room1 = "Content/levels/roomOne.xml";
+    private const string Room2 = "Content/levels/roomTwo.xml";
     private void InitializeLevel()
     {
         _level = new LevelLoader();
-        _level.Load(CurrentLevel);
+        _level.Load(Room1);
+        _level.Load(Room2);
         LoadObstacles();
     }
 
