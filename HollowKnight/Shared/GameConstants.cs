@@ -7,7 +7,7 @@ namespace HollowKnight.Shared
         public const int ScreenHeight = 1080;
 
         // Level
-        public const int DefaultLevelWidth = 9500;
+        public const int DefaultLevelWidth = 7000;
         public const int DefaultLevelHeight = 3400;
 
         // Navigation

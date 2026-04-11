@@ -5,6 +5,7 @@ using HollowKnight.Enemies;
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using HollowKnight.Shared;
 
 namespace HollowKnight.Levels
 {
@@ -13,6 +14,7 @@ namespace HollowKnight.Levels
         public List<IEnemy> Enemies        { get; } = new();
         public List<IObject> Backgrounds   { get; } = new();
         public List<IObject> Platforms     { get; } = new();
+        public List<Rectangle> Transitions { get; } = new();
         public Vector2 KnightSpawn { get; private set; } = Vector2.Zero;
 
         private readonly Dictionary<string, Func<Vector2, IObject>> _platformMap;
@@ -87,6 +89,8 @@ namespace HollowKnight.Levels
                 ["Knight"]   = (name, pos) => KnightSpawn = pos,
                 ["Platform"] = SpawnPlatform,
                 ["Enemy"]    = SpawnEnemy,
+                ["Transition"] = (name, pos) => Transitions.Add(
+                new Rectangle((int)pos.X, (int)pos.Y, 80, GameConstants.DefaultLevelHeight))
             };
         }
 
