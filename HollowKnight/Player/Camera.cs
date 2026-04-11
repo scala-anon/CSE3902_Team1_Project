@@ -6,7 +6,7 @@ namespace HollowKnight
     {
         private Vector2 position;
         public Vector2 Position => position;
-        public readonly int _screenWidth;
+        private readonly int _screenWidth;
         private readonly int _screenHeight;
         private int _levelWidth;
         private int _levelHeight;
