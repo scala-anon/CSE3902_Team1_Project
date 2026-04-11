@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Level name="roomTwo">
 
+<Item>
+  <ObjectType>Transition</ObjectType>
+  <ObjectName>ToRoom1</ObjectName>
+  <Location>6931 2473</Location>
+</Item>
 
 <Item>
     <ObjectType>Knight</ObjectType>
@@ -14,5 +19,15 @@
     <Location>6745 2600</Location>
 </Item>
 
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Brick_1</ObjectName>
+    <Location>6900 2600</Location>
+</Item>
 
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Brick_1</ObjectName>
+    <Location>6500 2600</Location>
+</Item>
 </Level>

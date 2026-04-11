@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Level name="roomOne">
 
+<Item>
+  <ObjectType>Transition</ObjectType>
+  <ObjectName>ToRoom2</ObjectName>
+  <Location>0 0</Location>
+</Item>
 
 <Item>
     <ObjectType>Knight</ObjectType>
     <ObjectName>Knight</ObjectName>
     <Location>100 1800</Location>
-</Item>
-
-<Item>
-    <ObjectType>Enemy</ObjectType>
-    <ObjectName>MantisLord</ObjectName>
-    <Location>1800 1600</Location>
 </Item>
 
 <Item>
@@ -183,4 +182,3 @@
 </Item>
 
 </Level>
-
