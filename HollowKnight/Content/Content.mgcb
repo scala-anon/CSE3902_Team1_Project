@@ -102,7 +102,6 @@
 #begin Audio/SongFiles.xml
 /copy:Audio/SongFiles.xml
 
-
 # TODO: Add your sprite sheets here using the format below:
 # #begin sprites/your_sprite_sheet.png
 # /importer:TextureImporter
@@ -212,6 +211,18 @@
 /processorParam:TextureFormat=Color
 /build:sprites/MantisLordSpriteSheet.png
 
+#begin sprites/MantisVillageAssets.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:sprites/MantisVillageAssets.png
+
 
 #begin sprites/knight_movement-atlas.xml
 /copy:sprites/knight_movement-atlas.xml
@@ -240,8 +251,14 @@
 #begin sprites/mantisLords-atlas.xml
 /copy:sprites/mantisLords-atlas.xml
 
+#begin sprites/village-atlas.xml
+/copy:sprites/village-atlas.xml
+
 #begin levels/roomOne.xml
 /copy:levels/roomOne.xml
+
+#begin levels/roomTwo.xml
+/copy:levels/roomTwo.xml
 
 #begin levels/levelOne.xml
 /copy:levels/levelOne.xml

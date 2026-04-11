@@ -21,6 +21,7 @@ public partial class Game1
 
     private void UpdatePlayingLogic(GameTime gameTime)
     {
+        CheckTransitions();
         UpdateKnight(gameTime);
         UpdateRoom(gameTime);
         UpdateEnemies(gameTime);
@@ -43,6 +44,18 @@ public partial class Game1
 
     private void UpdateWin(GameTime gameTime)
     {
+        bool won = true;
+        foreach(var enemy in _level.Enemies)
+        {
+            if(enemy.IsActive)
+            {
+                won = false;
+            }
+        } 
+        if(won)
+        {
+            SetWin();
+        }
     }
 
     private void UpdateKnight(GameTime gameTime)
@@ -93,5 +106,18 @@ public partial class Game1
     private void UpdateProjectiles(GameTime gameTime)
     {
         _projectileManager.Update(gameTime);
+    }
+
+    private void CheckTransitions()
+    {
+        Rectangle knightRect = _knight.GetBounds()[0];
+        foreach (Rectangle t in _level.Transitions)
+        {
+            if (knightRect.Intersects(t))
+            {
+                TransitionToRoom(_currentRoom == 1 ? 2 : 1);
+                return;
+            }
+        }
     }
 }

@@ -5,6 +5,7 @@ using HollowKnight.Enemies;
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using HollowKnight.Shared;
 
 namespace HollowKnight.Levels
 {
@@ -13,6 +14,7 @@ namespace HollowKnight.Levels
         public List<IEnemy> Enemies        { get; } = new();
         public List<IObject> Backgrounds   { get; } = new();
         public List<IObject> Platforms     { get; } = new();
+        public List<Rectangle> Transitions { get; } = new();
         public Vector2 KnightSpawn { get; private set; } = Vector2.Zero;
 
         private readonly Dictionary<string, Func<Vector2, IObject>> _platformMap;
@@ -49,6 +51,30 @@ namespace HollowKnight.Levels
                 ["Wall_1"]             = pos => new Wall(1, pos, 80, 200),
                 ["Wall_2"]             = pos => new Wall(2, pos, 80, 200),
                 ["Door_0"]             = pos => new Door(pos, 60, 150),
+                ["Brick_1"]            = pos => new Brick(1,pos,272,62),
+                ["Brick_2"] = pos => new Brick(2, pos, 122, 39),
+                ["Brick_3"] = pos => new Brick(3, pos, 274, 132),
+                ["Brick_4"] = pos => new Brick(4, pos, 227, 61),
+                ["Brick_5"] = pos => new Brick(5, pos, 345, 139),
+                ["Brick_6"] = pos => new Brick(6, pos, 197, 127),
+                ["Brick_7"] = pos => new Brick(7, pos, 81, 302),
+                ["Brick_8"] = pos => new Brick(8, pos, 78, 280),
+
+                ["MantisThrone_1"] = pos => new MantisThrone(1, pos, 119, 613),
+                ["MantisThrone_2"] = pos => new MantisThrone(2, pos, 112, 374),
+
+                ["Floor_1"] = pos => new Floor(1, pos, 249, 141),
+                ["Floor_2"] = pos => new Floor(2, pos, 249, 141),
+                ["Floor_3"] = pos => new Floor(3, pos, 625, 141),
+
+                ["Flag_1"] = pos => new Flag(1, pos, 119, 622),
+                ["Flag_2"] = pos => new Flag(2, pos, 102, 622),
+                ["Flag_3"] = pos => new Flag(3, pos, 121, 621),
+                ["Flag_4"] = pos => new Flag(4, pos, 104, 621),
+
+                ["Village_1"] = pos => new Village(1, pos, 243, 507),
+                ["Village_2"] = pos => new Village(2, pos, 262, 511),
+                ["Village_3"] = pos => new Village(3, pos, 161, 520),
             };
 
             _enemyMap = new Dictionary<string, Func<Vector2, IEnemy>>
@@ -63,6 +89,8 @@ namespace HollowKnight.Levels
                 ["Knight"]   = (name, pos) => KnightSpawn = pos,
                 ["Platform"] = SpawnPlatform,
                 ["Enemy"]    = SpawnEnemy,
+                ["Transition"] = (name, pos) => Transitions.Add(
+                new Rectangle((int)pos.X, (int)pos.Y, 80, GameConstants.DefaultLevelHeight))
             };
         }
 
