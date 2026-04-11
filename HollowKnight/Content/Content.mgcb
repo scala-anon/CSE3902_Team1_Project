@@ -90,7 +90,6 @@
 #begin Audio/SongFiles.xml
 /copy:Audio/SongFiles.xml
 
-
 # TODO: Add your sprite sheets here using the format below:
 # #begin sprites/your_sprite_sheet.png
 # /importer:TextureImporter
@@ -242,6 +241,12 @@
 
 #begin sprites/village-atlas.xml
 /copy:sprites/village-atlas.xml
+
+#begin levels/roomOne.xml
+/copy:levels/roomOne.xml
+
+#begin levels/roomTwo.xml
+/copy:levels/roomTwo.xml
 
 
 #begin fonts/Credits.spritefont
