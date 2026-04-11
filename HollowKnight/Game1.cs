@@ -23,7 +23,7 @@ public partial class Game1 : Game
     private List<IController> _controllerList;
     private readonly List<Spirit> _items = new();
 
-    private GameState _gameState = GameState.Playing;
+    private GameState _gameState = new PlayingState();
 
     private TheKnight _knight;
     private CollisionSystem _collisionSystem;
@@ -70,21 +70,21 @@ public partial class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
-        switch (_gameState)
-        {
-            case GameState.Playing:
-                // Collisions first so IsGrounded is current when input checks it
-                UpdateCollisions();
-                UpdateControllers(gameTime);
-                UpdatePlayingLogic(gameTime);
-                break;
+        // Collisions first so IsGrounded is current when input checks it
+        if (_gameState is PlayingState)
+            UpdateCollisions();
 
-            default:
-                // Non-playing states still need input for pause/unpause/quit
-                UpdateControllers(gameTime);
-                break;
+        UpdateControllers(gameTime);
+
+        if (_restartRequested)
+        {
+            _restartRequested = false;
+            RestartGame();
+            base.Update(gameTime);
+            return;
         }
 
+        _gameState.Update(this, gameTime);
         UpdateAudio();
         base.Update(gameTime);
     }

@@ -9,6 +9,11 @@ namespace HollowKnight;
 
 public partial class Game1
 {
+    internal void DrawPausedStateOverlay() => DrawCenteredOverlay(PauseTitle, PausePrompt, ScreenTint, Color.White);
+    internal void DrawInventoryStateOverlay() => DrawCenteredOverlay(InventoryTitle, InventoryPrompt, InventoryTint, Color.White);
+    internal void DrawGameOverStateOverlay() => DrawCenteredOverlay(GameOverTitle, GameOverPrompt, ScreenTint, Color.White);
+    internal void DrawWinStateOverlay() => DrawCenteredOverlay(WinTitle, string.Empty, ScreenTint, Color.Yellow);
+
     private void DrawWorld()
     {
         // Layer 1: Backgrounds (behind everything, no interaction)
@@ -97,31 +102,51 @@ public partial class Game1
 
     private void DrawOverlay()
     {
-        if (_gameState == GameState.Playing) return;
+        if (_gameState is PlayingState) return;
 
         _spriteBatch.Begin();
 
-        switch (_gameState)
+        if (_gameState.ShowsHealthHud)
         {
-            case GameState.Paused:
-                DebugRenderer.DrawOverlayText(_spriteBatch, "PAUSED", Vector2.Zero, Color.White, 3f);
-                DebugRenderer.DrawOverlayText(_spriteBatch, "\n\n\nPress P to resume", Vector2.Zero, Color.Gray, 1f);
-                break;
-
-            case GameState.Inventory:
-                DebugRenderer.DrawOverlayText(_spriteBatch, "INVENTORY", Vector2.Zero, Color.White, 3f);
-                DebugRenderer.DrawOverlayText(_spriteBatch, "\n\n\nPress Tab to close", Vector2.Zero, Color.Gray, 1f);
-                break;
-
-            case GameState.GameOver:
-                DebugRenderer.DrawOverlayText(_spriteBatch, "GAME OVER", Vector2.Zero, Color.Red, 3f);
-                break;
-
-            case GameState.Win:
-                DebugRenderer.DrawOverlayText(_spriteBatch, "YOU WIN", Vector2.Zero, Color.Yellow, 3f);
-                break;
+            _healthHud.Draw(_spriteBatch, _knight.GetHealth(), _knight.GetMaxHealth());
+            _soulHud.Draw(_spriteBatch, _knight.GetSoul(), _knight.GetMaxSoul());
         }
 
+        _gameState.DrawOverlay(this, _spriteBatch);
+
         _spriteBatch.End();
+    }
+
+    private void DrawCenteredOverlay(string title, string prompt, Color tint, Color titleColor)
+    {
+        Rectangle overlayBounds = new(
+            0,
+            0,
+            GraphicsDevice.PresentationParameters.BackBufferWidth,
+            GraphicsDevice.PresentationParameters.BackBufferHeight);
+        _spriteBatch.Draw(_overlayPixel, overlayBounds, tint);
+
+        Vector2 titleSize = _hudFont.MeasureString(title);
+        Vector2 promptSize = _hudFont.MeasureString(prompt);
+        Vector2 screenCenter = new(overlayBounds.Width / 2f, overlayBounds.Height / 2f);
+        bool hasPrompt = !string.IsNullOrEmpty(prompt);
+        float blockHeight = hasPrompt
+            ? titleSize.Y + OverlayTextLineSpacing + promptSize.Y
+            : titleSize.Y;
+        float blockTop = screenCenter.Y - blockHeight / 2f;
+
+        Vector2 titlePosition = new(
+            screenCenter.X - titleSize.X / 2f,
+            blockTop);
+
+        _spriteBatch.DrawString(_hudFont, title, titlePosition, titleColor);
+
+        if (hasPrompt)
+        {
+            Vector2 promptPosition = new(
+                screenCenter.X - promptSize.X / 2f,
+                blockTop + titleSize.Y + OverlayTextLineSpacing);
+            _spriteBatch.DrawString(_hudFont, prompt!, promptPosition, Color.White);
+        }
     }
 }
