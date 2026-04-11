@@ -56,5 +56,9 @@ namespace HollowKnight.Shared
         public const float KnightProjectileSpawnOffsetRight = 20f;
         public const float KnightProjectileSpawnOffsetLeft = 180f;
         public const double VengefulSpiritImpactDuration = 0.5;
+
+        //Audio counters
+        public const int RunFrameCounter = 120;
+
     }
 }

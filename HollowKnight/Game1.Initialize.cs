@@ -18,6 +18,7 @@ namespace HollowKnight;
 
 public partial class Game1
 {
+    private Camera camera;
     private void InitializeRendering()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -31,7 +32,7 @@ public partial class Game1
     private void InitializeAudio()
     {
         AudioLoader.Instance.loadAudio(Content);
-        Song music = AudioLoader.Instance.Get_Mantis_Lords_Music();
+        Song music = AudioLoader.Instance.Get_Enter_Hollownest();
         AudioManager.Instance.PlaySong(music);
     }
 
@@ -113,6 +114,8 @@ public partial class Game1
             screenHeight,
             GameConstants.DefaultLevelWidth,
             GameConstants.DefaultLevelHeight);
+
+            camera = _camera;
     }
 
     private void InitializeControllers()
