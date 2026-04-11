@@ -1,3 +1,4 @@
+using HollowKnight.Audio;
 using HollowKnight.Player;
 using HollowKnight.Projectiles;
 using HollowKnight.Shared;
@@ -25,6 +26,7 @@ namespace HollowKnight.Player
 
         public void Fire()
         {
+            AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Hero_Fireball());
             Vector2 direction = _knight.Facing == Direction.Right
                 ? new Vector2(1f, 0f)
                 : new Vector2(-1f, 0f);

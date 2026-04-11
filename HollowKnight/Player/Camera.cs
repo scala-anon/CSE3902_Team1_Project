@@ -6,7 +6,7 @@ namespace HollowKnight
     {
         private Vector2 position;
         public Vector2 Position => position;
-        private readonly int _screenWidth;
+        public readonly int _screenWidth;
         private readonly int _screenHeight;
         private int _levelWidth;
         private int _levelHeight;
@@ -48,5 +48,6 @@ namespace HollowKnight
         {
             Follow(target);
         }
+
     }
 }

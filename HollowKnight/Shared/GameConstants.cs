@@ -35,7 +35,7 @@ namespace HollowKnight.Shared
         public const float MaxVolume = 1.0f;
         public const float Pan = 0.0f;
         public const float Pitch = 0.0f;
-        public const float SongVolume = 0.5f;
+        public const float SongVolume = 0.1f;
 
         // A* Pathfinding
         public const int AStarMaxIterations = 1000;

@@ -8,6 +8,7 @@ using HollowKnight.Collision;
 using HollowKnight.Audio;
 using Microsoft.Xna.Framework.Audio;
 
+
 namespace HollowKnight.Player
 {
     public class TheKnight : IPlayer
@@ -227,7 +228,7 @@ namespace HollowKnight.Player
         {
             if (dash.IsDashing) return;
             health.CancelHeal();
-            AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Hero_Attack());
+            
             combat.TryStartAttack(KnightSpriteType.SideSlash, position, physics.IsGrounded);
         }
 

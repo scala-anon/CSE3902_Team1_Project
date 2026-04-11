@@ -3,4 +3,7 @@
     <Item>
         <FilePath>Audio/Music/Hollow Knight OST - Mantis Lords 4</FilePath>
     </Item>
+    <Item>
+        <FilePath>Audio/Music/EnterHollownest</FilePath>
+    </Item>
 </XnaContent>

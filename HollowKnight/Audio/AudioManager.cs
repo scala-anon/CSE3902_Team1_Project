@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Net;
-using HollowKnight.Factories;
 using HollowKnight.Shared;
+using HollowKnight.Storage;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 
@@ -13,12 +13,12 @@ namespace HollowKnight.Audio
     // Should be initialized in Game1.LoadContent() and updated in Game1.Update().
     // Use GameState to switch background music.
     // Use KnightState / enemy state changes to trigger SFX.
-
-    
     
     //TODO create dispose method and impliment IDispossable
     public class AudioManager : IDisposable
     {
+
+    private Camera camera;
 
     //Sound effect instances created so they can be pasued, unpaused, and/or disposed        
     private readonly List<SoundEffectInstance> _activateSoundEffectInstances; 
@@ -89,6 +89,7 @@ namespace HollowKnight.Audio
     public AudioManager()
         {
             _activateSoundEffectInstances = new List<SoundEffectInstance>();
+           
         }
 
     private static AudioManager instance = new AudioManager();
@@ -141,6 +142,18 @@ namespace HollowKnight.Audio
             }
         }
 
+        //TODO refactor the camera so I can play sound effects based on whats visible on the screen
+        /*
+        public void Try_PlaySoundEffect(SoundEffect soundEffect, Vector2 position)
+        {
+            if (Math.Abs(position.X - camera) <= camera._screenWidth)
+            {
+                PlaySoundEffect(soundEffect, GameConstants.MaxVolume, GameConstants.Pitch, GameConstants.Pan, false);
+            }
+
+        }
+        */
+
         /// <summary>
         /// Plays given sound effect.
         /// </summary>
@@ -175,6 +188,11 @@ namespace HollowKnight.Audio
             _activateSoundEffectInstances.Add(soundEffectInstance);
 
             return soundEffectInstance;
+        }
+
+        public void StopSoundEffect(SoundEffectInstance soundEffect)
+        {
+            soundEffect.Stop();
         }
 
         /// <summary>
