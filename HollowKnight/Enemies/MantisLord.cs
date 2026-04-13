@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace HollowKnight.Enemies
 {
-    public enum MantisLordState { Idle, Throw, Death, DStabArrive }
+    public enum MantisLordState {ThroneIdle, ThroneStand, ThroneLeave, WallArrive, WallReady, Throw, WallLeave, DashArrive, DashAnticipate, Dash, DashRecover, DashLeave, DStabArrive, DStab, DStabLand, DStabLeave, Death, DeathLeave, ThroneWounded, ThroneBow}
 
     public class MantisLord : BaseEnemy
     {
@@ -23,10 +23,26 @@ namespace HollowKnight.Enemies
             IsGrounded = false;
             sprites = new Dictionary<MantisLordState, ISprite>
             {
-                [MantisLordState.Idle] = SpriteFactory.Instance.CreateMantisThroneIdle(position),
+                [MantisLordState.ThroneIdle] = SpriteFactory.Instance.CreateMantisThroneIdle(position),
+                [MantisLordState.ThroneStand] = SpriteFactory.Instance.CreateMantisThroneStand(position),
+                [MantisLordState.ThroneLeave] = SpriteFactory.Instance.CreateMantisThroneLeave(position),
+                [MantisLordState.WallArrive] = SpriteFactory.Instance.CreateMantisWallArrive(position),
+                [MantisLordState.WallReady] = SpriteFactory.Instance.CreateMantisWallReady(position),
                 [MantisLordState.Throw] = SpriteFactory.Instance.CreateMantisThrow(position),
-                [MantisLordState.Death] = SpriteFactory.Instance.CreateMantisDeath(position),
+                [MantisLordState.WallLeave] = SpriteFactory.Instance.CreateMantisWallLeave(position),
+                [MantisLordState.DashArrive] = SpriteFactory.Instance.CreateMantisDashArrive(position),
+                [MantisLordState.DashAnticipate] = SpriteFactory.Instance.CreateMantisDashAnticipate(position),
+                [MantisLordState.Dash] = SpriteFactory.Instance.CreateMantisDash(position),
+                [MantisLordState.DashRecover] = SpriteFactory.Instance.CreateMantisDashRecover(position),
+                [MantisLordState.DashLeave] = SpriteFactory.Instance.CreateMantisDashLeave(position),
                 [MantisLordState.DStabArrive] = SpriteFactory.Instance.CreateMantisDStabArrive(position),
+                [MantisLordState.DStab] = SpriteFactory.Instance.CreateMantisDStab(position),
+                [MantisLordState.DStabLand] = SpriteFactory.Instance.CreateMantisDStabLand(position),
+                [MantisLordState.DStabLeave] = SpriteFactory.Instance.CreateMantisDStabLeave(position),
+                [MantisLordState.Death] = SpriteFactory.Instance.CreateMantisDeath(position),
+                [MantisLordState.DeathLeave] = SpriteFactory.Instance.CreateMantisDeathLeaveOne(position),
+                [MantisLordState.ThroneWounded] = SpriteFactory.Instance.CreateMantisThroneWounded(position),
+                [MantisLordState.ThroneBow] = SpriteFactory.Instance.CreateMantisThroneBow(position),
             };
             Sprite = sprites[MantisLordState.DStabArrive];
         }
