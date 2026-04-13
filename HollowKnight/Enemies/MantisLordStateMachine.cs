@@ -1,81 +1,285 @@
+using HollowKnight.Shared;
+using Microsoft.Xna.Framework;
+
 namespace HollowKnight.Enemies
 {
+    /// <summary>
+    /// Drives all MantisLord animation transitions and attack sequencing.
+    /// </summary>
     public class MantisLordStateMachine
     {
-        //PRE-FIGHT stages
-        //"Throne Idle"
-        //Throne Idle ->  Throne Stand (ALL)
-        //Throne stand -> Throne Leave (Middle)
-        
-        //FIGHT-STAGE Phase 1 (Only one lord)
-        //210 HP 
-        //Wall attack
-            //Wall arrive
-            //Wall Arrive -> Wall Ready
-            //Wall Ready -> Throw
-                //Throw -> Air Projectile
-            //Throw -> Wall Leave Pt1
-            //Wall Leave Pt1 -> Wall Leave Pt2
-        //
+        private readonly MantisLord _owner;
+        private float _stateTimer;
 
-        //Dash Attack 
-            //Dash Arrive 
-            //Dash arrive -> Dash Anticiapte
-            //Dash Anticipate -> Dash
-            //Dash -> Dash Recover
-            //Dash Recover -> Dash Leave
-        //
+        // Shared RNG across all MantisLord instances; seeded once from environment tick count.
+        private static readonly System.Random _rng = new System.Random(System.Environment.TickCount);
 
-        //DStab
-            //Dstab arrive
-            //DStab Arrive -> DStab
-            //DStab -> DStab Land
-            //DStab Land -> DStab Leave
-        //
+        // ---- Public surface consumed by BossFightController ----
 
-        //On Death
-            //Trigger Death
-            //Death -> Death Leave 1
-            //Death Leave 1 -> Throne Wounded (Middle Mantis)
-           
-        //
+        /// <summary>True while any attack animation is playing.</summary>
+        public bool IsAttacking { get; private set; }
 
-         //Throne Stand -> Throne Leave (Left and Right Mantis)
+        /// <summary>True once the lord has returned to throne in wounded pose.</summary>
+        public bool IsInWoundedPose { get; private set; }
 
-        //Phase 2 (Two Lords)
-        //160 HP each
-            // if wall attack both must trigger disk at same time 
-                //Either high or low projectile throw
-            // Can both dash at the same time if they are dashing in opposite directions
-            // if death trigger leave 1 then throne wounded 
+        /// <summary>True once the bow animation has finished.</summary>
+        public bool IsBowComplete { get; private set; }
 
-        //final phase
-            // throne wounded -> throne standing -> throne bow
+        // ---- Internal state ----
+        private bool _healthDepleted;
+        private bool _postDeathTimer;
+        private bool _fightStarted;
 
+        public MantisLordStateMachine(MantisLord owner)
+        {
+            _owner = owner;
+        }
 
-        //States
-            //ThroneIdle
-            //TroneStand
-            //ThroneLeave
-            //WallArrive
-            //WallReady
-            //Throw
-            //Air Projectile
-                //High
-                //Low
-            //WallLeave1
-            //WallLeave2
-            //DashArrive
-            //DashAnticipate
-            //DashRecover
-            //DashLeave
-            //DStabArrive
-            //DStab
-            //DStabLeave
-            //Death
-            //DeathLeave1
-            //ThroneWounded
-            //ThroneBow
-        //
+        // ---- Commands called by BossFightController ----
+
+        /// <summary>Kicks off the throne-stand-then-leave sequence.</summary>
+        public void CommandActivate()
+        {
+            _fightStarted = true;
+            _owner.Activate();
+            EnterState(MantisLordState.ThroneStand);
+        }
+
+        /// <summary>After ThroneLeave completes, start the attack loop.</summary>
+        public void CommandBeginAttackLoop()
+        {
+            PickNextAttack();
+        }
+
+        /// <summary>Force an immediate wall attack (used by BossFightController for simultaneous throws).</summary>
+        public void CommandForceWallAttack()
+        {
+            if (_healthDepleted) return;  // do not interrupt death sequence
+            IsAttacking = true;
+            // TODO: audio hook — play wall-arrive sound
+            EnterState(MantisLordState.WallArrive);
+        }
+
+        /// <summary>Called when sibling / middle has been defeated and this lord should return wounded.</summary>
+        public void CommandReturnToThroneWounded()
+        {
+            IsAttacking = false;
+            _postDeathTimer = true;
+            _stateTimer = 0f;
+        }
+
+        /// <summary>Trigger the bow sequence (all three lords bow together).</summary>
+        public void CommandBow()
+        {
+            EnterState(MantisLordState.ThroneBow);
+        }
+
+        /// <summary>Called by MantisLord.OnHealthChanged when HP reaches zero.</summary>
+        public void OnHealthDepleted()
+        {
+            if (_healthDepleted) return;
+            _healthDepleted = true;
+            IsAttacking = false;
+            // TODO: audio hook — play death sound
+            EnterState(MantisLordState.Death);
+        }
+
+        // ---- Main update ----
+
+        public void Update(GameTime gameTime, float dt)
+        {
+            if (!_fightStarted) return;
+
+            _stateTimer += dt;
+
+            // Waiting for post-death delay before entering ThroneWounded.
+            if (_postDeathTimer)
+            {
+                if (_stateTimer >= EnemyConstants.MantisPostDeathToWoundedDelay)
+                {
+                    _postDeathTimer = false;
+                    _stateTimer = 0f;
+                    IsInWoundedPose = true;
+                    EnterState(MantisLordState.ThroneWounded);
+                }
+                return;
+            }
+
+            switch (_owner.State)
+            {
+                case MantisLordState.ThroneStand:
+                    if (_owner.Sprite.IsFinished)
+                        EnterState(MantisLordState.ThroneLeave);
+                    break;
+
+                case MantisLordState.ThroneLeave:
+                    if (_owner.Sprite.IsFinished)
+                        CommandBeginAttackLoop();
+                    break;
+
+                case MantisLordState.ThroneArrive:
+                    if (_owner.Sprite.IsFinished)
+                    {
+                        IsInWoundedPose = true;
+                        EnterState(MantisLordState.ThroneWounded);
+                    }
+                    break;
+
+                // ---- Throw sequence ----
+                case MantisLordState.Throw:
+                    if (_owner.Sprite.IsFinished)
+                    {
+                        // TODO: spawn projectile here
+                        EnterState(MantisLordState.WallLeave);
+                    }
+                    break;
+
+                case MantisLordState.WallArrive:
+                    if (_owner.Sprite.IsFinished)
+                        EnterState(MantisLordState.WallReady);
+                    break;
+
+                case MantisLordState.WallReady:
+                    // Loops until controller forces a throw or duration elapses.
+                    // TODO: spawn projectile here (when WallReady times out)
+                    if (_stateTimer >= EnemyConstants.MantisWallReadyDuration)
+                        EnterState(MantisLordState.Throw);
+                    break;
+
+                case MantisLordState.WallLeave:
+                    if (_owner.Sprite.IsFinished)
+                        StartAttackCooldown();
+                    break;
+
+                // ---- Dash sequence ----
+                case MantisLordState.DashArrive:
+                    if (_owner.Sprite.IsFinished)
+                    {
+                        // TODO: audio hook — play dash anticipate sound
+                        EnterState(MantisLordState.DashAnticipate);
+                    }
+                    break;
+
+                case MantisLordState.DashAnticipate:
+                    if (_owner.Sprite.IsFinished)
+                    {
+                        // TODO: damage hitbox — activate dash contact damage here
+                        EnterState(MantisLordState.Dash);
+                    }
+                    break;
+
+                case MantisLordState.Dash:
+                    if (_owner.Sprite.IsFinished)
+                        EnterState(MantisLordState.DashRecover);
+                    break;
+
+                case MantisLordState.DashRecover:
+                    if (_owner.Sprite.IsFinished)
+                        EnterState(MantisLordState.DashLeave);
+                    break;
+
+                case MantisLordState.DashLeave:
+                    if (_owner.Sprite.IsFinished)
+                        StartAttackCooldown();
+                    break;
+
+                // ---- DStab sequence ----
+                case MantisLordState.DStabArrive:
+                    if (_owner.Sprite.IsFinished)
+                    {
+                        // TODO: damage hitbox — activate DStab contact damage here
+                        EnterState(MantisLordState.DStab);
+                    }
+                    break;
+
+                case MantisLordState.DStab:
+                    if (_owner.Sprite.IsFinished)
+                        EnterState(MantisLordState.DStabLand);
+                    break;
+
+                case MantisLordState.DStabLand:
+                    if (_owner.Sprite.IsFinished)
+                        EnterState(MantisLordState.DStabLeave);
+                    break;
+
+                case MantisLordState.DStabLeave:
+                    if (_owner.Sprite.IsFinished)
+                        StartAttackCooldown();
+                    break;
+
+                // ---- Attack cooldown (idle state after attack completes) ----
+                case MantisLordState.IdleOnThrone:
+                    if (_stateTimer >= EnemyConstants.MantisAttackCooldown)
+                        PickNextAttack();
+                    break;
+
+                // ---- Death sequence ----
+                case MantisLordState.Death:
+                    if (_owner.Sprite.IsFinished)
+                        EnterState(MantisLordState.DeathLeaveOne);
+                    break;
+
+                case MantisLordState.DeathLeaveOne:
+                    if (_owner.Sprite.IsFinished)
+                        EnterState(MantisLordState.DeathLeaveTwo);
+                    break;
+
+                case MantisLordState.DeathLeaveTwo:
+                    if (_owner.Sprite.IsFinished)
+                        CommandReturnToThroneWounded();
+                    break;
+
+                // ---- Bow sequence ----
+                case MantisLordState.ThroneBow:
+                    if (_owner.Sprite.IsFinished)
+                        IsBowComplete = true;
+                    break;
+
+                // States with no automatic transition handled here:
+                // ThroneWounded, Dormant — wait for external command.
+                default:
+                    break;
+            }
+        }
+
+        // ---- Private helpers ----
+
+        private void EnterState(MantisLordState state)
+        {
+            _stateTimer = 0f;
+            _owner.SetState(state);
+        }
+
+        /// <summary>Starts the cooldown pause before the next attack.</summary>
+        private void StartAttackCooldown()
+        {
+            IsAttacking = false;
+            _stateTimer = 0f;
+            // Re-use IdleOnThrone as the "between attacks" state.
+            _owner.SetState(MantisLordState.IdleOnThrone);
+            _owner.Sprite.Reset();
+        }
+
+        /// <summary>
+        /// Randomly selects the next attack from {Throw (via Wall), Dash, DStab}.
+        /// </summary>
+        private void PickNextAttack()
+        {
+            IsAttacking = true;
+            int roll = _rng.Next(3);
+            // TODO: audio hook — play attack start sound
+            switch (roll)
+            {
+                case 0:
+                    EnterState(MantisLordState.WallArrive);
+                    break;
+                case 1:
+                    EnterState(MantisLordState.DashArrive);
+                    break;
+                default:
+                    EnterState(MantisLordState.DStabArrive);
+                    break;
+            }
+        }
     }
 }

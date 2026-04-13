@@ -32,9 +32,20 @@ namespace HollowKnight.Shared
         public const float EnemyProjectileInterval = 3f;
         public const float EnemyProjectileSpeed = 250f;
 
+        // Mantis Lord
+        public const int MantisLordMiddleHealth          = 36;
+        public const int MantisLordSideHealth            = 18;
 
-        //Mantis
-        public const int MantisPhase1Health = 36;
-        public const int MantisPhase2Health = 20;
+        public const float MantisAttackCooldown          = 1.2f;
+        public const float MantisSiblingStaggerDelay     = 0.6f;
+        public const float MantisWallAttackInterval      = 6.0f;
+        public const float MantisPostDeathToWoundedDelay = 0.2f;
+        public const float MantisFrameInterval           = 0.1f;
+        public const float MantisWallReadyDuration       = 1.0f;
+
+        public const float MantisThroneLeftOffsetX       = -400f;
+        public const float MantisThroneMiddleOffsetX     = 0f;
+        public const float MantisThroneRightOffsetX      = 400f;
+        public const float MantisThroneY                 = 0f;
     }
 }
