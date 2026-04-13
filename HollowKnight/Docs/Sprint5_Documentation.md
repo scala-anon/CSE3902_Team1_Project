@@ -75,7 +75,6 @@ Priority 1 work that did not finish in Sprint 4. These must close before new fea
 | Ability UI | Ability UI was incomplete at end of S4 and needs to be finished and wired into the HUD | Sri |
 | Downslash attack | Downslash attack still broken after S4 fix attempt — carried from S4 backlog | Sri |
 | First dungeon layout | First dungeon rooms not fully built or playable end-to-end | Thomas (primary), Sri (assist) |
-| Boss sprites & animations | Boss sprite extraction and animation states incomplete | Thomas (primary), Sudhish (assist / unblock) |
 
 ### Known Code TODOs
 
@@ -84,9 +83,9 @@ Surfaced from `TODO`/`FIXME` comments in the current codebase. Owners fold these
 | File | Line | TODO |
 |------|------|------|
 | `Enemies/MantisLordStateMachine.cs` | 5 | "TODO: Implement" |
-| `Audio/AudioManager.cs` | 9 | "TODO: Implement for the audio sprint." |
-| `Audio/AudioManager.cs` | 15 | "create dispose method and implement IDisposable" |
-| `Audio/AudioManager.cs` | 148 | "replace magic numbers => GameConstants" |
+| `Audio/AudioManager.cs` | 9 | remove comments |
+| `Audio/AudioManager.cs` | 15 | remove comments |
+| `Audio/AudioManager.cs` | 148 | remove comments |
 | `Environment/Spike.cs` | 46 | "Tune width/height to match the actual scaled sprite size" |
 | `Controllers/KeyboardBindings.cs` | 15 | "remove developer keybinding and change ability/movement binds if needed" |
 | `Player/SwordHitbox.cs` | 23 | "Tune sword hitbox dimensions to match sword sprite visually" |
@@ -108,8 +107,6 @@ Priority 1. None of the Week 2 features start cleanly until these close. Sri pai
 | Downslash fix (v2) | Re-fix downslash attack hitbox/animation interaction; regression-test against S4 bug | Sri | `feature/downslash-fix-v2` |
 | First dungeon completion | Finish remaining rooms, connections, and enemy/item placement so dungeon is playable end-to-end | Thomas | `feature/first-dungeon-complete` |
 | First dungeon assist | Pair with Thomas — build out secondary rooms and transitions | Sri | `feature/first-dungeon-assist` |
-| Boss sprite extraction finish | Finish extracting boss sprite sheets and animation frames from source material | Thomas | `feature/boss-sprites` |
-| Boss sprite unblock | Step in on boss sprite extraction if Thomas blocked by 4/17; deliver animation states | Sudhish | `feature/boss-sprites-assist` |
 
 ### 2. Boss Fight (Zach — primary, Sudhish — assist)
 
@@ -148,6 +145,8 @@ Second dungeon must be visually distinct from the first. Thomas leads layout and
 | IBreakable interface | Formalize and apply to walls/grass/breakables | Sudhish | `feature/ibreakable` |
 | IInteractable interface | Formalize for benches, items, triggers | Sudhish | `feature/iinteractable` |
 | Audio scoping | Camera-bound SFX — only play when source is within camera view | Zach | `feature/audio-scoping` |
+| Camera refactor | Refactor camera system for cleaner follow/bounds/room handling | Zach | `feature/camera-refactor` |
+| Custom voice lines | Record and integrate custom voice lines into audio pipeline | Zach | `feature/custom-voice-lines` |
 | Magic numbers sweep | Extract remaining magic numbers in each owner's area to `GameConstants` | All | `feature/magic-numbers-s5` |
 
 ### 6. Process (Niko — primary, All — code reviews)
@@ -168,8 +167,8 @@ Second dungeon must be visually distinct from the first. Thomas leads layout and
 | Member | Owns | Shares / Assists |
 |--------|------|------------------|
 | **Niko (PM)** | PR reviews, visual layer system, code metrics, README, sprint reflection, branch tracking | Magic numbers sweep, code review round |
-| **Thomas** | Boss sprites, first dungeon completion, second dungeon layout, second dungeon custom sprite, visual layer assets | First dungeon pairing with Sri, code review round |
-| **Zach** | Boss AI/behavior, boss room integration, audio scoping, second dungeon XML | Boss physics integration (assist to Sudhish), code review round |
+| **Thomas** | First dungeon completion, second dungeon layout, second dungeon custom sprite, visual layer assets | First dungeon pairing with Sri, code review round |
+| **Zach** | Boss AI/behavior, boss room integration, audio scoping, camera refactor, custom voice lines, second dungeon XML | Boss physics integration (assist to Sudhish), code review round |
 | **Sri** | HUD health fix, ability UI, downslash fix, first dungeon assist | Ability integration touchpoints, code review round |
 | **Sudhish** | Collision layer system, IBreakable, IInteractable, boss physics integration | Boss sprite unblock for Thomas, code review round |
 
@@ -186,9 +185,7 @@ dev
 │   ├── feature/ability-ui                      (Sri)
 │   ├── feature/downslash-fix-v2                (Sri)
 │   ├── feature/first-dungeon-complete          (Thomas)
-│   ├── feature/first-dungeon-assist            (Sri)
-│   ├── feature/boss-sprites                    (Thomas)
-│   └── feature/boss-sprites-assist             (Sudhish)
+│   └── feature/first-dungeon-assist            (Sri)
 ├── feature/boss                                (Zach + Sudhish)
 │   ├── feature/boss-behavior                   (Zach)
 │   ├── feature/boss-room                       (Zach)
@@ -205,6 +202,8 @@ dev
 │   ├── feature/ibreakable                      (Sudhish)
 │   ├── feature/iinteractable                   (Sudhish)
 │   ├── feature/audio-scoping                   (Zach)
+│   ├── feature/camera-refactor                 (Zach)
+│   ├── feature/custom-voice-lines              (Zach)
 │   └── feature/magic-numbers-s5                (All)
 └── core/process                                (Niko)
     ├── core/code-metrics                       (Niko)
@@ -241,15 +240,14 @@ Close every Priority 1 carry-over. Start boss AI and collision-layer scaffolding
 
 | Who | Primary Focus | Also Start |
 |-----|---------------|------------|
-| **Thomas** | First dungeon completion, finish boss sprite extraction | Second dungeon layout rough-in |
-| **Zach** | Boss behavior / AI scaffolding | Audio scoping |
+| **Thomas** | First dungeon completion | Second dungeon layout rough-in |
+| **Zach** | Boss behavior / AI scaffolding | Audio scoping, camera refactor |
 | **Sri** | HUD health fix, downslash fix, ability UI | First dungeon assist rooms |
-| **Sudhish** | Collision layer system, boss sprite unblock (if needed) | IBreakable, IInteractable |
+| **Sudhish** | Collision layer system | IBreakable, IInteractable |
 | **Niko** | Visual layer system scaffolding, branch tracking, PR reviews | Code metrics baseline |
 
 **By end of Week 1 (4/20 — Gate):**
 - First dungeon fully playable end-to-end
-- Boss sprites complete (Thomas or Sudhish delivering)
 - HUD health display fixed and ability UI functional
 - Downslash fix merged
 - If any of the above is not met, Sri and Sudhish are pre-authorized to absorb remaining Thomas work without waiting
@@ -261,7 +259,7 @@ Boss fight and second dungeon carry the week. Layers land mid-week so second-dun
 | Who | Must Finish | Stretch |
 |-----|-------------|---------|
 | **Thomas** | Second dungeon layout, second dungeon custom sprite | Visual layer assets for second dungeon |
-| **Zach** | Boss room integration, second dungeon XML assist | Audio scoping complete |
+| **Zach** | Boss room integration, camera refactor, second dungeon XML assist | Audio scoping complete, custom voice lines |
 | **Sri** | Ability UI polish, HUD fixes verified against second dungeon | Magic numbers in own areas |
 | **Sudhish** | Collision layers merged, boss physics integration, IBreakable/IInteractable | Magic numbers in collision code |
 | **Niko** | Visual layers merged, README draft, first code metrics snapshot | First code review round |
@@ -278,7 +276,7 @@ Three days to harden, review, and ship. No new features start this week.
 | Who | Primary Focus | Process Tasks |
 |-----|---------------|---------------|
 | **Thomas** | Second dungeon polish, sprite fixes | Code review (readability + quality) |
-| **Zach** | Boss tuning, audio scoping final | Code review (readability + quality) |
+| **Zach** | Boss tuning, audio scoping final, custom voice lines polish | Code review (readability + quality) |
 | **Sri** | Ability UI polish, HUD regression sweep | Code review (readability + quality) |
 | **Sudhish** | Collision layer edge cases, IBreakable/IInteractable sweep | Code review (readability + quality) |
 | **Niko** | README, sprint reflection, code metrics, magic numbers coordination | Code review (readability + quality) |
@@ -292,7 +290,7 @@ Three days to harden, review, and ship. No new features start this week.
 
 Verbatim from the Sprint 5 goals:
 
-- Thomas carried two unfinished areas into Sprint 5 (level layout, boss sprites). Paired with Sri (level) and Sudhish (boss sprites) with explicit check-in points.
+- Thomas carried first-dungeon level layout into Sprint 5. Paired with Sri with explicit check-in points.
 - If Thomas is behind by end of Week 1, Sri and Sudhish are pre-authorized to take over without waiting.
 - Niko tracks Thomas's branch activity daily and flags blockers same-day.
 
