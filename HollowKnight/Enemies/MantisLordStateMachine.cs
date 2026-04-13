@@ -8,6 +8,7 @@ namespace HollowKnight.Enemies
         //Throne stand -> Throne Leave (Middle)
         
         //FIGHT-STAGE Phase 1 (Only one lord)
+        //210 HP 
         //Wall attack
             //Wall arrive
             //Wall Arrive -> Wall Ready
@@ -42,10 +43,39 @@ namespace HollowKnight.Enemies
          //Throne Stand -> Throne Leave (Left and Right Mantis)
 
         //Phase 2 (Two Lords)
+        //160 HP each
             // if wall attack both must trigger disk at same time 
+                //Either high or low projectile throw
+            // Can both dash at the same time if they are dashing in opposite directions
             // if death trigger leave 1 then throne wounded 
 
         //final phase
-            // throne wounded to throne standing to throne bow
+            // throne wounded -> throne standing -> throne bow
+
+
+        //States
+            //ThroneIdle
+            //TroneStand
+            //ThroneLeave
+            //WallArrive
+            //WallReady
+            //Throw
+            //Air Projectile
+                //High
+                //Low
+            //WallLeave1
+            //WallLeave2
+            //DashArrive
+            //DashAnticipate
+            //DashRecover
+            //DashLeave
+            //DStabArrive
+            //DStab
+            //DStabLeave
+            //Death
+            //DeathLeave1
+            //ThroneWounded
+            //ThroneBow
+        //
     }
 }
