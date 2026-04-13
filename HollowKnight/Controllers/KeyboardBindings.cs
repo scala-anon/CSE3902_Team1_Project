@@ -98,6 +98,9 @@ namespace HollowKnight.Controllers
             // Audio
             keyboard.RegisterPressedCommand(Keys.M, new ToggleMuteCommand());
 
+            // Start Mantis Lord boss fight (debug / trigger key)
+            keyboard.RegisterPressedCommand(Keys.B, new StartMantisFightCommand(game));
+
             // Quit
             keyboard.RegisterPressedCommand(Keys.Q, new QuitCommand(game));
         }

@@ -62,6 +62,7 @@ public partial class Game1
     private void InitializeLevel()
     {
         _level = new LevelLoader();
+        _level.SetGame(this);
         _level.Load(Room1);
         _currentRoom = 1;
         LoadObstacles();
@@ -70,6 +71,7 @@ public partial class Game1
     public void TransitionToRoom(int roomNumber)
     {
         _level = new LevelLoader();
+        _level.SetGame(this);
         _level.Load(roomNumber == 1 ? Room1 : Room2);
         _currentRoom = roomNumber;
 

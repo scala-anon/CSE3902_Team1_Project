@@ -61,6 +61,8 @@ public partial class Game1
         {
             enemy.Update(gameTime);
         }
+        // BossFightController must update AFTER enemies so state reads are fresh.
+        _level.BossFight?.Update(gameTime);
     }
 
     internal void UpdateKnightProjectiles(GameTime gameTime)
