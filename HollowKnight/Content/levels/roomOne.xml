@@ -14,6 +14,12 @@
 </Item>
 
 <Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>MantisLord</ObjectName>
+    <Location>3500 1800</Location>
+</Item>
+
+<Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Plant1_Idle</ObjectName>
     <Location>1600 1850</Location>
