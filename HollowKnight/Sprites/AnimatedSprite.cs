@@ -18,6 +18,8 @@ namespace HollowKnight.Sprites
         private int _currentFrame;
         private double _frameTimer;
         private double _frameInterval;
+        private bool _loop;
+        private bool _finished;
 
         public int Width => (int)(_frames[_currentFrame].Width * _scale);
         public int Height => (int)(_frames[_currentFrame].Height * _scale);
@@ -30,7 +32,9 @@ namespace HollowKnight.Sprites
         /// <param name="position">Initial position in world coordinates</param>
         /// <param name="frameInterval">Time in seconds between frames (default 0.15)</param>
         /// <param name="scale">Scale multiplier (default 2.0)</param>
-        public AnimatedSprite(Texture2D texture, Rectangle[] frames, Vector2 position, double frameInterval = 0.15, float scale = 2.0f)
+        public bool IsFinished => _finished;
+
+        public AnimatedSprite(Texture2D texture, Rectangle[] frames, Vector2 position, double frameInterval = 0.15, float scale = 2.0f, bool loop = true)
         {
             _texture = texture;
             _frames = frames;
@@ -40,17 +44,29 @@ namespace HollowKnight.Sprites
             _currentFrame = 0;
             _frameTimer = 0;
             _frameInterval = frameInterval;
+            _loop = loop;
+            _finished = false;
         }
 
         public void Update(GameTime gameTime)
         {
+            if (_finished) return;
+
             _frameTimer += gameTime.ElapsedGameTime.TotalSeconds;
             if (_frameTimer >= _frameInterval)
             {
                 _currentFrame++;
                 if (_currentFrame >= _frames.Length)
                 {
-                    _currentFrame = 0;
+                    if (_loop)
+                    {
+                        _currentFrame = 0;
+                    }
+                    else
+                    {
+                        _currentFrame = _frames.Length - 1;
+                        _finished = true;
+                    }
                 }
                 _frameTimer = 0;
             }
@@ -61,6 +77,7 @@ namespace HollowKnight.Sprites
             _position = _startPosition;
             _currentFrame = 0;
             _frameTimer = 0;
+            _finished = false;
         }
 
         public void SetPosition(Vector2 position)

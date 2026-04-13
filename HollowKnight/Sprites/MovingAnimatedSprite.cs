@@ -25,6 +25,7 @@ namespace HollowKnight.Sprites
 
         public int Width => (int)(_frames[_currentFrame].Width * _scale);
         public int Height => (int)(_frames[_currentFrame].Height * _scale);
+        public bool IsFinished => false;
 
         /// <summary>
         /// Create a horizontally moving animated sprite.

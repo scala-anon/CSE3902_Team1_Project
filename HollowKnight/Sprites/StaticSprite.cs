@@ -18,6 +18,7 @@ namespace HollowKnight.Sprites
 
         public int Width => (int)(_sourceRect.Width * _scale);
         public int Height => (int)(_sourceRect.Height * _scale);
+        public bool IsFinished => true;
 
         /// <summary>
         /// Create a static sprite from a sprite sheet.
