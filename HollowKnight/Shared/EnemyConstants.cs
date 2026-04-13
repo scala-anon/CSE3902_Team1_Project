@@ -31,5 +31,10 @@ namespace HollowKnight.Shared
         // Projectile
         public const float EnemyProjectileInterval = 3f;
         public const float EnemyProjectileSpeed = 250f;
+
+
+        //Mantis
+        public const int MantisPhase1Health = 36;
+        public const int MantisPhase2Health = 20;
     }
 }
