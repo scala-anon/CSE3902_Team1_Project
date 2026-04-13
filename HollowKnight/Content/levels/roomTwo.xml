@@ -2,32 +2,33 @@
 <Level name="roomTwo">
 
 <Item>
-  <ObjectType>Transition</ObjectType>
-  <ObjectName>ToRoom1</ObjectName>
-  <Location>6931 2473</Location>
-</Item>
-
-<Item>
     <ObjectType>Knight</ObjectType>
     <ObjectName>Knight</ObjectName>
-    <Location>6745 2400</Location>
+    <Location>6600 1000</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
-    <ObjectName>Brick_1</ObjectName>
-    <Location>6745 2600</Location>
+    <ObjectName>Path_1</ObjectName>
+    <Location>6500 1100</Location>
+</Item>
+
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Crawlid</ObjectName>
+    <Location>6700 1000</Location>
+</Item>
+
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Vengefly</ObjectName>
+    <Location>6600 950</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
-    <ObjectName>Brick_1</ObjectName>
-    <Location>6900 2600</Location>
+    <ObjectName>Spike_Floor_1</ObjectName>
+    <Location>7000 1100</Location>
 </Item>
 
-<Item>
-    <ObjectType>Platform</ObjectType>
-    <ObjectName>Brick_1</ObjectName>
-    <Location>6500 2600</Location>
-</Item>
 </Level>

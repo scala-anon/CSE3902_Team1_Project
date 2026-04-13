@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Level name="roomOne">
-
 <Item>
   <ObjectType>Transition</ObjectType>
   <ObjectName>ToRoom2</ObjectName>
-  <Location>0 0</Location>
+  <Location>6050 0</Location>
 </Item>
 
 <Item>
@@ -177,26 +176,13 @@
 
 <Item>
     <ObjectType>Platform</ObjectType>
-    <ObjectName>Path_2</ObjectName>
-    <Location>6000 1850</Location>
+    <ObjectName>Path_1</ObjectName>
+    <Location>5600 1100</Location>
 </Item>
 
-<Item>
-    <ObjectType>Platform</ObjectType>
-    <ObjectName>Tutorial_Platform_8</ObjectName>
-    <Location>7150 2050</Location>
-</Item>
+<!--END OF PARKOUR -->
 
-<Item>
-    <ObjectType>Platform</ObjectType>
-    <ObjectName>Tutorial_Platform_9</ObjectName>
-    <Location>6900 2200</Location>
-</Item>
 
-<Item>
-    <ObjectType>Platform</ObjectType>
-    <ObjectName>Tutorial_Platform_9</ObjectName>
-    <Location>7150 2400</Location>
-</Item>
+
 
 </Level>
