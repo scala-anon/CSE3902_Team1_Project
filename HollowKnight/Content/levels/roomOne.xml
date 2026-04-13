@@ -123,7 +123,25 @@
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Tutorial_Platform_5</ObjectName>
-    <Location>4600 1990</Location>
+    <Location>4800 1990</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_3</ObjectName>
+    <Location>4950 1400</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_4</ObjectName>
+    <Location>5330 1525</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_4</ObjectName>
+    <Location>5330 1225</Location>
 </Item>
 
 <Item>
@@ -134,8 +152,8 @@
 
 <Item>
     <ObjectType>Platform</ObjectType>
-    <ObjectName>Tutorial_Platform_3</ObjectName>
-    <Location>4550 1550</Location>
+    <ObjectName>Tutorial_Platform_1</ObjectName>
+    <Location>4550 1650</Location>
 </Item>
 
 
