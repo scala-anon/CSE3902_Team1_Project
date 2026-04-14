@@ -1,33 +1,90 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Level name="roomTwo">
 
-<Item>
-  <ObjectType>Transition</ObjectType>
-  <ObjectName>ToRoom1</ObjectName>
-  <Location>6931 2473</Location>
-</Item>
-
+<!-- Start of Room 2 -->
 <Item>
     <ObjectType>Knight</ObjectType>
     <ObjectName>Knight</ObjectName>
-    <Location>6745 2400</Location>
+    <Location>100 400</Location>
+</Item>
+
+<!-- TOP PATH (Straight path with 2 spikes and crawlid) -->
+<!-- Main long platform -->
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>0 500</Location>
+</Item>
+
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Crawlid</ObjectName>
+    <Location>300 450</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
-    <ObjectName>Brick_1</ObjectName>
-    <Location>6745 2600</Location>
+    <ObjectName>Spike_Floor_1</ObjectName>
+    <Location>600 480</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
-    <ObjectName>Brick_1</ObjectName>
-    <Location>6900 2600</Location>
+    <ObjectName>Spike_Floor_1</ObjectName>
+    <Location>900 480</Location>
+</Item>
+
+
+
+<!-- SHORT LEDGE UNDERNEATH -->
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_ledge</ObjectName>
+    <Location>1200 800</Location>
+</Item>
+
+
+<!-- LOWER PATH (Next straight path with fly and spike) -->
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>0 1000</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
-    <ObjectName>Brick_1</ObjectName>
-    <Location>6500 2600</Location>
+    <ObjectName>Spike_Floor_1</ObjectName>
+    <Location>800 980</Location>
 </Item>
+
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Vengefly</ObjectName>
+    <Location>400 800</Location>
+</Item>
+
+<!-- Transition out (End of the path, dropping into the big shaft) -->
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Crawlid</ObjectName>
+    <Location>150 950</Location>
+</Item>
+<Item>
+    <ObjectType>Transition</ObjectType>
+    <ObjectName>ToRoom3</ObjectName>
+    <Location>0 1000</Location>
+</Item>
+
+<!-- Walls to contain the paths -->
+<!-- Right Wall -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>1350 400</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>1350 510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>1350 620</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>1350 730</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>1350 840</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>1350 950</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>1350 1060</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>1350 1170</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>1350 1280</Location></Item>
+
 </Level>
