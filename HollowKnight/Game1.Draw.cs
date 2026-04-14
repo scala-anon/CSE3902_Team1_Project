@@ -97,7 +97,8 @@ public partial class Game1
             _items,
             _projectileManager,
             _navigationGrid,
-            _camera);
+            _camera,
+            _level.Transitions);
     }
 
     private void DrawOverlay()

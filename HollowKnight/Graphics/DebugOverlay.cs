@@ -7,6 +7,7 @@ using HollowKnight.Player;
 using HollowKnight.Projectiles;
 using HollowKnight.Abilities;
 using HollowKnight.Pathfinding;
+using System;
 
 namespace HollowKnight.Graphics
 {
@@ -28,11 +29,27 @@ namespace HollowKnight.Graphics
             List<Spirit> items,
             ProjectileManager projectileManager,
             NavigationGrid navigationGrid,
-            Camera camera)
+            Camera camera,
+            List<Rectangle> transitions = null)
         {
             // Navigation grid
             if (NavigationGrid.GridEnabled)
                 navigationGrid.Draw(spriteBatch);
+
+            // Transition zone debug
+            if (transitions != null)
+            {
+                foreach (Rectangle t in transitions)
+                {
+                    DrawRectangleOutline(spriteBatch, t, Color.Cyan, 3);
+                    if (DebugRenderer.hitboxEnabled)
+                    {
+                        spriteBatch.Draw(_pixel, t, Color.Cyan * 0.20f);
+                        Vector2 labelPos = new Vector2(t.Left + 4, t.Top + 4);
+                        DebugRenderer.DrawText(spriteBatch, "[Transition]", labelPos, Color.Cyan);
+                    }
+                }
+            }
 
             // Enemy debug
             foreach (IEnemy enemy in enemies)
