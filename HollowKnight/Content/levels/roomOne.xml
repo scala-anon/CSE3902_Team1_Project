@@ -2,12 +2,6 @@
 <Level name="roomOne">
 
 <Item>
-  <ObjectType>Transition</ObjectType>
-  <ObjectName>ToRoom2</ObjectName>
-  <Location>0 0</Location>
-</Item>
-
-<Item>
     <ObjectType>Knight</ObjectType>
     <ObjectName>Knight</ObjectName>
     <Location>250 1800</Location>
@@ -142,6 +136,18 @@
     <ObjectType>Platform</ObjectType>
     <ObjectName>Tutorial_Platform_4</ObjectName>
     <Location>5330 1225</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>5600 1150</Location>
+</Item>
+
+<Item>
+  <ObjectType>TransitionV</ObjectType>
+  <ObjectName>ToRoom2</ObjectName>
+  <Location>6050 800</Location>
 </Item>
 
 <Item>

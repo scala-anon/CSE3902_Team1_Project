@@ -3,9 +3,15 @@
 
 <!-- Start of Room 2 -->
 <Item>
+    <ObjectType>TransitionV</ObjectType>
+    <ObjectName>ToRoom1</ObjectName>
+    <Location>6050 0</Location>
+</Item>
+
+<Item>
     <ObjectType>Knight</ObjectType>
     <ObjectName>Knight</ObjectName>
-    <Location>100 400</Location>
+    <Location>6150 400</Location>
 </Item>
 
 <!-- TOP PATH (Straight path with 2 spikes and crawlid) -->
@@ -13,25 +19,25 @@
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Path_1</ObjectName>
-    <Location>0 500</Location>
+    <Location>6050 500</Location>
 </Item>
 
 <Item>
     <ObjectType>Enemy</ObjectType>
     <ObjectName>Crawlid</ObjectName>
-    <Location>300 450</Location>
+    <Location>6350 450</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Spike_Floor_1</ObjectName>
-    <Location>600 480</Location>
+    <Location>6650 480</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Spike_Floor_1</ObjectName>
-    <Location>900 480</Location>
+    <Location>6950 480</Location>
 </Item>
 
 
@@ -40,7 +46,7 @@
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Path_ledge</ObjectName>
-    <Location>1200 800</Location>
+    <Location>7250 800</Location>
 </Item>
 
 
@@ -48,43 +54,43 @@
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Path_1</ObjectName>
-    <Location>0 1000</Location>
+    <Location>6050 1000</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Spike_Floor_1</ObjectName>
-    <Location>800 980</Location>
+    <Location>6850 980</Location>
 </Item>
 
 <Item>
     <ObjectType>Enemy</ObjectType>
     <ObjectName>Vengefly</ObjectName>
-    <Location>400 800</Location>
+    <Location>6450 800</Location>
 </Item>
 
 <!-- Transition out (End of the path, dropping into the big shaft) -->
 <Item>
     <ObjectType>Enemy</ObjectType>
     <ObjectName>Crawlid</ObjectName>
-    <Location>150 950</Location>
+    <Location>6200 950</Location>
 </Item>
 <Item>
-    <ObjectType>Transition</ObjectType>
+    <ObjectType>TransitionH</ObjectType>
     <ObjectName>ToRoom3</ObjectName>
-    <Location>0 1000</Location>
+    <Location>5550 1200</Location>
 </Item>
 
 <!-- Walls to contain the paths -->
 <!-- Right Wall -->
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>1350 400</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>1350 510</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>1350 620</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>1350 730</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>1350 840</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>1350 950</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>1350 1060</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>1350 1170</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>1350 1280</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 400</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 620</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 730</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 840</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 950</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 1060</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 1170</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 1280</Location></Item>
 
 </Level>
