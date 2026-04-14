@@ -146,6 +146,24 @@
 
 <Item>
     <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_8</ObjectName>
+    <Location>5350 2000</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_5</ObjectName>
+    <Location>5600 1745</Location>
+</Item>
+
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Crawlid</ObjectName>
+    <Location>5500 1745</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
     <ObjectName>Tutorial_Platform_6</ObjectName>
     <Location>5050 1790</Location>
 </Item>
@@ -169,13 +187,14 @@
     <Location>6000 1900</Location>
 </Item>
 
-<Item>
+<!-- TODO: Fix -->
+<!-- <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Tutorial_Platform_10</ObjectName>
     <Location>5400 1720</Location>
-</Item>
+</Item> -->
 
-<Item>
+<!-- <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Path_2</ObjectName>
     <Location>6000 1850</Location>
@@ -197,6 +216,6 @@
     <ObjectType>Platform</ObjectType>
     <ObjectName>Tutorial_Platform_9</ObjectName>
     <Location>7150 2400</Location>
-</Item>
+</Item> -->
 
 </Level>
