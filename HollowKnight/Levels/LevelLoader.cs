@@ -89,8 +89,15 @@ namespace HollowKnight.Levels
                 ["Knight"]   = (name, pos) => KnightSpawn = pos,
                 ["Platform"] = SpawnPlatform,
                 ["Enemy"]    = SpawnEnemy,
-                ["Transition"] = (name, pos) => Transitions.Add(
-                new Rectangle((int)pos.X, (int)pos.Y, 80, GameConstants.DefaultLevelHeight))
+                
+                ["Transition"]  = (name, pos) => Transitions.Add(
+                    new Rectangle((int)pos.X, (int)pos.Y, 80, GameConstants.TransitionZoneHeight)),
+                // Vertical: thin strip the player walks into from the side
+                ["TransitionV"] = (name, pos) => Transitions.Add(
+                    new Rectangle((int)pos.X, (int)pos.Y, 80, GameConstants.TransitionZoneHeight)),
+                // Horizontal: wide flat strip the player falls/walks through vertically
+                ["TransitionH"] = (name, pos) => Transitions.Add(
+                    new Rectangle((int)pos.X, (int)pos.Y, GameConstants.TransitionZoneWidth, 80))
             };
         }
 

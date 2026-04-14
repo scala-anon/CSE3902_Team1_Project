@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Level name="roomOne">
-<Item>
-  <ObjectType>Transition</ObjectType>
-  <ObjectName>ToRoom2</ObjectName>
-  <Location>6050 0</Location>
-</Item>
 
 <Item>
     <ObjectType>Knight</ObjectType>
@@ -145,6 +140,38 @@
 
 <Item>
     <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_8</ObjectName>
+    <Location>5350 2000</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>5600 1150</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_5</ObjectName>
+    <Location>5600 1745</Location>
+</Item>
+
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Crawlid</ObjectName>
+    <Location>5500 1745</Location>
+</Item>
+
+
+
+<Item>
+  <ObjectType>TransitionV</ObjectType>
+  <ObjectName>ToRoom2</ObjectName>
+  <Location>6050 800</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
     <ObjectName>Tutorial_Platform_6</ObjectName>
     <Location>5050 1790</Location>
 </Item>
@@ -168,21 +195,35 @@
     <Location>6000 1900</Location>
 </Item>
 
-<Item>
+<!-- TODO: Fix -->
+<!-- <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Tutorial_Platform_10</ObjectName>
     <Location>5400 1720</Location>
-</Item>
+</Item> -->
 
-<Item>
+<!-- <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Path_1</ObjectName>
     <Location>5600 1100</Location>
 </Item>
 
-<!--END OF PARKOUR -->
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_8</ObjectName>
+    <Location>7150 2050</Location>
+</Item>
 
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_9</ObjectName>
+    <Location>6900 2200</Location>
+</Item>
 
-
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_9</ObjectName>
+    <Location>7150 2400</Location>
+</Item> -->
 
 </Level>
