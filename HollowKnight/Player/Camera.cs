@@ -11,6 +11,8 @@ namespace HollowKnight
         private int _levelWidth;
         private int _levelHeight;
 
+        //private static Camera instance = new Camera();
+
         public Camera(int screenWidth, int screenHeight, int levelWidth, int levelHeight)
         {
             _screenWidth = screenWidth;
