@@ -110,11 +110,11 @@ namespace HollowKnight.Levels
                 if (_spawnMap.TryGetValue(objectType, out var spawn))
                     spawn(objectName, position);
                 else
-                    Console.WriteLine($"[LevelLoader] Unknown ObjectType '{objectType}'");
+                    DebugLogger.LogGeneral($"[LevelLoader] Unknown ObjectType '{objectType}'");
             }
 
             AssignPlatformsToCrawlid();
-            Console.WriteLine($"[LevelLoader] Loaded: {Enemies.Count} enemies, " +
+            DebugLogger.LogRoomTransition($"[LevelLoader] Loaded '{xmlFilePath}': {Enemies.Count} enemies, " +
                               $"{Platforms.Count} platforms. Knight spawns at {KnightSpawn}.");
         }
 
@@ -168,7 +168,7 @@ namespace HollowKnight.Levels
         {
             if (!_platformMap.TryGetValue(name, out var create))
             {
-                Console.WriteLine($"[LevelLoader] Unknown platform '{name}' at {position}");
+                DebugLogger.LogObject($"[LevelLoader] Unknown platform '{name}' at {position}");
                 return;
             }
 
@@ -183,10 +183,11 @@ namespace HollowKnight.Levels
         {
             if (!_enemyMap.TryGetValue(name, out var create))
             {
-                Console.WriteLine($"[LevelLoader] Unknown enemy '{name}' at {position}");
+                DebugLogger.LogObject($"[LevelLoader] Unknown enemy '{name}' at {position}");
                 return;
             }
             Enemies.Add(create(position));
+            DebugLogger.LogObject($"Enemy spawned: {name} at {position}");
         }
 
         private static Vector2 ParseVector2(string s)
@@ -199,7 +200,7 @@ namespace HollowKnight.Levels
                 return new Vector2(x, y);
             }
 
-            Console.WriteLine($"[LevelLoader] Could not parse Vector2 from '{s}', defaulting to zero.");
+            DebugLogger.LogGeneral($"[LevelLoader] Could not parse Vector2 from '{s}', defaulting to zero.");
             return Vector2.Zero;
         }
     }

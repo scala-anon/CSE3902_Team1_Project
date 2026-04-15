@@ -60,6 +60,8 @@ namespace HollowKnight.Collision
             {
                 if (obj == null) continue;
                 CollisionSide side = CollisionDetector.Detect(obj, knight);
+                if (side != CollisionSide.None)
+                    DebugLogger.LogCollision($"{obj.GetType().Name} vs Knight side={side}");
                 _handler.HandleCollision(obj, knight, side);
             }
 
@@ -70,6 +72,8 @@ namespace HollowKnight.Collision
                 enemy.SetNavigationGrid(navigationGrid);
                 if (!enemy.IsActive) continue;
                 CollisionSide side = CollisionDetector.Detect(enemy, knight);
+                if (side != CollisionSide.None)
+                    DebugLogger.LogCollision($"{enemy.GetType().Name} vs Knight side={side}");
                 _handler.HandleCollision(enemy, knight, side);
             }
 
@@ -93,6 +97,8 @@ namespace HollowKnight.Collision
                 {
                     if (!enemy.IsActive) continue;
                     CollisionSide side = CollisionDetector.Detect(swordHitbox, enemy);
+                    if (side != CollisionSide.None)
+                        DebugLogger.LogCollision($"SwordHitbox vs {enemy.GetType().Name} side={side}");
                     _handler.HandleCollision(swordHitbox, enemy, side);
                 }
             }

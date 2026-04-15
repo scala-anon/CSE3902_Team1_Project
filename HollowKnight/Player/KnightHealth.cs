@@ -70,7 +70,7 @@ namespace HollowKnight.Player
         {
             if (isAttacking || !isGrounded) return;
             if (IsHealing) return;
-            if (Soul < KnightConstants.KnightSoulPerHeal) { Console.WriteLine("Not enough soul!"); return; }
+            if (Soul < KnightConstants.KnightSoulPerHeal) { DebugLogger.LogGeneral("Not enough soul to heal"); return; }
 
             IsHealing = true;
             healPhase = HealPhase.Startup;
@@ -117,7 +117,7 @@ namespace HollowKnight.Player
             {
                 Soul -= KnightConstants.KnightSoulPerHeal;
                 Health = Math.Min(MaxHealth, Health + 1);
-                Console.WriteLine($"Healed! Health is now {Health}");
+                DebugLogger.LogGeneral($"Healed! Health is now {Health}/{MaxHealth}");
                 healPhase = HealPhase.Post;
                 healTimer = 0;
             }
