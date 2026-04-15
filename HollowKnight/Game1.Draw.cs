@@ -100,18 +100,21 @@ public partial class Game1
             _camera);
     }
 
+    private void DrawHud()
+    {
+        if (!_gameState.ShowsHealthHud) return;
+
+        _spriteBatch.Begin();
+        _healthHud.Draw(_spriteBatch, _knight.GetHealth(), _knight.GetMaxHealth());
+        _soulHud.Draw(_spriteBatch, _knight.GetSoul(), _knight.GetMaxSoul());
+        _spriteBatch.End();
+    }
+
     private void DrawOverlay()
     {
         if (_gameState is PlayingState) return;
 
         _spriteBatch.Begin();
-
-        if (_gameState.ShowsHealthHud)
-        {
-            _healthHud.Draw(_spriteBatch, _knight.GetHealth(), _knight.GetMaxHealth());
-            _soulHud.Draw(_spriteBatch, _knight.GetSoul(), _knight.GetMaxSoul());
-        }
-
         _gameState.DrawOverlay(this, _spriteBatch);
 
         _spriteBatch.End();
