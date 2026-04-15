@@ -94,6 +94,7 @@ public partial class Game1 : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
         DrawWorld();
+        DrawHud();
         DrawOverlay();
 
         base.Draw(gameTime);
