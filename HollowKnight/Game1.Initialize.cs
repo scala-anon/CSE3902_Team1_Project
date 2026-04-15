@@ -51,7 +51,9 @@ public partial class Game1
     {
         _items.Clear();
         _items.Add(new Spirit(new Vector2(100, 100)));
+        DebugLogger.LogObject($"Spirit spawned at (100,100)");
         _items.Add(new Spirit(new Vector2(-100, -100)));
+        DebugLogger.LogObject($"Spirit spawned at (-100,-100)");
     }
 
     private const string Room1 = "Content/levels/roomOne.xml";
@@ -61,20 +63,26 @@ public partial class Game1
 
     private void InitializeLevel()
     {
+        DebugLogger.LogRoomTransition($"InitializeLevel: loading room 1 ({Room1})");
         _level = new LevelLoader();
         _level.Load(Room1);
         _currentRoom = 1;
         LoadObstacles();
+        DebugLogger.LogRoomTransition($"InitializeLevel: room 1 loaded");
     }
 
     public void TransitionToRoom(int roomNumber)
     {
+        int previousRoom = _currentRoom;
+        string targetFile = roomNumber == 1 ? Room1 : Room2;
+        DebugLogger.LogRoomTransition($"TransitionToRoom: room {previousRoom} -> room {roomNumber} ({targetFile})");
         _level = new LevelLoader();
-        _level.Load(roomNumber == 1 ? Room1 : Room2);
+        _level.Load(targetFile);
         _currentRoom = roomNumber;
 
         _knight.SetPosition(_level.KnightSpawn);
         LoadObstacles();
+        DebugLogger.LogRoomTransition($"TransitionToRoom: room {roomNumber} loaded, knight at {_level.KnightSpawn}");
     }
 
     private void InitializeDebug()

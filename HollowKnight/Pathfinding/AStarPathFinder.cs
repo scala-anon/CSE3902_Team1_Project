@@ -20,6 +20,7 @@ namespace HollowKnight.Pathfinding
         public static List<Vector2> FindPath(NavigationGrid grid, Vector2 startPixel, Vector2 targetPixel, Vector2? entityBounds = null)
         {
             List<Vector2> path = new List<Vector2>();
+            DebugLogger.LogAStar($"Search start=({startPixel.X:F0},{startPixel.Y:F0}) goal=({targetPixel.X:F0},{targetPixel.Y:F0})");
 
             int startX = (int)(startPixel.X / grid.cellSize);
             int startY = (int)(startPixel.Y / grid.cellSize);
@@ -132,6 +133,11 @@ namespace HollowKnight.Pathfinding
                     current = current.Parent;
                 }
                 path.Reverse(); // Reverse to get start to end
+                DebugLogger.LogAStar($"Path found: length={path.Count} nodes expanded={currentIteration}");
+            }
+            else
+            {
+                DebugLogger.LogAStar($"Path failed: start=({startPixel.X:F0},{startPixel.Y:F0}) goal=({targetPixel.X:F0},{targetPixel.Y:F0}) iterations={currentIteration}");
             }
 
             return path;
