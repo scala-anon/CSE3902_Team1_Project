@@ -60,6 +60,7 @@ public partial class Game1
     private const string Room2 = "Content/levels/roomTwo.xml";
 
     private int _currentRoom = 1;
+    public int CurrentRoom => _currentRoom;
 
     private void InitializeLevel()
     {

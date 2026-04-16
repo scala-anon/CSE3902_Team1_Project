@@ -3,6 +3,7 @@ using HollowKnight.Commands;
 using HollowKnight.Interfaces;
 using HollowKnight.Levels;
 using HollowKnight.Player;
+using HollowKnight.Shared;
 
 namespace HollowKnight.Controllers
 {
@@ -94,6 +95,19 @@ namespace HollowKnight.Controllers
             // Debug toggles
             keyboard.RegisterPressedCommand(Keys.H, new ToggleHitboxesCommand(game));
             keyboard.RegisterPressedCommand(Keys.G, new ToggleGridCommand(game));
+
+            // Debug hotkeys (compile-time gated; eliminated when DEBUG_LOG_ENABLED != 1)
+            if (GameConstants.DEBUG_LOG_ENABLED == 1)
+            {
+                // Ctrl+D1 / Ctrl+D2 — direct room jump via Game1.TransitionToRoom
+                keyboard.RegisterComboPressedCommand(Keys.D1, Keys.LeftControl,  Gameplay(game, new DebugJumpToRoomCommand(game, 1)));
+                keyboard.RegisterComboPressedCommand(Keys.D1, Keys.RightControl, Gameplay(game, new DebugJumpToRoomCommand(game, 1)));
+                keyboard.RegisterComboPressedCommand(Keys.D2, Keys.LeftControl,  Gameplay(game, new DebugJumpToRoomCommand(game, 2)));
+                keyboard.RegisterComboPressedCommand(Keys.D2, Keys.RightControl, Gameplay(game, new DebugJumpToRoomCommand(game, 2)));
+
+                // K — godmode toggle (NOT gameplay-gated, matches H/G pattern)
+                keyboard.RegisterPressedCommand(Keys.K, new ToggleGodmodeCommand());
+            }
 
             // Audio
             keyboard.RegisterPressedCommand(Keys.M, new ToggleMuteCommand());
