@@ -31,6 +31,7 @@ namespace HollowKnight.Player
         private readonly Vector2 baseSize;
 
         public KnightState CurrentState { get; private set; } = KnightState.Idle;
+        public static bool GodmodeEnabled = false;
         public KnightProjectile Projectiles { get; set; }
 
         public bool IsActive => true;
@@ -254,6 +255,11 @@ namespace HollowKnight.Player
 
         public void TakeDamage(CollisionSide side)
         {
+            if (GodmodeEnabled)
+            {
+                DebugLogger.LogGeneral($"Godmode: ignored damage from {side} side");
+                return;
+            }
             if (!health.TakeDamage()) return;
             AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Hero_Take_Damage());
             DebugLogger.LogGeneral($"Knight took damage from {side} side, health={health.Health}");

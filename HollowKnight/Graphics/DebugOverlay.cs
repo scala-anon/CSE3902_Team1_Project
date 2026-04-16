@@ -97,6 +97,7 @@ namespace HollowKnight.Graphics
             string posText = $"Knight Position: ({knight.position.X:F0}, {knight.position.Y:F0})";
             string hpText  = $"Health: {knight.GetHealth()}";
             string soulText = $"Soul: {knight.Soul}";
+            string godmodeText = $"GODMODE: {(TheKnight.GodmodeEnabled ? "ON" : "OFF")}";
 
             //hud for knight stats in debug mode
             Vector2 hudBasePos = camera.Position + new Vector2(10, 10);
@@ -108,6 +109,7 @@ namespace HollowKnight.Graphics
             DebugRenderer.DrawText(spriteBatch, posText, hudBasePos + new Vector2(0, 100), Color.White);
             DebugRenderer.DrawText(spriteBatch, hpText,  hudBasePos + new Vector2(0, 120), Color.White);
             DebugRenderer.DrawText(spriteBatch, soulText, hudBasePos + new Vector2(0, 140), Color.White);
+            DebugRenderer.DrawText(spriteBatch, godmodeText, hudBasePos + new Vector2(0, 160), Color.White);
 
             // Sword hitbox debug
             SwordHitbox swordHitbox = knight.GetSwordHitbox();
