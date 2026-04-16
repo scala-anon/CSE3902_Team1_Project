@@ -56,21 +56,26 @@ public partial class Game1
 
     private const string Room1 = "Content/levels/roomOne.xml";
     private const string Room2 = "Content/levels/roomTwo.xml";
-
-    private int _currentRoom = 1;
+    private const string Room3 = "Content/levels/roomThree.xml";
+    private string[] rooms = new[] { Room1, Room2, Room3 };
+    private int _currentRoom = 3;
 
     private void InitializeLevel()
     {
         _level = new LevelLoader();
-        _level.Load(Room1);
-        _currentRoom = 1;
+        _level.Load(rooms[_currentRoom - 1]);
+        // _level.Load(Room1);
+        // _currentRoom = 1;
         LoadObstacles();
     }
-
+    
     public void TransitionToRoom(int roomNumber)
     {
         _level = new LevelLoader();
-        _level.Load(roomNumber == 1 ? Room1 : Room2);
+        // _level.Load(roomNumber == 1 ? Room1 : Room2);
+        _level.Load(roomNumber == 1 ? Room1 
+            : roomNumber == 2 ? Room2 
+            : Room3);
         _currentRoom = roomNumber;
 
         _knight.SetPosition(_level.KnightSpawn);

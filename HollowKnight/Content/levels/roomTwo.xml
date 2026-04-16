@@ -63,11 +63,11 @@
     <Location>6850 980</Location>
 </Item>
 
-<Item>
+<!-- <Item>
     <ObjectType>Enemy</ObjectType>
     <ObjectName>Vengefly</ObjectName>
     <Location>6450 800</Location>
-</Item>
+</Item> -->
 
 <!-- Transition out (End of the path, dropping into the big shaft) -->
 <Item>

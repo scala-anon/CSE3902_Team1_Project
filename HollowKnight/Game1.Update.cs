@@ -19,6 +19,7 @@ public partial class Game1
         }
     }
 
+    // TODO: Refactor so that we map a transition to a certain room
     internal void CheckTransitions()
     {
         Rectangle knightRect = _knight.GetBounds()[0];
@@ -26,11 +27,13 @@ public partial class Game1
         {
             if (knightRect.Intersects(t))
             {
-                TransitionToRoom(_currentRoom == 1 ? 2 : 1);
+                
+                TransitionToRoom(_currentRoom == 1 ? 2 : 1);//_currentRoom % 3 + 1);   //_currentRoom == 1 ? 2 : 1);
                 return;
             }
         }
     }
+
 
     internal void UpdateKnight(GameTime gameTime)
     {

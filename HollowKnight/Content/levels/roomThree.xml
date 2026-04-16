@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Level name="roomThree">
+
+<!-- Start of Room 2 -->
+<Item>
+    <ObjectType>TransitionH</ObjectType>
+    <ObjectName>ToRoom2</ObjectName>
+    <Location>5550 2000</Location>
+</Item>
+
+<Item>
+    <ObjectType>Knight</ObjectType>
+    <ObjectName>Knight</ObjectName>
+    <Location>5750 2100</Location>
+</Item>
+
+<!-- RIGHTSIDE -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6045 2000</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6045 2111</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6045 2222</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6045 2333</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6045 2444</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6045 2555</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6045 2666</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6045 2777</Location></Item>
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7850 3790</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7850 3901</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7850 4012</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7850 4123</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7850 4234</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7850 4345</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7850 4456</Location></Item>
+<!-- <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6045 2888</Location></Item> -->
+
+<!-- LEFTSIDE -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5500 2000</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5500 2111</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5500 2222</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5500 2333</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5500 2444</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5500 2555</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5500 2666</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5500 2777</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5500 2888</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5500 2999</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5500 3110</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5500 3221</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5500 3332</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5500 3443</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5500 3554</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5500 3665</Location></Item>
+
+
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_1</ObjectName>
+    <Location>5750 3500</Location>
+</Item>
+
+<!-- <Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_4</ObjectName>
+    <Location>6150 3350</Location>
+</Item> -->
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_8</ObjectName>
+    <Location>6000 3625</Location>
+</Item>
+
+<!-- was 6250, 3235 -->
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_7</ObjectName>
+    <Location>6250 3235</Location>
+</Item>
+
+<!-- was 6500 3650 -->
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_4</ObjectName>
+    <Location>6420 3650</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_5</ObjectName>
+    <Location>6780 3400</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_10</ObjectName>
+    <Location>7000 3580</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_4</ObjectName>
+    <Location>7488 3580</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_3</ObjectName>
+    <Location>8000 3400</Location>
+</Item>
+
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Vengefly</ObjectName>
+    <Location>8000 3300</Location>
+</Item>
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>5550 3705</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>5684 3705</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>5818 3705</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>5952 3705</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6086 3705</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6220 3705</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6354 3705</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6488 3705</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6622 3705</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6756 3705</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6890 3705</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>7024 3705</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>7866 3705</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>8000 3705</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>8134 3705</Location></Item>
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_1</ObjectName><Location>5475 4550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_1</ObjectName><Location>5790 4550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_1</ObjectName><Location>6830 4550</Location></Item>
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>6230 3818</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>6230 3947</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>6230 4076</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>6230 4205</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_4</ObjectName><Location>6150 4330</Location></Item>
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Bench</ObjectName><Location>5790 4480</Location></Item>
+
+<Item>
+    <ObjectType>TransitionV</ObjectType>
+    <ObjectName>ToRoom1</ObjectName>
+    <Location>5470 4050</Location>
+</Item>
+
+
+
+</Level>

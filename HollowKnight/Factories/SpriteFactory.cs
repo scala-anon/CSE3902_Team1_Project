@@ -121,6 +121,9 @@ namespace HollowKnight.Factories
             backgroundFrames.Add("Wall_0", backgroundAtlas.GetRegion("Wall_0").SourceRectangle);
             backgroundFrames.Add("Wall_1", backgroundAtlas.GetRegion("Wall_1").SourceRectangle);
             backgroundFrames.Add("Wall_2", backgroundAtlas.GetRegion("Wall_2").SourceRectangle);
+            backgroundFrames.Add("Wall_3",backgroundAtlas.GetRegion("Wall_3").SourceRectangle);
+            backgroundFrames.Add("Wall_4",backgroundAtlas.GetRegion("Wall_4").SourceRectangle);
+            backgroundFrames.Add("Wall_5",backgroundAtlas.GetRegion("Wall_5").SourceRectangle);
             backgroundFrames.Add("Door_0", backgroundAtlas.GetRegion("Door_0").SourceRectangle);
             backgroundFrames.Add("Door_1", backgroundAtlas.GetRegion("Door_1").SourceRectangle);
             for (int i = 1; i <= 10; i++)
@@ -402,14 +405,19 @@ namespace HollowKnight.Factories
 
         public ISprite CreateWallSprite(int variant, Vector2 position)
         {
+            float scale = 1.25f;
+            if(variant==4) scale = .8f;
             string key = variant switch
             {
                 0 => "Wall_0",
                 1 => "Wall_1",
                 2 => "Wall_2",
+                3 => "Wall_3",
+                4 => "Wall_4",
+                5 => "Wall_5",
                 _ => "Wall_0"
             };
-            return new StaticSprite(backgroundSpriteSheet, backgroundFrames[key], position, 1.25f);
+            return new StaticSprite(backgroundSpriteSheet, backgroundFrames[key], position, scale);
         }
 
         public ISprite CreateDoorSprite(Vector2 position)

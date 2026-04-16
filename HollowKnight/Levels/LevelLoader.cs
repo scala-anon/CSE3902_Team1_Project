@@ -49,7 +49,10 @@ namespace HollowKnight.Levels
                 ["Plant2_Idle"]        = pos => new Grass(2,pos, 100, 5, hitOffsetY: 0),
                 ["Wall_0"]             = pos => new Wall(0, pos, 80, 200),
                 ["Wall_1"]             = pos => new Wall(1, pos, 80, 200),
-                ["Wall_2"]             = pos => new Wall(2, pos, 80, 200),
+                ["Wall_2"]             = pos => new Wall(2, pos, 80, 111),
+                ["Wall_3"]              = pos => new Wall(3,pos,49,111),
+                ["Wall_4"]              = pos => new Wall(4,pos,142,246),
+                ["Wall_5"]              = pos => new Wall(5,pos, 175,305),
                 ["Door_0"]             = pos => new Door(pos, 60, 150),
                 ["Brick_1"]            = pos => new Brick(1,pos,272,62),
                 ["Brick_2"] = pos => new Brick(2, pos, 122, 39),
@@ -103,6 +106,13 @@ namespace HollowKnight.Levels
 
         public void Load(string xmlFilePath)
         {
+            // Clear all lists before loading new level
+            Enemies.Clear();
+            Backgrounds.Clear();
+            Platforms.Clear();
+            Transitions.Clear();
+            KnightSpawn = Vector2.Zero;
+
             XDocument doc  = XDocument.Load(xmlFilePath);
             XElement  root = doc.Root
                 ?? throw new Exception($"[LevelLoader] Bad XML root in {xmlFilePath}");
