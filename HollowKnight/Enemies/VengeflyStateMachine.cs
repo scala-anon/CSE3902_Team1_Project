@@ -15,7 +15,9 @@ namespace HollowKnight.Enemies
         private NavigationGrid _grid;
         private List<Vector2> _currentPath = new List<Vector2>();
         private float _pathUpdateTimer = 0f;
-        private int frameCounter = 0; 
+        private int _consecutivePathFailures = 0;
+        private float _currentBackoffDelay = 0f;
+        private int frameCounter = 0;
 
         public void SetNavigationGrid(NavigationGrid grid) => _grid = grid;
         public List<Vector2> GetCurrentPath() => _currentPath;
@@ -78,6 +80,8 @@ namespace HollowKnight.Enemies
             {
                 CurrentVengeFly.SetState(VengeflyState.Idle);
                 _currentPath.Clear();
+                _consecutivePathFailures = 0;
+                _currentBackoffDelay = 0f;
             }
         }
 
@@ -116,7 +120,7 @@ namespace HollowKnight.Enemies
         private void UpdateChase(float elapsedTime, Vector2 enemyCenter)
         {
             _pathUpdateTimer += elapsedTime;
-            bool useAStar = TryUpdatePath(enemyCenter);
+            bool useAStar = TryUpdatePath(enemyCenter, elapsedTime);
 
             Vector2 dir;
             if (useAStar && _currentPath.Count > 0)
@@ -148,11 +152,14 @@ namespace HollowKnight.Enemies
             }
         }
 
-        private bool TryUpdatePath(Vector2 enemyCenter)
+        private bool TryUpdatePath(Vector2 enemyCenter, float elapsedTime)
         {
             if (_grid == null) return false;
 
-            if (_pathUpdateTimer >= EnemyConstants.VengeflyPathUpdateInterval || _currentPath.Count == 0)
+            _currentBackoffDelay = System.Math.Max(0f, _currentBackoffDelay - elapsedTime);
+
+            if (_currentBackoffDelay <= 0f &&
+                (_pathUpdateTimer >= EnemyConstants.VengeflyPathUpdateInterval || _currentPath.Count == 0))
             {
                 _pathUpdateTimer = 0f;
                 int gridPixelWidth = _grid.cols * _grid.cellSize;
@@ -169,10 +176,23 @@ namespace HollowKnight.Enemies
                     Vector2 enemySize = new Vector2(CurrentVengeFly.Bounds.Width, CurrentVengeFly.Bounds.Height);
                     _currentPath = AStarPathFinder.FindPath(_grid, enemyCenter, knightPos, enemySize);
 
-                    if (_currentPath.Count == 0)
-                        _currentPath = AStarPathFinder.FindPath(_grid, enemyCenter, knightPos, null);
+                    if (_currentPath.Count > 0)
+                    {
+                        _consecutivePathFailures = 0;
+                        _currentBackoffDelay = 0f;
+                        return true;
+                    }
 
-                    return _currentPath.Count > 0;
+                    _consecutivePathFailures++;
+                    if (_consecutivePathFailures >= EnemyConstants.VengeflyPathFailuresBeforeBackoff)
+                    {
+                        int failuresSinceBackoff = _consecutivePathFailures - EnemyConstants.VengeflyPathFailuresBeforeBackoff;
+                        float next = EnemyConstants.VengeflyPathFailBackoffInitial * (float)System.Math.Pow(
+                            EnemyConstants.VengeflyPathFailBackoffMultiplier,
+                            failuresSinceBackoff);
+                        _currentBackoffDelay = System.Math.Min(next, EnemyConstants.VengeflyPathFailBackoffMax);
+                    }
+                    return false;
                 }
 
                 _currentPath.Clear();

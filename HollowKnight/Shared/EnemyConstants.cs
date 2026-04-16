@@ -23,9 +23,13 @@ namespace HollowKnight.Shared
         public const float VengeflyChaseSpeed = 130f;
         public const double VengeflyStartleDuration = 0.5;
         public const float VengeflyPathUpdateInterval = 0.3f;
+        public const float VengeflyWaypointReachDivisor = 1.5f;
+        public const float VengeflyPathFailBackoffInitial = 0.6f;      // first backoff delay, seconds
+        public const float VengeflyPathFailBackoffMax = 2.0f;          // backoff cap, seconds
+        public const float VengeflyPathFailBackoffMultiplier = 2.0f;   // growth per failure
+        public const int VengeflyPathFailuresBeforeBackoff = 2;        // consecutive failures needed to trigger backoff
         public const float VengeflyKnockbackUpComponent = -150f;
         public const float VengeflyVerticalKnockbackSpeed = 250f;
-        public const float VengeflyWaypointReachDivisor = 1.5f;
         public const int VengeflyDamage = 1;
 
         // Projectile
