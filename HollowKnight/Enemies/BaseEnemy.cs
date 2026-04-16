@@ -117,15 +117,6 @@ namespace HollowKnight.Enemies
                 _knockbackVelocity.X = 0;
 
             position += _knockbackVelocity * dt;
-
-            float spriteHeight = Sprite.GetSize().Y;
-            if (position.Y + spriteHeight >= GameConstants.ScreenHeight)
-            {
-                position.Y = GameConstants.ScreenHeight - spriteHeight;
-                _knockbackVelocity = Vector2.Zero;
-                IsGrounded = true;
-                OnDeath(true);
-            }
         }
 
         protected void UpdateDamageTimer(float dt)
