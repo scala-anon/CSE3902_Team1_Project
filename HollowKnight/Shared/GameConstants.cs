@@ -7,8 +7,10 @@ namespace HollowKnight.Shared
         public const int ScreenHeight = 1080;
 
         // Level
-        public const int DefaultLevelWidth = 7000;
-        public const int DefaultLevelHeight = 3400;
+        public const int DefaultLevelWidth = 70000;
+        public const int DefaultLevelHeight = 34000;
+        public const int TransitionZoneHeight = 500; 
+        public const int TransitionZoneWidth  = 500; 
 
         // Knight — Physics
         public const float KnightMoveSpeed = 250f;

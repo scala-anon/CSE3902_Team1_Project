@@ -1,33 +1,96 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Level name="roomTwo">
 
+<!-- Start of Room 2 -->
 <Item>
-  <ObjectType>Transition</ObjectType>
-  <ObjectName>ToRoom1</ObjectName>
-  <Location>6931 2473</Location>
+    <ObjectType>TransitionV</ObjectType>
+    <ObjectName>ToRoom1</ObjectName>
+    <Location>6050 0</Location>
 </Item>
 
 <Item>
     <ObjectType>Knight</ObjectType>
     <ObjectName>Knight</ObjectName>
-    <Location>6745 2400</Location>
+    <Location>6150 400</Location>
+</Item>
+
+<!-- TOP PATH (Straight path with 2 spikes and crawlid) -->
+<!-- Main long platform -->
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>6050 500</Location>
+</Item>
+
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Crawlid</ObjectName>
+    <Location>6350 450</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
-    <ObjectName>Brick_1</ObjectName>
-    <Location>6745 2600</Location>
+    <ObjectName>Spike_Floor_1</ObjectName>
+    <Location>6650 480</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
-    <ObjectName>Brick_1</ObjectName>
-    <Location>6900 2600</Location>
+    <ObjectName>Spike_Floor_1</ObjectName>
+    <Location>6950 480</Location>
+</Item>
+
+
+
+<!-- SHORT LEDGE UNDERNEATH -->
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_ledge</ObjectName>
+    <Location>7250 800</Location>
+</Item>
+
+
+<!-- LOWER PATH (Next straight path with fly and spike) -->
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>6050 1000</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
-    <ObjectName>Brick_1</ObjectName>
-    <Location>6500 2600</Location>
+    <ObjectName>Spike_Floor_1</ObjectName>
+    <Location>6850 980</Location>
 </Item>
+
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Vengefly</ObjectName>
+    <Location>6450 800</Location>
+</Item>
+
+<!-- Transition out (End of the path, dropping into the big shaft) -->
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Crawlid</ObjectName>
+    <Location>6200 950</Location>
+</Item>
+<Item>
+    <ObjectType>TransitionH</ObjectType>
+    <ObjectName>ToRoom3</ObjectName>
+    <Location>5550 1200</Location>
+</Item>
+
+<!-- Walls to contain the paths -->
+<!-- Right Wall -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 400</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 620</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 730</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 840</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 950</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 1060</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 1170</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 1280</Location></Item>
+
 </Level>

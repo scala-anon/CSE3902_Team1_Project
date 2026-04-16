@@ -2,12 +2,6 @@
 <Level name="roomOne">
 
 <Item>
-  <ObjectType>Transition</ObjectType>
-  <ObjectName>ToRoom2</ObjectName>
-  <Location>0 0</Location>
-</Item>
-
-<Item>
     <ObjectType>Knight</ObjectType>
     <ObjectName>Knight</ObjectName>
     <Location>250 1800</Location>
@@ -123,7 +117,57 @@
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Tutorial_Platform_5</ObjectName>
-    <Location>4600 1990</Location>
+    <Location>4800 1990</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_3</ObjectName>
+    <Location>4950 1400</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_4</ObjectName>
+    <Location>5330 1525</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_4</ObjectName>
+    <Location>5330 1225</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_8</ObjectName>
+    <Location>5350 2000</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>5600 1150</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Tutorial_Platform_5</ObjectName>
+    <Location>5600 1745</Location>
+</Item>
+
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Crawlid</ObjectName>
+    <Location>5500 1745</Location>
+</Item>
+
+
+
+<Item>
+  <ObjectType>TransitionV</ObjectType>
+  <ObjectName>ToRoom2</ObjectName>
+  <Location>6050 800</Location>
 </Item>
 
 <Item>
@@ -134,8 +178,8 @@
 
 <Item>
     <ObjectType>Platform</ObjectType>
-    <ObjectName>Tutorial_Platform_3</ObjectName>
-    <Location>4550 1550</Location>
+    <ObjectName>Tutorial_Platform_1</ObjectName>
+    <Location>4550 1650</Location>
 </Item>
 
 
@@ -151,16 +195,17 @@
     <Location>6000 1900</Location>
 </Item>
 
-<Item>
+<!-- TODO: Fix -->
+<!-- <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Tutorial_Platform_10</ObjectName>
     <Location>5400 1720</Location>
-</Item>
+</Item> -->
 
-<Item>
+<!-- <Item>
     <ObjectType>Platform</ObjectType>
-    <ObjectName>Path_2</ObjectName>
-    <Location>6000 1850</Location>
+    <ObjectName>Path_1</ObjectName>
+    <Location>5600 1100</Location>
 </Item>
 
 <Item>
@@ -179,6 +224,6 @@
     <ObjectType>Platform</ObjectType>
     <ObjectName>Tutorial_Platform_9</ObjectName>
     <Location>7150 2400</Location>
-</Item>
+</Item> -->
 
 </Level>
