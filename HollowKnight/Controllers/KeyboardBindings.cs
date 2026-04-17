@@ -54,6 +54,7 @@ namespace HollowKnight.Controllers
             keyboard.RegisterComboPressedCommand(Keys.Z, Keys.Down, Gameplay(game, new PlayerDownSlashCommand(knight)));
             keyboard.RegisterComboPressedCommand(Keys.Z, Gameplay(game, new PlayerSideSlashCommand(knight)));
 
+
             // Healing — hold X to heal
             keyboard.RegisterHeldCommand(Keys.X, Gameplay(game, new PlayerHealHoldCommand(knight)));
             keyboard.RegisterReleasedCommand(Keys.X, Gameplay(game, new PlayerHealCancelCommand(knight)));
