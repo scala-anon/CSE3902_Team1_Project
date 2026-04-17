@@ -7,12 +7,14 @@ namespace HollowKnight.Controllers
 {
     public class MouseController : IController
     {
+        private readonly Game1 _game;
         private readonly int _screenWidth;
         private readonly RoomManager _roomManager;
         private MouseState _previousState;
 
-        public MouseController(int screenWidth, RoomManager roomManager)
+        public MouseController(Game1 game, int screenWidth, RoomManager roomManager)
         {
+            _game = game;
             _screenWidth = screenWidth;
             _roomManager = roomManager;
             _previousState = Mouse.GetState();
@@ -26,13 +28,22 @@ namespace HollowKnight.Controllers
 
             if (leftClickPressed)
             {
-                if (currentState.X < _screenWidth / 2)
+                if (_game.TrySelectInventoryItem(new Point(currentState.X, currentState.Y)))
                 {
-                    _roomManager.SwitchRoomByOffset(-1);
+                    _previousState = currentState;
+                    return;
                 }
-                else
+
+                if (_game.AllowsGameplayInput())
                 {
-                    _roomManager.SwitchRoomByOffset(1);
+                    if (currentState.X < _screenWidth / 2)
+                    {
+                        _roomManager.SwitchRoomByOffset(-1);
+                    }
+                    else
+                    {
+                        _roomManager.SwitchRoomByOffset(1);
+                    }
                 }
             }
 

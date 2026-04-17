@@ -48,6 +48,11 @@ public partial class Game1
         return _gameState is PlayingState;
     }
 
+    public bool IsInventoryOpen()
+    {
+        return _gameState is InventoryState;
+    }
+
     public void ResetGame()
     {
         _restartRequested = true;

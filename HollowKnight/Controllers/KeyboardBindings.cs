@@ -58,13 +58,13 @@ namespace HollowKnight.Controllers
             keyboard.RegisterReleasedCommand(Keys.X, Gameplay(game, new PlayerHealCancelCommand(knight)));
 
             // Items
-            keyboard.RegisterPressedCommand(Keys.D1, Gameplay(game, new PlayerUseItemCommand(knight, 1)));
-            keyboard.RegisterPressedCommand(Keys.D2, Gameplay(game, new PlayerUseItemCommand(knight, 2)));
-            keyboard.RegisterPressedCommand(Keys.D3, Gameplay(game, new PlayerUseItemCommand(knight, 3)));
+            keyboard.RegisterPressedCommand(Keys.D1, new PlayerUseItemCommand(game, knight, 1));
+            keyboard.RegisterPressedCommand(Keys.D2, new PlayerUseItemCommand(game, knight, 2));
+            keyboard.RegisterPressedCommand(Keys.D3, new PlayerUseItemCommand(game, knight, 3));
 
             // Cycle Items
-            keyboard.RegisterPressedCommand(Keys.U, Gameplay(game, new CycleItemPreviousCommand()));
-            keyboard.RegisterPressedCommand(Keys.I, Gameplay(game, new CycleItemNextCommand()));
+            keyboard.RegisterPressedCommand(Keys.U, new CycleItemPreviousCommand());
+            keyboard.RegisterPressedCommand(Keys.I, new CycleItemNextCommand());
 
             // Give Soul (debug) - Using Y because U is taken
             keyboard.RegisterPressedCommand(Keys.Y, new PlayerGiveSoulCommand(knight));
