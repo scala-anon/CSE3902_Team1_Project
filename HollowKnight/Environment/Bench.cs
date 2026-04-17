@@ -20,7 +20,7 @@ namespace HollowKnight.Environment
 
         public override Rectangle[] GetBounds()
         {
-            hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, 100, 32);
+            hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, CollisionConstants.BenchHitboxWidth, CollisionConstants.BenchHitboxHeight);
             return hitBoxes;
         }
 
@@ -28,7 +28,11 @@ namespace HollowKnight.Environment
         {
             return new[]
             {
-                new Rectangle((int)position.X - 16, (int)position.Y - 12, 132, 56)
+                new Rectangle(
+                    (int)position.X - CollisionConstants.BenchInteractionMarginX,
+                    (int)position.Y - CollisionConstants.BenchInteractionMarginY,
+                    CollisionConstants.BenchInteractionWidth,
+                    CollisionConstants.BenchInteractionHeight)
             };
         }
 

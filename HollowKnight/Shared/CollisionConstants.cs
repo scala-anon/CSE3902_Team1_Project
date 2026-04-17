@@ -66,6 +66,16 @@ namespace HollowKnight.Shared
         public const int VengefulSpiritNoseOffsetLeft = 0;
         public const int VengefulSpiritCollisionOffsetY = -47;
 
+        // Bench Hitbox Dimensions (sprite is 95x46 at scale 2.0 = 190x92)
+        public const int BenchHitboxWidth = 190;
+        public const int BenchHitboxHeight = 92;
+
+        // Bench Interaction Bounds Margins
+        public const int BenchInteractionMarginX = 48;
+        public const int BenchInteractionMarginY = 20;
+        public const int BenchInteractionWidth = 286;
+        public const int BenchInteractionHeight = 132;
+
         // Physics/Collision Thresholds
         public const float GroundProbeExtension = 1;
     }
