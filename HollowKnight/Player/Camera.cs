@@ -1,4 +1,6 @@
+using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace HollowKnight
 {
@@ -6,17 +8,28 @@ namespace HollowKnight
     {
         private Vector2 position;
         public Vector2 Position => position;
-        private readonly int _screenWidth;
-        private readonly int _screenHeight;
+        private int _screenWidth;
+        private int _screenHeight;
         private int _levelWidth;
         private int _levelHeight;
 
-        public Camera(int screenWidth, int screenHeight, int levelWidth, int levelHeight)
+        private static Camera instance = new Camera();
+
+        public Camera()
         {
-            _screenWidth = screenWidth;
-            _screenHeight = screenHeight;
-            _levelWidth = levelWidth;
-            _levelHeight = levelHeight;
+            _levelWidth = GameConstants.DefaultLevelWidth;
+            _levelHeight = GameConstants.DefaultLevelHeight;
+        }
+
+        public void Initialize(int width, int heigth)
+        {
+            _screenHeight = heigth;
+            _screenWidth = width;
+        }
+
+        public static Camera Instance
+        {
+            get {return instance; }
         }
 
         public Matrix GetTransform()

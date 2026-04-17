@@ -18,14 +18,13 @@ namespace HollowKnight.Levels
 
         public RoomManager(
             TheKnight knight,
-            Camera camera,
             int screenWidth,
             int screenHeight,
             int levelWidth,
             int levelHeight)
         {
             _knight = knight;
-            _camera = camera;
+            _camera = Camera.Instance;
             _screenWidth = screenWidth;
             _levelWidth = Math.Max(screenWidth, levelWidth);
             _roomCount = Math.Max(1, (int)Math.Ceiling(_levelWidth / (double)_screenWidth));
