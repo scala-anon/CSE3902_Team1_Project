@@ -18,12 +18,12 @@ namespace HollowKnight.Environment
         public InteractionType InteractionType => InteractionType.SwordHit;
         public override bool IsActive => !_chopped;
 
-        public Grass(int variant, Vector2 position, int hitWidth, int hitHeight, int hitOffsetY = 0)
+        public Grass(int variant, Vector2 position, int hitWidth = 0, int hitHeight = 0, int hitOffsetY = 0)
         {
             this.variant = variant;
             this.position = position;
-            this.hitWidth = hitWidth;
-            this.hitHeight = hitHeight;
+            this.hitWidth = hitWidth;  // no longer used
+            this.hitHeight = hitHeight; // no longer used
             this.hitOffsetY = hitOffsetY;
             hitBoxes = new Rectangle[1];
             sprite = variant == 1
@@ -37,9 +37,23 @@ namespace HollowKnight.Environment
 
             DebugLogger.LogObject($"Grass chopped: {Label}");
             _chopped = true;
+
+            // Get the original sprite's bottom position
+            Vector2 originalSize = sprite.GetSize();
+            float originalBottom = position.Y + originalSize.Y;
+
+            // Create the chopped sprite
             sprite = variant == 1
                 ? SpriteFactory.Instance.CreatePlant1ChoppedSprite(position)
                 : SpriteFactory.Instance.CreatePlant2ChoppedSprite(position);
+
+            // Position the chopped sprite so its bottom aligns with the original bottom
+            Vector2 choppedSize = sprite.GetSize();
+            float newY = originalBottom - choppedSize.Y;
+            Vector2 newPosition = new Vector2(position.X, newY);
+            sprite.SetPosition(newPosition);
+
+            position = newPosition;
         }
 
         /// <summary>
@@ -47,11 +61,12 @@ namespace HollowKnight.Environment
         /// </summary>
         public override Rectangle[] GetBounds()
         {
+            Vector2 spriteSize = sprite.GetSize();
             hitBoxes[0] = new Rectangle(
                 (int)position.X,
                 (int)position.Y + hitOffsetY,
-                hitWidth,
-                hitHeight
+                (int)spriteSize.X,
+                (int)spriteSize.Y
             );
             return hitBoxes;
         }
@@ -61,6 +76,7 @@ namespace HollowKnight.Environment
         /// </summary>
         public Rectangle[] GetInteractionBounds()
         {
+            Vector2 spriteSize = sprite.GetSize();
             // Expand the hitbox slightly to make sword interaction more forgiving
             int expandX = 10;
             int expandY = 5;
@@ -69,8 +85,8 @@ namespace HollowKnight.Environment
                 new Rectangle(
                     (int)position.X - expandX,
                     (int)position.Y + hitOffsetY - expandY,
-                    hitWidth + (expandX * 2),
-                    hitHeight + (expandY * 2)
+                    (int)spriteSize.X + (expandX * 2),
+                    (int)spriteSize.Y + (expandY * 2)
                 )
             };
         }
