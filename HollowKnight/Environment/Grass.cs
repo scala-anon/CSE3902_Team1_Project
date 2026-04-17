@@ -2,6 +2,7 @@ using HollowKnight.Factories;
 using Microsoft.Xna.Framework;
 using HollowKnight.Interfaces;
 using HollowKnight.Player;
+using HollowKnight.Shared;
 
 namespace HollowKnight.Environment
 {
@@ -32,15 +33,47 @@ namespace HollowKnight.Environment
 
         public void Chop()
         {
-            if(_chopped) return;
+            if (_chopped) return;
 
+            DebugLogger.LogObject($"Grass chopped: {Label}");
             _chopped = true;
             sprite = variant == 1
                 ? SpriteFactory.Instance.CreatePlant1ChoppedSprite(position)
                 : SpriteFactory.Instance.CreatePlant2ChoppedSprite(position);
         }
 
-        public Rectangle[] GetInteractionBounds() => GetBounds();
+        /// <summary>
+        /// Collision bounds (for sword/rendering) — the actual grass sprite area
+        /// </summary>
+        public override Rectangle[] GetBounds()
+        {
+            hitBoxes[0] = new Rectangle(
+                (int)position.X,
+                (int)position.Y + hitOffsetY,
+                hitWidth,
+                hitHeight
+            );
+            return hitBoxes;
+        }
+
+        /// <summary>
+        /// Interactive bounds (for sword strike triggers) — slightly expanded for easier interaction
+        /// </summary>
+        public Rectangle[] GetInteractionBounds()
+        {
+            // Expand the hitbox slightly to make sword interaction more forgiving
+            int expandX = 10;
+            int expandY = 5;
+            return new[]
+            {
+                new Rectangle(
+                    (int)position.X - expandX,
+                    (int)position.Y + hitOffsetY - expandY,
+                    hitWidth + (expandX * 2),
+                    hitHeight + (expandY * 2)
+                )
+            };
+        }
 
         public bool IsInteractable(TheKnight knight) => !_chopped;
 

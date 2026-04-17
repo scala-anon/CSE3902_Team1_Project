@@ -20,6 +20,7 @@ namespace HollowKnight.Collision
         public static readonly Color ColorTrigger     = CollisionConstants.DebugColorTrigger;
         public static readonly Color ColorMidpoint    = CollisionConstants.DebugColorMidpoint;
         public static readonly Color ColorSword       = CollisionConstants.DebugColorSword;
+        public static readonly Color ColorInteractable = CollisionConstants.DebugColorInteractable;
 
         /// <summary>
         /// Creates the internal 1x1 pixel texture.
@@ -147,6 +148,15 @@ namespace HollowKnight.Collision
             if(!hitboxEnabled || _pixel == null) return;
             int halfSize = size / 2;
             spriteBatch.Draw(_pixel, new Rectangle((int)(center.X - halfSize), (int)(center.Y - halfSize), size, size), color);
+        }
+
+        public static void DrawInteractableBounds(SpriteBatch spriteBatch, Rectangle[] bounds, Color color)
+        {
+            if (!hitboxEnabled || _pixel == null)
+            {
+                return;
+            }
+            DrawHitbox(spriteBatch, bounds, color);
         }
     }
 }

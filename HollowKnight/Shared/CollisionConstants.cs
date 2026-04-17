@@ -17,6 +17,7 @@ namespace HollowKnight.Shared
         public static readonly Color DebugColorTrigger = Color.Yellow;
         public static readonly Color DebugColorMidpoint = Color.Magenta;
         public static readonly Color DebugColorSword = Color.Cyan;
+        public static readonly Color DebugColorInteractable = Color.Violet;
 
         // Knight Hurtbox
         public const int KnightHurtboxShrink = 6;

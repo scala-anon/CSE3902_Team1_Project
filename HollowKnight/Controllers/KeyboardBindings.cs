@@ -23,14 +23,19 @@ namespace HollowKnight.Controllers
             keyboard.RegisterHeldCommand(Keys.D, Gameplay(game, new PlayerMoveRightCommand(knight)));
             keyboard.RegisterHeldCommand(Keys.Right, Gameplay(game, new PlayerMoveRightCommand(knight)));
 
-            // Look Up — W only (removed Up to avoid binding conflict)
+            // Look Up — W and Up Arrow
             keyboard.RegisterHeldCommand(Keys.W, Gameplay(game, new PlayerMoveUpCommand(knight)));
+            keyboard.RegisterHeldCommand(Keys.Up, Gameplay(game, new PlayerMoveUpCommand(knight)));
+
+            // Stop Horizontal on release
+            keyboard.RegisterReleasedCommand(Keys.A, Gameplay(game, new PlayerStopMovingHorizontalCommand(knight)));
+            keyboard.RegisterReleasedCommand(Keys.Left, Gameplay(game, new PlayerStopMovingHorizontalCommand(knight)));
+            keyboard.RegisterReleasedCommand(Keys.D, Gameplay(game, new PlayerStopMovingHorizontalCommand(knight)));
+            keyboard.RegisterReleasedCommand(Keys.Right, Gameplay(game, new PlayerStopMovingHorizontalCommand(knight)));
 
             // Stop Vertical on release
             keyboard.RegisterReleasedCommand(Keys.W, Gameplay(game, new PlayerStopMovingVerticalCommand(knight)));
-
-            // Interact — Up Arrow
-            keyboard.RegisterPressedCommand(Keys.Up, Gameplay(game, new PlayerInteractCommand(game)));
+            keyboard.RegisterReleasedCommand(Keys.Up, Gameplay(game, new PlayerStopMovingVerticalCommand(knight)));
 
             // Jump — Space
             keyboard.RegisterPressedCommand(Keys.Space, Gameplay(game, new PlayerJumpCommand(knight)));

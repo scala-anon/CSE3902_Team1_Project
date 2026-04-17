@@ -30,6 +30,7 @@ namespace HollowKnight.Graphics
             ProjectileManager projectileManager,
             NavigationGrid navigationGrid,
             Camera camera,
+            List<IInteractable> interactables = null,
             List<Rectangle> transitions = null)
         {
             // Navigation grid
@@ -128,6 +129,25 @@ namespace HollowKnight.Graphics
                     if (objBounds.Length > 0)
                     {
                         DebugRenderer.DrawText(spriteBatch, obj.Label, new Vector2(objBounds[0].Left, objBounds[0].Top - 20), Color.White);
+                    }
+                }
+            }
+
+            // Interactable bounds debug
+            if (interactables != null)
+            {
+                foreach (IInteractable interactable in interactables)
+                {
+                    if (interactable != null && interactable.IsActive)
+                    {
+                        DebugRenderer.DrawInteractableBounds(spriteBatch, interactable.GetInteractionBounds(), DebugRenderer.ColorInteractable);
+                        
+                        // Draw label
+                        Rectangle[] bounds = interactable.GetInteractionBounds();
+                        if (bounds.Length > 0)
+                        {
+                            DebugRenderer.DrawText(spriteBatch, $"[{interactable.InteractionType}]", new Vector2(bounds[0].Left, bounds[0].Top - 20), DebugRenderer.ColorInteractable);
+                        }
                     }
                 }
             }

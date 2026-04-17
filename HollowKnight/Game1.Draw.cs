@@ -110,6 +110,7 @@ public partial class Game1
             _projectileManager,
             _navigationGrid,
             _camera,
+            _level.Interactables,
             _level.Transitions);
     }
 
