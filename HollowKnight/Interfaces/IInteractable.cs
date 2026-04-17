@@ -1,20 +1,20 @@
-using System;
 using HollowKnight.Player;
 using Microsoft.Xna.Framework;
+
 namespace HollowKnight.Interfaces
 {
-
     public enum InteractionType
     {
         None,
-        KeyBoardInput,
+        ButtonPress,
         SwordHit,
         Touch
     }
-    public interface IInteractable
+
+    public interface IInteractable : IObject
     {
         InteractionType InteractionType { get; }
-        Rectangle GetInteractionBounds();
+        Rectangle[] GetInteractionBounds();
         bool IsInteractable(TheKnight knight);
         void OnInteract(TheKnight knight);
     }

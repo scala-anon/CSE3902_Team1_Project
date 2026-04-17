@@ -47,6 +47,7 @@ namespace HollowKnight.Collision
         public void Update(
             TheKnight knight,
             List<IObject> platforms,
+            List<IInteractable> interactables,
             List<IEnemy> enemies,
             List<Spirit> items,
             ProjectileManager projectileManager,
@@ -89,7 +90,7 @@ namespace HollowKnight.Collision
                 }
             }
 
-            // Sword collisions
+            // Sword collisions / interactions
             SwordHitbox swordHitbox = knight.GetSwordHitbox();
             if (swordHitbox != null)
             {
@@ -100,6 +101,22 @@ namespace HollowKnight.Collision
                     if (side != CollisionSide.None)
                         DebugLogger.LogCollision($"SwordHitbox vs {enemy.GetType().Name} side={side}");
                     _handler.HandleCollision(swordHitbox, enemy, side);
+                }
+
+                foreach (IInteractable interactable in interactables)
+                {
+                    if (interactable == null ||
+                        !interactable.IsActive ||
+                        interactable.InteractionType != InteractionType.SwordHit)
+                    {
+                        continue;
+                    }
+
+                    CollisionSide side = CollisionDetector.Detect(swordHitbox, interactable);
+                    if (side != CollisionSide.None && interactable.IsInteractable(_currentKnight))
+                    {
+                        interactable.OnInteract(_currentKnight);
+                    }
                 }
             }
 

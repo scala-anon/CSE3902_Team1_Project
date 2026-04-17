@@ -14,6 +14,7 @@ namespace HollowKnight.Levels
         public List<IEnemy> Enemies        { get; } = new();
         public List<IObject> Backgrounds   { get; } = new();
         public List<IObject> Platforms     { get; } = new();
+        public List<IInteractable> Interactables { get; } = new();
         public List<Rectangle> Transitions { get; } = new();
         public Vector2 KnightSpawn { get; private set; } = Vector2.Zero;
 
@@ -182,6 +183,8 @@ namespace HollowKnight.Levels
             IObject obj = create(position);
             if (BackgroundNames.Contains(name))
                 Backgrounds.Add(obj);
+            else if (obj is IInteractable interactable)
+                Interactables.Add(interactable);
             else
                 Platforms.Add(obj);
         }

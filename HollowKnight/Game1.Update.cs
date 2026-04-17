@@ -47,10 +47,12 @@ public partial class Game1
         _collisionSystem.Update(
             _knight,
             _level.Platforms,
+            _level.Interactables,
             _level.Enemies,
             _items,
             _projectileManager,
-            _navigationGrid);
+            _navigationGrid
+        );
     }
 
     internal bool KnightIsDead() => _knight.IsDead();
@@ -77,10 +79,46 @@ public partial class Game1
                 platform.Update(gameTime);
             }
         }
+
+        foreach (IInteractable interactable in _level.Interactables)
+        {
+            if (interactable != null)
+            {
+                interactable.Update(gameTime);
+            }
+        }
     }
 
     internal void UpdateProjectiles(GameTime gameTime)
     {
         _projectileManager.Update(gameTime);
     }
+
+
+    internal void TryInteract()
+{
+    Rectangle knightBounds = _knight.GetBounds()[0];
+
+    foreach (IInteractable interactable in _level.Interactables)
+    {
+        if (interactable == null ||
+            !interactable.IsActive ||
+            interactable.InteractionType != InteractionType.ButtonPress)
+        {
+            continue;
+        }
+
+        foreach (Rectangle rect in interactable.GetInteractionBounds())
+        {
+            if (!rect.Intersects(knightBounds))
+                continue;
+
+            if (interactable.IsInteractable(_knight))
+            {
+                interactable.OnInteract(_knight);
+                return;
+            }
+        }
+    }
+}
 }

@@ -113,6 +113,10 @@ namespace HollowKnight.Controllers
             // Audio
             keyboard.RegisterPressedCommand(Keys.M, new ToggleMuteCommand());
 
+            //Interactions
+            // Bench / interactive object button
+            keyboard.RegisterPressedCommand(Keys.Up, Gameplay(game, new PlayerInteractCommand(game)));
+
             // Quit
             keyboard.RegisterPressedCommand(Keys.Q, new QuitCommand(game));
         }
