@@ -138,6 +138,7 @@ public partial class Game1
     {
     DebugLogger.LogRoomTransition($"InitializeLevel: loading room 1 ({Room1})");
     _level = new LevelLoader();
+    _level.SetGame(this);
     _currentRoom = 1;
     _level.Load(rooms[_currentRoom - 1]);
     LoadObstacles();
@@ -158,6 +159,7 @@ public void TransitionToRoom(int roomNumber)
     DebugLogger.LogRoomTransition($"TransitionToRoom: room {previousRoom} -> room {roomNumber} ({targetFile})");
 
     _level = new LevelLoader();
+    _level.SetGame(this);
     _level.Load(targetFile);
     _currentRoom = roomNumber;
 

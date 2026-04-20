@@ -18,6 +18,7 @@ namespace HollowKnight.Sprites
 
         public int Width => 0;
         public int Height => 0;
+        public bool IsFinished => false;
 
         /// <summary>
         /// Create a text sprite.

@@ -21,6 +21,7 @@ namespace HollowKnight.Sprites
         private int _spriteHeight;
 
         public int Width => (int)(_sourceRect.Width * _scale);
+        public bool IsFinished => false;
         public int Height => (int)(_sourceRect.Height * _scale);
 
         /// <summary>

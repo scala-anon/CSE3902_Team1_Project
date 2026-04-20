@@ -48,6 +48,11 @@ public partial class Game1
         return _gameState is PlayingState;
     }
 
+    public void StartMantisFight()
+    {
+        _level.BossFight?.Activate();
+    }
+
     public void ResetGame()
     {
         _restartRequested = true;

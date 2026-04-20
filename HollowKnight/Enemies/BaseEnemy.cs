@@ -53,9 +53,9 @@ namespace HollowKnight.Enemies
 
         // --- Shared implementations ---
 
-        public bool TakeDamage() => TakeDamage(CollisionSide.None);
+        public virtual bool TakeDamage() => TakeDamage(CollisionSide.None);
 
-        public bool TakeDamage(CollisionSide side)
+        public virtual bool TakeDamage(CollisionSide side)
         {
             if (_isDamaged) return false;
             _isDamaged = true;

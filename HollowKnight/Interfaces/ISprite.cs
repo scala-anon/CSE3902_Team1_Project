@@ -39,5 +39,11 @@ namespace HollowKnight.Interfaces
         Vector2 GetSize();
         int Width { get; }
         int Height { get; }
+
+        /// <summary>
+        /// True when a non-looping animation has played through all frames.
+        /// Always true for StaticSprite; always false for MovingAnimatedSprite.
+        /// </summary>
+        bool IsFinished { get; }
     }
 }
