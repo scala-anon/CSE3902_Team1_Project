@@ -1,9 +1,21 @@
+using HollowKnight.Player;
 using Microsoft.Xna.Framework;
+
 namespace HollowKnight.Interfaces
 {
-    public interface IInteractable
+    public enum InteractionType
     {
-        Rectangle Bounds { get; }
-        Rectangle[] GetBounds();
+        None,
+        ButtonPress,
+        SwordHit,
+        Touch
+    }
+
+    public interface IInteractable : IObject
+    {
+        InteractionType InteractionType { get; }
+        Rectangle[] GetInteractionBounds();
+        bool IsInteractable(TheKnight knight);
+        void OnInteract(TheKnight knight);
     }
 }

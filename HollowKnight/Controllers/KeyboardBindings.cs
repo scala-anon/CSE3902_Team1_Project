@@ -54,6 +54,7 @@ namespace HollowKnight.Controllers
             keyboard.RegisterComboPressedCommand(Keys.Z, Keys.Down, Gameplay(game, new PlayerDownSlashCommand(knight)));
             keyboard.RegisterComboPressedCommand(Keys.Z, Gameplay(game, new PlayerSideSlashCommand(knight)));
 
+
             // Healing — hold X to heal
             keyboard.RegisterHeldCommand(Keys.X, Gameplay(game, new PlayerHealHoldCommand(knight)));
             keyboard.RegisterReleasedCommand(Keys.X, Gameplay(game, new PlayerHealCancelCommand(knight)));
@@ -67,7 +68,7 @@ namespace HollowKnight.Controllers
             keyboard.RegisterPressedCommand(Keys.U, Gameplay(game, new CycleItemPreviousCommand()));
             keyboard.RegisterPressedCommand(Keys.I, Gameplay(game, new CycleItemNextCommand()));
 
-            // Give Soul (debug) - Using Y because U is taken
+            // Give Soul (debug - automatically get max soul) - Y 
             keyboard.RegisterPressedCommand(Keys.Y, new PlayerGiveSoulCommand(knight));
 
             // GameState
@@ -111,6 +112,11 @@ namespace HollowKnight.Controllers
 
             // Audio
             keyboard.RegisterPressedCommand(Keys.M, new ToggleMuteCommand());
+
+            //Interactions
+            // Bench / interactive object button
+            keyboard.RegisterPressedCommand(Keys.Up, Gameplay(game, new PlayerInteractCommand(game)));
+            keyboard.RegisterPressedCommand(Keys.W, Gameplay(game, new PlayerInteractCommand(game)));
 
             // Quit
             keyboard.RegisterPressedCommand(Keys.Q, new QuitCommand(game));

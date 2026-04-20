@@ -28,12 +28,24 @@ public partial class Game1
                 samplerState: SamplerState.PointClamp,
                 transformMatrix: _camera.GetTransform());
         DrawPlatforms();
+        DrawInteractables();
         DrawEnemies();
         DrawProjectiles();
         DrawItems();
         DrawKnight();
         DrawDebugOverlay();
         _spriteBatch.End();
+    }
+
+    private void DrawInteractables()
+    {
+        foreach (IInteractable interactable in _level.Interactables)
+        {
+            if(interactable != null)
+            {
+                interactable.Draw(_spriteBatch, SpriteEffects.None);
+            }
+        }
     }
 
     private void DrawBackgrounds()
@@ -98,6 +110,7 @@ public partial class Game1
             _projectileManager,
             _navigationGrid,
             _camera,
+            _level.Interactables,
             _level.Transitions);
     }
 
