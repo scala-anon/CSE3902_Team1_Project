@@ -4,6 +4,7 @@ using HollowKnight.Player;
 using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 using System;
+using static HollowKnight.Shared.CollisionLayerMatrix;
 
 namespace HollowKnight.Collision
 {
@@ -37,6 +38,7 @@ namespace HollowKnight.Collision
                 // Blocks first: projectile dies on impact
                 for (int i = 0; i < blocks.Length && p.Alive; i++)
                 {
+                    if (!ShouldCollide(p, blocks[i])) continue;
                     CollisionSide side = CollisionDetector.Detect(p, blocks[i]);
                     if (side != CollisionSide.None)
                     {
@@ -44,25 +46,23 @@ namespace HollowKnight.Collision
                     }
                 }
 
-                // Enemy hits (player faction only)
-                if (p.Faction == ProjectileFaction.Player)
+                // Enemy hits (player projectiles only)
+                for (int i = 0; i < enemies.Length && p.Alive; i++)
                 {
-                    for (int i = 0; i < enemies.Length && p.Alive; i++)
+                    if (!ShouldCollide(p, enemies[i])) continue;
+                    CollisionSide side = CollisionDetector.Detect(p, enemies[i]);
+                    if (side != CollisionSide.None)
                     {
-                        CollisionSide side = CollisionDetector.Detect(p, enemies[i]);
-                        if (side != CollisionSide.None)
+                        onEnemyHit?.Invoke(i);
+                        if (!p.PiercesEnemies)
                         {
-                            onEnemyHit?.Invoke(i);
-                            if (!p.PiercesEnemies)
-                            {
-                                p.OnCollide(enemies[i], side);
-                            }
+                            p.OnCollide(enemies[i], side);
                         }
                     }
                 }
 
-                // Player hits (enemy faction only)
-                if (p.Faction == ProjectileFaction.Enemy && p.Alive)
+                // Player hits (enemy projectiles only)
+                if (p.Alive && ShouldCollide(p, player))
                 {
                     CollisionSide side = CollisionDetector.Detect(p, player);
                     if (side != CollisionSide.None)
