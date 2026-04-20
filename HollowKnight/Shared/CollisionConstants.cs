@@ -77,10 +77,13 @@ namespace HollowKnight.Shared
         public const int BenchHitboxHeight = 92;
 
         // Bench Interaction Bounds Margins
-        public const int BenchInteractionMarginX = 12; //prev 48
-        public const int BenchInteractionMarginY = 0; //prev 20
-        public const int BenchInteractionWidth = 158; //prev286
-        public const int BenchInteractionHeight = 92; //prev132
+        public const int BenchInteractionMarginX = 12; 
+        public const int BenchInteractionMarginY = 0; 
+        public const int BenchInteractionWidth = 158;
+        public const int BenchInteractionHeight = 92;
+
+        // Breakable Wall Interaction Bounds
+        public const int BreakableWallInteractionExpand = 10;
 
     }
 }

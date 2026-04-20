@@ -420,6 +420,18 @@ namespace HollowKnight.Factories
             return new StaticSprite(backgroundSpriteSheet, backgroundFrames[key], position, scale);
         }
 
+        public ISprite CreateBrokenWallSprite(int variant, Vector2 position)
+        {
+            // TODO: replace fallback with broken wall sprite once art assets are added to atlas
+            // Add to LoadAllTextures(): backgroundFrames.Add("Wall_0_Broken", backgroundAtlas.GetRegion("Wall_0_Broken").SourceRectangle); etc.
+            float scale = 1.25f;
+            if (variant == 4) scale = .8f;
+            string key = $"Wall_{variant}_Broken";
+            if (!backgroundFrames.ContainsKey(key))
+                key = variant switch { 0 => "Wall_0", 1 => "Wall_1", 2 => "Wall_2", 3 => "Wall_3", 4 => "Wall_4", 5 => "Wall_5", _ => "Wall_0" };
+            return new StaticSprite(backgroundSpriteSheet, backgroundFrames[key], position, scale);
+        }
+
         public ISprite CreateDoorSprite(Vector2 position)
         {
             return new StaticSprite(backgroundSpriteSheet, backgroundFrames["Door_0"], position, 1.25f);
