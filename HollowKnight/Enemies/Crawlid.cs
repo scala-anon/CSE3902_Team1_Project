@@ -15,6 +15,7 @@ namespace HollowKnight.Enemies
         public bool Alive { get; set; } = true;
         public override bool IsActive => Alive;
 
+        private new Rectangle[] hitBoxes = new Rectangle[2];
         private readonly Dictionary<CrawlidState, ISprite> sprites;
         private CrawlidStateMachine stateMachine;
 
@@ -39,6 +40,19 @@ namespace HollowKnight.Enemies
             State = newState;
             Sprite = sprites[newState];
         }
+
+        public override Rectangle[] GetBounds()
+        {
+            Vector2 size = Sprite.GetSize();
+            hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
+            int feetWidth = (int)size.X - CollisionConstants.CrawlidFeetWidthShrink;
+            int feetX = (int)position.X + CollisionConstants.CrawlidFeetWidthShrink / 2;
+            int feetY = (int)position.Y + (int)size.Y - CollisionConstants.CrawlidFeetHeight;
+            hitBoxes[1] = new Rectangle(feetX, feetY, feetWidth, CollisionConstants.CrawlidFeetHeight);
+            return hitBoxes;
+        }
+
+        public Rectangle FeetRect => GetBounds()[1];
 
         public override void SetPlatform(IObject platform) => stateMachine.SetPlatform(platform);
         public override string GetStateName() => stateMachine.GetStateName();
