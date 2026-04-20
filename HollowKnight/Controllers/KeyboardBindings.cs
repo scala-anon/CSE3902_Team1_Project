@@ -83,9 +83,6 @@ namespace HollowKnight.Controllers
             // Damage (debug)
             keyboard.RegisterPressedCommand(Keys.E, Gameplay(game, new PlayerTakeDamageCommand(knight)));
 
-            // Soul gain — T builds soul toward the Vengeful Spirit cast threshold
-            keyboard.RegisterPressedCommand(Keys.T, Gameplay(game, new PlayerGainSoulCommand(knight, 11)));
-
             // Debug room switching
             keyboard.RegisterComboPressedCommand(Keys.Right, Keys.LeftControl, Gameplay(game, new SwitchRoomCommand(roomManager, 1)));
             keyboard.RegisterComboPressedCommand(Keys.Left, Keys.LeftControl, Gameplay(game, new SwitchRoomCommand(roomManager, -1)));
