@@ -76,6 +76,30 @@ namespace HollowKnight.Enemies
                 minX = pBounds.Left;
                 maxX = pBounds.Right;
                 CurrentCrawlid.position.Y = pBounds.Top - CurrentCrawlid.SpriteSize.Y;
+                Rectangle feet = CurrentCrawlid.FeetRect;
+                int dirSign = _movementDirection == Direction.Right ? 1 : -1;
+                Rectangle edgeProbe = new Rectangle(
+                    feet.X + dirSign * CollisionConstants.CrawlidEdgeProbeOffset,
+                    feet.Y + CollisionConstants.CrawlidGroundProbeExtension,
+                    feet.Width,
+                    feet.Height + CollisionConstants.CrawlidGroundProbeExtension);
+                bool groundAhead = edgeProbe.Intersects(pBounds)
+                                && edgeProbe.Left >= pBounds.Left
+                                && edgeProbe.Right <= pBounds.Right;
+                if (!groundAhead)
+                {
+                    if (_movementDirection == Direction.Right)
+                    {
+                        _movementDirection = Direction.Left;
+                        CurrentCrawlid.FacingDirection = Direction.Left;
+                    }
+                    else
+                    {
+                        _movementDirection = Direction.Right;
+                        CurrentCrawlid.FacingDirection = Direction.Right;
+                    }
+                    CrawlidTurn();
+                }
             }
 
             if (CurrentCrawlid.position.X + spriteWidth >= maxX)

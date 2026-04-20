@@ -73,7 +73,7 @@ namespace HollowKnight.Enemies
             Sprite.Draw(spriteBatch, effects);
         }
 
-        public Rectangle[] GetBounds()
+        public virtual Rectangle[] GetBounds()
         {
             Vector2 size = Sprite.GetSize();
             hitBoxes[0] = new Rectangle(
