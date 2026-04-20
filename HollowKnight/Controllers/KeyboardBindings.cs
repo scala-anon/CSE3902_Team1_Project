@@ -100,11 +100,15 @@ namespace HollowKnight.Controllers
             // Debug hotkeys (compile-time gated; eliminated when DEBUG_LOG_ENABLED != 1)
             if (GameConstants.DEBUG_LOG_ENABLED == 1)
             {
-                // Ctrl+D1 / Ctrl+D2 — direct room jump via Game1.TransitionToRoom
+                // Ctrl+D1..D4 — direct room jump via Game1.TransitionToRoom
                 keyboard.RegisterComboPressedCommand(Keys.D1, Keys.LeftControl,  Gameplay(game, new DebugJumpToRoomCommand(game, 1)));
                 keyboard.RegisterComboPressedCommand(Keys.D1, Keys.RightControl, Gameplay(game, new DebugJumpToRoomCommand(game, 1)));
                 keyboard.RegisterComboPressedCommand(Keys.D2, Keys.LeftControl,  Gameplay(game, new DebugJumpToRoomCommand(game, 2)));
                 keyboard.RegisterComboPressedCommand(Keys.D2, Keys.RightControl, Gameplay(game, new DebugJumpToRoomCommand(game, 2)));
+                keyboard.RegisterComboPressedCommand(Keys.D3, Keys.LeftControl,  Gameplay(game, new DebugJumpToRoomCommand(game, 3)));
+                keyboard.RegisterComboPressedCommand(Keys.D3, Keys.RightControl, Gameplay(game, new DebugJumpToRoomCommand(game, 3)));
+                keyboard.RegisterComboPressedCommand(Keys.D4, Keys.LeftControl,  Gameplay(game, new DebugJumpToRoomCommand(game, 4)));
+                keyboard.RegisterComboPressedCommand(Keys.D4, Keys.RightControl, Gameplay(game, new DebugJumpToRoomCommand(game, 4)));
 
                 // K — godmode toggle (NOT gameplay-gated, matches H/G pattern)
                 keyboard.RegisterPressedCommand(Keys.K, new ToggleGodmodeCommand());
