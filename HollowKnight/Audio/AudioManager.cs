@@ -177,14 +177,16 @@ namespace HollowKnight.Audio
 
         public bool TryPlaySoundEffect(Vector2 sound_effect_position)
         {
-            bool in_camera = false;
-            Camera _camera = Camera.Instance;
-            if (Math.Abs(_camera.Position.X - sound_effect_position.X) <= _camera.Position.X)
-            {
-                in_camera = true;
-            }
+            return Camera.Instance.Contains(sound_effect_position);
+        }
 
-            return in_camera;
+        public SoundEffectInstance PlaySoundEffectIfInView(SoundEffect soundEffect, Vector2 worldPos)
+        {
+            if (!Camera.Instance.Contains(worldPos))
+            {
+                return null;
+            }
+            return PlaySoundEffect(soundEffect);
         }
 
         public void StopSoundEffect(SoundEffectInstance soundEffect)

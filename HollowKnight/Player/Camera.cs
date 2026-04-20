@@ -62,5 +62,12 @@ namespace HollowKnight
             Follow(target);
         }
 
+        public bool Contains(Vector2 worldPos)
+        {
+            return worldPos.X >= position.X
+                && worldPos.X <= position.X + _screenWidth
+                && worldPos.Y >= position.Y
+                && worldPos.Y <= position.Y + _screenHeight;
+        }
     }
 }

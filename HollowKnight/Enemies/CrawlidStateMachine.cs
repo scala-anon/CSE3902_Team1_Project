@@ -14,7 +14,6 @@ namespace HollowKnight.Enemies
         private bool _isTurning = false;
         private float _turnTimer = 0f;
         private IObject _platform;
-        private bool in_camera;
 
         public void SetPlatform(IObject platform) => _platform = platform;
 
@@ -26,7 +25,7 @@ namespace HollowKnight.Enemies
         public void ChangeHealth()
         {
             CurrentCrawlid.Health--;
-            AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Enemy_Damage());
+            AudioManager.Instance.PlaySoundEffectIfInView(AudioLoader.Instance.Get_Enemy_Damage(), CurrentCrawlid.position);
             if (CurrentCrawlid.Health <= 0)
             {
                 CurrentCrawlid.Alive = false;
@@ -42,12 +41,9 @@ namespace HollowKnight.Enemies
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             
-            if (AudioManager.Instance.TryPlaySoundEffect(CurrentCrawlid.position) == true)
+            if (frameCounter % 180 == 0)
             {
-                if (frameCounter % 180 == 0)
-                {
-                    AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Crawler_Walk());
-                }
+                AudioManager.Instance.PlaySoundEffectIfInView(AudioLoader.Instance.Get_Crawler_Walk(), CurrentCrawlid.position);
             }
             
 
