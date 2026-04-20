@@ -60,6 +60,7 @@ namespace HollowKnight.Collision
             foreach (IObject obj in platforms)
             {
                 if (obj == null) continue;
+                if (!CollisionLayerMatrix.ShouldCollide(obj, knight)) continue;
                 CollisionSide side = CollisionDetector.Detect(obj, knight);
                 if (side != CollisionSide.None)
                     DebugLogger.LogCollision($"{obj.GetType().Name} vs Knight side={side}");
@@ -72,6 +73,7 @@ namespace HollowKnight.Collision
                 enemy.SetKnightPosition(knightPosition);
                 enemy.SetNavigationGrid(navigationGrid);
                 if (!enemy.IsActive) continue;
+                if (!CollisionLayerMatrix.ShouldCollide(enemy, knight)) continue;
                 CollisionSide side = CollisionDetector.Detect(enemy, knight);
                 if (side != CollisionSide.None)
                     DebugLogger.LogCollision($"{enemy.GetType().Name} vs Knight side={side}");
@@ -85,6 +87,7 @@ namespace HollowKnight.Collision
                 foreach (IObject obj in platforms)
                 {
                     if (!(obj is Spike spike)) continue;
+                    if (!CollisionLayerMatrix.ShouldCollide(spike, enemy)) continue;
                     CollisionSide side = CollisionDetector.Detect(spike, enemy);
                     _handler.HandleCollision(spike, enemy, side);
                 }
@@ -97,6 +100,7 @@ namespace HollowKnight.Collision
                 foreach (IEnemy enemy in enemies)
                 {
                     if (!enemy.IsActive) continue;
+                    if (!CollisionLayerMatrix.ShouldCollide(swordHitbox, enemy)) continue;
                     CollisionSide side = CollisionDetector.Detect(swordHitbox, enemy);
                     if (side != CollisionSide.None)
                         DebugLogger.LogCollision($"SwordHitbox vs {enemy.GetType().Name} side={side}");
@@ -112,6 +116,7 @@ namespace HollowKnight.Collision
                         continue;
                     }
 
+                    if (!CollisionLayerMatrix.ShouldCollide(swordHitbox, interactable)) continue;
                     CollisionSide side = CollisionDetector.Detect(swordHitbox, interactable);
                     if (side != CollisionSide.None && interactable.IsInteractable(_currentKnight))
                     {
@@ -126,7 +131,10 @@ namespace HollowKnight.Collision
             for (int i = 0; i < platforms.Count; i++)
             {
                 if (platforms[i] is ICollidable blockObj)
+                {
+                    if (!CollisionLayerMatrix.ShouldCollide(blockObj, knight)) continue;
                     CollisionManager.ResolvePlayerBlockCollision(knight, blockObj);
+                }
             }
 
             // Block resolution for vengefly enemies (includes dead vengeflies falling)
@@ -136,7 +144,10 @@ namespace HollowKnight.Collision
                 for (int i = 0; i < platforms.Count; i++)
                 {
                     if (platforms[i] is ICollidable blockObj)
+                    {
+                        if (!CollisionLayerMatrix.ShouldCollide(blockObj, vengefly)) continue;
                         CollisionManager.ResolveEnemyBlockCollision(vengefly, blockObj);
+                    }
                 }
             }
             
@@ -157,6 +168,7 @@ namespace HollowKnight.Collision
             // Item collisions
             foreach (Spirit item in items)
             {
+                if (!CollisionLayerMatrix.ShouldCollide(item, knight)) continue;
                 CollisionSide side = CollisionDetector.Detect(item, knight);
                 _handler.HandleCollision(item, knight, side);
                 if (side != CollisionSide.None)
