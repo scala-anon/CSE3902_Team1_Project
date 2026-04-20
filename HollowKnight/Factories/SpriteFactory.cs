@@ -348,15 +348,15 @@ namespace HollowKnight.Factories
         }
         public ISprite CreateSpiritMovingSprite(Vector2 position)
         {
-            return new AnimatedSprite(spellsSpriteSheet, spiritAnimations["MovingSpirit"], position, 0.1, 2.0f);
+            return new AnimatedSprite(spellsSpriteSheet, spiritAnimations["MovingSpirit"], position, 0.1, 1.0f);
         }
         public ISprite CreateSpiritPulseSprite(Vector2 position)
         {
-            return new AnimatedSprite(spellsSpriteSheet, spiritAnimations["Pulse"], position, 0.1, 2.0f);
+            return new AnimatedSprite(spellsSpriteSheet, spiritAnimations["Pulse"], position, 0.1, 1.0f);
         }
         public ISprite CreateSpiritCollisionSprite(Vector2 position)
         {
-            return new AnimatedSprite(spellsSpriteSheet, spiritAnimations["Collision"], position, 0.1, 2.0f);
+            return new AnimatedSprite(spellsSpriteSheet, spiritAnimations["Collision"], position, 0.1, 1.0f);
         }
 
         public ISprite CreateTextSprite(string text, Vector2 position, Color color)
