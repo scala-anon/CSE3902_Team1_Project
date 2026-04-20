@@ -18,7 +18,6 @@ namespace HollowKnight;
 
 public partial class Game1
 {
-    private Camera camera;
     private void InitializeRendering()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -96,21 +95,15 @@ public partial class Game1
         int screenWidth = _graphics.PreferredBackBufferWidth;
         int screenHeight = _graphics.PreferredBackBufferHeight;
 
-        _camera = new Camera(
-            screenWidth,
-            screenHeight,
-            GameConstants.DefaultLevelWidth,
-            GameConstants.DefaultLevelHeight);
+        Camera.Instance.Initialize(screenWidth, screenHeight);
+        
 
         _roomManager = new RoomManager(
             _knight,
-            _camera,
             screenWidth,
             screenHeight,
             GameConstants.DefaultLevelWidth,
             GameConstants.DefaultLevelHeight);
-
-            camera = _camera;
     }
 
     private void InitializeControllers()

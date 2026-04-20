@@ -29,7 +29,6 @@ namespace HollowKnight.Graphics
             List<Spirit> items,
             ProjectileManager projectileManager,
             NavigationGrid navigationGrid,
-            Camera camera,
             List<IInteractable> interactables = null,
             List<TransitionZone> transitions = null)
         {
@@ -101,7 +100,7 @@ namespace HollowKnight.Graphics
             string godmodeText = $"GODMODE: {(TheKnight.GodmodeEnabled ? "ON" : "OFF")}";
 
             //hud for knight stats in debug mode
-            Vector2 hudBasePos = camera.Position + new Vector2(10, 10);
+            Vector2 hudBasePos = Camera.Instance.Position + new Vector2(10, 10);
             DebugRenderer.DrawText(spriteBatch, atkText, hudBasePos, Color.White);
             DebugRenderer.DrawText(spriteBatch, invText, hudBasePos + new Vector2(0, 20), Color.White);
             DebugRenderer.DrawText(spriteBatch, dashText, hudBasePos + new Vector2(0, 40), Color.White);
