@@ -14,6 +14,12 @@
 </Item>
 
 <Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>MantisLord</ObjectName>
+    <Location>4900 5400</Location>
+</Item>
+
+<Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Brick_1</ObjectName>
     <Location>6500 5600</Location>
