@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using HollowKnight.Interfaces;
 using HollowKnight.Audio;
+using HollowKnight.Shared;
 
 namespace HollowKnight;
 
@@ -115,6 +116,7 @@ public partial class Game1
 
             if (interactable.IsInteractable(_knight))
             {
+                DebugLogger.LogInteraction(interactable.GetType().Name, "ButtonPress", "Up/W");
                 interactable.OnInteract(_knight);
                 return;
             }

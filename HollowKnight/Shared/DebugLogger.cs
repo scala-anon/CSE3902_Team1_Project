@@ -39,5 +39,11 @@ namespace HollowKnight.Shared
         public static void LogObject(string msg)         => Log("OBJECT", msg);
         public static void LogRoomTransition(string msg) => Log("ROOM", msg);
         public static void LogGeneral(string msg)        => Log("GENERAL", msg);
+
+        public static void LogInteraction(string assetName, string interactionType, string keyInput = "")
+        {
+            string keyPart = string.IsNullOrEmpty(keyInput) ? "" : $" with [{keyInput}]";
+            Log("INTERACT", $"Knight interacted with [{assetName}] by [{interactionType}]{keyPart}");
+        }
     }
 }

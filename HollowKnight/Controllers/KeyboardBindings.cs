@@ -116,6 +116,7 @@ namespace HollowKnight.Controllers
             //Interactions
             // Bench / interactive object button
             keyboard.RegisterPressedCommand(Keys.Up, Gameplay(game, new PlayerInteractCommand(game)));
+            keyboard.RegisterPressedCommand(Keys.W, Gameplay(game, new PlayerInteractCommand(game)));
 
             // Quit
             keyboard.RegisterPressedCommand(Keys.Q, new QuitCommand(game));

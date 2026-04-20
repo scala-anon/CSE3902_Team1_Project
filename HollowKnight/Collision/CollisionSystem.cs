@@ -115,6 +115,7 @@ namespace HollowKnight.Collision
                     CollisionSide side = CollisionDetector.Detect(swordHitbox, interactable);
                     if (side != CollisionSide.None && interactable.IsInteractable(_currentKnight))
                     {
+                        DebugLogger.LogInteraction(interactable.GetType().Name, "SwordHit", "Z");
                         interactable.OnInteract(_currentKnight);
                     }
                 }
