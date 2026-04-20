@@ -1,6 +1,7 @@
 using HollowKnight.Player;
 using Microsoft.Xna.Framework;
 using System;
+using System.Diagnostics;
 
 namespace HollowKnight.Levels
 {
@@ -37,17 +38,30 @@ namespace HollowKnight.Levels
         {
             HandleAutomaticRoomSwitch();
             Vector2 knightPosition = _knight.GetPosition();
-            Vector2 cameraPosition = new Vector2();
-            if (_knight.Facing == Shared.Direction.Right)
+            Vector2 cameraPosition = Camera.Instance.Position;
+
+            float xDifference = _knight.position.X - (Camera.Instance.Position.X + 1000);
+
+            
+
+            if (xDifference >= 100)
             {
                 cameraPosition.X = knightPosition.X - 100;
                 cameraPosition.Y = knightPosition.Y;
                 _camera.Follow(cameraPosition);
-            } else if (_knight.Facing == Shared.Direction.Left)
-            {
+
+            } else if (xDifference <= -100)
+            {   
                 cameraPosition.X = knightPosition.X + 100;
                 cameraPosition.Y = knightPosition.Y;
                 _camera.Follow(cameraPosition);
+                
+            }
+            else
+            {
+                _camera.SetTempBounds();
+                Console.WriteLine("xDifference = " + xDifference);
+                
             }
            
         }

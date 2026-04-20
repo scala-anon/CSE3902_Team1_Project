@@ -1,3 +1,5 @@
+using System;
+using System.Security.Cryptography.X509Certificates;
 using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -60,6 +62,15 @@ namespace HollowKnight
         public void SnapTo(Vector2 target)
         {
             Follow(target);
+        }
+
+        /// <summary>
+        /// Make the screen "clamp" temporarily    
+        /// </summary>
+        public void SetTempBounds()
+        {
+            float x = position.X;
+            x = MathHelper.Clamp(x, x, x);
         }
 
     }
