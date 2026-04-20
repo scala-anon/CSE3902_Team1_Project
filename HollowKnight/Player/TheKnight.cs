@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using HollowKnight.Shared;
 using HollowKnight.Collision;
 using HollowKnight.Audio;
+using HollowKnight.Storage;
 using Microsoft.Xna.Framework.Audio;
 
 
@@ -314,7 +315,16 @@ namespace HollowKnight.Player
         public void UseItem(int itemNumber)
         {
             currentItem = itemNumber;
-            DebugLogger.LogGeneral($"Using item #{currentItem}");
+            string selected = ItemManager.CurrentItem;
+            DebugLogger.LogGeneral($"Using item #{currentItem} ({selected})");
+
+            if (selected == ItemManager.FireballItemName)
+            {
+                CastSpell();
+                return;
+            }
+
+            // Boomerang / Bomb: stubs — future work
         }
 
         public void Collect(CollisionSide side)

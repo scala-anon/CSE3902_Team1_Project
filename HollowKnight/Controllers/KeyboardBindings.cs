@@ -44,8 +44,8 @@ namespace HollowKnight.Controllers
             //Dash - C
             keyboard.RegisterPressedCommand(Keys.C, new PlayerDashCommand(knight));
 
-            //SpellCasting - T 
-            keyboard.RegisterPressedCommand(Keys.T, new PlayerSpellCastCommand(knight));
+            // SpellCasting - F (Vengeful Spirit)
+            keyboard.RegisterPressedCommand(Keys.F, Gameplay(game, new PlayerSpellCastCommand(knight)));
 
             // Attack — Z + direction for slash variants
             keyboard.RegisterComboPressedCommand(Keys.Z, Keys.W, Gameplay(game, new PlayerUpSlashCommand(knight)));
@@ -82,7 +82,6 @@ namespace HollowKnight.Controllers
 
             // Damage (debug)
             keyboard.RegisterPressedCommand(Keys.E, Gameplay(game, new PlayerTakeDamageCommand(knight)));
-            keyboard.RegisterPressedCommand(Keys.T, Gameplay(game, new PlayerGainSoulCommand(knight, 11)));
 
             // Debug room switching
             keyboard.RegisterComboPressedCommand(Keys.Right, Keys.LeftControl, Gameplay(game, new SwitchRoomCommand(roomManager, 1)));
