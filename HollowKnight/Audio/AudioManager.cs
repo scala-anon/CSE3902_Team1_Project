@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using HollowKnight.Shared;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 
@@ -172,6 +173,18 @@ namespace HollowKnight.Audio
             _activateSoundEffectInstances.Add(soundEffectInstance);
 
             return soundEffectInstance;
+        }
+
+        public bool TryPlaySoundEffect(Vector2 sound_effect_position)
+        {
+            bool in_camera = false;
+            Camera _camera = Camera.Instance;
+            if (Math.Abs(_camera.Position.X - sound_effect_position.X) <= _camera.Position.X)
+            {
+                in_camera = true;
+            }
+
+            return in_camera;
         }
 
         public void StopSoundEffect(SoundEffectInstance soundEffect)
