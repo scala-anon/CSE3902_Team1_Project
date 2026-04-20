@@ -15,7 +15,7 @@ namespace HollowKnight.Levels
         public List<IObject> Backgrounds   { get; } = new();
         public List<IObject> Platforms     { get; } = new();
         public List<IInteractable> Interactables { get; } = new();
-        public List<Rectangle> Transitions { get; } = new();
+        public List<TransitionZone> Transitions { get; } = new();
         public Vector2 KnightSpawn { get; private set; } = Vector2.Zero;
 
         private readonly Dictionary<string, Func<Vector2, IObject>> _platformMap;
@@ -50,7 +50,10 @@ namespace HollowKnight.Levels
                 ["Plant2_Idle"]        = pos => new Grass(2,pos, 100, 5, hitOffsetY: 0),
                 ["Wall_0"]             = pos => new Wall(0, pos, 80, 200),
                 ["Wall_1"]             = pos => new Wall(1, pos, 80, 200),
-                ["Wall_2"]             = pos => new Wall(2, pos, 80, 200),
+                ["Wall_2"]             = pos => new Wall(2, pos, 80, 111),
+                ["Wall_3"]              = pos => new Wall(3,pos,49,111),
+                ["Wall_4"]              = pos => new Wall(4,pos,142,246),
+                ["Wall_5"]              = pos => new Wall(5,pos, 175,305),
                 ["Door_0"]             = pos => new Door(pos, 60, 150),
                 ["Brick_1"]            = pos => new Brick(1,pos,272,62),
                 ["Brick_2"] = pos => new Brick(2, pos, 122, 39),
@@ -91,19 +94,27 @@ namespace HollowKnight.Levels
                 ["Platform"] = SpawnPlatform,
                 ["Enemy"]    = SpawnEnemy,
                 
-                ["Transition"]  = (name, pos) => Transitions.Add(
-                    new Rectangle((int)pos.X, (int)pos.Y, 80, GameConstants.TransitionZoneHeight)),
-                // Vertical: thin strip the player walks into from the side
                 ["TransitionV"] = (name, pos) => Transitions.Add(
-                    new Rectangle((int)pos.X, (int)pos.Y, 80, GameConstants.TransitionZoneHeight)),
-                // Horizontal: wide flat strip the player falls/walks through vertically
+                new TransitionZone(
+                new Rectangle((int)pos.X, (int)pos.Y, 80, GameConstants.TransitionZoneHeight),
+                ParseDestinationRoom(name))),
+
                 ["TransitionH"] = (name, pos) => Transitions.Add(
-                    new Rectangle((int)pos.X, (int)pos.Y, GameConstants.TransitionZoneWidth, 80))
+                new TransitionZone(
+                new Rectangle((int)pos.X, (int)pos.Y, GameConstants.TransitionZoneWidth, 80),
+                ParseDestinationRoom(name))),
             };
         }
 
         public void Load(string xmlFilePath)
         {
+            // Clear all lists before loading new level
+            Enemies.Clear();
+            Backgrounds.Clear();
+            Platforms.Clear();
+            Transitions.Clear();
+            KnightSpawn = Vector2.Zero;
+
             XDocument doc  = XDocument.Load(xmlFilePath);
             XElement  root = doc.Root
                 ?? throw new Exception($"[LevelLoader] Bad XML root in {xmlFilePath}");
@@ -213,5 +224,12 @@ namespace HollowKnight.Levels
             DebugLogger.LogGeneral($"[LevelLoader] Could not parse Vector2 from '{s}', defaulting to zero.");
             return Vector2.Zero;
         }
+            // helper to parse "ToRoom3" -> 3
+        private static int ParseDestinationRoom(string name)
+        {
+        var match = System.Text.RegularExpressions.Regex.Match(name, @"\d+");
+        return match.Success ? int.Parse(match.Value) : 1;
+        }
     }
+
 }

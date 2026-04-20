@@ -182,12 +182,12 @@
     <Location>4550 1650</Location>
 </Item>
 
-
-<Item>
+<!-- TODO: Debug delay -->
+<!-- <Item>
     <ObjectType>Enemy</ObjectType>
     <ObjectName>Vengefly</ObjectName>
     <Location>5200 1800</Location>
-</Item>
+</Item> -->
 
 <Item>
     <ObjectType>Platform</ObjectType>

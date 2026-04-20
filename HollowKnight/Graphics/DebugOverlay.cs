@@ -31,7 +31,7 @@ namespace HollowKnight.Graphics
             NavigationGrid navigationGrid,
             Camera camera,
             List<IInteractable> interactables = null,
-            List<Rectangle> transitions = null)
+            List<TransitionZone> transitions = null)
         {
             // Navigation grid
             if (NavigationGrid.GridEnabled)
@@ -40,13 +40,13 @@ namespace HollowKnight.Graphics
             // Transition zone debug
             if (transitions != null)
             {
-                foreach (Rectangle t in transitions)
+                foreach (TransitionZone t in transitions)
                 {
-                    DrawRectangleOutline(spriteBatch, t, Color.Cyan, 3);
+                    DrawRectangleOutline(spriteBatch, t.Bounds, Color.Cyan, 3);
                     if (DebugRenderer.hitboxEnabled)
                     {
-                        spriteBatch.Draw(_pixel, t, Color.Cyan * 0.20f);
-                        Vector2 labelPos = new Vector2(t.Left + 4, t.Top + 4);
+                        spriteBatch.Draw(_pixel, t.Bounds, Color.Cyan * 0.20f);
+                        Vector2 labelPos = new Vector2(t.Bounds.Left + 4, t.Bounds.Top + 4);
                         DebugRenderer.DrawText(spriteBatch, "[Transition]", labelPos, Color.Cyan);
                     }
                 }
