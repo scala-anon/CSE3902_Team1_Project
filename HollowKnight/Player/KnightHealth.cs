@@ -26,6 +26,13 @@ namespace HollowKnight.Player
             Soul = Math.Min(MaxSoul, Soul + KnightConstants.KnightSoulPerHit);
         }
 
+        public void AddSoul(int amount)
+        {
+            Soul = Math.Clamp(Soul + amount, 0, MaxSoul);
+        }
+
+        public float GetSoulFillRatio() => MaxSoul <= 0 ? 0f : Soul / (float)MaxSoul;
+
         public void ConsumeSoul(int amount)
         {
             Soul = Math.Max(0, Soul - amount);

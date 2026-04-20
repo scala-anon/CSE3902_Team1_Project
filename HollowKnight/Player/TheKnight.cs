@@ -25,7 +25,6 @@ namespace HollowKnight.Player
         private readonly KnightPhysics physics = new();
         private readonly KnightCombat combat = new();
         private readonly KnightHealth health = new();
-        private readonly KnightSoul soul = new();
         private readonly KnightDash dash = new();
         private int currentItem;
 
@@ -281,11 +280,11 @@ namespace HollowKnight.Player
 
         public int GetHealth() => health.Health;
         public int GetMaxHealth() => health.MaxHealth;
-        public int GetSoul() => soul.Soul;
-        public int GetMaxSoul() => soul.MaxSoul;
-        public float GetSoulFillRatio() => soul.GetFillRatio();
+        public int GetSoul() => health.Soul;
+        public int GetMaxSoul() => health.MaxSoul;
+        public float GetSoulFillRatio() => health.GetSoulFillRatio();
         public bool IsDead() => health.Health <= 0;
-        public void GainSoul(int amount) => soul.AddSoul(amount);
+        public void GainSoul(int amount) => health.AddSoul(amount);
 
         public void StartHeal()
         {
@@ -329,8 +328,8 @@ namespace HollowKnight.Player
 
         public void Collect(CollisionSide side)
         {
-            soul.AddSoul(GameConstants.SpiritPickupSoul);
-            DebugLogger.LogGeneral($"Knight collected soul. Soul is now {soul.Soul}/{soul.MaxSoul}");
+            health.AddSoul(GameConstants.SpiritPickupSoul);
+            DebugLogger.LogGeneral($"Knight collected soul. Soul is now {health.Soul}/{health.MaxSoul}");
         }
         public void Block(CollisionSide side) => DebugLogger.LogCollision($"Knight is colliding with a block on side={side}");
 
