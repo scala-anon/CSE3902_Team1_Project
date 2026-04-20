@@ -62,7 +62,7 @@ namespace HollowKnight.Levels
                 ["BreakableWall_3"]    = pos => new BreakableWall(3, pos, 49, 111),
                 ["BreakableWall_4"]    = pos => new BreakableWall(4, pos, 142, 246),
                 ["BreakableWall_5"]    = pos => new BreakableWall(5, pos, 175, 305),
-                ["Door_0"]             = pos => new Door(pos, 60, 150),
+                ["Door_0"]             = pos => new Door(pos, 87, 236),
                 ["Brick_1"]            = pos => new Brick(1,pos,272,62),
                 ["Brick_2"] = pos => new Brick(2, pos, 122, 39),
                 ["Brick_3"] = pos => new Brick(3, pos, 274, 132),

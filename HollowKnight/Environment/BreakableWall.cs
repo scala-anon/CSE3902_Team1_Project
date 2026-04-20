@@ -11,7 +11,9 @@ namespace HollowKnight.Environment
         private readonly int variant;
         private int _hitCount = 0;
         private bool _broken = false;
+        private long _lastHitTime = 0;
         private const int HitsToBreak = 3;
+        private const long HitCooldownMs = 500;
 
         public override string Label => $"BreakableWall_{variant}";
         public override bool IsActive => !_broken;
@@ -53,6 +55,9 @@ namespace HollowKnight.Environment
         public void OnInteract(TheKnight knight)
         {
             if (_broken) return;
+            long now = System.Environment.TickCount64;
+            if (now - _lastHitTime < HitCooldownMs) return;
+            _lastHitTime = now;
             _hitCount++;
             DebugLogger.LogObject($"BreakableWall hit: {Label} ({_hitCount}/{HitsToBreak})");
             if (_hitCount >= HitsToBreak)

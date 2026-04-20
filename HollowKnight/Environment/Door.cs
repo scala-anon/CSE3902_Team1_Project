@@ -12,7 +12,9 @@ namespace HollowKnight.Environment
     {
         private int _hitCount = 0;
         private bool _broken = false;
+        private long _lastHitTime = 0;
         private const int HitsToBreak = 3;
+        private const long HitCooldownMs = 500;
 
         public override string Label => "Door";
         public override bool IsActive => !_broken;
@@ -54,6 +56,9 @@ namespace HollowKnight.Environment
         public void OnInteract(TheKnight knight)
         {
             if (_broken) return;
+            long now = System.Environment.TickCount64;
+            if (now - _lastHitTime < HitCooldownMs) return;
+            _lastHitTime = now;
             _hitCount++;
             DebugLogger.LogObject($"Door hit: {Label} ({_hitCount}/{HitsToBreak})");
             if (_hitCount >= HitsToBreak)
