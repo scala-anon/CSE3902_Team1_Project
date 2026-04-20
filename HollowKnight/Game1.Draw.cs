@@ -19,14 +19,14 @@ public partial class Game1
         // Layer 1: Backgrounds (behind everything, no interaction)
         _spriteBatch.Begin(
                 samplerState: SamplerState.PointClamp,
-                transformMatrix: _camera.GetTransform());
+                transformMatrix: Camera.Instance.GetTransform());
         DrawBackgrounds();
         _spriteBatch.End();
 
         // Layer 2: Platforms, enemies, knight, projectiles, items
         _spriteBatch.Begin(
                 samplerState: SamplerState.PointClamp,
-                transformMatrix: _camera.GetTransform());
+                transformMatrix: Camera.Instance.GetTransform());
         DrawPlatforms();
         DrawEnemies();
         DrawProjectiles();
