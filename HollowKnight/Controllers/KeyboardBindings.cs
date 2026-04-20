@@ -68,7 +68,7 @@ namespace HollowKnight.Controllers
             keyboard.RegisterPressedCommand(Keys.U, Gameplay(game, new CycleItemPreviousCommand()));
             keyboard.RegisterPressedCommand(Keys.I, Gameplay(game, new CycleItemNextCommand()));
 
-            // Give Soul (debug) - Using Y because U is taken
+            // Give Soul (debug - automatically get max soul) - Y 
             keyboard.RegisterPressedCommand(Keys.Y, new PlayerGiveSoulCommand(knight));
 
             // GameState

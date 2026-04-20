@@ -29,8 +29,8 @@ namespace HollowKnight.Environment
             return new[]
             {
                 new Rectangle(
-                    (int)position.X - CollisionConstants.BenchInteractionMarginX,
-                    (int)position.Y - CollisionConstants.BenchInteractionMarginY,
+                    (int)position.X + CollisionConstants.BenchInteractionMarginX,
+                    (int)position.Y + CollisionConstants.BenchInteractionMarginY,
                     CollisionConstants.BenchInteractionWidth,
                     CollisionConstants.BenchInteractionHeight)
             };
