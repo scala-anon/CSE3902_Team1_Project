@@ -280,6 +280,7 @@ namespace HollowKnight.Player
 
         public int GetHealth() => health.Health;
         public int GetMaxHealth() => health.MaxHealth;
+        public void FullHeal() => health.ResetHealth();
         public int GetSoul() => soul.Soul;
         public int GetMaxSoul() => soul.MaxSoul;
         public float GetSoulFillRatio() => soul.GetFillRatio();

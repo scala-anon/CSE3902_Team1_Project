@@ -43,8 +43,8 @@ namespace HollowKnight.Environment
 
         public void OnInteract(TheKnight knight)
         {
-            DebugLogger.LogObject("Bench interacted with.");
-            // Add your bench interaction behavior here.
+            knight.FullHeal();
+            DebugLogger.LogObject($"Bench used: health restored to {knight.GetMaxHealth()}.");
         }
     }
 }
