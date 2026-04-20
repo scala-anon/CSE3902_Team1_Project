@@ -133,5 +133,6 @@ namespace HollowKnight.Shared
         public const int AStarMaxIterations = 1000;
         public const int AStarStraightMoveCost = 10;
         public const int AStarDiagonalMoveCost = 14;
+
     }
 }
