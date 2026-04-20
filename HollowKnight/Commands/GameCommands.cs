@@ -4,6 +4,8 @@ using HollowKnight.Collision;
 using HollowKnight.Pathfinding;
 using HollowKnight.Levels;
 using HollowKnight.Audio;
+using HollowKnight.Player;
+using HollowKnight.Shared;
 
 namespace HollowKnight.Commands
 {
@@ -24,6 +26,16 @@ namespace HollowKnight.Commands
     {
         public ToggleGridCommand(Game1 game) { }
         public void Execute() => NavigationGrid.GridEnabled = !NavigationGrid.GridEnabled;
+    }
+
+    public class ToggleGodmodeCommand : ICommand
+    {
+        public ToggleGodmodeCommand() { }
+        public void Execute()
+        {
+            TheKnight.GodmodeEnabled = !TheKnight.GodmodeEnabled;
+            DebugLogger.LogGeneral($"Godmode toggled: {(TheKnight.GodmodeEnabled ? "ON" : "OFF")}");
+        }
     }
 
     public class TogglePauseCommand : ICommand
@@ -147,6 +159,28 @@ namespace HollowKnight.Commands
         }
 
         public void Execute() => _roomManager.JumpToRoomIndex(_roomIndex);
+    }
+
+    public class DebugJumpToRoomCommand : ICommand
+    {
+        private readonly Game1 _game;
+        private readonly int _targetRoom;
+
+        public DebugJumpToRoomCommand(Game1 game, int targetRoom)
+        {
+            _game = game;
+            _targetRoom = targetRoom;
+        }
+
+        public void Execute()
+        {
+            if (_game.CurrentRoom == _targetRoom)
+            {
+                DebugLogger.LogGeneral($"DebugJumpToRoom: already in room {_targetRoom}, no-op");
+                return;
+            }
+            _game.TransitionToRoom(_targetRoom);
+        }
     }
 
     public class ToggleMuteCommand : ICommand

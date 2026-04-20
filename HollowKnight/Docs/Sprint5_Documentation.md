@@ -30,7 +30,9 @@
 
 ### Sudhish
 - **What went well?**
+- Documentation was easy to follow and I was able to easily refer to it when working on tasks. Lots of good communication throughout the sprint. Check-ins during class was a good way to check in on everyone's progression.
 - **What can be improved?**
+- Merging to dev more often, using the same conventions and abstractions as much as possible.
 
 ### Niko
 - **What went well?**

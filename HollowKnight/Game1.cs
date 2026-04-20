@@ -34,6 +34,8 @@ public partial class Game1 : Game
     private Camera _camera;
     private RoomManager _roomManager;
     private LevelLoader _level;
+    private Dictionary<int, Vector2> _roomEntryPoints = new();
+    private bool _isTransitioning = false;
 
 
     public Game1()
@@ -94,6 +96,7 @@ public partial class Game1 : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
         DrawWorld();
+        DrawHud();
         DrawOverlay();
 
         base.Draw(gameTime);

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Level name="roomFour">
+
+<Item>
+    <ObjectType>TransitionV</ObjectType>
+    <ObjectName>ToRoom3</ObjectName>
+    <Location>6772 5200</Location>
+</Item>
+
+<Item>
+    <ObjectType>Knight</ObjectType>
+    <ObjectName>Knight</ObjectName>
+    <Location>6500 5500</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Brick_1</ObjectName>
+    <Location>6500 5600</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Brick_1</ObjectName>
+    <Location>6235 5600</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Brick_1</ObjectName>
+    <Location>5970 5600</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Brick_1</ObjectName>
+    <Location>5705 5600</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Brick_1</ObjectName>
+    <Location>5440 5600</Location>
+</Item>
+
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Floor_2</ObjectName>
+    <Location>5195 5600</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Brick_1</ObjectName>
+    <Location>4926 5600</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Brick_1</ObjectName>
+    <Location>4668 5600</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Brick_1</ObjectName>
+    <Location>4403 5600</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Brick_1</ObjectName>
+    <Location>4142 5600</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Brick_1</ObjectName>
+    <Location>3884 5600</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Floor_1</ObjectName>
+    <Location>3640 5600</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Brick_1</ObjectName>
+    <Location>3380 5600</Location>
+</Item>
+</Level>

@@ -1,4 +1,5 @@
 using HollowKnight.Projectiles;
+using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 
 namespace HollowKnight.Projectiles
@@ -14,6 +15,7 @@ namespace HollowKnight.Projectiles
 
         public void Spawn(Vector2 spawnPosition, Vector2 direction, float speed, ProjectileFaction faction)
         {
+            DebugLogger.LogObject($"VengefulSpiritProjectile spawned at ({spawnPosition.X:F0},{spawnPosition.Y:F0}) faction={faction}");
             _projectileManager.Spawn(
                 new VengefulSpiritProjectile(spawnPosition, direction * speed, faction)
             );

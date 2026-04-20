@@ -31,6 +31,7 @@ namespace HollowKnight.Player
         private readonly Vector2 baseSize;
 
         public KnightState CurrentState { get; private set; } = KnightState.Idle;
+        public static bool GodmodeEnabled = false;
         public KnightProjectile Projectiles { get; set; }
 
         public bool IsActive => true;
@@ -187,8 +188,8 @@ namespace HollowKnight.Player
             physics.MoveLeft();
         }
 
-        public void MoveUp() => Console.WriteLine("Camera Move Up");
-        public void MoveDown() => Console.WriteLine("Camera Move Down");
+        public void MoveUp() { }
+        public void MoveDown() { }
 
         public void Jump()
         {
@@ -254,14 +255,19 @@ namespace HollowKnight.Player
 
         public void TakeDamage(CollisionSide side)
         {
+            if (GodmodeEnabled)
+            {
+                DebugLogger.LogGeneral($"Godmode: ignored damage from {side} side");
+                return;
+            }
             if (!health.TakeDamage()) return;
             AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Hero_Take_Damage());
-            Console.WriteLine("Knight took damage from " + side + " side");
+            DebugLogger.LogGeneral($"Knight took damage from {side} side, health={health.Health}");
             dash.CancelDash();
-            
+
             if (health.Health == 0)
             {
-                Console.WriteLine("Knight died. Respawning at most recent bench.");
+                DebugLogger.LogGeneral($"Knight died. Respawning at {benchSpawnPoint}.");
                 SetPosition(benchSpawnPoint);
                 physics.Velocity = Vector2.Zero;
                 health.ResetHealth();
@@ -290,11 +296,11 @@ namespace HollowKnight.Player
         // --- Spells ---
         public void CastSpell()
         {
-            if (health.Soul < KnightConstants.KnightSpellCastSoulCost) { Console.WriteLine("Not enough soul to cast spell"); return; }
+            if (health.Soul < KnightConstants.KnightSpellCastSoulCost) { DebugLogger.LogGeneral("Not enough soul to cast spell"); return; }
             if (!combat.TryStartCastPulse(position)) return;
             sprites[KnightSpriteType.SpiritCast].Reset();
             health.ConsumeSoul(KnightConstants.KnightSpellCastSoulCost);
-            Console.WriteLine("Casting spell! Remaining soul: " + health.Soul);
+            DebugLogger.LogGeneral($"Casting spell! Remaining soul: {health.Soul}");
             physics.ApplyCastKnockback(Facing);
             Projectiles?.Fire();
         }
@@ -308,15 +314,15 @@ namespace HollowKnight.Player
         public void UseItem(int itemNumber)
         {
             currentItem = itemNumber;
-            Console.WriteLine($"Using item #{currentItem}");
+            DebugLogger.LogGeneral($"Using item #{currentItem}");
         }
 
         public void Collect(CollisionSide side)
         {
             soul.AddSoul(GameConstants.SpiritPickupSoul);
-            Console.WriteLine($"Knight collected soul. Soul is now {soul.Soul}/{soul.MaxSoul}");
+            DebugLogger.LogGeneral($"Knight collected soul. Soul is now {soul.Soul}/{soul.MaxSoul}");
         }
-        public void Block(CollisionSide side) => Console.WriteLine("Knight is colliding with a block");
+        public void Block(CollisionSide side) => DebugLogger.LogCollision($"Knight is colliding with a block on side={side}");
 
         // --- Position ---
         public Vector2 GetPosition() => position;

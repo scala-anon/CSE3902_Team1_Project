@@ -19,20 +19,30 @@ public partial class Game1
         }
     }
 
-    // TODO: Refactor so that we map a transition to a certain room
-    internal void CheckTransitions()
+internal void CheckTransitions()
+{
+    if (_isTransitioning) return;
+
+    Rectangle knightRect = _knight.GetBounds()[0];
+    foreach (var zone in _level.Transitions)
     {
-        Rectangle knightRect = _knight.GetBounds()[0];
-        foreach (Rectangle t in _level.Transitions)
+        if (knightRect.Intersects(zone.Bounds))
         {
-            if (knightRect.Intersects(t))
-            {
-                
-                TransitionToRoom(_currentRoom == 1 ? 2 : 1);//_currentRoom % 3 + 1);   //_currentRoom == 1 ? 2 : 1);
-                return;
-            }
+            _isTransitioning = true;
+
+            // offset spawn away from the transition so we don't re-trigger it on return
+            Vector2 safeSpawn = _knight.position;
+            if (zone.Bounds.Width > zone.Bounds.Height) // horizontal transition
+                safeSpawn.Y -= 100; // push up
+            else // vertical transition
+                safeSpawn.X += _knight.position.X < zone.Bounds.Center.X ? -100 : 100; // push away laterally
+
+            _roomEntryPoints[_currentRoom] = safeSpawn;
+            TransitionToRoom(zone.DestinationRoom);
+            return;
         }
     }
+}
 
 
     internal void UpdateKnight(GameTime gameTime)

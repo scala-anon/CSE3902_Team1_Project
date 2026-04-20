@@ -14,7 +14,9 @@ namespace HollowKnight.Levels
         public List<IEnemy> Enemies        { get; } = new();
         public List<IObject> Backgrounds   { get; } = new();
         public List<IObject> Platforms     { get; } = new();
-        public List<Rectangle> Transitions { get; } = new();
+        // public List<Rectangle> Transitions { get; } = new();
+
+        public List<TransitionZone> Transitions { get; } = new();
         public Vector2 KnightSpawn { get; private set; } = Vector2.Zero;
 
         private readonly Dictionary<string, Func<Vector2, IObject>> _platformMap;
@@ -93,14 +95,15 @@ namespace HollowKnight.Levels
                 ["Platform"] = SpawnPlatform,
                 ["Enemy"]    = SpawnEnemy,
                 
-                ["Transition"]  = (name, pos) => Transitions.Add(
-                    new Rectangle((int)pos.X, (int)pos.Y, 80, GameConstants.TransitionZoneHeight)),
-                // Vertical: thin strip the player walks into from the side
                 ["TransitionV"] = (name, pos) => Transitions.Add(
-                    new Rectangle((int)pos.X, (int)pos.Y, 80, GameConstants.TransitionZoneHeight)),
-                // Horizontal: wide flat strip the player falls/walks through vertically
+                new TransitionZone(
+                new Rectangle((int)pos.X, (int)pos.Y, 80, GameConstants.TransitionZoneHeight),
+                ParseDestinationRoom(name))),
+
                 ["TransitionH"] = (name, pos) => Transitions.Add(
-                    new Rectangle((int)pos.X, (int)pos.Y, GameConstants.TransitionZoneWidth, 80))
+                new TransitionZone(
+                new Rectangle((int)pos.X, (int)pos.Y, GameConstants.TransitionZoneWidth, 80),
+                ParseDestinationRoom(name))),
             };
         }
 
@@ -127,11 +130,11 @@ namespace HollowKnight.Levels
                 if (_spawnMap.TryGetValue(objectType, out var spawn))
                     spawn(objectName, position);
                 else
-                    Console.WriteLine($"[LevelLoader] Unknown ObjectType '{objectType}'");
+                    DebugLogger.LogGeneral($"[LevelLoader] Unknown ObjectType '{objectType}'");
             }
 
             AssignPlatformsToCrawlid();
-            Console.WriteLine($"[LevelLoader] Loaded: {Enemies.Count} enemies, " +
+            DebugLogger.LogRoomTransition($"[LevelLoader] Loaded '{xmlFilePath}': {Enemies.Count} enemies, " +
                               $"{Platforms.Count} platforms. Knight spawns at {KnightSpawn}.");
         }
 
@@ -185,7 +188,7 @@ namespace HollowKnight.Levels
         {
             if (!_platformMap.TryGetValue(name, out var create))
             {
-                Console.WriteLine($"[LevelLoader] Unknown platform '{name}' at {position}");
+                DebugLogger.LogObject($"[LevelLoader] Unknown platform '{name}' at {position}");
                 return;
             }
 
@@ -200,10 +203,11 @@ namespace HollowKnight.Levels
         {
             if (!_enemyMap.TryGetValue(name, out var create))
             {
-                Console.WriteLine($"[LevelLoader] Unknown enemy '{name}' at {position}");
+                DebugLogger.LogObject($"[LevelLoader] Unknown enemy '{name}' at {position}");
                 return;
             }
             Enemies.Add(create(position));
+            DebugLogger.LogObject($"Enemy spawned: {name} at {position}");
         }
 
         private static Vector2 ParseVector2(string s)
@@ -216,8 +220,15 @@ namespace HollowKnight.Levels
                 return new Vector2(x, y);
             }
 
-            Console.WriteLine($"[LevelLoader] Could not parse Vector2 from '{s}', defaulting to zero.");
+            DebugLogger.LogGeneral($"[LevelLoader] Could not parse Vector2 from '{s}', defaulting to zero.");
             return Vector2.Zero;
         }
+            // helper to parse "ToRoom3" -> 3
+        private static int ParseDestinationRoom(string name)
+        {
+        var match = System.Text.RegularExpressions.Regex.Match(name, @"\d+");
+        return match.Success ? int.Parse(match.Value) : 1;
+        }
     }
+
 }

@@ -51,36 +51,20 @@ public partial class Game1
     {
         _items.Clear();
         _items.Add(new Spirit(new Vector2(100, 100)));
+        DebugLogger.LogObject($"Spirit spawned at (100,100)");
         _items.Add(new Spirit(new Vector2(-100, -100)));
+        DebugLogger.LogObject($"Spirit spawned at (-100,-100)");
     }
 
     private const string Room1 = "Content/levels/roomOne.xml";
     private const string Room2 = "Content/levels/roomTwo.xml";
     private const string Room3 = "Content/levels/roomThree.xml";
-    private string[] rooms = new[] { Room1, Room2, Room3 };
-    private int _currentRoom = 3;
+     private const string Room4 = "Content/levels/roomFour.xml";
+    private string[] rooms = new[] { Room1, Room2, Room3, Room4 };
 
-    private void InitializeLevel()
-    {
-        _level = new LevelLoader();
-        _level.Load(rooms[_currentRoom - 1]);
-        // _level.Load(Room1);
-        // _currentRoom = 1;
-        LoadObstacles();
-    }
-    
-    public void TransitionToRoom(int roomNumber)
-    {
-        _level = new LevelLoader();
-        // _level.Load(roomNumber == 1 ? Room1 : Room2);
-        _level.Load(roomNumber == 1 ? Room1 
-            : roomNumber == 2 ? Room2 
-            : Room3);
-        _currentRoom = roomNumber;
 
-        _knight.SetPosition(_level.KnightSpawn);
-        LoadObstacles();
-    }
+    private int _currentRoom = 1;
+    public int CurrentRoom => _currentRoom;
 
     private void InitializeDebug()
     {
@@ -157,16 +141,55 @@ public partial class Game1
         }
     }
 
-    private void RestartGame()
+    private void InitializeLevel()
     {
-        InitializeNavigationGrid();
-        _projectileManager.Clear();
-        InitializeItems();
-        InitializeLevel();
-        InitializeGameplaySystems();
-        InitializePlayerAndProjectiles();
-        InitializeCameraAndRooms();
-        InitializeControllers();
-        SetPlaying();
+    DebugLogger.LogRoomTransition($"InitializeLevel: loading room 1 ({Room1})");
+    _level = new LevelLoader();
+    _currentRoom = 1;
+    _level.Load(rooms[_currentRoom - 1]);
+    LoadObstacles();
+    DebugLogger.LogRoomTransition($"InitializeLevel: room 1 loaded");
+}
+
+public void TransitionToRoom(int roomNumber)
+{
+    if (roomNumber < 1 || roomNumber > rooms.Length)
+    {
+        DebugLogger.LogRoomTransition($"TransitionToRoom: invalid room number {roomNumber}");
+        return;
     }
+
+    int previousRoom = _currentRoom;
+    string targetFile = rooms[roomNumber - 1];
+
+    DebugLogger.LogRoomTransition($"TransitionToRoom: room {previousRoom} -> room {roomNumber} ({targetFile})");
+
+    _level = new LevelLoader();
+    _level.Load(targetFile);
+    _currentRoom = roomNumber;
+
+    if (_roomEntryPoints.TryGetValue(roomNumber, out Vector2 entryPoint))
+        _knight.SetPosition(entryPoint);
+    else
+        _knight.SetPosition(_level.KnightSpawn);
+
+    LoadObstacles();
+    _isTransitioning = false;
+    DebugLogger.LogRoomTransition($"TransitionToRoom: room {roomNumber} loaded, knight at {_knight.position}");
+}
+
+private void RestartGame()
+{
+    _roomEntryPoints.Clear();
+    _currentRoom = 1; // reset room on restart
+    InitializeNavigationGrid();
+    _projectileManager.Clear();
+    InitializeItems();
+    InitializeLevel();
+    InitializeGameplaySystems();
+    InitializePlayerAndProjectiles();
+    InitializeCameraAndRooms();
+    InitializeControllers();
+    SetPlaying();
+}
 }

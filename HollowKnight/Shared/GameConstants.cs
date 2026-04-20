@@ -135,5 +135,8 @@ namespace HollowKnight.Shared
         public const int AStarMaxIterations = 1000;
         public const int AStarStraightMoveCost = 10;
         public const int AStarDiagonalMoveCost = 14;
+
+        // Debug Logging (1 = enabled, 0 = disabled)
+        public const int DEBUG_LOG_ENABLED = 1;
     }
 }

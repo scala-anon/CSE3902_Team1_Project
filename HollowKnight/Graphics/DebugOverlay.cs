@@ -30,7 +30,7 @@ namespace HollowKnight.Graphics
             ProjectileManager projectileManager,
             NavigationGrid navigationGrid,
             Camera camera,
-            List<Rectangle> transitions = null)
+            List<TransitionZone> transitions = null)
         {
             // Navigation grid
             if (NavigationGrid.GridEnabled)
@@ -39,13 +39,13 @@ namespace HollowKnight.Graphics
             // Transition zone debug
             if (transitions != null)
             {
-                foreach (Rectangle t in transitions)
+                foreach (TransitionZone t in transitions)
                 {
-                    DrawRectangleOutline(spriteBatch, t, Color.Cyan, 3);
+                    DrawRectangleOutline(spriteBatch, t.Bounds, Color.Cyan, 3);
                     if (DebugRenderer.hitboxEnabled)
                     {
-                        spriteBatch.Draw(_pixel, t, Color.Cyan * 0.20f);
-                        Vector2 labelPos = new Vector2(t.Left + 4, t.Top + 4);
+                        spriteBatch.Draw(_pixel, t.Bounds, Color.Cyan * 0.20f);
+                        Vector2 labelPos = new Vector2(t.Bounds.Left + 4, t.Bounds.Top + 4);
                         DebugRenderer.DrawText(spriteBatch, "[Transition]", labelPos, Color.Cyan);
                     }
                 }
@@ -97,6 +97,7 @@ namespace HollowKnight.Graphics
             string posText = $"Knight Position: ({knight.position.X:F0}, {knight.position.Y:F0})";
             string hpText  = $"Health: {knight.GetHealth()}";
             string soulText = $"Soul: {knight.Soul}";
+            string godmodeText = $"GODMODE: {(TheKnight.GodmodeEnabled ? "ON" : "OFF")}";
 
             //hud for knight stats in debug mode
             Vector2 hudBasePos = camera.Position + new Vector2(10, 10);
@@ -108,6 +109,7 @@ namespace HollowKnight.Graphics
             DebugRenderer.DrawText(spriteBatch, posText, hudBasePos + new Vector2(0, 100), Color.White);
             DebugRenderer.DrawText(spriteBatch, hpText,  hudBasePos + new Vector2(0, 120), Color.White);
             DebugRenderer.DrawText(spriteBatch, soulText, hudBasePos + new Vector2(0, 140), Color.White);
+            DebugRenderer.DrawText(spriteBatch, godmodeText, hudBasePos + new Vector2(0, 160), Color.White);
 
             // Sword hitbox debug
             SwordHitbox swordHitbox = knight.GetSwordHitbox();
