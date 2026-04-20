@@ -4,14 +4,14 @@ namespace HollowKnight.Storage
 {
     public static class ItemManager
     {
-        public const string FireballItemName = "Fireball";
+        public const string VengefulSpiritItemName = "Vengeful Spirit";
 
         private static int _currentIndex = 0;
 
         // Placeholder list — replace with real items later
         private static List<string> _items = new List<string>()
         {
-            "Fireball",
+            VengefulSpiritItemName,
             "Boomerang",
             "Bomb"
         };

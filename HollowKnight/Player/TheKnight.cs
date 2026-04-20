@@ -318,7 +318,7 @@ namespace HollowKnight.Player
             string selected = ItemManager.CurrentItem;
             DebugLogger.LogGeneral($"Using item #{currentItem} ({selected})");
 
-            if (selected == ItemManager.FireballItemName)
+            if (selected == ItemManager.VengefulSpiritItemName)
             {
                 CastSpell();
                 return;
