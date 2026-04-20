@@ -115,7 +115,7 @@ public partial class Game1
         KeyboardBindings.BindGameplay(keyboard, _knight, this, _roomManager);
 
         _controllerList.Add(keyboard);
-        _controllerList.Add(new MouseController(screenWidth, _roomManager));
+        _controllerList.Add(new MouseController(this, screenWidth, _roomManager));
     }
 
     private void LoadObstacles()

@@ -14,6 +14,8 @@ namespace HollowKnight.Storage
             "Bomb"
         };
 
+        public static IReadOnlyList<string> Items => _items;
+        public static int CurrentIndex => _currentIndex;
         public static string CurrentItem => _items[_currentIndex];
 
         public static void NextItem()
@@ -24,6 +26,16 @@ namespace HollowKnight.Storage
         public static void PreviousItem()
         {
             _currentIndex = (_currentIndex - 1 + _items.Count) % _items.Count;
+        }
+
+        public static void SelectItem(int index)
+        {
+            if (index < 0 || index >= _items.Count)
+            {
+                return;
+            }
+
+            _currentIndex = index;
         }
 
         public static void Reset()

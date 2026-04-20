@@ -3,8 +3,8 @@ namespace HollowKnight.Shared
     public static class GameConstants
     {
         // Screen
-        public const int ScreenWidth = 1920;
-        public const int ScreenHeight = 1080;
+        public const int ScreenWidth = 1280;
+        public const int ScreenHeight = 720;
 
         // Level
         public const int DefaultLevelWidth = 70000;
