@@ -1,3 +1,6 @@
+using System;
+using System.Net.Http;
+using System.Security.Cryptography.X509Certificates;
 using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -42,7 +45,7 @@ namespace HollowKnight
         {
             // puts target at center of screen
             float x = target.X - _screenWidth /2f;
-            float y = target.Y - _screenHeight /2f;
+            float y = target.Y - _screenHeight /2f - CameraConstants.yAxisCameraRaise;
 
             // makes sure that the range for the camera is valid
             x = MathHelper.Clamp(x,0,_levelWidth - _screenWidth);
@@ -68,6 +71,19 @@ namespace HollowKnight
                 && worldPos.X <= position.X + _screenWidth
                 && worldPos.Y >= position.Y
                 && worldPos.Y <= position.Y + _screenHeight;
+        }
+
+        /// <summary>
+        /// Make the screen "clamp" temporarily
+        /// </summary>s
+        public void SetTempBounds(Vector2 _position)
+        {
+            float y = _position.Y - _screenHeight /2f - CameraConstants.yAxisCameraRaise;
+            float x = position.X;
+
+            y = MathHelper.Clamp(y, 0, _levelHeight - _screenHeight);
+
+            position = new Vector2(x,y);
         }
     }
 }
