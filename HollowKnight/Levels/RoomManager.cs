@@ -1,4 +1,5 @@
 using HollowKnight.Player;
+using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 using System;
 using System.Diagnostics;
@@ -40,30 +41,34 @@ namespace HollowKnight.Levels
             Vector2 knightPosition = _knight.GetPosition();
             Vector2 cameraPosition = Camera.Instance.Position;
 
-            float xDifference = _knight.position.X - (Camera.Instance.Position.X + 1000);
+            float xDifference = _knight.position.X - (Camera.Instance.Position.X + CameraConstants.cameraCenterOffset);
 
+            if (_knight.Facing == Shared.Direction.Right && xDifference >= CameraConstants.cameraFollowKnightMax)
+            {
+                cameraPosition.X = knightPosition.X - CameraConstants.cameraFollowKnightMax;
+                cameraPosition.Y = knightPosition.Y;
+                _camera.Follow(cameraPosition);
             
 
-            if (xDifference >= 100)
-            {
-                cameraPosition.X = knightPosition.X - 100;
-                cameraPosition.Y = knightPosition.Y;
-                _camera.Follow(cameraPosition);
-
-            } else if (xDifference <= -100)
+            } else if (_knight.Facing == Shared.Direction.Left && xDifference <= CameraConstants.cameraFollowKnightMin)
             {   
-                cameraPosition.X = knightPosition.X + 100;
+                cameraPosition.X = knightPosition.X + CameraConstants.cameraKnightOffset;
                 cameraPosition.Y = knightPosition.Y;
                 _camera.Follow(cameraPosition);
                 
             }
-            else
+            else if ((xDifference <= -CameraConstants.cameraFollowKnightMin) && (xDifference >= CameraConstants.cameraFollowKnightMin))
             {
-                _camera.SetTempBounds();
-                Console.WriteLine("xDifference = " + xDifference);
+                _camera.SetTempBounds(knightPosition);
                 
+            
+            }else
+            {
+                _camera.Follow(knightPosition);
             }
-           
+
+            
+            
         }
 
         public void SwitchRoomByOffset(int offset)
