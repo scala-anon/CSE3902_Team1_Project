@@ -17,7 +17,7 @@ namespace HollowKnight.Shared
         public const int CrawlidDamage = 1;
 
         // Vengefly
-        public const float VengeflyDetectionRadius = 500f;
+        public const float VengeflyDetectionRadius = 400f;
         public const float VengeflyChaseRadius = 1200f;
         public const float VengeflyPatrolSpeed = 95f;
         public const float VengeflyChaseSpeed = 130f;
