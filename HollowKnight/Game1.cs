@@ -49,6 +49,7 @@ public partial class Game1 : Game
 
     protected override void Initialize()
     {
+        CollisionLayerMatrix.ValidateSymmetry();
         _controllerList = new List<IController>();
         base.Initialize();
     }
