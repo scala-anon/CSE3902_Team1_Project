@@ -138,5 +138,19 @@ namespace HollowKnight.Shared
 
         // Debug Logging (1 = enabled, 0 = disabled)
         public const int DEBUG_LOG_ENABLED = 1;
+
+        // Rendering — Layer Depth (FrontToBack: 0.0 = back, 1.0 = front)
+        public const float LayerDepthBackgroundFar = 0.00f;
+        public const float LayerDepthBackgroundMid = 0.10f;
+        public const float LayerDepthBackgroundRocks = 0.15f;
+        public const float LayerDepthPlatform = 0.20f;
+        public const float LayerDepthInteractable = 0.30f;
+        public const float LayerDepthItem = 0.40f;
+        public const float LayerDepthEnemy = 0.60f;
+        public const float LayerDepthProjectile = 0.70f;
+        public const float LayerDepthKnight = 0.80f;
+        public const float LayerDepthKnightEffects = 0.85f;
+        public const float LayerDepthForeground = 0.90f;
+        public const float LayerDepthDebug = 1.00f;
     }
 }

@@ -18,86 +18,85 @@ public partial class Game1
 
     private void DrawWorld()
     {
-        // Layer 1: Backgrounds (behind everything, no interaction)
+        // Single world-space batch. FrontToBack sort:
+        // layerDepth 0.0 = farthest back, 1.0 = frontmost.
         _spriteBatch.Begin(
+                sortMode: SpriteSortMode.FrontToBack,
+                blendState: BlendState.AlphaBlend,
                 samplerState: SamplerState.PointClamp,
                 transformMatrix: Camera.Instance.GetTransform());
-        DrawBackgrounds();
-        _spriteBatch.End();
 
-        // Layer 2: Platforms, enemies, knight, projectiles, items
-        _spriteBatch.Begin(
-                samplerState: SamplerState.PointClamp,
-                transformMatrix: Camera.Instance.GetTransform());
-        DrawPlatforms();
-        DrawInteractables();
-        DrawEnemies();
-        DrawProjectiles();
-        DrawItems();
-        DrawKnight();
+        DrawBackgrounds(GameConstants.LayerDepthBackgroundFar);
+        DrawPlatforms(GameConstants.LayerDepthPlatform);
+        DrawInteractables(GameConstants.LayerDepthInteractable);
+        DrawItems(GameConstants.LayerDepthItem);
+        DrawEnemies(GameConstants.LayerDepthEnemy);
+        DrawProjectiles(GameConstants.LayerDepthProjectile);
+        DrawKnight(GameConstants.LayerDepthKnight);
         DrawDebugOverlay();
+
         _spriteBatch.End();
     }
 
-    private void DrawInteractables()
+    private void DrawInteractables(float layerDepth)
     {
         foreach (IInteractable interactable in _level.Interactables)
         {
             if(interactable != null)
             {
-                interactable.Draw(_spriteBatch, SpriteEffects.None);
+                interactable.Draw(_spriteBatch, SpriteEffects.None, layerDepth);
             }
         }
     }
 
-    private void DrawBackgrounds()
+    private void DrawBackgrounds(float layerDepth)
     {
         foreach (IObject bg in _level.Backgrounds)
         {
-            bg.Draw(_spriteBatch, SpriteEffects.None);
+            bg.Draw(_spriteBatch, SpriteEffects.None, layerDepth);
         }
     }
 
-    private void DrawKnight()
+    private void DrawKnight(float layerDepth)
     {
-        _knight.Draw(_spriteBatch);
+        _knight.Draw(_spriteBatch, layerDepth);
     }
 
-    private void DrawPlatforms()
+    private void DrawPlatforms(float layerDepth)
     {
         foreach (IObject obj in _level.Platforms)
         {
             if (obj != null)
             {
-                obj.Draw(_spriteBatch, SpriteEffects.None);
+                obj.Draw(_spriteBatch, SpriteEffects.None, layerDepth);
             }
         }
     }
 
-    private void DrawEnemies()
+    private void DrawEnemies(float layerDepth)
     {
         foreach (IEnemy enemy in _level.Enemies)
         {
-            enemy.Draw(_spriteBatch, SpriteEffects.None);
+            enemy.Draw(_spriteBatch, SpriteEffects.None, layerDepth);
         }
     }
 
-    private void DrawItems()
+    private void DrawItems(float layerDepth)
     {
         foreach (Spirit item in _items)
         {
             if (item.IsActive)
             {
-                item.Draw(_spriteBatch);
+                item.Draw(_spriteBatch, layerDepth);
             }
         }
     }
 
-    private void DrawProjectiles()
+    private void DrawProjectiles(float layerDepth)
     {
         foreach (var p in _projectileManager.All)
         {
-            p.Draw(_spriteBatch, Direction.Right);
+            p.Draw(_spriteBatch, Direction.Right, layerDepth);
         }
     }
 

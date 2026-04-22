@@ -157,13 +157,13 @@ namespace HollowKnight.Player
         public double GetCastCooldownRemaining() =>
             IsCastOnCooldown ? System.Math.Max(0, castCooldown - castCooldownTimer) : 0;
 
-        public void DrawSlashEffect(SpriteBatch spriteBatch, Direction facing)
+        public void DrawSlashEffect(SpriteBatch spriteBatch, Direction facing, float layerDepth = 0f)
         {
             if (!isSlashEffectActive || slashEffect == null) return;
             SpriteEffects effects = facing == Direction.Right
                 ? SpriteEffects.None
                 : SpriteEffects.FlipHorizontally;
-            slashEffect.Draw(spriteBatch, effects);
+            slashEffect.Draw(spriteBatch, effects, layerDepth);
         }
 
         public bool TryStartCastPulse(Vector2 position)
@@ -177,13 +177,13 @@ namespace HollowKnight.Player
             return true;
         }
 
-        public void DrawCastPulseEffect(SpriteBatch spriteBatch, Direction facing)
+        public void DrawCastPulseEffect(SpriteBatch spriteBatch, Direction facing, float layerDepth = 0f)
         {
             if (!isCastPulseActive || castPulseEffect == null) return;
             SpriteEffects effects = facing == Direction.Right
                 ? SpriteEffects.FlipHorizontally
                 : SpriteEffects.None;
-            castPulseEffect.Draw(spriteBatch, effects);
+            castPulseEffect.Draw(spriteBatch, effects, layerDepth);
         }
     }
 }

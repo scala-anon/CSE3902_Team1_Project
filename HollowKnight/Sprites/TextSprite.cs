@@ -41,9 +41,9 @@ namespace HollowKnight.Sprites
             // No update needed for static text
         }
 
-        public void Draw(SpriteBatch spriteBatch, SpriteEffects effects)
+        public void Draw(SpriteBatch spriteBatch, SpriteEffects effects, float layerDepth = 0f)
         {
-            spriteBatch.DrawString(_font, _text, _position, _color);
+            spriteBatch.DrawString(_font, _text, _position, _color); // layerDepth ignored: DrawString default overload does not take depth.
         }
 
         public void Reset()

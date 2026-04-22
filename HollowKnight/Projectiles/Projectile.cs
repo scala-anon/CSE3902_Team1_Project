@@ -54,7 +54,7 @@ namespace HollowKnight.Projectiles
             }
         }
 
-        public virtual void Draw(SpriteBatch spriteBatch, Direction facing)
+        public virtual void Draw(SpriteBatch spriteBatch, Direction facing, float layerDepth = 0f)
         {
             // Base projectile has no visual representation
         }

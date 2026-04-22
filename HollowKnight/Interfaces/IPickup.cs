@@ -9,6 +9,6 @@ public interface IPickup : ICollidable
 {
     public void Update(GameTime gameTime);
 
-    public void Draw(SpriteBatch spriteBatch);
+    public void Draw(SpriteBatch spriteBatch, float layerDepth = 0f);
 
 }
