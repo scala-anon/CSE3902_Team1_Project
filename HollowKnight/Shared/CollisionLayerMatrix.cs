@@ -29,6 +29,9 @@ namespace HollowKnight.Shared
 
         public static CollisionLayer GetLayer(ICollidable obj)
         {
+            // Order matters: more-specific interfaces (IInteractable) come before
+            // broader ones (IEnemy). An enemy that is also IInteractable intentionally
+            // routes to the Interactable layer. Change priority here if that's wrong.
             switch (obj)
             {
                 case TheKnight _:    return CollisionLayer.Player;
@@ -49,8 +52,31 @@ namespace HollowKnight.Shared
         {
             CollisionLayer layerA = GetLayer(a);
             CollisionLayer layerB = GetLayer(b);
-            return (_matrix[layerA] & layerB) != 0
-                && (_matrix[layerB] & layerA) != 0;
+            if (layerA == CollisionLayer.None || layerB == CollisionLayer.None) return false;
+            if (!_matrix.TryGetValue(layerA, out CollisionLayer maskA)) return false;
+            return (maskA & layerB) != 0;
+        }
+
+        public static void ValidateSymmetry()
+        {
+            foreach (var kvpA in _matrix)
+            {
+                CollisionLayer layerA = kvpA.Key;
+                CollisionLayer maskA = kvpA.Value;
+                foreach (var kvpB in _matrix)
+                {
+                    CollisionLayer layerB = kvpB.Key;
+                    CollisionLayer maskB = kvpB.Value;
+                    bool aSaysYes = (maskA & layerB) != 0;
+                    bool bSaysYes = (maskB & layerA) != 0;
+                    if (aSaysYes != bSaysYes)
+                    {
+                        throw new System.InvalidOperationException(
+                            $"CollisionLayerMatrix asymmetry: {layerA} <-> {layerB} " +
+                            $"(A says {aSaysYes}, B says {bSaysYes})");
+                    }
+                }
+            }
         }
     }
 }
