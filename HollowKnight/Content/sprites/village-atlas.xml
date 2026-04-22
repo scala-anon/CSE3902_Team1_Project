@@ -37,9 +37,9 @@
         <Region name="Pole_1" x="5828" y="2131" width="69" height="477" />
         <Region name="Pole_2" x="6081" y="2133" width="69" height="477" />
 
-        <Region name="Floor_Spike_1" x="5413" y="165" width="162" height="103" />
-        <Region name="Floor_Spike_2" x="5644" y="162" width="162" height="103" />
-        <Region name="Floor_Spike_3" x="5858" y="164" width="162" height="103" />
-        <Region name="Floor_Spike_4" x="6066" y="175" width="162" height="103" />
+        <Region name="Floor_Spike_0" x="5413" y="165" width="162" height="103" />
+        <Region name="Floor_Spike_1" x="5644" y="162" width="162" height="103" />
+        <Region name="Floor_Spike_2" x="5858" y="164" width="162" height="103" />
+        <Region name="Floor_Spike_3" x="6066" y="175" width="162" height="103" />
     </Regions>
 </TextureAtlas>

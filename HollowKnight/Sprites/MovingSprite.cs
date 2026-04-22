@@ -50,17 +50,17 @@ namespace HollowKnight.Sprites
             float delta = _speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             _position.Y += delta * _direction;
 
-            // Bounce off top and bottom
-            if (_position.Y + _spriteHeight >= _screenHeight)
-            {
-                _position.Y = _screenHeight - _spriteHeight;
-                _direction = -1;
-            }
-            else if (_position.Y <= 0)
-            {
-                _position.Y = 0;
-                _direction = 1;
-            }
+            // // Bounce off top and bottom
+            // if (_position.Y + _spriteHeight >= _screenHeight)
+            // {
+            //     _position.Y = _screenHeight - _spriteHeight;
+            //     _direction = -1;
+            // }
+            // else if (_position.Y <= 0)
+            // {
+            //     _position.Y = 0;
+            //     _direction = 1;
+            // }
         }
 
         public void Draw(SpriteBatch spriteBatch, SpriteEffects effects)

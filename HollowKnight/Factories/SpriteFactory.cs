@@ -6,6 +6,7 @@ using HollowKnight.Sprites;
 using HollowKnight.Graphics;
 using HollowKnight.Environment;
 using System.Collections.Generic;
+using HollowKnight.Shared;
 
 namespace HollowKnight.Factories
 {
@@ -40,6 +41,7 @@ namespace HollowKnight.Factories
 
         private readonly Dictionary<string, Rectangle> mantisLordFrames;
         private readonly Dictionary<string, Rectangle[]> mantisLordAnimations;
+        private readonly Dictionary<string,Rectangle[]> bossSpikeAnimations;
         private readonly Dictionary<string, Rectangle> mantisVillageFrames;
 
         private static SpriteFactory instance = new SpriteFactory();
@@ -65,6 +67,7 @@ namespace HollowKnight.Factories
             mantisLordAnimations = new Dictionary<string, Rectangle[]>();
             mantisVillageFrames = new Dictionary<string, Rectangle>();
             layerFrames = new Dictionary<string, Rectangle>();
+            bossSpikeAnimations = new Dictionary<string, Rectangle[]>();
         }
 
         public void LoadAllTextures(ContentManager content)
@@ -157,6 +160,8 @@ namespace HollowKnight.Factories
             plantSingleFrames.Add("Plant1_Frame0", backgroundAtlas.GetRegion("Plant1_Frame0").SourceRectangle);
             plantSingleFrames.Add("Plant2_Frame0", backgroundAtlas.GetRegion("Plant2_Frame0").SourceRectangle);
 
+            bossSpikeAnimations.Add("Floor_Spike", mantisVillageAtlas.GetAnimationFrames("Floor_Spike"));
+
             // Mantis Lord frames
             mantisLordFrames.Add("Throne_Idle", mantisLordAtlas.GetRegion("Throne_Idle").SourceRectangle);
             mantisLordAnimations.Add("Throne_Gesture", mantisLordAtlas.GetAnimationFrames("Throne_Gesture"));
@@ -218,6 +223,18 @@ namespace HollowKnight.Factories
             {
                 string key = $"Left_Rock_{i}";
                 layerFrames.Add(key, layersAtlas.GetRegion(key).SourceRectangle);
+            }
+
+            for (int i = 1; i <= 2; i++)
+            {
+                string key = $"Cage_{i}";
+                mantisVillageFrames.Add(key, mantisVillageAtlas.GetRegion(key).SourceRectangle);
+            }
+
+            for (int i = 1; i <= 2; i++)
+            {
+                string key = $"Pole_{i}";
+                mantisVillageFrames.Add(key, mantisVillageAtlas.GetRegion(key).SourceRectangle);
             }
         }
 
@@ -628,6 +645,31 @@ namespace HollowKnight.Factories
 
             };
             return new StaticSprite(layersSpriteSheet, layerFrames[key], position, 2.0f, .75f,Color.White);
+        }
+
+        public ISprite CreateBossMiddlegroundSprite(int variant, Vector2 position)
+        {
+            string key = variant switch
+            {
+                1 => "Cage_1",
+                2 => "Cage_2",
+                _ => "Cage_1"
+            };
+            return new StaticSprite(mantisVillageSpriteSheet, mantisVillageFrames[key], position, 1.0f);
+        }
+        public ISprite CreatePoleSprite(int variant, Vector2 position)
+        {
+            string key = variant switch
+            {
+                1 => "Pole_1",
+                2 => "Pole_2",
+                _ => "Pole_1",
+            };
+            return new StaticSprite(mantisVillageSpriteSheet,mantisVillageFrames[key],position,1.0f);
+        }
+        public ISprite CreateBossSpikeIdle(Vector2 position)
+        {
+            return new AnimatedSprite(mantisVillageSpriteSheet, bossSpikeAnimations["Floor_Spike"], position, 0.5, 1.5f);
         }
     }
 }

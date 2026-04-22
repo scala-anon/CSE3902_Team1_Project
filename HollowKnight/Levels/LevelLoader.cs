@@ -82,6 +82,13 @@ namespace HollowKnight.Levels
                 ["Village_2"] = pos => new Village(2, pos, 262, 511),
                 ["Village_3"] = pos => new Village(3, pos, 161, 520),
 
+                ["Cage_1"] = pos => new Middleground(1,pos),
+                ["Cage_2"] = pos => new Middleground(2,pos),
+                ["Pole_1"] = pos => new Pole(1,pos,69,477),
+                ["Pole_2"] = pos => new Pole(2,pos,69,477),
+
+                ["Floor_Spike"] = pos => new BossSpike(pos),
+
                 // TODO: Figure out which rocks need to stay in background/foreground 
                 ["Right_Rock_1"] = pos => new Layer(1,pos),
                 ["Right_Rock_2"] = pos => new Layer(2,pos),

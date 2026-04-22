@@ -92,23 +92,37 @@
     <Location>3380 5600</Location>
 </Item>
 
+<Item><ObjectType>Platform</ObjectType><ObjectName>Pole_1</ObjectName><Location>5440 4246</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Pole_1</ObjectName><Location>5440 4688</Location></Item>
+
+<!-- <Item><ObjectType>Platform</ObjectType><ObjectName>Pole_1</ObjectName><Location>5440 5130</Location></Item> -->
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Pole_2</ObjectName><Location>3600 4246</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Pole_2</ObjectName><Location>3600 4688</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Pole_2</ObjectName><Location>3600 5130</Location></Item>
+
+<!-- 
 <Item>
     <ObjectType>Platform</ObjectType>
-    <ObjectName>Village_1</ObjectName>
-    <Location>4000 5300</Location>
-</Item>
+    <ObjectName>Floor_Spike</ObjectName>
+    <Location>5200 5600</Location>
+</Item> -->
 
 
-<Item>
-    <ObjectType>Platform</ObjectType>
-    <ObjectName>Village_2</ObjectName>
-    <Location>3300 5300</Location>
-</Item>
 
-<Item>
-    <ObjectType>Platform</ObjectType>
-    <ObjectName>Village_3</ObjectName>
-    <Location>5000 5300</Location>
-</Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Cage_1</ObjectName><Location>5300 4382</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Cage_1</ObjectName><Location>5300 4791</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Cage_1</ObjectName><Location>5300 5200</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Cage_1</ObjectName><Location>5163 4382</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Cage_1</ObjectName><Location>5163 4791</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Cage_1</ObjectName><Location>5163 5200</Location></Item>
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Cage_2</ObjectName><Location>3650 4382</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Cage_2</ObjectName><Location>3650 4791</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Cage_2</ObjectName><Location>3650 5200</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Cage_2</ObjectName><Location>3787 4382</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Cage_2</ObjectName><Location>3787 4791</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Cage_2</ObjectName><Location>3787 5200</Location></Item>
+
 
 </Level>
