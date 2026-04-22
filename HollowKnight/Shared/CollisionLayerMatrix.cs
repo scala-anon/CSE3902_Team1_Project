@@ -17,12 +17,13 @@ namespace HollowKnight.Shared
             [CollisionLayer.PlayerAttack]     = CollisionLayer.Enemy | CollisionLayer.Interactable,
             [CollisionLayer.Enemy]            = CollisionLayer.Player | CollisionLayer.Terrain | CollisionLayer.Hazard
                                               | CollisionLayer.PlayerProjectile | CollisionLayer.PlayerAttack,
-            [CollisionLayer.Hazard]           = CollisionLayer.Player | CollisionLayer.Enemy,
+            [CollisionLayer.Hazard]           = CollisionLayer.Player | CollisionLayer.Enemy
+                                              | CollisionLayer.PlayerProjectile | CollisionLayer.EnemyProjectile,
             [CollisionLayer.Terrain]          = CollisionLayer.Player | CollisionLayer.Enemy
                                               | CollisionLayer.PlayerProjectile | CollisionLayer.EnemyProjectile,
             [CollisionLayer.Interactable]     = CollisionLayer.Player | CollisionLayer.PlayerAttack,
-            [CollisionLayer.PlayerProjectile] = CollisionLayer.Enemy | CollisionLayer.Terrain,
-            [CollisionLayer.EnemyProjectile]  = CollisionLayer.Player | CollisionLayer.Terrain,
+            [CollisionLayer.PlayerProjectile] = CollisionLayer.Enemy | CollisionLayer.Terrain | CollisionLayer.Hazard,
+            [CollisionLayer.EnemyProjectile]  = CollisionLayer.Player | CollisionLayer.Terrain | CollisionLayer.Hazard,
             [CollisionLayer.Pickup]           = CollisionLayer.Player,
             [CollisionLayer.None]             = CollisionLayer.None,
         };
