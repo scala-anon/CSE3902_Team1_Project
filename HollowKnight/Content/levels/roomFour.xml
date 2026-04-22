@@ -98,17 +98,48 @@
     <Location>3380 5600</Location>
 </Item>
 
+<!-- <Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>MantisThrone_1</ObjectName>
+    <Location>4500 5000</Location>
+</Item>
+
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>MantisThrone_1</ObjectName>
-    <Location>4403 5000</Location>
+    <Location>4270 5100</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>MantisThrone_1</ObjectName>
+    <Location>4730 5100</Location>
+</Item> -->
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>MantisThrone_1</ObjectName>
+    <Location>4518 5040</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>MantisThrone_1</ObjectName>
+    <Location>4288 5140</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>MantisThrone_1</ObjectName>
+    <Location>4748 5140</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>MantisThrone_2</ObjectName>
-    <Location>4403 4900</Location>
+    <Location>4518 4840</Location>
 </Item>
+
 
 <Item><ObjectType>Platform</ObjectType><ObjectName>Pole_1</ObjectName><Location>5440 4246</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Pole_1</ObjectName><Location>5440 4688</Location></Item>
