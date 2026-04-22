@@ -65,12 +65,12 @@ namespace HollowKnight.Enemies
             return true;
         }
 
-        public void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects)
+        public void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects, float layerDepth = 0f)
         {
             SpriteEffects effects = FacingDirection == Direction.Right
                 ? SpriteEffects.FlipHorizontally
                 : SpriteEffects.None;
-            Sprite.Draw(spriteBatch, effects);
+            Sprite.Draw(spriteBatch, effects, layerDepth);
         }
 
         public virtual Rectangle[] GetBounds()

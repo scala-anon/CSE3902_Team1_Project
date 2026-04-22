@@ -16,8 +16,8 @@ namespace HollowKnight.Environment
 
         public virtual void Update(GameTime gameTime) => sprite.Update(gameTime);
 
-        public virtual void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects)
-            => sprite.Draw(spriteBatch, spriteEffects);
+        public virtual void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects, float layerDepth = 0f)
+            => sprite.Draw(spriteBatch, spriteEffects, layerDepth);
 
         public abstract Rectangle[] GetBounds();
     }

@@ -9,6 +9,6 @@ namespace HollowKnight.Interfaces
         public string Label { get; }
         public void Update(GameTime _gameTime);
 
-        public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects);
+        public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects, float layerDepth = 0f);
     }
 }

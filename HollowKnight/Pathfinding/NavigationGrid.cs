@@ -57,17 +57,17 @@ namespace HollowKnight.Pathfinding
       for(int x=0; x<=cols; x++)
       {
         spriteBatch.Draw(
-          _pixel, 
+          _pixel,
           new Rectangle(x * cellSize, 0, 1, rows * cellSize),
-          lineColor);
+          null, lineColor, 0f, Vector2.Zero, SpriteEffects.None, GameConstants.LayerDepthDebug);
       }
       //Horizontal lines
       for(int y=0; y<=rows; y++)
       {
         spriteBatch.Draw(
-          _pixel, 
+          _pixel,
           new Rectangle(0, y * cellSize, cols * cellSize, 1),
-          lineColor);
+          null, lineColor, 0f, Vector2.Zero, SpriteEffects.None, GameConstants.LayerDepthDebug);
       }
     }
 

@@ -9,7 +9,7 @@ public interface IEnemy : ICollidable
 {
     public void Update(GameTime _gameTime);
 
-    public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects);
+    public void Draw(SpriteBatch _spriteBatch, SpriteEffects _spriteEffects, float layerDepth = 0f);
 
     string GetStateName();
 

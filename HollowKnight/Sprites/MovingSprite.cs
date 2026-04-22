@@ -64,7 +64,7 @@ namespace HollowKnight.Sprites
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch, SpriteEffects effects)
+        public void Draw(SpriteBatch spriteBatch, SpriteEffects effects, float layerDepth = 0f)
         {
             spriteBatch.Draw(
                 _texture,
@@ -75,7 +75,7 @@ namespace HollowKnight.Sprites
                 Vector2.Zero,
                 _scale,
                 effects,
-                0f
+                layerDepth
             );
         }
 

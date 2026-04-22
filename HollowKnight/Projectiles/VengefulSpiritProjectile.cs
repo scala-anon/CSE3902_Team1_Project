@@ -64,7 +64,7 @@ namespace HollowKnight.Projectiles
             _currentSprite.Update(gameTime);
         }
 
-        public override void Draw(SpriteBatch spriteBatch, Direction facing)
+        public override void Draw(SpriteBatch spriteBatch, Direction facing, float layerDepth = 0f)
         {
             if (!Alive) return;
             if (_state == State.Moving && !HasMoved) return;
@@ -80,7 +80,7 @@ namespace HollowKnight.Projectiles
                 effects = _facing == Direction.Left ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             }
 
-            _currentSprite.Draw(spriteBatch, effects);
+            _currentSprite.Draw(spriteBatch, effects, layerDepth);
         }
 
         public override void OnCollide(ICollidable target, CollisionSide side)

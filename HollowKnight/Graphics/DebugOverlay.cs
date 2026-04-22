@@ -7,6 +7,7 @@ using HollowKnight.Player;
 using HollowKnight.Projectiles;
 using HollowKnight.Abilities;
 using HollowKnight.Pathfinding;
+using HollowKnight.Shared;
 using System;
 
 namespace HollowKnight.Graphics
@@ -44,7 +45,7 @@ namespace HollowKnight.Graphics
                     DrawRectangleOutline(spriteBatch, t.Bounds, Color.Cyan, 3);
                     if (DebugRenderer.hitboxEnabled)
                     {
-                        spriteBatch.Draw(_pixel, t.Bounds, Color.Cyan * 0.20f);
+                        spriteBatch.Draw(_pixel, t.Bounds, null, Color.Cyan * 0.20f, 0f, Vector2.Zero, SpriteEffects.None, GameConstants.LayerDepthDebug);
                         Vector2 labelPos = new Vector2(t.Bounds.Left + 4, t.Bounds.Top + 4);
                         DebugRenderer.DrawText(spriteBatch, "[Transition]", labelPos, Color.Cyan);
                     }
@@ -164,10 +165,10 @@ namespace HollowKnight.Graphics
         private void DrawRectangleOutline(SpriteBatch spriteBatch, Rectangle rect, Color color, int thickness = 2)
         {
             if (!DebugRenderer.hitboxEnabled) return;
-            spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Top, rect.Width, thickness), color);
-            spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Bottom - thickness, rect.Width, thickness), color);
-            spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Top, thickness, rect.Height), color);
-            spriteBatch.Draw(_pixel, new Rectangle(rect.Right - thickness, rect.Top, thickness, rect.Height), color);
+            spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Top, rect.Width, thickness), null, color, 0f, Vector2.Zero, SpriteEffects.None, GameConstants.LayerDepthDebug);
+            spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Bottom - thickness, rect.Width, thickness), null, color, 0f, Vector2.Zero, SpriteEffects.None, GameConstants.LayerDepthDebug);
+            spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Top, thickness, rect.Height), null, color, 0f, Vector2.Zero, SpriteEffects.None, GameConstants.LayerDepthDebug);
+            spriteBatch.Draw(_pixel, new Rectangle(rect.Right - thickness, rect.Top, thickness, rect.Height), null, color, 0f, Vector2.Zero, SpriteEffects.None, GameConstants.LayerDepthDebug);
         }
     }
 }

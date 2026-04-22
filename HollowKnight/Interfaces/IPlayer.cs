@@ -7,7 +7,7 @@ namespace HollowKnight.Interfaces
     public interface IPlayer : HollowKnight.Collision.ICollidable
     {
         void Update(GameTime gameTime);
-        void Draw(SpriteBatch spriteBatch);
+        void Draw(SpriteBatch spriteBatch, float layerDepth = 0f);
         void MoveRight();
         void MoveLeft();
         void MoveUp();
