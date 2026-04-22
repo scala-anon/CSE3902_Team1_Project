@@ -6,20 +6,13 @@ using Microsoft.Xna.Framework;
 
 namespace HollowKnight.Environment
 {
-    public class BreakableWall : SizedEnvironmentObject, IInteractable, IBreakable
+    public class BreakableWall : BreakableEnvironmentObject
     {
         private readonly int variant;
-        private int _hitCount = 0;
-        private bool _broken = false;
-        private long _lastHitTime = 0;
-        private const int HitsToBreak = 3;
-        private const long HitCooldownMs = 500;
 
         public override string Label => $"BreakableWall_{variant}";
-        public override bool IsActive => !_broken;
 
-        public int Health => HitsToBreak - _hitCount;
-        public InteractionType InteractionType => InteractionType.SwordHit;
+        public override InteractionType InteractionType => InteractionType.SwordHit;
 
         public BreakableWall(int variant, Vector2 position, int hitWidth, int hitHeight, int hitOffsetY = 0)
         {
@@ -32,15 +25,7 @@ namespace HollowKnight.Environment
             sprite = SpriteFactory.Instance.CreateWallSprite(variant, position);
         }
 
-        public void Break()
-        {
-            if (_broken) return;
-            _broken = true;
-            sprite = SpriteFactory.Instance.CreateBrokenWallSprite(variant, position);
-            DebugLogger.LogObject($"BreakableWall broken: {Label}");
-        }
-
-        public Rectangle[] GetInteractionBounds()
+        public override Rectangle[] GetInteractionBounds()
         {
             int expand = CollisionConstants.BreakableWallInteractionExpand;
             Rectangle b = GetBounds()[0];
@@ -50,18 +35,18 @@ namespace HollowKnight.Environment
             };
         }
 
-        public bool IsInteractable(TheKnight knight) => !_broken;
+        public override bool IsInteractable(TheKnight knight) => !_broken;
 
-        public void OnInteract(TheKnight knight)
+        protected override void ApplyBrokenSprite()
         {
-            if (_broken) return;
-            long now = System.Environment.TickCount64;
-            if (now - _lastHitTime < HitCooldownMs) return;
-            _lastHitTime = now;
-            _hitCount++;
-            DebugLogger.LogObject($"BreakableWall hit: {Label} ({_hitCount}/{HitsToBreak})");
-            if (_hitCount >= HitsToBreak)
-                Break();
+            sprite = SpriteFactory.Instance.CreateBrokenWallSprite(variant, position);
+            DebugLogger.LogObject($"BreakableWall broken: {Label}");
+        }
+
+        public override void OnInteract(TheKnight knight)
+        {
+            DebugLogger.LogObject($"BreakableWall hit: {Label} ({_hitCount + 1}/{CollisionConstants.BreakableHitsToBreak})");
+            base.OnInteract(knight);
         }
     }
 }

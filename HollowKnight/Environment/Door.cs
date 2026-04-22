@@ -8,19 +8,11 @@ namespace HollowKnight.Environment
 {
     public enum DoorState { Full, Half, Broken }
 
-    public class Door : SizedEnvironmentObject, IInteractable, IBreakable
+    public class Door : BreakableEnvironmentObject
     {
-        private int _hitCount = 0;
-        private bool _broken = false;
-        private long _lastHitTime = 0;
-        private const int HitsToBreak = 3;
-        private const long HitCooldownMs = 500;
-
         public override string Label => "Door";
-        public override bool IsActive => !_broken;
 
-        public int Health => HitsToBreak - _hitCount;
-        public InteractionType InteractionType => InteractionType.SwordHit;
+        public override InteractionType InteractionType => InteractionType.SwordHit;
 
         public Door(Vector2 position, int hitWidth, int hitHeight, int hitOffsetY = 0)
         {
@@ -32,16 +24,7 @@ namespace HollowKnight.Environment
             sprite = SpriteFactory.Instance.CreateDoorSprite(position);
         }
 
-        public void Break()
-        {
-            if (_broken) return;
-            _broken = true;
-            // TODO: swap to broken door sprite once art asset exists; Door_1 used as placeholder
-            sprite = SpriteFactory.Instance.CreateDoorHitSprite(position);
-            DebugLogger.LogObject($"Door broken: {Label}");
-        }
-
-        public Rectangle[] GetInteractionBounds()
+        public override Rectangle[] GetInteractionBounds()
         {
             int expand = CollisionConstants.BreakableWallInteractionExpand;
             Rectangle b = GetBounds()[0];
@@ -51,18 +34,19 @@ namespace HollowKnight.Environment
             };
         }
 
-        public bool IsInteractable(TheKnight knight) => !_broken;
+        public override bool IsInteractable(TheKnight knight) => !_broken;
 
-        public void OnInteract(TheKnight knight)
+        protected override void ApplyBrokenSprite()
         {
-            if (_broken) return;
-            long now = System.Environment.TickCount64;
-            if (now - _lastHitTime < HitCooldownMs) return;
-            _lastHitTime = now;
-            _hitCount++;
-            DebugLogger.LogObject($"Door hit: {Label} ({_hitCount}/{HitsToBreak})");
-            if (_hitCount >= HitsToBreak)
-                Break();
+            // TODO: swap to broken door sprite once art asset exists; Door_1 used as placeholder
+            sprite = SpriteFactory.Instance.CreateDoorHitSprite(position);
+            DebugLogger.LogObject($"Door broken: {Label}");
+        }
+
+        public override void OnInteract(TheKnight knight)
+        {
+            DebugLogger.LogObject($"Door hit: {Label} ({_hitCount + 1}/{CollisionConstants.BreakableHitsToBreak})");
+            base.OnInteract(knight);
         }
     }
 }
