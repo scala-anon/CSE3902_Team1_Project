@@ -80,6 +80,28 @@ namespace HollowKnight.Levels
                 ["Village_1"] = pos => new Village(1, pos, 243, 507),
                 ["Village_2"] = pos => new Village(2, pos, 262, 511),
                 ["Village_3"] = pos => new Village(3, pos, 161, 520),
+
+                //Todo: fix the digits 
+                ["Right_Rock_1"] = pos => new Layer(1,pos),
+                ["Right_Rock_2"] = pos => new Layer(2,pos),
+                ["Right_Rock_3"] = pos => new Layer(3,pos),
+                ["Right_Rock_4"] = pos => new Layer(4,pos),
+                ["Right_Rock_5"] = pos => new Layer(5,pos),
+                ["Right_Rock_6"] = pos => new Layer(6,pos),
+                ["Right_Rock_7"] = pos => new Layer(7,pos),
+
+                ["Left_Rock_1"] = pos => new Layer(8,pos),
+                ["Left_Rock_2"] = pos => new Layer(9,pos),
+                ["Left_Rock_3"] = pos => new Layer(10,pos),
+                ["Left_Rock_4"] = pos => new Layer(11,pos),
+                ["Left_Rock_5"] = pos => new Layer(12,pos),
+                ["Left_Rock_6"] = pos => new Layer(13,pos),
+                ["Left_Rock_7"] = pos => new Layer(14,pos),
+                ["Left_Rock_8"] = pos => new Layer(15,pos),
+                ["Left_Rock_9"] = pos => new Layer(16,pos),
+                ["Left_Rock_10"] = pos => new Layer(17,pos),
+
+                
             };
 
             _enemyMap = new Dictionary<string, Func<Vector2, IEnemy>>

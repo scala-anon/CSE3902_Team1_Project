@@ -19,6 +19,7 @@ namespace HollowKnight.Factories
         private Texture2D backgroundSpriteSheet;
         private Texture2D mantisLordSpriteSheet;
         private Texture2D mantisVillageSpriteSheet;
+        private Texture2D layersSpriteSheet;
 
         private SpriteFont defaultFont;
 
@@ -34,6 +35,8 @@ namespace HollowKnight.Factories
         private readonly Dictionary<string, Rectangle[]> plantAnimations;
 
         private readonly Dictionary<string, Rectangle> backgroundFrames;
+
+        private readonly Dictionary<string, Rectangle> layerFrames;
 
         private readonly Dictionary<string, Rectangle> mantisLordFrames;
         private readonly Dictionary<string, Rectangle[]> mantisLordAnimations;
@@ -61,6 +64,7 @@ namespace HollowKnight.Factories
             mantisLordFrames = new Dictionary<string, Rectangle>();
             mantisLordAnimations = new Dictionary<string, Rectangle[]>();
             mantisVillageFrames = new Dictionary<string, Rectangle>();
+            layerFrames = new Dictionary<string, Rectangle>();
         }
 
         public void LoadAllTextures(ContentManager content)
@@ -76,6 +80,7 @@ namespace HollowKnight.Factories
             TextureAtlas backgroundAtlas = TextureAtlas.FromFile(content, "sprites/background-atlas.xml");
             TextureAtlas mantisLordAtlas = TextureAtlas.FromFile(content, "sprites/mantisLords-atlas.xml");
             TextureAtlas mantisVillageAtlas = TextureAtlas.FromFile(content,"sprites/village-atlas.xml");
+            TextureAtlas layersAtlas = TextureAtlas.FromFile(content, "sprites/layers-atlas.xml");
             enemySpriteSheet = enemyAtlas.Texture;
             platformSpriteSheet = platformAtlas.Texture;
             tutorialPlatformSpriteSheet = tutorialPlatformAtlas.Texture;
@@ -83,6 +88,7 @@ namespace HollowKnight.Factories
             backgroundSpriteSheet = backgroundAtlas.Texture;
             mantisLordSpriteSheet = mantisLordAtlas.Texture;
             mantisVillageSpriteSheet = mantisVillageAtlas.Texture;
+            layersSpriteSheet = layersAtlas.Texture;
             // Knight movement frames
             knightSingleFrames.Add("Damaged", knightAtlas.GetRegion("Damaged").SourceRectangle);
             
@@ -200,6 +206,18 @@ namespace HollowKnight.Factories
             {
                 string key = $"Village_{i}";
                 mantisVillageFrames.Add(key, mantisVillageAtlas.GetRegion(key).SourceRectangle);
+            }
+
+            for (int i = 1; i <= 7; i++)
+            {
+                string key = $"Right_Rock_{i}";
+                layerFrames.Add(key, layersAtlas.GetRegion(key).SourceRectangle);
+            }
+
+            for (int i = 1; i <= 10; i++)
+            {
+                string key = $"Left_Rock_{i}";
+                layerFrames.Add(key, layersAtlas.GetRegion(key).SourceRectangle);
             }
         }
 
@@ -582,6 +600,34 @@ namespace HollowKnight.Factories
                 _ => "Village_1"
             };
             return new StaticSprite(mantisVillageSpriteSheet, mantisVillageFrames[key], position, 1.0f);
+        }
+
+        public ISprite CreateLayerSprite(int variant, Vector2 position)
+        {
+            // TODO: Fix constants
+            string key = variant switch
+            {
+                1 => "Right_Rock_1",
+                2 => "Right_Rock_2",
+                3 => "Right_Rock_3",
+                4 => "Right_Rock_4",
+                5 => "Right_Rock_5",
+                6 => "Right_Rock_6",
+                7 => "Right_Rock_7",
+                8 => "Left_Rock_1",
+                9 => "Left_Rock_2",
+                10 => "Left_Rock_3",
+                11 => "Left_Rock_4",
+                12 => "Left_Rock_5",
+                13 => "Left_Rock_6",
+                14 => "Left_Rock_7",
+                15 => "Left_Rock_8",
+                16 => "Left_Rock_9",
+                17 => "Left_Rock_10",
+                _ => "Right_Rock_1" 
+
+            };
+            return new StaticSprite(layersSpriteSheet, layerFrames[key], position, 2.0f, .75f,Color.White);
         }
     }
 }
