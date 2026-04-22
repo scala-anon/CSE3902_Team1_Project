@@ -87,7 +87,7 @@ namespace HollowKnight.Levels
             Vector2 cameraPosition = new Vector2();
             cameraPosition.X = knightPosition.X - 100;
             cameraPosition.Y = knightPosition.Y;
-            _camera.Follow(cameraPosition);
+            _camera.SnapTo(cameraPosition);
         }
 
         public void JumpToRoomIndex(int roomIndex)
@@ -105,7 +105,7 @@ namespace HollowKnight.Levels
             Vector2 cameraPosition = new Vector2();
             cameraPosition.X = knightPosition.X - 100;
             cameraPosition.Y = knightPosition.Y;
-            _camera.Follow(cameraPosition);
+            _camera.SnapTo(cameraPosition);
         }
 
         private void HandleAutomaticRoomSwitch()

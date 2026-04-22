@@ -41,17 +41,19 @@ namespace HollowKnight
             return Matrix.CreateTranslation(-position.X, -position.Y,0);
         }
 
+        private Vector2 ComputeClampedTarget(Vector2 target)
+        {
+            float x = target.X - _screenWidth / 2f;
+            float y = target.Y - _screenHeight / 2f - CameraConstants.yAxisCameraRaise;
+            x = MathHelper.Clamp(x, 0, _levelWidth - _screenWidth);
+            y = MathHelper.Clamp(y, 0, _levelHeight - _screenHeight);
+            return new Vector2(x, y);
+        }
+
         public void Follow(Vector2 target)
         {
-            // puts target at center of screen
-            float x = target.X - _screenWidth /2f;
-            float y = target.Y - _screenHeight /2f - CameraConstants.yAxisCameraRaise;
-
-            // makes sure that the range for the camera is valid
-            x = MathHelper.Clamp(x,0,_levelWidth - _screenWidth);
-            y = MathHelper.Clamp(y,0, _levelHeight - _screenHeight);
-
-            position = new Vector2(x,y);
+            Vector2 desired = ComputeClampedTarget(target);
+            position = Vector2.Lerp(position, desired, CameraConstants.cameraLerpFactor);
         }
 
         public void SetBounds(int levelWidth, int levelHeight)
@@ -62,7 +64,7 @@ namespace HollowKnight
 
         public void SnapTo(Vector2 target)
         {
-            Follow(target);
+            position = ComputeClampedTarget(target);
         }
 
         public bool Contains(Vector2 worldPos)
@@ -78,12 +80,10 @@ namespace HollowKnight
         /// </summary>s
         public void SetTempBounds(Vector2 _position)
         {
-            float y = _position.Y - _screenHeight /2f - CameraConstants.yAxisCameraRaise;
-            float x = position.X;
-
-            y = MathHelper.Clamp(y, 0, _levelHeight - _screenHeight);
-
-            position = new Vector2(x,y);
+            float desiredY = _position.Y - _screenHeight / 2f - CameraConstants.yAxisCameraRaise;
+            desiredY = MathHelper.Clamp(desiredY, 0, _levelHeight - _screenHeight);
+            float newY = MathHelper.Lerp(position.Y, desiredY, CameraConstants.cameraLerpFactor);
+            position = new Vector2(position.X, newY);
         }
     }
 }
