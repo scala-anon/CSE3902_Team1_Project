@@ -16,23 +16,39 @@ public partial class Game1
 
     private void DrawWorld()
     {
-        // Layer 1: Backgrounds (behind everything, no interaction)
-        _spriteBatch.Begin(
-                samplerState: SamplerState.PointClamp,
-                transformMatrix: _camera.GetTransform());
-        DrawBackgrounds();
-        _spriteBatch.End();
+        // // Layer 1: Backgrounds (behind everything, no interaction)
+        // _spriteBatch.Begin(
+        //         samplerState: SamplerState.PointClamp,
+        //         transformMatrix: _camera.GetTransform());
+        // DrawBackgrounds();
+        // _spriteBatch.End();
 
-        // Layer 2: Platforms, enemies, knight, projectiles, items
+        // // Layer 2: Platforms, enemies, knight, projectiles, items
+        // _spriteBatch.Begin(
+        //         samplerState: SamplerState.PointClamp,
+        //         transformMatrix: _camera.GetTransform());
+        // DrawPlatforms();
+        // DrawEnemies();
+        // DrawProjectiles();
+        // DrawItems();
+        // DrawKnight();
+        // DrawDebugOverlay();
+        // _spriteBatch.End();
+        
+
         _spriteBatch.Begin(
-                samplerState: SamplerState.PointClamp,
-                transformMatrix: _camera.GetTransform());
-        DrawPlatforms();
-        DrawEnemies();
-        DrawProjectiles();
-        DrawItems();
-        DrawKnight();
-        DrawDebugOverlay();
+            sortMode: SpriteSortMode.FrontToBack,
+            samplerState: SamplerState.PointClamp,
+            transformMatrix: _camera.GetTransform());
+
+        DrawBackgrounds();  // 0.0f
+        DrawPlatforms();    // 0.2f
+        DrawItems();        // 0.4f
+        DrawEnemies();      // 0.6f
+        DrawProjectiles();  // 0.7f
+        DrawKnight();       // 0.8f
+        DrawDebugOverlay(); // 1.0f
+
         _spriteBatch.End();
     }
 

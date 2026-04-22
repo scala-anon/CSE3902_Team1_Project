@@ -27,5 +27,19 @@
         <Region name="Village_1" x="4352" y="1496" width="243" height="507" />
         <Region name="Village_2" x="4717" y="1509" width="262" height="511" />
         <Region name="Village_3" x="5378" y="1537" width="161" height="520" />
+        
+        <Region name="Spike_1" x="5432" y="426" width="74" height="194" />
+        <Region name="Spike_2" x="5607" y="434" width="73" height="194" />
+
+        <Region name="Cage_1" x="5697" y="1602" width="182" height="409" />
+        <Region name="Cage_2" x="6004" y="1606" width="182" height="409" />
+
+        <Region name="Pole_1" x="5828" y="2131" width="69" height="477" />
+        <Region name="Pole_2" x="6081" y="2133" width="69" height="477" />
+
+        <Region name="Floor_Spike_1" x="5413" y="165" width="162" height="103" />
+        <Region name="Floor_Spike_2" x="5644" y="162" width="162" height="103" />
+        <Region name="Floor_Spike_3" x="5858" y="164" width="162" height="103" />
+        <Region name="Floor_Spike_4" x="6066" y="175" width="162" height="103" />
     </Regions>
 </TextureAtlas>

@@ -91,4 +91,24 @@
     <ObjectName>Brick_1</ObjectName>
     <Location>3380 5600</Location>
 </Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Village_1</ObjectName>
+    <Location>4000 5300</Location>
+</Item>
+
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Village_2</ObjectName>
+    <Location>3300 5300</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Village_3</ObjectName>
+    <Location>5000 5300</Location>
+</Item>
+
 </Level>

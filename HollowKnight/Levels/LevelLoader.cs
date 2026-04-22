@@ -13,6 +13,7 @@ namespace HollowKnight.Levels
     {
         public List<IEnemy> Enemies        { get; } = new();
         public List<IObject> Backgrounds   { get; } = new();
+        public List<IObject> Foregrounds    {get;} = new();
         public List<IObject> Platforms     { get; } = new();
         // public List<Rectangle> Transitions { get; } = new();
 
@@ -81,7 +82,7 @@ namespace HollowKnight.Levels
                 ["Village_2"] = pos => new Village(2, pos, 262, 511),
                 ["Village_3"] = pos => new Village(3, pos, 161, 520),
 
-                //Todo: fix the digits 
+                // TODO: Figure out which rocks need to stay in background/foreground 
                 ["Right_Rock_1"] = pos => new Layer(1,pos),
                 ["Right_Rock_2"] = pos => new Layer(2,pos),
                 ["Right_Rock_3"] = pos => new Layer(3,pos),
@@ -204,6 +205,12 @@ namespace HollowKnight.Levels
         private static readonly HashSet<string> BackgroundNames = new()
         {
             "Background_1", "Background_2"
+        };
+
+        // TODO: Add the rocks that need to be inside the foreground!
+        private static readonly HashSet<string> foregroundNames = new()
+        {
+            
         };
 
         private void SpawnPlatform(string name, Vector2 position)
