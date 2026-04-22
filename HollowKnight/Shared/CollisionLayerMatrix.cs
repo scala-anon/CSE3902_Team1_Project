@@ -13,19 +13,27 @@ namespace HollowKnight.Shared
         private static readonly Dictionary<CollisionLayer, CollisionLayer> _matrix = new Dictionary<CollisionLayer, CollisionLayer>
         {
             [CollisionLayer.Player]           = CollisionLayer.Enemy | CollisionLayer.Hazard | CollisionLayer.Terrain
-                                              | CollisionLayer.Interactable | CollisionLayer.EnemyProjectile | CollisionLayer.Pickup,
-            [CollisionLayer.PlayerAttack]     = CollisionLayer.Enemy | CollisionLayer.Interactable,
+                                              | CollisionLayer.Interactable | CollisionLayer.EnemyProjectile | CollisionLayer.Pickup
+                                              | CollisionLayer.BreakableTerrain,
+            [CollisionLayer.PlayerAttack]     = CollisionLayer.Enemy | CollisionLayer.Interactable
+                                              | CollisionLayer.BreakableTerrain,
             [CollisionLayer.Enemy]            = CollisionLayer.Player | CollisionLayer.Terrain | CollisionLayer.Hazard
-                                              | CollisionLayer.PlayerProjectile | CollisionLayer.PlayerAttack,
+                                              | CollisionLayer.PlayerProjectile | CollisionLayer.PlayerAttack
+                                              | CollisionLayer.BreakableTerrain,
             [CollisionLayer.Hazard]           = CollisionLayer.Player | CollisionLayer.Enemy
                                               | CollisionLayer.PlayerProjectile | CollisionLayer.EnemyProjectile,
             [CollisionLayer.Terrain]          = CollisionLayer.Player | CollisionLayer.Enemy
                                               | CollisionLayer.PlayerProjectile | CollisionLayer.EnemyProjectile,
             [CollisionLayer.Interactable]     = CollisionLayer.Player | CollisionLayer.PlayerAttack,
-            [CollisionLayer.PlayerProjectile] = CollisionLayer.Enemy | CollisionLayer.Terrain | CollisionLayer.Hazard,
-            [CollisionLayer.EnemyProjectile]  = CollisionLayer.Player | CollisionLayer.Terrain | CollisionLayer.Hazard,
+            [CollisionLayer.PlayerProjectile] = CollisionLayer.Enemy | CollisionLayer.Terrain | CollisionLayer.Hazard
+                                              | CollisionLayer.BreakableTerrain,
+            [CollisionLayer.EnemyProjectile]  = CollisionLayer.Player | CollisionLayer.Terrain | CollisionLayer.Hazard
+                                              | CollisionLayer.BreakableTerrain,
             [CollisionLayer.Pickup]           = CollisionLayer.Player,
             [CollisionLayer.None]             = CollisionLayer.None,
+            [CollisionLayer.BreakableTerrain] = CollisionLayer.Player | CollisionLayer.Enemy
+                                              | CollisionLayer.PlayerProjectile | CollisionLayer.EnemyProjectile
+                                              | CollisionLayer.PlayerAttack,
         };
 
         public static CollisionLayer GetLayer(ICollidable obj)
@@ -38,6 +46,11 @@ namespace HollowKnight.Shared
                 case TheKnight _:    return CollisionLayer.Player;
                 case SwordHitbox _:  return CollisionLayer.PlayerAttack;
                 case Spike _:        return CollisionLayer.Hazard;
+                // IBreakable must come before IInteractable: BreakableWall and Door
+                // implement both, but route to BreakableTerrain so the
+                // PlayerAttack<->BreakableTerrain pairing fires via the platforms loop
+                // rather than the sword-vs-interactable loop (prevents double-hit).
+                case IBreakable _:   return CollisionLayer.BreakableTerrain;
                 case IInteractable _: return CollisionLayer.Interactable;
                 case IEnemy _:       return CollisionLayer.Enemy;
                 case Spirit _:       return CollisionLayer.Pickup;

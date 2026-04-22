@@ -54,9 +54,15 @@ namespace HollowKnight.Levels
                 ["Wall_1"]             = pos => new Wall(1, pos, 80, 200),
                 ["Wall_2"]             = pos => new Wall(2, pos, 80, 111),
                 ["Wall_3"]              = pos => new Wall(3,pos,49,111),
-                ["Wall_4"]              = pos => new Wall(4,pos,142,246),
+                ["Wall_4"]              = pos => new BreakableWall(4,pos,142,246),
                 ["Wall_5"]              = pos => new Wall(5,pos, 175,305),
-                ["Door_0"]             = pos => new Door(pos, 60, 150),
+                ["BreakableWall_0"]    = pos => new BreakableWall(0, pos, 80, 200),
+                ["BreakableWall_1"]    = pos => new BreakableWall(1, pos, 80, 200),
+                ["BreakableWall_2"]    = pos => new BreakableWall(2, pos, 80, 111),
+                ["BreakableWall_3"]    = pos => new BreakableWall(3, pos, 49, 111),
+                ["BreakableWall_4"]    = pos => new BreakableWall(4, pos, 142, 246),
+                ["BreakableWall_5"]    = pos => new BreakableWall(5, pos, 175, 305),
+                ["Door_0"]             = pos => new Door(pos, 87, 236),
                 ["Brick_1"]            = pos => new Brick(1,pos,272,62),
                 ["Brick_2"] = pos => new Brick(2, pos, 122, 39),
                 ["Brick_3"] = pos => new Brick(3, pos, 274, 132),
@@ -115,6 +121,7 @@ namespace HollowKnight.Levels
             Enemies.Clear();
             Backgrounds.Clear();
             Platforms.Clear();
+            Interactables.Clear();
             Transitions.Clear();
             KnightSpawn = Vector2.Zero;
             BossFight = null;
@@ -198,7 +205,7 @@ namespace HollowKnight.Levels
             IObject obj = create(position);
             if (BackgroundNames.Contains(name))
                 Backgrounds.Add(obj);
-            else if (obj is IInteractable interactable)
+            else if (obj is IInteractable interactable && obj is not IBreakable)
                 Interactables.Add(interactable);
             else
                 Platforms.Add(obj);

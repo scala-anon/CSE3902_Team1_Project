@@ -82,5 +82,12 @@ namespace HollowKnight.Shared
         public const int BenchInteractionWidth = 158; //prev286
         public const int BenchInteractionHeight = 92; //prev132
 
+        // Breakable Wall Interaction Bounds
+        public const int BreakableWallInteractionExpand = 10;
+
+        // Breakable Environment Objects (BreakableWall, Door)
+        public const int BreakableHitsToBreak = 3;
+        public const double BreakableHitCooldownSeconds = 0.5; // was 500ms wall-clock
+
     }
 }

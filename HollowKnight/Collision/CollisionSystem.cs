@@ -107,6 +107,23 @@ namespace HollowKnight.Collision
                     _handler.HandleCollision(swordHitbox, enemy, side);
                 }
 
+                // Sword vs BreakableTerrain: process IBreakable objects here via the
+                // PlayerAttack<->BreakableTerrain matrix pairing so they are handled in
+                // a single canonical place (prevents double-hit if they also appear in interactables).
+                foreach (IObject obj in platforms)
+                {
+                    if (obj == null || !obj.IsActive) continue;
+                    if (obj is not IBreakable) continue;
+                    if (!(obj is IInteractable breakableInteractable)) continue;
+                    if (!CollisionLayerMatrix.ShouldCollide(swordHitbox, obj)) continue;
+                    CollisionSide side = CollisionDetector.Detect(swordHitbox, obj);
+                    if (side != CollisionSide.None && breakableInteractable.IsInteractable(_currentKnight))
+                    {
+                        DebugLogger.LogInteraction(obj.GetType().Name, "SwordHit-Breakable", "platforms");
+                        breakableInteractable.OnInteract(_currentKnight);
+                    }
+                }
+
                 foreach (IInteractable interactable in interactables)
                 {
                     if (interactable == null ||
@@ -115,6 +132,11 @@ namespace HollowKnight.Collision
                     {
                         continue;
                     }
+
+                    // IBreakable objects are processed via the PlayerAttack<->BreakableTerrain
+                    // layer pairing in the platforms loop above. Skipping here prevents a single
+                    // sword swing from decrementing _hitCount twice.
+                    if (interactable is IBreakable) continue;
 
                     if (!CollisionLayerMatrix.ShouldCollide(swordHitbox, interactable)) continue;
                     CollisionSide side = CollisionDetector.Detect(swordHitbox, interactable);

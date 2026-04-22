@@ -13,5 +13,6 @@ namespace HollowKnight.Shared
         PlayerProjectile = 1 << 6,
         EnemyProjectile  = 1 << 7,
         Pickup           = 1 << 8,
+        BreakableTerrain = 1 << 9,
     }
 }
