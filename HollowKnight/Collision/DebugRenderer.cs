@@ -42,23 +42,13 @@ namespace HollowKnight.Collision
         {
             if(!hitboxEnabled || _font ==null) return;
             Rectangle bounds = obj.GetBounds()[0];
-            spriteBatch.DrawString(_font, label, new Vector2(bounds.Left, bounds.Top - CollisionConstants.DebugTextOffsetY), Color.White);
+            spriteBatch.DrawString(_font, label, new Vector2(bounds.Left, bounds.Top - CollisionConstants.DebugTextOffsetY), color, 0f, Vector2.Zero, 1f, SpriteEffects.None, GameConstants.LayerDepthDebug);
         }
 
         public static void DrawText(SpriteBatch spriteBatch, string text, Vector2 position, Color color)
         {
             if (!hitboxEnabled || _font == null) return;
-            spriteBatch.DrawString(_font, text, position, color);
-        }
-
-        public static void DrawOverlayText(SpriteBatch spriteBatch, string text, Vector2 position, Color color, float scale = 1f)
-        {
-            if (_font == null) return;
-            Vector2 size = _font.MeasureString(text) * scale;
-            Vector2 centered = new Vector2(
-                (spriteBatch.GraphicsDevice.Viewport.Width - size.X) / 2,
-                (spriteBatch.GraphicsDevice.Viewport.Height - size.Y) / 3);
-            spriteBatch.DrawString(_font, text, centered, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+            spriteBatch.DrawString(_font, text, position, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, GameConstants.LayerDepthDebug);
         }
 
 
