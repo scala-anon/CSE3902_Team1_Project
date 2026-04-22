@@ -18,7 +18,6 @@ namespace HollowKnight;
 
 public partial class Game1
 {
-    private Camera camera;
     private void InitializeRendering()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -96,21 +95,15 @@ public partial class Game1
         int screenWidth = _graphics.PreferredBackBufferWidth;
         int screenHeight = _graphics.PreferredBackBufferHeight;
 
-        _camera = new Camera(
-            screenWidth,
-            screenHeight,
-            GameConstants.DefaultLevelWidth,
-            GameConstants.DefaultLevelHeight);
+        Camera.Instance.Initialize(screenWidth, screenHeight);
+        
 
         _roomManager = new RoomManager(
             _knight,
-            _camera,
             screenWidth,
             screenHeight,
             GameConstants.DefaultLevelWidth,
             GameConstants.DefaultLevelHeight);
-
-            camera = _camera;
     }
 
     private void InitializeControllers()
@@ -122,7 +115,7 @@ public partial class Game1
         KeyboardBindings.BindGameplay(keyboard, _knight, this, _roomManager);
 
         _controllerList.Add(keyboard);
-        _controllerList.Add(new MouseController(screenWidth, _roomManager));
+        _controllerList.Add(new MouseController(this, screenWidth, _roomManager));
     }
 
     private void LoadObstacles()
@@ -145,6 +138,7 @@ public partial class Game1
     {
     DebugLogger.LogRoomTransition($"InitializeLevel: loading room 1 ({Room1})");
     _level = new LevelLoader();
+    _level.SetGame(this);
     _currentRoom = 1;
     _level.Load(rooms[_currentRoom - 1]);
     LoadObstacles();
@@ -165,6 +159,7 @@ public void TransitionToRoom(int roomNumber)
     DebugLogger.LogRoomTransition($"TransitionToRoom: room {previousRoom} -> room {roomNumber} ({targetFile})");
 
     _level = new LevelLoader();
+    _level.SetGame(this);
     _level.Load(targetFile);
     _currentRoom = roomNumber;
 

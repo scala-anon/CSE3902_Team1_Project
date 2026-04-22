@@ -1,11 +1,15 @@
 using HollowKnight.Factories;
+using HollowKnight.Interfaces;
+using HollowKnight.Player;
+using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 
 namespace HollowKnight.Environment
 {
-    public class Bench : BaseEnvironmentObject
+    public class Bench : BaseEnvironmentObject, IInteractable
     {
         public override string Label => "Bench";
+        public InteractionType InteractionType => InteractionType.ButtonPress;
 
         public Bench(Vector2 pos)
         {
@@ -16,8 +20,31 @@ namespace HollowKnight.Environment
 
         public override Rectangle[] GetBounds()
         {
-            hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, 100, 32);
+            hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, CollisionConstants.BenchHitboxWidth, CollisionConstants.BenchHitboxHeight);
             return hitBoxes;
+        }
+
+        public Rectangle[] GetInteractionBounds()
+        {
+            return new[]
+            {
+                new Rectangle(
+                    (int)position.X + CollisionConstants.BenchInteractionMarginX,
+                    (int)position.Y + CollisionConstants.BenchInteractionMarginY,
+                    CollisionConstants.BenchInteractionWidth,
+                    CollisionConstants.BenchInteractionHeight)
+            };
+        }
+
+        public bool IsInteractable(TheKnight knight)
+        {
+            return GetInteractionBounds()[0].Intersects(knight.GetBounds()[0]);
+        }
+
+        public void OnInteract(TheKnight knight)
+        {
+            DebugLogger.LogObject("Bench interacted with.");
+            // Add your bench interaction behavior here.
         }
     }
 }

@@ -48,6 +48,16 @@ public partial class Game1
         return _gameState is PlayingState;
     }
 
+    public void StartMantisFight()
+    {
+        _level.BossFight?.Activate();
+    }
+
+    public bool IsInventoryOpen()
+    {
+        return _gameState is InventoryState;
+    }
+
     public void ResetGame()
     {
         _restartRequested = true;

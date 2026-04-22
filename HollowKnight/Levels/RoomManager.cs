@@ -1,6 +1,8 @@
 using HollowKnight.Player;
+using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 using System;
+using System.Diagnostics;
 
 namespace HollowKnight.Levels
 {
@@ -18,14 +20,13 @@ namespace HollowKnight.Levels
 
         public RoomManager(
             TheKnight knight,
-            Camera camera,
             int screenWidth,
             int screenHeight,
             int levelWidth,
             int levelHeight)
         {
             _knight = knight;
-            _camera = camera;
+            _camera = Camera.Instance;
             _screenWidth = screenWidth;
             _levelWidth = Math.Max(screenWidth, levelWidth);
             _roomCount = Math.Max(1, (int)Math.Ceiling(_levelWidth / (double)_screenWidth));
@@ -37,7 +38,37 @@ namespace HollowKnight.Levels
         public void Update(GameTime gameTime)
         {
             HandleAutomaticRoomSwitch();
-            _camera.Follow(_knight.GetPosition());
+            Vector2 knightPosition = _knight.GetPosition();
+            Vector2 cameraPosition = Camera.Instance.Position;
+
+            float xDifference = _knight.position.X - (Camera.Instance.Position.X + CameraConstants.cameraCenterOffset);
+
+            if (_knight.Facing == Shared.Direction.Right && xDifference >= CameraConstants.cameraFollowKnightMax)
+            {
+                cameraPosition.X = knightPosition.X - CameraConstants.cameraFollowKnightMax;
+                cameraPosition.Y = knightPosition.Y;
+                _camera.Follow(cameraPosition);
+            
+
+            } else if (_knight.Facing == Shared.Direction.Left && xDifference <= CameraConstants.cameraFollowKnightMin)
+            {   
+                cameraPosition.X = knightPosition.X + CameraConstants.cameraKnightOffset;
+                cameraPosition.Y = knightPosition.Y;
+                _camera.Follow(cameraPosition);
+                
+            }
+            else if ((xDifference <= -CameraConstants.cameraFollowKnightMin) && (xDifference >= CameraConstants.cameraFollowKnightMin))
+            {
+                _camera.SetTempBounds(knightPosition);
+                
+            
+            }else
+            {
+                _camera.Follow(knightPosition);
+            }
+
+            
+            
         }
 
         public void SwitchRoomByOffset(int offset)
@@ -51,7 +82,12 @@ namespace HollowKnight.Levels
             _currentRoomIndex = targetRoomIndex;
             float roomLeft = _currentRoomIndex * _screenWidth;
             _knight.SetPosition(new Vector2(roomLeft + 100f, _knight.GetPosition().Y));
-            _camera.Follow(_knight.GetPosition());
+
+            Vector2 knightPosition = _knight.GetPosition();
+            Vector2 cameraPosition = new Vector2();
+            cameraPosition.X = knightPosition.X - 100;
+            cameraPosition.Y = knightPosition.Y;
+            _camera.Follow(cameraPosition);
         }
 
         public void JumpToRoomIndex(int roomIndex)
@@ -64,7 +100,12 @@ namespace HollowKnight.Levels
             _currentRoomIndex = roomIndex;
             float roomLeft = _currentRoomIndex * _screenWidth;
             _knight.SetPosition(new Vector2(roomLeft + 100f, _knight.GetPosition().Y));
-            _camera.Follow(_knight.GetPosition());
+
+            Vector2 knightPosition = _knight.GetPosition();
+            Vector2 cameraPosition = new Vector2();
+            cameraPosition.X = knightPosition.X - 100;
+            cameraPosition.Y = knightPosition.Y;
+            _camera.Follow(cameraPosition);
         }
 
         private void HandleAutomaticRoomSwitch()

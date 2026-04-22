@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using HollowKnight.Interfaces;
 using HollowKnight.Audio;
+using HollowKnight.Shared;
 
 namespace HollowKnight;
 
@@ -60,10 +61,12 @@ internal void CheckTransitions()
         _collisionSystem.Update(
             _knight,
             _level.Platforms,
+            _level.Interactables,
             _level.Enemies,
             _items,
             _projectileManager,
-            _navigationGrid);
+            _navigationGrid
+        );
     }
 
     internal bool KnightIsDead() => _knight.IsDead();
@@ -74,6 +77,8 @@ internal void CheckTransitions()
         {
             enemy.Update(gameTime);
         }
+        // BossFightController must update AFTER enemies so state reads are fresh.
+        _level.BossFight?.Update(gameTime);
     }
 
     internal void UpdateKnightProjectiles(GameTime gameTime)
@@ -90,10 +95,47 @@ internal void CheckTransitions()
                 platform.Update(gameTime);
             }
         }
+
+        foreach (IInteractable interactable in _level.Interactables)
+        {
+            if (interactable != null)
+            {
+                interactable.Update(gameTime);
+            }
+        }
     }
 
     internal void UpdateProjectiles(GameTime gameTime)
     {
         _projectileManager.Update(gameTime);
     }
+
+
+    internal void TryInteract()
+{
+    Rectangle knightBounds = _knight.GetBounds()[0];
+
+    foreach (IInteractable interactable in _level.Interactables)
+    {
+        if (interactable == null ||
+            !interactable.IsActive ||
+            interactable.InteractionType != InteractionType.ButtonPress)
+        {
+            continue;
+        }
+
+        foreach (Rectangle rect in interactable.GetInteractionBounds())
+        {
+            if (!rect.Intersects(knightBounds))
+                continue;
+
+            if (interactable.IsInteractable(_knight))
+            {
+                DebugLogger.LogInteraction(interactable.GetType().Name, "ButtonPress", "Up/W");
+                interactable.OnInteract(_knight);
+                return;
+            }
+        }
+    }
+}
 }

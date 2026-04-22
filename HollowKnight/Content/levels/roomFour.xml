@@ -14,6 +14,12 @@
 </Item>
 
 <Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>MantisLord</ObjectName>
+    <Location>4900 5400</Location>
+</Item>
+
+<Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Brick_1</ObjectName>
     <Location>6500 5600</Location>
@@ -90,6 +96,18 @@
     <ObjectType>Platform</ObjectType>
     <ObjectName>Brick_1</ObjectName>
     <Location>3380 5600</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>MantisThrone_1</ObjectName>
+    <Location>4403 5000</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>MantisThrone_2</ObjectName>
+    <Location>4403 4900</Location>
 </Item>
 
 <Item><ObjectType>Platform</ObjectType><ObjectName>Pole_1</ObjectName><Location>5440 4246</Location></Item>

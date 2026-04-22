@@ -17,6 +17,7 @@ namespace HollowKnight.Shared
         public static readonly Color DebugColorTrigger = Color.Yellow;
         public static readonly Color DebugColorMidpoint = Color.Magenta;
         public static readonly Color DebugColorSword = Color.Cyan;
+        public static readonly Color DebugColorInteractable = Color.Violet;
 
         // Knight Hurtbox
         public const int KnightHurtboxShrink = 6;
@@ -59,13 +60,27 @@ namespace HollowKnight.Shared
         public const int SpikeCeilingSecondaryW = 115;
         public const int SpikeCeilingSecondaryH = 60;
 
+        // Crawlid Hitbox Dimensions
+        public const int CrawlidFeetWidthShrink = 10;
+        public const int CrawlidFeetHeight = 4;
+        public const int CrawlidEdgeProbeOffset = 4;
+        public const int CrawlidGroundProbeExtension = 1;
+
         // Vengeful Spirit Projectile Hitbox
         public const int VengefulSpiritLeadingHitboxWidth = 35;
         public const int VengefulSpiritNoseOffsetRight = 220;
         public const int VengefulSpiritNoseOffsetLeft = 0;
         public const int VengefulSpiritCollisionOffsetY = -47;
 
-        // Physics/Collision Thresholds
-        public const float GroundProbeExtension = 1;
+        // Bench Hitbox Dimensions (sprite is 95x46 at scale 2.0 = 190x92)
+        public const int BenchHitboxWidth = 190;
+        public const int BenchHitboxHeight = 92;
+
+        // Bench Interaction Bounds Margins
+        public const int BenchInteractionMarginX = 12; //prev 48
+        public const int BenchInteractionMarginY = 0; //prev 20
+        public const int BenchInteractionWidth = 158; //prev286
+        public const int BenchInteractionHeight = 92; //prev132
+
     }
 }

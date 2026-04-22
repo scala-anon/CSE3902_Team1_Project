@@ -44,8 +44,8 @@ namespace HollowKnight.Controllers
             //Dash - C
             keyboard.RegisterPressedCommand(Keys.C, new PlayerDashCommand(knight));
 
-            //SpellCasting - T 
-            keyboard.RegisterPressedCommand(Keys.T, new PlayerSpellCastCommand(knight));
+            // SpellCasting - F (Vengeful Spirit)
+            keyboard.RegisterPressedCommand(Keys.F, Gameplay(game, new PlayerSpellCastCommand(knight)));
 
             // Attack — Z + direction for slash variants
             keyboard.RegisterComboPressedCommand(Keys.Z, Keys.W, Gameplay(game, new PlayerUpSlashCommand(knight)));
@@ -54,20 +54,21 @@ namespace HollowKnight.Controllers
             keyboard.RegisterComboPressedCommand(Keys.Z, Keys.Down, Gameplay(game, new PlayerDownSlashCommand(knight)));
             keyboard.RegisterComboPressedCommand(Keys.Z, Gameplay(game, new PlayerSideSlashCommand(knight)));
 
+
             // Healing — hold X to heal
             keyboard.RegisterHeldCommand(Keys.X, Gameplay(game, new PlayerHealHoldCommand(knight)));
             keyboard.RegisterReleasedCommand(Keys.X, Gameplay(game, new PlayerHealCancelCommand(knight)));
 
             // Items
-            keyboard.RegisterPressedCommand(Keys.D1, Gameplay(game, new PlayerUseItemCommand(knight, 1)));
-            keyboard.RegisterPressedCommand(Keys.D2, Gameplay(game, new PlayerUseItemCommand(knight, 2)));
-            keyboard.RegisterPressedCommand(Keys.D3, Gameplay(game, new PlayerUseItemCommand(knight, 3)));
+            keyboard.RegisterPressedCommand(Keys.D1, new PlayerUseItemCommand(game, knight, 1));
+            keyboard.RegisterPressedCommand(Keys.D2, new PlayerUseItemCommand(game, knight, 2));
+            keyboard.RegisterPressedCommand(Keys.D3, new PlayerUseItemCommand(game, knight, 3));
 
             // Cycle Items
-            keyboard.RegisterPressedCommand(Keys.U, Gameplay(game, new CycleItemPreviousCommand()));
-            keyboard.RegisterPressedCommand(Keys.I, Gameplay(game, new CycleItemNextCommand()));
+            keyboard.RegisterPressedCommand(Keys.U, new CycleItemPreviousCommand());
+            keyboard.RegisterPressedCommand(Keys.I, new CycleItemNextCommand());
 
-            // Give Soul (debug) - Using Y because U is taken
+            // Give Soul (debug - automatically get max soul) - Y 
             keyboard.RegisterPressedCommand(Keys.Y, new PlayerGiveSoulCommand(knight));
 
             // GameState
@@ -81,7 +82,6 @@ namespace HollowKnight.Controllers
 
             // Damage (debug)
             keyboard.RegisterPressedCommand(Keys.E, Gameplay(game, new PlayerTakeDamageCommand(knight)));
-            keyboard.RegisterPressedCommand(Keys.T, Gameplay(game, new PlayerGainSoulCommand(knight, 11)));
 
             // Debug room switching
             keyboard.RegisterComboPressedCommand(Keys.Right, Keys.LeftControl, Gameplay(game, new SwitchRoomCommand(roomManager, 1)));
@@ -99,11 +99,15 @@ namespace HollowKnight.Controllers
             // Debug hotkeys (compile-time gated; eliminated when DEBUG_LOG_ENABLED != 1)
             if (GameConstants.DEBUG_LOG_ENABLED == 1)
             {
-                // Ctrl+D1 / Ctrl+D2 — direct room jump via Game1.TransitionToRoom
+                // Ctrl+D1..D4 — direct room jump via Game1.TransitionToRoom
                 keyboard.RegisterComboPressedCommand(Keys.D1, Keys.LeftControl,  Gameplay(game, new DebugJumpToRoomCommand(game, 1)));
                 keyboard.RegisterComboPressedCommand(Keys.D1, Keys.RightControl, Gameplay(game, new DebugJumpToRoomCommand(game, 1)));
                 keyboard.RegisterComboPressedCommand(Keys.D2, Keys.LeftControl,  Gameplay(game, new DebugJumpToRoomCommand(game, 2)));
                 keyboard.RegisterComboPressedCommand(Keys.D2, Keys.RightControl, Gameplay(game, new DebugJumpToRoomCommand(game, 2)));
+                keyboard.RegisterComboPressedCommand(Keys.D3, Keys.LeftControl,  Gameplay(game, new DebugJumpToRoomCommand(game, 3)));
+                keyboard.RegisterComboPressedCommand(Keys.D3, Keys.RightControl, Gameplay(game, new DebugJumpToRoomCommand(game, 3)));
+                keyboard.RegisterComboPressedCommand(Keys.D4, Keys.LeftControl,  Gameplay(game, new DebugJumpToRoomCommand(game, 4)));
+                keyboard.RegisterComboPressedCommand(Keys.D4, Keys.RightControl, Gameplay(game, new DebugJumpToRoomCommand(game, 4)));
 
                 // K — godmode toggle (NOT gameplay-gated, matches H/G pattern)
                 keyboard.RegisterPressedCommand(Keys.K, new ToggleGodmodeCommand());
@@ -111,6 +115,14 @@ namespace HollowKnight.Controllers
 
             // Audio
             keyboard.RegisterPressedCommand(Keys.M, new ToggleMuteCommand());
+
+            //Interactions
+            // Bench / interactive object button
+            keyboard.RegisterPressedCommand(Keys.Up, Gameplay(game, new PlayerInteractCommand(game)));
+            keyboard.RegisterPressedCommand(Keys.W, Gameplay(game, new PlayerInteractCommand(game)));
+
+            // Start Mantis Lord boss fight (debug / trigger key)
+            keyboard.RegisterPressedCommand(Keys.B, new StartMantisFightCommand(game));
 
             // Quit
             keyboard.RegisterPressedCommand(Keys.Q, new QuitCommand(game));

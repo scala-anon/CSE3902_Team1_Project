@@ -7,6 +7,7 @@ using HollowKnight.Player;
 using HollowKnight.Projectiles;
 using HollowKnight.Abilities;
 using HollowKnight.Pathfinding;
+using HollowKnight.Shared;
 using System;
 
 namespace HollowKnight.Graphics
@@ -29,7 +30,7 @@ namespace HollowKnight.Graphics
             List<Spirit> items,
             ProjectileManager projectileManager,
             NavigationGrid navigationGrid,
-            Camera camera,
+            List<IInteractable> interactables = null,
             List<TransitionZone> transitions = null)
         {
             // Navigation grid
@@ -44,7 +45,7 @@ namespace HollowKnight.Graphics
                     DrawRectangleOutline(spriteBatch, t.Bounds, Color.Cyan, 3);
                     if (DebugRenderer.hitboxEnabled)
                     {
-                        spriteBatch.Draw(_pixel, t.Bounds, Color.Cyan * 0.20f);
+                        spriteBatch.Draw(_pixel, t.Bounds, null, Color.Cyan * 0.20f, 0f, Vector2.Zero, SpriteEffects.None, GameConstants.LayerDepthDebug);
                         Vector2 labelPos = new Vector2(t.Bounds.Left + 4, t.Bounds.Top + 4);
                         DebugRenderer.DrawText(spriteBatch, "[Transition]", labelPos, Color.Cyan);
                     }
@@ -98,9 +99,10 @@ namespace HollowKnight.Graphics
             string hpText  = $"Health: {knight.GetHealth()}";
             string soulText = $"Soul: {knight.Soul}";
             string godmodeText = $"GODMODE: {(TheKnight.GodmodeEnabled ? "ON" : "OFF")}";
+            string cameraText = $"Camera Position: {Camera.Instance.Position:F2}";
 
             //hud for knight stats in debug mode
-            Vector2 hudBasePos = camera.Position + new Vector2(10, 10);
+            Vector2 hudBasePos = Camera.Instance.Position + new Vector2(10, 10);
             DebugRenderer.DrawText(spriteBatch, atkText, hudBasePos, Color.White);
             DebugRenderer.DrawText(spriteBatch, invText, hudBasePos + new Vector2(0, 20), Color.White);
             DebugRenderer.DrawText(spriteBatch, dashText, hudBasePos + new Vector2(0, 40), Color.White);
@@ -110,6 +112,7 @@ namespace HollowKnight.Graphics
             DebugRenderer.DrawText(spriteBatch, hpText,  hudBasePos + new Vector2(0, 120), Color.White);
             DebugRenderer.DrawText(spriteBatch, soulText, hudBasePos + new Vector2(0, 140), Color.White);
             DebugRenderer.DrawText(spriteBatch, godmodeText, hudBasePos + new Vector2(0, 160), Color.White);
+            DebugRenderer.DrawText(spriteBatch, cameraText, hudBasePos + new Vector2(0, 180), Color.White);
 
             // Sword hitbox debug
             SwordHitbox swordHitbox = knight.GetSwordHitbox();
@@ -132,6 +135,25 @@ namespace HollowKnight.Graphics
                 }
             }
 
+            // Interactable bounds debug
+            if (interactables != null)
+            {
+                foreach (IInteractable interactable in interactables)
+                {
+                    if (interactable != null && interactable.IsActive)
+                    {
+                        DebugRenderer.DrawInteractableBounds(spriteBatch, interactable.GetInteractionBounds(), DebugRenderer.ColorInteractable);
+                        
+                        // Draw label
+                        Rectangle[] bounds = interactable.GetInteractionBounds();
+                        if (bounds.Length > 0)
+                        {
+                            DebugRenderer.DrawText(spriteBatch, $"[{interactable.InteractionType}]", new Vector2(bounds[0].Left, bounds[0].Top - 20), DebugRenderer.ColorInteractable);
+                        }
+                    }
+                }
+            }
+
             // Enemy pathfinding debug
             foreach (IEnemy enemy in enemies)
             {
@@ -143,10 +165,10 @@ namespace HollowKnight.Graphics
         private void DrawRectangleOutline(SpriteBatch spriteBatch, Rectangle rect, Color color, int thickness = 2)
         {
             if (!DebugRenderer.hitboxEnabled) return;
-            spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Top, rect.Width, thickness), color);
-            spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Bottom - thickness, rect.Width, thickness), color);
-            spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Top, thickness, rect.Height), color);
-            spriteBatch.Draw(_pixel, new Rectangle(rect.Right - thickness, rect.Top, thickness, rect.Height), color);
+            spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Top, rect.Width, thickness), null, color, 0f, Vector2.Zero, SpriteEffects.None, GameConstants.LayerDepthDebug);
+            spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Bottom - thickness, rect.Width, thickness), null, color, 0f, Vector2.Zero, SpriteEffects.None, GameConstants.LayerDepthDebug);
+            spriteBatch.Draw(_pixel, new Rectangle(rect.Left, rect.Top, thickness, rect.Height), null, color, 0f, Vector2.Zero, SpriteEffects.None, GameConstants.LayerDepthDebug);
+            spriteBatch.Draw(_pixel, new Rectangle(rect.Right - thickness, rect.Top, thickness, rect.Height), null, color, 0f, Vector2.Zero, SpriteEffects.None, GameConstants.LayerDepthDebug);
         }
     }
 }

@@ -19,7 +19,8 @@ namespace HollowKnight.Interfaces
         /// Draw the sprite to the screen.
         /// Called once per render frame.
         /// </summary>
-        void Draw(SpriteBatch spriteBatch, SpriteEffects effects);
+        /// <param name="layerDepth">Depth in [0,1]; 0 = back, 1 = front. Used with SpriteSortMode.FrontToBack.</param>
+        void Draw(SpriteBatch spriteBatch, SpriteEffects effects, float layerDepth = 0f);
 
         /// <summary>
         /// Reset sprite to initial state (position, animation frame, etc.)
@@ -39,5 +40,11 @@ namespace HollowKnight.Interfaces
         Vector2 GetSize();
         int Width { get; }
         int Height { get; }
+
+        /// <summary>
+        /// True when a non-looping animation has played through all frames.
+        /// Always true for StaticSprite; always false for MovingAnimatedSprite.
+        /// </summary>
+        bool IsFinished { get; }
     }
 }

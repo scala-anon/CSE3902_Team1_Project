@@ -383,15 +383,15 @@ namespace HollowKnight.Factories
         }
         public ISprite CreateSpiritMovingSprite(Vector2 position)
         {
-            return new AnimatedSprite(spellsSpriteSheet, spiritAnimations["MovingSpirit"], position, 0.1, 2.0f);
+            return new AnimatedSprite(spellsSpriteSheet, spiritAnimations["MovingSpirit"], position, 0.1, 1.0f);
         }
         public ISprite CreateSpiritPulseSprite(Vector2 position)
         {
-            return new AnimatedSprite(spellsSpriteSheet, spiritAnimations["Pulse"], position, 0.1, 2.0f);
+            return new AnimatedSprite(spellsSpriteSheet, spiritAnimations["Pulse"], position, 0.1, 1.0f);
         }
         public ISprite CreateSpiritCollisionSprite(Vector2 position)
         {
-            return new AnimatedSprite(spellsSpriteSheet, spiritAnimations["Collision"], position, 0.1, 2.0f);
+            return new AnimatedSprite(spellsSpriteSheet, spiritAnimations["Collision"], position, 0.1, 1.0f);
         }
 
         public ISprite CreateTextSprite(string text, Vector2 position, Color color)
@@ -474,9 +474,13 @@ namespace HollowKnight.Factories
         {
             return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Throne_Gesture"], position, 0.1, 1.0f);
         }
+        public ISprite CreateThroneArrive(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Throne_Gesture"], position, 0.1, 1.0f, loop: false);
+        }
         public ISprite CreateThroneStand(Vector2 position)
         {
-            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Throne_Stand"], position, 0.1, 1.0f);
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Throne_Stand"], position, 0.1, 1.0f, loop: false);
         }
         public ISprite CreateMantisLook(Vector2 position)
         {
@@ -484,7 +488,7 @@ namespace HollowKnight.Factories
         }
         public ISprite CreateThroneLeave(Vector2 position)
         {
-            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Throne_Leave"], position, 0.1, 1.0f);
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Throne_Leave"], position, 0.1, 1.0f, loop: false);
         }
         public ISprite CreateThroneWounded(Vector2 position)
         {
@@ -492,11 +496,11 @@ namespace HollowKnight.Factories
         }
         public ISprite CreateThroneBow(Vector2 position)
         {
-            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Throne_Bow"], position, 0.1, 1.0f);
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Throne_Bow"], position, 0.1, 1.0f, loop: false);
         }
         public ISprite CreateWallArrive(Vector2 position)
         {
-            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Wall_Arrive"], position, 0.1, 1.0f);
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Wall_Arrive"], position, 0.1, 1.0f, loop: false);
         }
         public ISprite CreateWallReady(Vector2 position)
         {
@@ -504,59 +508,59 @@ namespace HollowKnight.Factories
         }
         public ISprite CreateMantisThrow(Vector2 position)
         {
-            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Throw"], position, 0.1, 1.0f);
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Throw"], position, 0.1, 1.0f, loop: false);
         }
         public ISprite CreateWallLeave(Vector2 position)
         {
-            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Wall_Leave"], position, 0.1, 1.0f);
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Wall_Leave"], position, 0.1, 1.0f, loop: false);
         }
         public ISprite CreateMantisDashArrive(Vector2 position)
         {
-            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Dash_Arrive"], position, 0.1, 1.0f);
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Dash_Arrive"], position, 0.1, 1.0f, loop: false);
         }
         public ISprite CreateMantisDashAnticipate(Vector2 position)
         {
-            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Dash_Anticipate"], position, 0.1, 1.0f);
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Dash_Anticipate"], position, 0.1, 1.0f, loop: false);
         }
         public ISprite CreateMantisDash(Vector2 position)
         {
-            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Dash"], position, 0.1, 1.0f);
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Dash"], position, 0.1, 1.0f, loop: false);
         }
         public ISprite CreateMantisDashRecover(Vector2 position)
         {
-            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Dash_Recover"], position, 0.1, 1.0f);
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Dash_Recover"], position, 0.1, 1.0f, loop: false);
         }
         public ISprite CreateMantisDashLeave(Vector2 position)
         {
-            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Dash_Leave"], position, 0.1, 1.0f);
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Dash_Leave"], position, 0.1, 1.0f, loop: false);
         }
         public ISprite CreateMantisDStabArrive(Vector2 position)
         {
-            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["DStab_Arrive"], position, 0.1, 1.0f);
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["DStab_Arrive"], position, 0.1, 1.0f, loop: false);
         }
         public ISprite CreateMantisDStab(Vector2 position)
         {
-            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["DStab"], position, 0.1, 1.0f);
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["DStab"], position, 0.1, 1.0f, loop: false);
         }
         public ISprite CreateMantisDStabLand(Vector2 position)
         {
-            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["DStab_Land"], position, 0.1, 1.0f);
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["DStab_Land"], position, 0.1, 1.0f, loop: false);
         }
         public ISprite CreateMantisDStabLeave(Vector2 position)
         {
-            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["DStab_Leave"], position, 0.1, 1.0f);
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["DStab_Leave"], position, 0.1, 1.0f, loop: false);
         }
         public ISprite CreateMantisDeath(Vector2 position)
         {
-            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Death"], position, 0.1, 1.0f);
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Death"], position, 0.1, 1.0f, loop: false);
         }
         public ISprite CreateMantisDeathLeaveOne(Vector2 position)
         {
-            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Death_Leave_One"], position, 0.1, 1.0f);
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Death_Leave_One"], position, 0.1, 1.0f, loop: false);
         }
         public ISprite CreateMantisDeathLeaveTwo(Vector2 position)
         {
-            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Death_Leave_Two"], position, 0.1, 1.0f);
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Death_Leave_Two"], position, 0.1, 1.0f, loop: false);
         }
         public ISprite CreateBrickSprite(int variant, Vector2 position)
         {
@@ -582,7 +586,7 @@ namespace HollowKnight.Factories
                 2 => "MantisThrone_2",
                 _ => "MantisThrone_1"
             };
-            return new StaticSprite(mantisVillageSpriteSheet, mantisVillageFrames[key], position, 1.0f);
+            return new StaticSprite(mantisVillageSpriteSheet, mantisVillageFrames[key], position, .75f);
         }
         public ISprite CreateFloorSprite(int variant, Vector2 position)
         {

@@ -15,11 +15,12 @@ namespace HollowKnight.Levels
         public List<IObject> Backgrounds   { get; } = new();
         public List<IObject> Foregrounds    {get;} = new();
         public List<IObject> Platforms     { get; } = new();
-        // public List<Rectangle> Transitions { get; } = new();
-
+        public List<IInteractable> Interactables { get; } = new();
         public List<TransitionZone> Transitions { get; } = new();
         public Vector2 KnightSpawn { get; private set; } = Vector2.Zero;
+        public BossFightController BossFight { get; private set; }
 
+        private Game1 _game;
         private readonly Dictionary<string, Func<Vector2, IObject>> _platformMap;
         private readonly Dictionary<string, Func<Vector2, IEnemy>>  _enemyMap;
         private readonly Dictionary<string, Action<string, Vector2>> _spawnMap;
@@ -114,9 +115,8 @@ namespace HollowKnight.Levels
 
             _enemyMap = new Dictionary<string, Func<Vector2, IEnemy>>
             {
-                ["Crawlid"]    = pos => new Crawlid(pos),
-                ["Vengefly"]   = pos => new Vengefly(pos),
-                ["MantisLord"] = pos => new MantisLord(pos),
+                ["Crawlid"]  = pos => new Crawlid(pos),
+                ["Vengefly"] = pos => new Vengefly(pos),
             };
 
             _spawnMap = new Dictionary<string, Action<string, Vector2>>
@@ -137,6 +137,8 @@ namespace HollowKnight.Levels
             };
         }
 
+        public void SetGame(Game1 game) { _game = game; }
+
         public void Load(string xmlFilePath)
         {
             // Clear all lists before loading new level
@@ -145,6 +147,7 @@ namespace HollowKnight.Levels
             Platforms.Clear();
             Transitions.Clear();
             KnightSpawn = Vector2.Zero;
+            BossFight = null;
 
             XDocument doc  = XDocument.Load(xmlFilePath);
             XElement  root = doc.Root
@@ -231,12 +234,20 @@ namespace HollowKnight.Levels
             IObject obj = create(position);
             if (BackgroundNames.Contains(name))
                 Backgrounds.Add(obj);
+            else if (obj is IInteractable interactable)
+                Interactables.Add(interactable);
             else
                 Platforms.Add(obj);
         }
 
         private void SpawnEnemy(string name, Vector2 position)
         {
+            if (name == "MantisLord")
+            {
+                SpawnMantisBossGroup(position);
+                return;
+            }
+
             if (!_enemyMap.TryGetValue(name, out var create))
             {
                 DebugLogger.LogObject($"[LevelLoader] Unknown enemy '{name}' at {position}");
@@ -244,6 +255,26 @@ namespace HollowKnight.Levels
             }
             Enemies.Add(create(position));
             DebugLogger.LogObject($"Enemy spawned: {name} at {position}");
+        }
+
+        private void SpawnMantisBossGroup(Vector2 anchor)
+        {
+            Vector2 leftPos   = new Vector2(anchor.X + EnemyConstants.MantisThroneLeftOffsetX,
+                                            anchor.Y + EnemyConstants.MantisThroneY);
+            Vector2 middlePos = new Vector2(anchor.X + EnemyConstants.MantisThroneMiddleOffsetX,
+                                            anchor.Y + EnemyConstants.MantisThroneY);
+            Vector2 rightPos  = new Vector2(anchor.X + EnemyConstants.MantisThroneRightOffsetX,
+                                            anchor.Y + EnemyConstants.MantisThroneY);
+
+            var left   = new MantisLord(leftPos,   MantisLordSlot.Left);
+            var middle = new MantisLord(middlePos, MantisLordSlot.Middle);
+            var right  = new MantisLord(rightPos,  MantisLordSlot.Right);
+
+            Enemies.Add(left);
+            Enemies.Add(middle);
+            Enemies.Add(right);
+
+            BossFight = new BossFightController(_game, left, middle, right);
         }
 
         private static Vector2 ParseVector2(string s)

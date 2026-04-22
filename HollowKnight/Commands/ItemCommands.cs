@@ -6,16 +6,26 @@ namespace HollowKnight.Commands
 {
     public class PlayerUseItemCommand : ICommand
     {
+        private readonly Game1 _game;
         private readonly TheKnight _knight;
         private readonly int _itemNumber;
 
-        public PlayerUseItemCommand(TheKnight knight, int itemNumber)
+        public PlayerUseItemCommand(Game1 game, TheKnight knight, int itemNumber)
         {
+            _game = game;
             _knight = knight;
             _itemNumber = itemNumber;
         }
 
-        public void Execute() => _knight.UseItem(_itemNumber);
+        public void Execute()
+        {
+            ItemManager.SelectItem(_itemNumber - 1);
+
+            if (_game.AllowsGameplayInput())
+            {
+                _knight.UseItem(_itemNumber);
+            }
+        }
     }
 
     public class CycleItemNextCommand : ICommand

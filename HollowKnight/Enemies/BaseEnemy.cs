@@ -53,9 +53,9 @@ namespace HollowKnight.Enemies
 
         // --- Shared implementations ---
 
-        public bool TakeDamage() => TakeDamage(CollisionSide.None);
+        public virtual bool TakeDamage() => TakeDamage(CollisionSide.None);
 
-        public bool TakeDamage(CollisionSide side)
+        public virtual bool TakeDamage(CollisionSide side)
         {
             if (_isDamaged) return false;
             _isDamaged = true;
@@ -65,15 +65,15 @@ namespace HollowKnight.Enemies
             return true;
         }
 
-        public void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects)
+        public void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects, float layerDepth = 0f)
         {
             SpriteEffects effects = FacingDirection == Direction.Right
                 ? SpriteEffects.FlipHorizontally
                 : SpriteEffects.None;
-            Sprite.Draw(spriteBatch, effects);
+            Sprite.Draw(spriteBatch, effects, layerDepth);
         }
 
-        public Rectangle[] GetBounds()
+        public virtual Rectangle[] GetBounds()
         {
             Vector2 size = Sprite.GetSize();
             hitBoxes[0] = new Rectangle(

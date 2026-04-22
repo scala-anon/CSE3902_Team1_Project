@@ -20,6 +20,7 @@ namespace HollowKnight.Sprites
 
         public int Width => (int)(_sourceRect.Width * _scale);
         public int Height => (int)(_sourceRect.Height * _scale);
+        public bool IsFinished => true;
 
         /// <summary>
         /// Create a static sprite from a sprite sheet.
@@ -63,7 +64,7 @@ namespace HollowKnight.Sprites
             _position = position;
         }
 
-        public void Draw(SpriteBatch spriteBatch, SpriteEffects effects)
+        public void Draw(SpriteBatch spriteBatch, SpriteEffects effects, float layerDepth = 0f)
         {
             spriteBatch.Draw(
                 _texture,
@@ -74,7 +75,7 @@ namespace HollowKnight.Sprites
                 Vector2.Zero,
                 _scale,
                 effects,
-                0f
+                layerDepth
             );
         }
         public void Draw(SpriteBatch spriteBatch, SpriteEffects effects, float layerDepth = 0f, Color? color = null)

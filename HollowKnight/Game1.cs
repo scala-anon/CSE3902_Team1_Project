@@ -31,7 +31,6 @@ public partial class Game1 : Game
     private readonly ProjectileManager _projectileManager = new();
     private ProjectileSpawner _projectileSpawner;
     private KnightProjectile _knightProjectile;
-    private Camera _camera;
     private RoomManager _roomManager;
     private LevelLoader _level;
     private Dictionary<int, Vector2> _roomEntryPoints = new();

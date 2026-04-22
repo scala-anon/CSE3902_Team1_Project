@@ -33,7 +33,7 @@ namespace HollowKnight.Enemies
         public void ChangeHealth()
         {
             CurrentVengeFly.Health--;
-            AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Enemy_Damage());
+            AudioManager.Instance.PlaySoundEffectIfInView(AudioLoader.Instance.Get_Enemy_Damage(), CurrentVengeFly.position);
             if (CurrentVengeFly.Health <= 0)
             {
                 CurrentVengeFly.Dead = true;
@@ -48,7 +48,7 @@ namespace HollowKnight.Enemies
             if (CurrentVengeFly.Dead || CurrentVengeFly.IsDamaged) return;
             if (frameCounter % 120 == 0)
             {
-                AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Vengefly_Fly());
+                AudioManager.Instance.PlaySoundEffectIfInView(AudioLoader.Instance.Get_Vengefly_Fly(), CurrentVengeFly.position);
             }
             frameCounter++;
 

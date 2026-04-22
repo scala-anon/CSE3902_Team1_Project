@@ -275,6 +275,12 @@
 #begin levels/roomTwo.xml
 /copy:levels/roomTwo.xml
 
+#begin levels/roomThree.xml
+/copy:levels/roomThree.xml
+
+#begin levels/roomFour.xml
+/copy:levels/roomFour.xml
+
 #begin levels/levelOne.xml
 /copy:levels/levelOne.xml
 

@@ -20,6 +20,7 @@ namespace HollowKnight.Collision
         public static readonly Color ColorTrigger     = CollisionConstants.DebugColorTrigger;
         public static readonly Color ColorMidpoint    = CollisionConstants.DebugColorMidpoint;
         public static readonly Color ColorSword       = CollisionConstants.DebugColorSword;
+        public static readonly Color ColorInteractable = CollisionConstants.DebugColorInteractable;
 
         /// <summary>
         /// Creates the internal 1x1 pixel texture.
@@ -41,23 +42,13 @@ namespace HollowKnight.Collision
         {
             if(!hitboxEnabled || _font ==null) return;
             Rectangle bounds = obj.GetBounds()[0];
-            spriteBatch.DrawString(_font, label, new Vector2(bounds.Left, bounds.Top - CollisionConstants.DebugTextOffsetY), Color.White);
+            spriteBatch.DrawString(_font, label, new Vector2(bounds.Left, bounds.Top - CollisionConstants.DebugTextOffsetY), color, 0f, Vector2.Zero, 1f, SpriteEffects.None, GameConstants.LayerDepthDebug);
         }
 
         public static void DrawText(SpriteBatch spriteBatch, string text, Vector2 position, Color color)
         {
             if (!hitboxEnabled || _font == null) return;
-            spriteBatch.DrawString(_font, text, position, color);
-        }
-
-        public static void DrawOverlayText(SpriteBatch spriteBatch, string text, Vector2 position, Color color, float scale = 1f)
-        {
-            if (_font == null) return;
-            Vector2 size = _font.MeasureString(text) * scale;
-            Vector2 centered = new Vector2(
-                (spriteBatch.GraphicsDevice.Viewport.Width - size.X) / 2,
-                (spriteBatch.GraphicsDevice.Viewport.Height - size.Y) / 3);
-            spriteBatch.DrawString(_font, text, centered, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+            spriteBatch.DrawString(_font, text, position, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, GameConstants.LayerDepthDebug);
         }
 
 
@@ -111,7 +102,7 @@ namespace HollowKnight.Collision
             Vector2 diff = p2 - p1;
             float length = diff.Length();
             float angle = MathF.Atan2(diff.Y, diff.X); //angle of the line in radians
-            spriteBatch.Draw(_pixel, p1, null, color, angle, Vector2.Zero, new Vector2(length, 1), SpriteEffects.None, 0); 
+            spriteBatch.Draw(_pixel, p1, null, color, angle, Vector2.Zero, new Vector2(length, 1), SpriteEffects.None, GameConstants.LayerDepthDebug);
         }
 
         public static void DrawPath(SpriteBatch spriteBatch, ICollidable obj, List<Vector2> path, Color lineColor, Color pointColor)
@@ -132,13 +123,13 @@ namespace HollowKnight.Collision
         {
             foreach (Rectangle rectangle in rect)
             {
-                spriteBatch.Draw(_pixel, rectangle, color * 0.25f);
+                spriteBatch.Draw(_pixel, rectangle, null, color * 0.25f, 0f, Vector2.Zero, SpriteEffects.None, GameConstants.LayerDepthDebug);
 
                 // Solid border
-                spriteBatch.Draw(_pixel, new Rectangle(rectangle.Left, rectangle.Top, rectangle.Width, CollisionConstants.DebugBorderThickness), color);
-                spriteBatch.Draw(_pixel, new Rectangle(rectangle.Left, rectangle.Bottom - CollisionConstants.DebugBorderThickness, rectangle.Width, CollisionConstants.DebugBorderThickness), color);
-                spriteBatch.Draw(_pixel, new Rectangle(rectangle.Left, rectangle.Top, CollisionConstants.DebugBorderThickness, rectangle.Height), color);
-                spriteBatch.Draw(_pixel, new Rectangle(rectangle.Right - CollisionConstants.DebugBorderThickness, rectangle.Top, CollisionConstants.DebugBorderThickness, rectangle.Height), color);
+                spriteBatch.Draw(_pixel, new Rectangle(rectangle.Left, rectangle.Top, rectangle.Width, CollisionConstants.DebugBorderThickness), null, color, 0f, Vector2.Zero, SpriteEffects.None, GameConstants.LayerDepthDebug);
+                spriteBatch.Draw(_pixel, new Rectangle(rectangle.Left, rectangle.Bottom - CollisionConstants.DebugBorderThickness, rectangle.Width, CollisionConstants.DebugBorderThickness), null, color, 0f, Vector2.Zero, SpriteEffects.None, GameConstants.LayerDepthDebug);
+                spriteBatch.Draw(_pixel, new Rectangle(rectangle.Left, rectangle.Top, CollisionConstants.DebugBorderThickness, rectangle.Height), null, color, 0f, Vector2.Zero, SpriteEffects.None, GameConstants.LayerDepthDebug);
+                spriteBatch.Draw(_pixel, new Rectangle(rectangle.Right - CollisionConstants.DebugBorderThickness, rectangle.Top, CollisionConstants.DebugBorderThickness, rectangle.Height), null, color, 0f, Vector2.Zero, SpriteEffects.None, GameConstants.LayerDepthDebug);
             }
         }
 
@@ -146,7 +137,16 @@ namespace HollowKnight.Collision
         {
             if(!hitboxEnabled || _pixel == null) return;
             int halfSize = size / 2;
-            spriteBatch.Draw(_pixel, new Rectangle((int)(center.X - halfSize), (int)(center.Y - halfSize), size, size), color);
+            spriteBatch.Draw(_pixel, new Rectangle((int)(center.X - halfSize), (int)(center.Y - halfSize), size, size), null, color, 0f, Vector2.Zero, SpriteEffects.None, GameConstants.LayerDepthDebug);
+        }
+
+        public static void DrawInteractableBounds(SpriteBatch spriteBatch, Rectangle[] bounds, Color color)
+        {
+            if (!hitboxEnabled || _pixel == null)
+            {
+                return;
+            }
+            DrawHitbox(spriteBatch, bounds, color);
         }
     }
 }

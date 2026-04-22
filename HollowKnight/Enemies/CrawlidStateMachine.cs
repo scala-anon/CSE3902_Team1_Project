@@ -25,7 +25,7 @@ namespace HollowKnight.Enemies
         public void ChangeHealth()
         {
             CurrentCrawlid.Health--;
-            AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Enemy_Damage());
+            AudioManager.Instance.PlaySoundEffectIfInView(AudioLoader.Instance.Get_Enemy_Damage(), CurrentCrawlid.position);
             if (CurrentCrawlid.Health <= 0)
             {
                 CurrentCrawlid.Alive = false;
@@ -40,11 +40,12 @@ namespace HollowKnight.Enemies
             if (!CurrentCrawlid.Alive || CurrentCrawlid.IsDamaged) return;
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+            
             if (frameCounter % 180 == 0)
             {
-                AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Crawler_Walk());
-                
+                AudioManager.Instance.PlaySoundEffectIfInView(AudioLoader.Instance.Get_Crawler_Walk(), CurrentCrawlid.position);
             }
+            
 
             frameCounter++;
             if (_isTurning)
@@ -75,6 +76,30 @@ namespace HollowKnight.Enemies
                 minX = pBounds.Left;
                 maxX = pBounds.Right;
                 CurrentCrawlid.position.Y = pBounds.Top - CurrentCrawlid.SpriteSize.Y;
+                Rectangle feet = CurrentCrawlid.FeetRect;
+                int dirSign = _movementDirection == Direction.Right ? 1 : -1;
+                Rectangle edgeProbe = new Rectangle(
+                    feet.X + dirSign * CollisionConstants.CrawlidEdgeProbeOffset,
+                    feet.Y + CollisionConstants.CrawlidGroundProbeExtension,
+                    feet.Width,
+                    feet.Height + CollisionConstants.CrawlidGroundProbeExtension);
+                bool groundAhead = edgeProbe.Intersects(pBounds)
+                                && edgeProbe.Left >= pBounds.Left
+                                && edgeProbe.Right <= pBounds.Right;
+                if (!groundAhead)
+                {
+                    if (_movementDirection == Direction.Right)
+                    {
+                        _movementDirection = Direction.Left;
+                        CurrentCrawlid.FacingDirection = Direction.Left;
+                    }
+                    else
+                    {
+                        _movementDirection = Direction.Right;
+                        CurrentCrawlid.FacingDirection = Direction.Right;
+                    }
+                    CrawlidTurn();
+                }
             }
 
             if (CurrentCrawlid.position.X + spriteWidth >= maxX)

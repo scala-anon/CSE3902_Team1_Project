@@ -25,6 +25,7 @@ namespace HollowKnight.Sprites
 
         public int Width => (int)(_frames[_currentFrame].Width * _scale);
         public int Height => (int)(_frames[_currentFrame].Height * _scale);
+        public bool IsFinished => false;
 
         /// <summary>
         /// Create a horizontally moving animated sprite.
@@ -82,7 +83,7 @@ namespace HollowKnight.Sprites
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch, SpriteEffects effects)
+        public void Draw(SpriteBatch spriteBatch, SpriteEffects effects, float layerDepth = 0f)
         {
             spriteBatch.Draw(
                 _texture,
@@ -93,7 +94,7 @@ namespace HollowKnight.Sprites
                 Vector2.Zero,
                 _scale,
                 effects,
-                0f
+                layerDepth
             );
         }
 

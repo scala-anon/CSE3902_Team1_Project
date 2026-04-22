@@ -38,9 +38,9 @@ namespace HollowKnight.Environment
             sprite.Update(gameTime);
         }
 
-        public void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects)
+        public void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects, float layerDepth = 0f)
         {
-            sprite.Draw(spriteBatch, spriteEffects);
+            sprite.Draw(spriteBatch, spriteEffects, layerDepth);
         }
 
         // TODO: Tune width/height to match the actual scaled sprite size
