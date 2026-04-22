@@ -6,6 +6,7 @@ using HollowKnight.Sprites;
 using HollowKnight.Graphics;
 using HollowKnight.Environment;
 using HollowKnight.Shared;
+using System;
 using System.Collections.Generic;
 
 namespace HollowKnight.Factories
@@ -441,7 +442,7 @@ namespace HollowKnight.Factories
             DebugLogger.LogObject($"[SpriteFactory] MISSING BROKEN VARIANT for {brokenKey} — using placeholder");
             string fallbackKey = variant switch { 0 => "Wall_0", 1 => "Wall_1", 2 => "Wall_2", 3 => "Wall_3", 4 => "Wall_4", 5 => "Wall_5", _ => "Wall_0" };
             Rectangle src = backgroundFrames[fallbackKey];
-            Rectangle halfWidthSrc = new Rectangle(src.X, src.Y, src.Width / 2, src.Height);
+            Rectangle halfWidthSrc = new Rectangle(src.X, src.Y, Math.Max(1, src.Width / 2), src.Height);
             return new StaticSprite(backgroundSpriteSheet, halfWidthSrc, position, scale);
         }
 

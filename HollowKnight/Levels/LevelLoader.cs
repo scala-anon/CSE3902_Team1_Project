@@ -121,6 +121,7 @@ namespace HollowKnight.Levels
             Enemies.Clear();
             Backgrounds.Clear();
             Platforms.Clear();
+            Interactables.Clear();
             Transitions.Clear();
             KnightSpawn = Vector2.Zero;
             BossFight = null;
@@ -204,13 +205,10 @@ namespace HollowKnight.Levels
             IObject obj = create(position);
             if (BackgroundNames.Contains(name))
                 Backgrounds.Add(obj);
+            else if (obj is IInteractable interactable && obj is not IBreakable)
+                Interactables.Add(interactable);
             else
-            {
-                if (obj is IInteractable interactable)
-                    Interactables.Add(interactable);
-                if (obj is not IInteractable || obj is IBreakable)
-                    Platforms.Add(obj);
-            }
+                Platforms.Add(obj);
         }
 
         private void SpawnEnemy(string name, Vector2 position)

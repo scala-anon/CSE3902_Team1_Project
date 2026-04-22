@@ -113,7 +113,7 @@ namespace HollowKnight.Collision
                 foreach (IObject obj in platforms)
                 {
                     if (obj == null || !obj.IsActive) continue;
-                    if (!(obj is IBreakable breakable)) continue;
+                    if (obj is not IBreakable) continue;
                     if (!(obj is IInteractable breakableInteractable)) continue;
                     if (!CollisionLayerMatrix.ShouldCollide(swordHitbox, obj)) continue;
                     CollisionSide side = CollisionDetector.Detect(swordHitbox, obj);
