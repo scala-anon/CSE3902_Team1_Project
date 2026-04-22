@@ -8,6 +8,9 @@ namespace HollowKnight.Shared
         public const float cameraFollowKnightMin = -50;
         public const float cameraKnightOffset = 60;
 
+        // Per-frame interpolation weight for Camera.Follow (0 = frozen, 1 = instant).
+        // Tuned for 60 FPS fixed timestep; revisit if IsFixedTimeStep or TargetElapsedTime change.
+        public const float cameraLerpFactor = 0.12f;
 
     }
 }
