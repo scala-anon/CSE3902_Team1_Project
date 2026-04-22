@@ -586,7 +586,7 @@ namespace HollowKnight.Factories
                 2 => "MantisThrone_2",
                 _ => "MantisThrone_1"
             };
-            return new StaticSprite(mantisVillageSpriteSheet, mantisVillageFrames[key], position, .75f);
+            return new StaticSprite(mantisVillageSpriteSheet, mantisVillageFrames[key], position, 1.0f);
         }
         public ISprite CreateFloorSprite(int variant, Vector2 position)
         {

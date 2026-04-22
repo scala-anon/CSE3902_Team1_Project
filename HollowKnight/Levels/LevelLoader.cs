@@ -260,11 +260,11 @@ namespace HollowKnight.Levels
         private void SpawnMantisBossGroup(Vector2 anchor)
         {
             Vector2 leftPos   = new Vector2(anchor.X + EnemyConstants.MantisThroneLeftOffsetX,
-                                            anchor.Y + EnemyConstants.MantisThroneY);
+                                            anchor.Y + EnemyConstants.MantisSecondaryThroneOffsetY);
             Vector2 middlePos = new Vector2(anchor.X + EnemyConstants.MantisThroneMiddleOffsetX,
-                                            anchor.Y + EnemyConstants.MantisThroneY);
+                                            anchor.Y + EnemyConstants.MantisPrimaryThroneOffsetY);
             Vector2 rightPos  = new Vector2(anchor.X + EnemyConstants.MantisThroneRightOffsetX,
-                                            anchor.Y + EnemyConstants.MantisThroneY);
+                                            anchor.Y + EnemyConstants.MantisSecondaryThroneOffsetY);
 
             var left   = new MantisLord(leftPos,   MantisLordSlot.Left);
             var middle = new MantisLord(middlePos, MantisLordSlot.Middle);

@@ -16,7 +16,7 @@
 <Item>
     <ObjectType>Enemy</ObjectType>
     <ObjectName>MantisLord</ObjectName>
-    <Location>4900 5400</Location>
+    <Location>4518 4900</Location>
 </Item>
 
 <Item>
@@ -98,23 +98,6 @@
     <Location>3380 5600</Location>
 </Item>
 
-<!-- <Item>
-    <ObjectType>Platform</ObjectType>
-    <ObjectName>MantisThrone_1</ObjectName>
-    <Location>4500 5000</Location>
-</Item>
-
-<Item>
-    <ObjectType>Platform</ObjectType>
-    <ObjectName>MantisThrone_1</ObjectName>
-    <Location>4270 5100</Location>
-</Item>
-
-<Item>
-    <ObjectType>Platform</ObjectType>
-    <ObjectName>MantisThrone_1</ObjectName>
-    <Location>4730 5100</Location>
-</Item> -->
 
 <Item>
     <ObjectType>Platform</ObjectType>
@@ -125,19 +108,31 @@
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>MantisThrone_1</ObjectName>
-    <Location>4288 5140</Location>
+    <Location>4264 5140</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>MantisThrone_1</ObjectName>
-    <Location>4748 5140</Location>
+    <Location>4772 5140</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>MantisThrone_2</ObjectName>
-    <Location>4518 4840</Location>
+    <Location>4518 4810</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>MantisThrone_2</ObjectName>
+    <Location>4264 4910</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>MantisThrone_2</ObjectName>
+    <Location>4772 4910</Location>
 </Item>
 
 
