@@ -283,6 +283,18 @@
 /processorParam:TextureFormat=Color
 /build:sprites/MantisVillageAssets.png
 
+#begin sprites/layersSpriteSheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:sprites/layersSpriteSheet.png
+
 
 #begin sprites/knight_movement-atlas.xml
 /copy:sprites/knight_movement-atlas.xml
@@ -314,6 +326,9 @@
 #begin sprites/village-atlas.xml
 /copy:sprites/village-atlas.xml
 
+#begin sprites/layers-atlas.xml
+/copy:sprites/layers-atlas.xml
+
 #begin levels/roomOne.xml
 /copy:levels/roomOne.xml
 
@@ -328,6 +343,12 @@
 
 #begin levels/levelOne.xml
 /copy:levels/levelOne.xml
+
+#begin levels/roomThree.xml
+/copy:levels/roomThree.xml
+
+#begin levels/roomFour.xml
+/copy:levels/roomFour.xml
 
 
 #begin fonts/Credits.spritefont

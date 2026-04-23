@@ -9,6 +9,12 @@
 
 <Item>
     <ObjectType>Platform</ObjectType>
+    <ObjectName>Right_Rock_6</ObjectName>
+    <Location>250 1975</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
     <ObjectName>Plant1_Idle</ObjectName>
     <Location>1600 1850</Location>
 </Item>
