@@ -125,9 +125,14 @@
 
 <Item>
     <ObjectType>Enemy</ObjectType>
-    <ObjectName>Vengefly</ObjectName>
+    <ObjectName>Crawlid</ObjectName>
     <Location>8000 3300</Location>
 </Item>
+<!-- Vengeflys patrolling above spike rows -->
+<Item><ObjectType>Enemy</ObjectType><ObjectName>Vengefly</ObjectName><Location>5700 3000</Location></Item>
+<Item><ObjectType>Enemy</ObjectType><ObjectName>Vengefly</ObjectName><Location>6200 3000</Location></Item>
+<Item><ObjectType>Enemy</ObjectType><ObjectName>Vengefly</ObjectName><Location>6700 3000</Location></Item>
+<Item><ObjectType>Enemy</ObjectType><ObjectName>Vengefly</ObjectName><Location>7950 3000</Location></Item>
 
 <Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>5550 3708</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>5670 3708</Location></Item>
@@ -194,7 +199,7 @@
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>6230 3944</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>6230 4070</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>6230 4196</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_4</ObjectName><Location>6150 4322</Location></Item> 
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_4</ObjectName><Location>6148 4322</Location></Item> 
 
 <Item><ObjectType>Platform</ObjectType><ObjectName>Bench</ObjectName><Location>5790 4480</Location></Item>
 

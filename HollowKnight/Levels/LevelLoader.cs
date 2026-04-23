@@ -55,7 +55,7 @@ namespace HollowKnight.Levels
                 ["Wall_0"]             = pos => new Wall(0, pos, 80, 200),
                 ["Wall_1"]             = pos => new Wall(1, pos, 80, 200),
                 ["Wall_2"]             = pos => new Wall(2, pos, 49, 111),
-                ["Wall_3"]              = pos => new Wall(3,pos,49,111),
+                ["Wall_3"]              = pos => new Wall(3,pos,61,139),
                 ["Wall_4"]              = pos => new BreakableWall(4,pos,142,246),
                 ["Wall_5"]              = pos => new Wall(5,pos, 175,305),
                 ["BreakableWall_0"]    = pos => new BreakableWall(0, pos, 80, 200),
