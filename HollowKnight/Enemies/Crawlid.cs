@@ -22,7 +22,7 @@ namespace HollowKnight.Enemies
         public Crawlid(Vector2 position)
         {
             this.position = position;
-            IsGrounded = true;
+            IsGrounded = false;
             FacingDirection = Direction.Right;
             sprites = new Dictionary<CrawlidState, ISprite>
             {
@@ -54,9 +54,27 @@ namespace HollowKnight.Enemies
 
         public Rectangle FeetRect => GetBounds()[1];
 
-        public override void SetPlatform(IObject platform) => stateMachine.SetPlatform(platform);
+        public void SetPlatforms(List<IObject> platforms) => stateMachine.SetPlatforms(platforms);
+        public void OnWallHit() => stateMachine.OnWallHit();
+
         public override string GetStateName() => stateMachine.GetStateName();
         public void ChangeHealth() => stateMachine.ChangeHealth();
+
+        public void Kill()
+        {
+            if (!Alive) return;
+            Health = 0;
+            Alive = false;
+            _isDamaged = false;
+            SetState(IsGrounded ? CrawlidState.DeathLand : CrawlidState.DeathAir);
+        }
+
+        public override void Land()
+        {
+            IsGrounded = true;
+            _knockbackVelocity = Vector2.Zero;
+            stateMachine.ResetVerticalVelocity();
+        }
 
         protected override void ApplyKnockback(CollisionSide side)
         {
@@ -69,7 +87,7 @@ namespace HollowKnight.Enemies
             if (_knockbackVelocity.Y < 0) IsGrounded = false;
         }
 
-        protected override void OnDeath(bool grounded) => SetState(CrawlidState.DeathLand);
+        protected override void OnDeath(bool grounded) => SetState(grounded ? CrawlidState.DeathLand : CrawlidState.DeathAir);
         protected override void OnHealthChanged() => ChangeHealth();
         protected override void UpdateAlive(GameTime gameTime, float dt) => stateMachine.Update(gameTime);
     }

@@ -35,6 +35,9 @@ namespace HollowKnight.Collision
                 // Spikes instantly kill vengefly
                 _handler.Register<Spike, Vengefly>(side, (a, b) => ((Vengefly)b).Kill());
 
+                // Spikes instantly kill crawlid
+                _handler.Register<Spike, Crawlid>(side, (a, b) => ((Crawlid)b).Kill());
+
                 // Sword damages enemies
                 _handler.Register<SwordHitbox, Crawlid>(side, (a, b) => { if (((Crawlid)b).TakeDamage(side) && _currentKnight != null) _currentKnight.GainSoul(); });
                 _handler.Register<SwordHitbox, Vengefly>(side, (a, b) => { if (((Vengefly)b).TakeDamage(side) && _currentKnight != null) _currentKnight.GainSoul(); });
@@ -65,6 +68,13 @@ namespace HollowKnight.Collision
                 if (side != CollisionSide.None)
                     DebugLogger.LogCollision($"{obj.GetType().Name} vs Knight side={side}");
                 _handler.HandleCollision(obj, knight, side);
+            }
+
+            // Supply crawlids with the current platform list for edge/spike detection
+            foreach (IEnemy enemy in enemies)
+            {
+                if (enemy is Crawlid crawlidForPlatforms)
+                    crawlidForPlatforms.SetPlatforms(platforms);
             }
 
             // Enemy collisions
@@ -169,6 +179,21 @@ namespace HollowKnight.Collision
                     {
                         if (!CollisionLayerMatrix.ShouldCollide(blockObj, vengefly)) continue;
                         CollisionManager.ResolveEnemyBlockCollision(vengefly, blockObj);
+                    }
+                }
+            }
+
+            // Block resolution for crawlid enemies (gravity fall + landing)
+            foreach (IEnemy enemy in enemies)
+            {
+                if (!(enemy is Crawlid crawlid)) continue;
+                crawlid.SetAirborne();
+                for (int i = 0; i < platforms.Count; i++)
+                {
+                    if (platforms[i] is ICollidable blockObj)
+                    {
+                        if (!CollisionLayerMatrix.ShouldCollide(blockObj, crawlid)) continue;
+                        CollisionManager.ResolveCrawlidBlockCollision(crawlid, blockObj);
                     }
                 }
             }

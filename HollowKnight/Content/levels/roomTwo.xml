@@ -30,13 +30,13 @@
 
 <Item>
     <ObjectType>Platform</ObjectType>
-    <ObjectName>Spike_Floor_1</ObjectName>
+    <ObjectName>Spike_Floor_2</ObjectName>
     <Location>6650 480</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
-    <ObjectName>Spike_Floor_1</ObjectName>
+    <ObjectName>Spike_Floor_2</ObjectName>
     <Location>6950 480</Location>
 </Item>
 
@@ -59,7 +59,7 @@
 
 <Item>
     <ObjectType>Platform</ObjectType>
-    <ObjectName>Spike_Floor_1</ObjectName>
+    <ObjectName>Spike_Floor_2</ObjectName>
     <Location>6850 980</Location>
 </Item>
 

@@ -2,13 +2,13 @@
 <TextureAtlas>
     <Texture>sprites/EnemySpriteSheet</Texture>
     <Regions>
-        <Region name="Crawlid_Idle_0" x="128" y="23" width="114" height="83" />
-        <Region name="Crawlid_Idle_1" x="246" y="23" width="115" height="83" />
-        <Region name="Crawlid_Idle_2" x="365" y="23" width="115" height="83" />
-        <Region name="Crawlid_Idle_3" x="484" y="23" width="115" height="83" />
+        <Region name="Crawlid_Idle_0" x="128" y="23" width="114" height="78" />
+        <Region name="Crawlid_Idle_1" x="246" y="23" width="115" height="78" />
+        <Region name="Crawlid_Idle_2" x="365" y="23" width="115" height="78" />
+        <Region name="Crawlid_Idle_3" x="484" y="23" width="115" height="78" />
 
-        <Region name="Crawlid_Turn_0" x="127" y="130" width="95" height="81" />
-        <Region name="Crawlid_Turn_1" x="226" y="130" width="95" height="81" />
+        <Region name="Crawlid_Turn_0" x="127" y="130" width="95" height="80" />
+        <Region name="Crawlid_Turn_1" x="226" y="130" width="95" height="80" />
 
         <Region name="Crawlid_Death_Air_0" x="127" y="235" width="116" height="118" />
         <Region name="Crawlid_Death_Air_1" x="247" y="235" width="116" height="118" />
