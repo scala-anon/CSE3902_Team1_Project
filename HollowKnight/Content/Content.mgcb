@@ -84,6 +84,66 @@
 /processorParam:Quality=Best
 /build:Audio/sfx/hero_unsheath.wav
 
+#begin Audio/sfx/Mantis Lord Land On Ground.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx/Mantis Lord Land On Ground.mp3
+
+#begin Audio/sfx/Mantis Lord Land Cage.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx/Mantis Lord Land Cage.mp3
+
+#begin Audio/sfx/Mantis Lord Jump Off Cage.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx/Mantis Lord Jump Off Cage.mp3
+
+#begin Audio/sfx/Mantis Lord Jump Off Ground.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx/Mantis Lord Jump Off Ground.mp3
+
+#begin Audio/sfx/Mantis Lord Horizontal Dash.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx/Mantis Lord Horizontal Dash.mp3
+
+#begin Audio/sfx/Mantis Lord Down Slash Impact.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx/Mantis Lord Down Slash Impact.mp3
+
+#begin Audio/sfx/Mantis Lord Down Slash.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx/Mantis Lord Down Slash.mp3
+
+#begin Audio/sfx/Mantis Lord Death 02.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx/Mantis Lord Death 02.mp3
+
+#begin Audio/sfx/Mantis Lord Death 01.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx/Mantis Lord Death 01.mp3
+
+#begin Audio/sfx/Mantis Lord Death 03.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx/Mantis Lord Death 03.mp3
+
 #begin Audio/Music/Hollow Knight OST - Mantis Lords 4.mp3
 /importer:Mp3Importer
 /processor:SongProcessor

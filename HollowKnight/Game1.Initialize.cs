@@ -26,6 +26,14 @@ public partial class Game1
         _overlayPixel.SetData(new[] { Color.White });
     }
 
+    private void InitializeFullScreen()
+    {
+        _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+        _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+        _graphics.IsFullScreen = true;
+        _graphics.ApplyChanges();       
+    }
+
     private void InitializeSharedResources()
     {
         SpriteFactory.Instance.LoadAllTextures(Content);

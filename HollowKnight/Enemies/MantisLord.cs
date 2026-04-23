@@ -5,6 +5,7 @@ using HollowKnight.Shared;
 using HollowKnight.Collision;
 using Microsoft.Xna.Framework;
 
+
 namespace HollowKnight.Enemies
 {
     public enum MantisLordState
