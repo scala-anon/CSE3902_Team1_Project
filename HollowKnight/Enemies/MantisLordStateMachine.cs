@@ -33,6 +33,8 @@ namespace HollowKnight.Enemies
         private bool _postDeathTimer;
         private bool _fightStarted;
 
+        private bool target_knight = false;
+
         public MantisLordStateMachine(MantisLord owner)
         {
             _owner = owner;
@@ -154,8 +156,8 @@ namespace HollowKnight.Enemies
                 case MantisLordState.WallReady:
                     // Loops until controller forces a throw or duration elapses.
                     // TODO: spawn projectile here (when WallReady times out)
-                    //if (_stateTimer >= EnemyConstants.MantisWallReadyDuration)
-                    if (_owner.Sprite.IsFinished){
+                    if(_owner.Sprite.IsFinished){
+                    if (_stateTimer >= EnemyConstants.MantisWallReadyDuration)
                         EnterState(MantisLordState.Throw);
                     }
                     break;
@@ -214,8 +216,11 @@ namespace HollowKnight.Enemies
 
                 // ---- DStab sequence ----
                 case MantisLordState.DStabArrive:
-                    _owner.position = new Vector2(_owner.knightPosition.X, _owner.knightPosition.Y - 800);
 
+                    if (target_knight == false){
+                        target_knight = true;
+                        _owner.position = new Vector2(_owner.knightPosition.X, _owner.knightPosition.Y - 800);
+                    }
 
                     if (_owner.Sprite.IsFinished)
                     {
@@ -227,6 +232,7 @@ namespace HollowKnight.Enemies
                 case MantisLordState.DStab:
                     _owner.position.Y += EnemyConstants.MantisStabSpeed * elapsedTime;
                     if (_owner.Sprite.IsFinished)
+                        target_knight = false;
                         EnterState(MantisLordState.DStabLand);
                     break;
 
