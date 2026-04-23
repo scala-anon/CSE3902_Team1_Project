@@ -131,6 +131,16 @@
 <Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>8000 3705</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>8134 3705</Location></Item>
 
+<!-- Vertical wall on right side of furthest spike section (built upward) -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>8268 2928</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>8268 3039</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>8268 3150</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>8268 3261</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>8268 3372</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>8268 3483</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>8268 3594</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>8268 3705</Location></Item>
+
 <Item><ObjectType>Platform</ObjectType><ObjectName>Path_1</ObjectName><Location>5475 4550</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Path_1</ObjectName><Location>5790 4550</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Path_1</ObjectName><Location>6830 4550</Location></Item>
