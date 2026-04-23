@@ -1,3 +1,4 @@
+using System.Collections;
 using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 
