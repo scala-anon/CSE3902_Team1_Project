@@ -17,6 +17,7 @@ namespace HollowKnight.Levels
         public List<IInteractable> Interactables { get; } = new();
         public List<TransitionZone> Transitions { get; } = new();
         public Vector2 KnightSpawn { get; private set; } = Vector2.Zero;
+        public Vector2? RespawnPoint { get; private set; }
         public BossFightController BossFight { get; private set; }
 
         private Game1 _game;
@@ -110,6 +111,8 @@ namespace HollowKnight.Levels
                 new TransitionZone(
                 new Rectangle((int)pos.X, (int)pos.Y, GameConstants.TransitionZoneWidth, 80),
                 ParseDestinationRoom(name))),
+
+                ["Respawn"] = (name, pos) => RespawnPoint = pos,
             };
         }
 
@@ -124,6 +127,7 @@ namespace HollowKnight.Levels
             Interactables.Clear();
             Transitions.Clear();
             KnightSpawn = Vector2.Zero;
+            RespawnPoint = null;
             BossFight = null;
 
             XDocument doc  = XDocument.Load(xmlFilePath);

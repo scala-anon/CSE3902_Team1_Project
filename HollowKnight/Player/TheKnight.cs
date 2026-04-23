@@ -40,6 +40,18 @@ namespace HollowKnight.Player
 
         private Vector2 benchSpawnPoint;
 
+        private Vector2? _roomRespawnPoint;
+        public bool HasRespawnPoint => _roomRespawnPoint.HasValue;
+        public void SetRoomRespawnPoint(Vector2 pos) => _roomRespawnPoint = pos;
+        public void ClearRoomRespawnPoint() => _roomRespawnPoint = null;
+
+        public void Respawn()
+        {
+            SetPosition(_roomRespawnPoint.Value);
+            physics.Velocity = Vector2.Zero;
+            //health.ResetHealth();
+        }
+
         public TheKnight(Dictionary<KnightSpriteType, ISprite> sprites, Vector2 position)
         {
             this.sprites = sprites;

@@ -65,6 +65,7 @@ public partial class Game1 : Game
         InitializeDebug();
         InitializeGameplaySystems();
         InitializePlayerAndProjectiles();
+        ApplyRoomRespawnPoint();
         InitializeCameraAndRooms();
         InitializeControllers();
         

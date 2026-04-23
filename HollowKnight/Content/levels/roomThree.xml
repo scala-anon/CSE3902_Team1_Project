@@ -14,6 +14,12 @@
     <Location>5750 2100</Location>
 </Item>
 
+<Item>
+    <ObjectType>Respawn</ObjectType>
+    <ObjectName>Respawn</ObjectName>
+    <Location>5750 2100</Location>
+</Item>
+
 <!-- RIGHTSIDE -->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6045 2000</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6045 2111</Location></Item>

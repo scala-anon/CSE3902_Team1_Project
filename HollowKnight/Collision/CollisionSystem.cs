@@ -29,8 +29,14 @@ namespace HollowKnight.Collision
                 _handler.Register<Crawlid, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
                 _handler.Register<Vengefly, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
 
-                // Hitting spikes damages the knight
-                _handler.Register<Spike, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
+                // Hitting spikes damages the knight (or respawns if a room respawn point is set)
+                _handler.Register<Spike, TheKnight>(side, (a, b) => {
+                    var knight = (TheKnight)b;
+                    
+                    knight.TakeDamage(side);
+                    if (knight.HasRespawnPoint) knight.Respawn();
+                
+                });
 
                 // Spikes instantly kill vengefly
                 _handler.Register<Spike, Vengefly>(side, (a, b) => ((Vengefly)b).Kill());
