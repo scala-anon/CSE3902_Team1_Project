@@ -66,6 +66,7 @@ public partial class Game1 : Game
         InitializePlayerAndProjectiles();
         InitializeCameraAndRooms();
         InitializeControllers();
+        InitializeFullScreen();
         
     }
 

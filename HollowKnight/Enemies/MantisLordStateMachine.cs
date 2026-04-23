@@ -1,6 +1,8 @@
 using System.Collections;
+using HollowKnight.Player;
 using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace HollowKnight.Enemies
 {
@@ -91,6 +93,7 @@ namespace HollowKnight.Enemies
         {
             if (!_fightStarted) return;
 
+            float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             _stateTimer += dt;
 
             // Waiting for post-death delay before entering ThroneWounded.
@@ -136,6 +139,14 @@ namespace HollowKnight.Enemies
                     break;
 
                 case MantisLordState.WallArrive:
+                    if (_owner.FacingDirection == Direction.Right)
+                    {
+                        _owner.position = new Vector2(3600, 4546);
+                    } else
+                    {
+                        _owner.position = new Vector2(3600, 4546);
+                    }
+
                     if (_owner.Sprite.IsFinished)
                         EnterState(MantisLordState.WallReady);
                     break;
@@ -154,6 +165,13 @@ namespace HollowKnight.Enemies
 
                 // ---- Dash sequence ----
                 case MantisLordState.DashArrive:
+                    if(_owner.FacingDirection == Direction.Right)
+                    {
+                        _owner.position = new Vector2(3880, 5000);
+                    } else
+                    {
+                        _owner.position = new Vector2(5140, 5000);
+                    }
                     if (_owner.Sprite.IsFinished)
                     {
                         // TODO: audio hook — play dash anticipate sound
@@ -162,6 +180,7 @@ namespace HollowKnight.Enemies
                     break;
 
                 case MantisLordState.DashAnticipate:
+                    _owner.position.Y = 5000 + (556/2);
                     if (_owner.Sprite.IsFinished)
                     {
                         // TODO: damage hitbox — activate dash contact damage here
@@ -170,6 +189,13 @@ namespace HollowKnight.Enemies
                     break;
 
                 case MantisLordState.Dash:
+                    if(_owner.FacingDirection == Direction.Right)
+                    {
+                        _owner.position.X -= EnemyConstants.MantisDashSpeed * elapsedTime;
+                    } else
+                    {
+                        _owner.position.X += EnemyConstants.MantisDashSpeed * elapsedTime;
+                    }
                     if (_owner.Sprite.IsFinished)
                         EnterState(MantisLordState.DashRecover);
                     break;
@@ -186,6 +212,9 @@ namespace HollowKnight.Enemies
 
                 // ---- DStab sequence ----
                 case MantisLordState.DStabArrive:
+                    _owner.position = new Vector2(_owner.knightPosition.X, _owner.knightPosition.Y - 800);
+
+
                     if (_owner.Sprite.IsFinished)
                     {
                         // TODO: damage hitbox — activate DStab contact damage here
@@ -194,6 +223,7 @@ namespace HollowKnight.Enemies
                     break;
 
                 case MantisLordState.DStab:
+                    _owner.position.Y += EnemyConstants.MantisStabSpeed * elapsedTime;
                     if (_owner.Sprite.IsFinished)
                         EnterState(MantisLordState.DStabLand);
                     break;
