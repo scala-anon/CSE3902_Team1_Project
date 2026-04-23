@@ -129,7 +129,7 @@
     <Location>8000 3300</Location>
 </Item>
 <!-- Vengeflys patrolling above spike rows -->
-<Item><ObjectType>Enemy</ObjectType><ObjectName>Vengefly</ObjectName><Location>5700 3000</Location></Item>
+<Item><ObjectType>Enemy</ObjectType><ObjectName>Vengefly</ObjectName><Location>7200 3000</Location></Item>
 <Item><ObjectType>Enemy</ObjectType><ObjectName>Vengefly</ObjectName><Location>6200 3000</Location></Item>
 <Item><ObjectType>Enemy</ObjectType><ObjectName>Vengefly</ObjectName><Location>6700 3000</Location></Item>
 <Item><ObjectType>Enemy</ObjectType><ObjectName>Vengefly</ObjectName><Location>7950 3000</Location></Item>
