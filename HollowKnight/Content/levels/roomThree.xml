@@ -37,6 +37,14 @@
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7850 4234</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7850 4345</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7850 4456</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7768 3785</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7768 3881</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7768 3977</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7768 4073</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7768 4169</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7768 4265</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7768 4361</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7768 4457</Location></Item>
 <!-- <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6045 2888</Location></Item> -->
 
 <!-- LEFTSIDE -->
@@ -121,21 +129,52 @@
     <Location>8000 3300</Location>
 </Item>
 
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>5550 3705</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>5684 3705</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>5818 3705</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>5952 3705</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6086 3705</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6220 3705</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6354 3705</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6488 3705</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6622 3705</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6756 3705</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6890 3705</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>7024 3705</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>7866 3705</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>8000 3705</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>8134 3705</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>5550 3708</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>5670 3708</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>5790 3708</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>5910 3708</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6030 3708</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6150 3708</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6270 3708</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6390 3708</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6510 3708</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6630 3708</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6750 3708</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6870 3708</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6990 3708</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>7110 3708</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>7866 3708</Location></Item>
+<!-- Ledges below row 1 of floor spikes to prevent clipping -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>5550 3795</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>5635 3795</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>5720 3795</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>5805 3795</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>5890 3795</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>5975 3795</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>6060 3795</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>6145 3795</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>6230 3795</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>6315 3795</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>6400 3795</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>6485 3795</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>6570 3795</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>6655 3795</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>6740 3795</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>6825 3795</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>6910 3795</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>6995 3795</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>7080 3795</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>7125 3795</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>7986 3708</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>8106 3708</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>8226 3708</Location></Item>
+<!-- Ledges below row 2 of floor spikes to prevent clipping -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>7866 3799</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>7951 3799</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>8036 3799</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>8121 3799</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>8206 3799</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>8251 3799</Location></Item>
 
 <!-- Vertical wall on right side of furthest spike section (built upward) -->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>8268 2928</Location></Item>
@@ -145,17 +184,17 @@
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>8268 3372</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>8268 3483</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>8268 3594</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>8268 3705</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>8268 3708</Location></Item>
 
 <Item><ObjectType>Platform</ObjectType><ObjectName>Path_1</ObjectName><Location>5475 4550</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Path_1</ObjectName><Location>5790 4550</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Path_1</ObjectName><Location>6830 4550</Location></Item>
 
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>6230 3818</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>6230 3947</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>6230 4076</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>6230 4205</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_4</ObjectName><Location>6150 4330</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>6230 3944</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>6230 4070</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>6230 4196</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_4</ObjectName><Location>6150 4322</Location></Item> 
 
 <Item><ObjectType>Platform</ObjectType><ObjectName>Bench</ObjectName><Location>5790 4480</Location></Item>
 

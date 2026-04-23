@@ -52,6 +52,11 @@ namespace HollowKnight.Shared
         public const int SpikeFloor2SecondaryW = 100;
         public const int SpikeFloor2SecondaryH = 40;
 
+        // Spike Hitbox Dimensions — Wall1 (137x99 sprite)
+        public const int SpikeWall1W = 137;
+        public const int SpikeWall1H = 99;
+        public const int SpikeWall1OffsetY = 0;
+
         // Spike Hitbox Dimensions — Ceiling
         public const int SpikeCeilingPrimaryW = 230;
         public const int SpikeCeilingPrimaryH = 70;

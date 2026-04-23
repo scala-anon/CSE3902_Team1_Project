@@ -48,6 +48,7 @@ namespace HollowKnight.Levels
                 ["Spike_Floor_1"]        = pos => new Spike(SpikeVariant.Floor1, pos),
                 ["Spike_Floor_2"]        = pos => new Spike(SpikeVariant.Floor2, pos),
                 ["Spike_Ceiling"]        = pos => new Spike(SpikeVariant.Ceiling, pos),
+                ["Spike_Wall_1"]         = pos => new Spike(SpikeVariant.Wall1, pos),
                 ["Bench"]               = pos => new Bench(pos),
                 ["Plant1_Idle"]        = pos => new Grass(1,pos, 100, 5, hitOffsetY: 0),
                 ["Plant2_Idle"]        = pos => new Grass(2,pos, 100, 5, hitOffsetY: 0),
