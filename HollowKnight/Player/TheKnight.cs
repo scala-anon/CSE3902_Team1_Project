@@ -39,6 +39,10 @@ namespace HollowKnight.Player
         public float VelocityY => physics.VelocityY;
 
         private Vector2 benchSpawnPoint;
+        private bool _justDied;
+        public bool JustDied => _justDied;
+        public void ConsumeJustDied() => _justDied = false;
+        public void SetBenchSpawnPoint(Vector2 pos) => benchSpawnPoint = pos;
 
         private Vector2? _roomRespawnPoint;
         public bool HasRespawnPoint => _roomRespawnPoint.HasValue;
@@ -279,6 +283,7 @@ namespace HollowKnight.Player
 
             if (health.Health == 0)
             {
+                _justDied = true;
                 DebugLogger.LogGeneral($"Knight died. Respawning at {benchSpawnPoint}.");
                 SetPosition(benchSpawnPoint);
                 physics.Velocity = Vector2.Zero;
