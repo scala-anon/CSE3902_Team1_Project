@@ -10,13 +10,28 @@ namespace HollowKnight.Commands
         private static readonly MantisLordState[] _states = new[]
         {
             MantisLordState.IdleOnThrone,
+            MantisLordState.ThroneStand,
+            MantisLordState.ThroneLeave,
             MantisLordState.WallArrive,
+            MantisLordState.WallReady,
+            MantisLordState.WallLeave,
+            MantisLordState.Throw,
             MantisLordState.DashArrive,
+            MantisLordState.DashAnticipate,
+            MantisLordState.Dash,
+            MantisLordState.DashRecover,
+            MantisLordState.DashLeave,
             MantisLordState.DStabArrive,
+            MantisLordState.DStab,
+            MantisLordState.DStabLand,
+            MantisLordState.DStabLeave,
+            MantisLordState.ThroneArrive,
             MantisLordState.ThroneWounded,
             MantisLordState.ThroneBow,
             MantisLordState.Death,
-            MantisLordState.Dormant
+            MantisLordState.DeathLeaveOne,
+            MantisLordState.DeathLeaveTwo,
+            MantisLordState.Dormant,
         };
 
         private int _currentIndex = 0;
