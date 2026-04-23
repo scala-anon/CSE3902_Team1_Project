@@ -36,4 +36,35 @@
     <Item>
         <FilePath>Audio/sfx/Fly Flying</FilePath>
     </Item>
+    <Item>
+        <FilePath>Audio/sfx/Mantis Lord Land On Ground</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/sfx/Mantis Lord Land Cage</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/sfx/Mantis Lord Jump Off Ground</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/sfx/Mantis Lord Jump Off Cage</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/sfx/Mantis Lord Horizontal Dash</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/sfx/Mantis Lord Down Slash Impact</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/sfx/Mantis Lord Down Slash</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/sfx/Mantis Lord Death 02</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/sfx/Mantis Lord Death 01</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/sfx/Mantis Lord Death 03</FilePath>
+    </Item>
+
 </XnaContent>
