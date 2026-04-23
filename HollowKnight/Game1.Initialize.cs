@@ -13,6 +13,7 @@ using HollowKnight.Graphics;
 using HollowKnight.Abilities;
 using HollowKnight.Audio;
 using Microsoft.Xna.Framework.Media;
+using System;
 
 namespace HollowKnight;
 
@@ -106,18 +107,6 @@ public partial class Game1
             GameConstants.DefaultLevelHeight);
     }
 
-    private void InitializeControllers()
-    {
-        _controllerList.Clear();
-        int screenWidth = _graphics.PreferredBackBufferWidth;
-
-        KeyboardController keyboard = new KeyboardController();
-        KeyboardBindings.BindGameplay(keyboard, _knight, this, _roomManager);
-
-        _controllerList.Add(keyboard);
-        _controllerList.Add(new MouseController(this, screenWidth, _roomManager));
-    }
-
     private void LoadObstacles()
     {
         foreach (IObject obj in _level.Platforms)
@@ -145,6 +134,19 @@ public partial class Game1
     DebugLogger.LogRoomTransition($"InitializeLevel: room 1 loaded");
 }
 
+
+private void InitializeControllers()
+{
+    _controllerList.Clear();
+    int screenWidth = _graphics.PreferredBackBufferWidth;
+
+    KeyboardController keyboard = new KeyboardController();
+    KeyboardBindings.BindGameplay(keyboard, _knight, this, _roomManager, _level.BossFight);
+
+    _controllerList.Add(keyboard);
+    _controllerList.Add(new MouseController(this, screenWidth, _roomManager));
+}
+
 public void TransitionToRoom(int roomNumber)
 {
     if (roomNumber < 1 || roomNumber > rooms.Length)
@@ -170,6 +172,7 @@ public void TransitionToRoom(int roomNumber)
 
     LoadObstacles();
     _isTransitioning = false;
+    _pendingControllerInit = true; // replaces InitializeControllers()
     DebugLogger.LogRoomTransition($"TransitionToRoom: room {roomNumber} loaded, knight at {_knight.position}");
 }
 

@@ -35,6 +35,7 @@ public partial class Game1 : Game
     private LevelLoader _level;
     private Dictionary<int, Vector2> _roomEntryPoints = new();
     private bool _isTransitioning = false;
+    private bool _pendingControllerInit = false; // add this
 
 
     public Game1()
@@ -66,12 +67,10 @@ public partial class Game1 : Game
         InitializePlayerAndProjectiles();
         InitializeCameraAndRooms();
         InitializeControllers();
-        
     }
 
     protected override void Update(GameTime gameTime)
     {
-        // Collisions first so IsGrounded is current when input checks it
         if (_gameState is PlayingState)
             UpdateCollisions();
 
@@ -87,6 +86,13 @@ public partial class Game1 : Game
 
         _gameState.Update(this, gameTime);
         UpdateAudio();
+
+        if (_pendingControllerInit)
+        {
+            _pendingControllerInit = false;
+            InitializeControllers();
+        }
+
         base.Update(gameTime);
     }
 

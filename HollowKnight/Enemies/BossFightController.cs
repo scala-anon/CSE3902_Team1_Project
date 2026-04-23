@@ -27,6 +27,12 @@ namespace HollowKnight.Enemies
         private readonly MantisLord _middle;
         private readonly MantisLord _right;
 
+
+        // Added for debugger
+        public MantisLord Left   => _left;
+        public MantisLord Middle => _middle;
+        public MantisLord Right  => _right;
+
         private BossFightPhase _phase = BossFightPhase.Dormant;
         private float _wallAttackTimer;
 

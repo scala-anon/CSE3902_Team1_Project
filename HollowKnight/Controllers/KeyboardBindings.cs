@@ -4,6 +4,7 @@ using HollowKnight.Interfaces;
 using HollowKnight.Levels;
 using HollowKnight.Player;
 using HollowKnight.Shared;
+using HollowKnight.Enemies;
 
 namespace HollowKnight.Controllers
 {
@@ -11,7 +12,7 @@ namespace HollowKnight.Controllers
     {
         private static ICommand Gameplay(Game1 game, ICommand command) => new GameplayOnlyCommand(game, command);
 
-        public static void BindGameplay(KeyboardController keyboard, TheKnight knight, Game1 game, RoomManager roomManager)
+        public static void BindGameplay(KeyboardController keyboard, TheKnight knight, Game1 game, RoomManager roomManager, BossFightController bossFight = null)
         {
             //TODO: remove developer keybinding and change ability and movement binds if needed
 
@@ -121,11 +122,20 @@ namespace HollowKnight.Controllers
             keyboard.RegisterPressedCommand(Keys.Up, Gameplay(game, new PlayerInteractCommand(game)));
             keyboard.RegisterPressedCommand(Keys.W, Gameplay(game, new PlayerInteractCommand(game)));
 
-            // Start Mantis Lord boss fight (debug / trigger key)
-            keyboard.RegisterPressedCommand(Keys.B, new StartMantisFightCommand(game));
+            // // Start Mantis Lord boss fight (debug / trigger key)
+            // keyboard.RegisterPressedCommand(Keys.B, new StartMantisFightCommand(game));
 
+            // After:
+            if (bossFight != null)
+            {
+                keyboard.RegisterPressedCommand(Keys.V, new ToggleMantisStateCommand(bossFight.Left));
+                keyboard.RegisterPressedCommand(Keys.B, new ToggleMantisStateCommand(bossFight.Middle));
+                keyboard.RegisterPressedCommand(Keys.N, new ToggleMantisStateCommand(bossFight.Right));
+            }
             // Quit
             keyboard.RegisterPressedCommand(Keys.Q, new QuitCommand(game));
+
+
         }
     }
 }
