@@ -49,7 +49,7 @@ namespace HollowKnight.Player
         {
             SetPosition(_roomRespawnPoint.Value);
             physics.Velocity = Vector2.Zero;
-            //health.ResetHealth();
+            health.CancelDamageState();
         }
 
         public TheKnight(Dictionary<KnightSpriteType, ISprite> sprites, Vector2 position)

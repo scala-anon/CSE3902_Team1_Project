@@ -11,13 +11,13 @@
 <Item>
     <ObjectType>Knight</ObjectType>
     <ObjectName>Knight</ObjectName>
-    <Location>5750 2100</Location>
+    <Location>5785 2100</Location>
 </Item>
 
 <Item>
     <ObjectType>Respawn</ObjectType>
     <ObjectName>Respawn</ObjectName>
-    <Location>5750 2100</Location>
+    <Location>5785 3400</Location>
 </Item>
 
 <!-- RIGHTSIDE -->
