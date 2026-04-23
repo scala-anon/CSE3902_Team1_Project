@@ -100,6 +100,7 @@ namespace HollowKnight.Graphics
             string soulText = $"Soul: {knight.Soul}";
             string godmodeText = $"GODMODE: {(TheKnight.GodmodeEnabled ? "ON" : "OFF")}";
             string cameraText = $"Camera Position: {Camera.Instance.Position:F2}";
+            
 
             //hud for knight stats in debug mode
             Vector2 hudBasePos = Camera.Instance.Position + new Vector2(10, 10);

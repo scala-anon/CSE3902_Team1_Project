@@ -122,8 +122,8 @@ namespace HollowKnight.Controllers
             keyboard.RegisterPressedCommand(Keys.Up, Gameplay(game, new PlayerInteractCommand(game)));
             keyboard.RegisterPressedCommand(Keys.W, Gameplay(game, new PlayerInteractCommand(game)));
 
-            // // Start Mantis Lord boss fight (debug / trigger key)
-            // keyboard.RegisterPressedCommand(Keys.B, new StartMantisFightCommand(game));
+            //Start Mantis Lord boss fight (debug / trigger key)
+            keyboard.RegisterPressedCommand(Keys.L, new StartMantisFightCommand(game));
 
             // After:
             if (bossFight != null)

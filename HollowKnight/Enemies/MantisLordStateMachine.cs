@@ -154,8 +154,10 @@ namespace HollowKnight.Enemies
                 case MantisLordState.WallReady:
                     // Loops until controller forces a throw or duration elapses.
                     // TODO: spawn projectile here (when WallReady times out)
-                    if (_stateTimer >= EnemyConstants.MantisWallReadyDuration)
+                    //if (_stateTimer >= EnemyConstants.MantisWallReadyDuration)
+                    if (_owner.Sprite.IsFinished){
                         EnterState(MantisLordState.Throw);
+                    }
                     break;
 
                 case MantisLordState.WallLeave:
@@ -268,6 +270,12 @@ namespace HollowKnight.Enemies
 
                 // States with no automatic transition handled here:
                 // ThroneWounded, Dormant — wait for external command.
+                case MantisLordState.ThroneWounded:
+                    if (_owner.Sprite.IsFinished)
+                    {
+                        
+                    }
+                    break;
                 default:
                     break;
             }

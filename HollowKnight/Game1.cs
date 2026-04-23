@@ -67,6 +67,7 @@ public partial class Game1 : Game
         InitializePlayerAndProjectiles();
         InitializeCameraAndRooms();
         InitializeControllers();
+        InitializeFullScreen();
     }
 
     protected override void Update(GameTime gameTime)
