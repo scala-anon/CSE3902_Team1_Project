@@ -492,7 +492,7 @@ namespace HollowKnight.Factories
         }
         public ISprite CreateThroneWounded(Vector2 position)
         {
-            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Throne_Wounded"], position, 0.1, 1.0f, loop: false);
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Throne_Wounded"], position, 0.1, 1.0f, loop:false);
         }
         public ISprite CreateThroneBow(Vector2 position)
         {
@@ -504,7 +504,7 @@ namespace HollowKnight.Factories
         }
         public ISprite CreateWallReady(Vector2 position)
         {
-            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Wall_Ready"], position, 0.1, 1.0f, loop: false);
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Wall_Ready"], position, 0.1, 1.0f, loop:false);
         }
         public ISprite CreateMantisThrow(Vector2 position)
         {

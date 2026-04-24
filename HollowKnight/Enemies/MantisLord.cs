@@ -4,6 +4,7 @@ using HollowKnight.Interfaces;
 using HollowKnight.Shared;
 using HollowKnight.Collision;
 using Microsoft.Xna.Framework;
+using System;
 
 
 namespace HollowKnight.Enemies
