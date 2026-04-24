@@ -40,6 +40,12 @@ namespace HollowKnight.Enemies
         private bool _siblingsCommandedActive;
         private float _siblingStaggerTimer;
 
+        // field
+        private bool _paused = false;
+
+        // method
+        public void TogglePause() => _paused = !_paused;
+
         public IEnumerable<IEnemy> Enemies
         {
             get
@@ -71,7 +77,10 @@ namespace HollowKnight.Enemies
 
         public void Update(GameTime gameTime)
         {
-            if (_phase == BossFightPhase.Dormant || _phase == BossFightPhase.Done)
+            // if (_phase == BossFightPhase.Dormant || _phase == BossFightPhase.Done)
+            //     return;
+
+            if (_phase == BossFightPhase.Dormant || _phase == BossFightPhase.Done || _paused)
                 return;
 
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;

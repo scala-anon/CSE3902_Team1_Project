@@ -128,9 +128,26 @@ namespace HollowKnight.Controllers
             // After:
             if (bossFight != null)
             {
+                // keyboard.RegisterPressedCommand(Keys.V, new ToggleMantisStateCommand(bossFight.Left));
+                // keyboard.RegisterPressedCommand(Keys.B, new ToggleMantisStateCommand(bossFight.Middle));
+                // keyboard.RegisterPressedCommand(Keys.N, new ToggleMantisStateCommand(bossFight.Right));
+
+                // keyboard.RegisterComboPressedCommand(Keys.V, Keys.LeftShift, new KillMantisCommand(bossFight.Left));
+                // keyboard.RegisterComboPressedCommand(Keys.B, Keys.LeftShift, new KillMantisCommand(bossFight.Middle));
+                // keyboard.RegisterComboPressedCommand(Keys.N, Keys.LeftShift, new KillMantisCommand(bossFight.Right));
                 keyboard.RegisterPressedCommand(Keys.V, new ToggleMantisStateCommand(bossFight.Left));
                 keyboard.RegisterPressedCommand(Keys.B, new ToggleMantisStateCommand(bossFight.Middle));
                 keyboard.RegisterPressedCommand(Keys.N, new ToggleMantisStateCommand(bossFight.Right));
+
+                keyboard.RegisterComboPressedCommand(Keys.V, Keys.LeftShift, new KillMantisCommand(bossFight.Left));
+                keyboard.RegisterComboPressedCommand(Keys.B, Keys.LeftShift, new KillMantisCommand(bossFight.Middle));
+                keyboard.RegisterComboPressedCommand(Keys.N, Keys.LeftShift, new KillMantisCommand(bossFight.Right));
+
+                keyboard.RegisterComboPressedCommand(Keys.V, Keys.LeftControl, new FreezeMantisCommand(bossFight.Left));
+                keyboard.RegisterComboPressedCommand(Keys.B, Keys.LeftControl, new FreezeMantisCommand(bossFight.Middle));
+                keyboard.RegisterComboPressedCommand(Keys.N, Keys.LeftControl, new FreezeMantisCommand(bossFight.Right));
+
+                keyboard.RegisterComboPressedCommand(Keys.F, Keys.LeftShift, new ToggleFightPauseCommand(bossFight));
             }
             // Quit
             keyboard.RegisterPressedCommand(Keys.Q, new QuitCommand(game));
