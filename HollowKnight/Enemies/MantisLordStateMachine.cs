@@ -94,7 +94,7 @@ namespace HollowKnight.Enemies
         public void Update(GameTime gameTime, float dt)
         {
             if (!_fightStarted) return;
-
+            if (_frozen) return; // add this line
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             _stateTimer += dt;
 
@@ -114,16 +114,64 @@ namespace HollowKnight.Enemies
             switch (_owner.State)
             {
                 case MantisLordState.ThroneStand:
+                    switch(_owner.Slot)
+                    {
+                        case MantisLordSlot.Left:
+                            _owner.position = new Vector2(EnemyConstants.LeftMantisStandingX, EnemyConstants.SecondaryMantisStandingY);
+                        break;
+
+                        case MantisLordSlot.Right:
+                            _owner.position = new Vector2(EnemyConstants.RightMantisStandingX,EnemyConstants.SecondaryMantisStandingY);
+                        break;
+
+                        case MantisLordSlot.Middle:
+                            _owner.position = new Vector2(EnemyConstants.MiddleMantisStandingX,EnemyConstants.PrimaryMantisStandingY);
+                        break;
+                    }
                     if (_owner.Sprite.IsFinished)
                         EnterState(MantisLordState.ThroneLeave);
                     break;
 
                 case MantisLordState.ThroneLeave:
-                    if (_owner.Sprite.IsFinished)
+                    switch(_owner.Slot)
+                    {
+                        case MantisLordSlot.Left:
+                            _owner.FacingDirection = Direction.Left;
+                            _owner.position = new Vector2(EnemyConstants.LeftMantisStandingX, EnemyConstants.SecondaryMantisStandingY+72+18);
+                        break;
+
+                        case MantisLordSlot.Right:
+                            _owner.FacingDirection = Direction.Right;
+                            _owner.position = new Vector2(EnemyConstants.RightMantisStandingX,EnemyConstants.SecondaryMantisStandingY+72+18);
+                        break;
+
+                        case MantisLordSlot.Middle:
+                            _owner.FacingDirection = Direction.Right;
+                            _owner.position = new Vector2(EnemyConstants.MiddleMantisStandingX,EnemyConstants.PrimaryMantisStandingY+72+18);
+                        break;
+                    }
+                    if(_owner.Sprite.IsFinished)
+                    {
                         CommandBeginAttackLoop();
+                    }
                     break;
 
+
                 case MantisLordState.ThroneArrive:
+                    switch(_owner.Slot)
+                    {
+                        case MantisLordSlot.Left:
+                            _owner.position = new Vector2(EnemyConstants.LeftMantisStandingX, EnemyConstants.SecondaryMantisStandingY);
+                        break;
+
+                        case MantisLordSlot.Right:
+                            _owner.position = new Vector2(EnemyConstants.RightMantisStandingX,EnemyConstants.SecondaryMantisStandingY);
+                        break;
+
+                        case MantisLordSlot.Middle:
+                            _owner.position = new Vector2(EnemyConstants.MiddleMantisStandingX,EnemyConstants.PrimaryMantisStandingY);
+                        break;
+                    }
                     if (_owner.Sprite.IsFinished)
                     {
                         IsInWoundedPose = true;
@@ -334,5 +382,125 @@ namespace HollowKnight.Enemies
                     break;
             }
         }
+        // Add this field at the top with the other fields
+        private bool _frozen = false;
+
+        // Add these public methods
+        public void ToggleFreeze() => _frozen = !_frozen;
+        public bool IsFrozen => _frozen;
+
+        public void ResetDebugState()
+        {
+            target_knight = false;
+        }
+
+        public void ForceStartFight()
+        {
+            _fightStarted = true;
+            _owner.Activate();
+        }
+
+        // Add this method to snap position instantly when toggling states
+        public void SnapPositionForState(MantisLordState state)
+        {
+            switch (state)
+            {
+                case MantisLordState.ThroneStand:
+                    switch(_owner.Slot)
+                        {
+                            case MantisLordSlot.Left:
+                                _owner.position = new Vector2(EnemyConstants.LeftMantisStandingX, EnemyConstants.SecondaryMantisStandingY);
+                            break;
+
+                            case MantisLordSlot.Right:
+                                _owner.position = new Vector2(EnemyConstants.RightMantisStandingX,EnemyConstants.SecondaryMantisStandingY);
+                            break;
+
+                            case MantisLordSlot.Middle:
+                                _owner.position = new Vector2(EnemyConstants.MiddleMantisStandingX,EnemyConstants.PrimaryMantisStandingY);
+                            break;
+                    }
+                break;
+                case MantisLordState.IdleOnThrone:
+                case MantisLordState.ThroneLeave:
+                switch(_owner.Slot)
+                    {
+                        case MantisLordSlot.Left:
+                            _owner.FacingDirection = Direction.Left;
+                            _owner.position = new Vector2(EnemyConstants.LeftMantisStandingX, EnemyConstants.SecondaryMantisStandingY);
+                        break;
+
+                        case MantisLordSlot.Right:
+                            _owner.FacingDirection = Direction.Right;
+                            _owner.position = new Vector2(EnemyConstants.RightMantisStandingX,EnemyConstants.SecondaryMantisStandingY);
+                        break;
+
+                        case MantisLordSlot.Middle:
+                            _owner.FacingDirection = Direction.Right;
+                            _owner.position = new Vector2(EnemyConstants.MiddleMantisStandingX,EnemyConstants.PrimaryMantisStandingY);
+                        break;
+                    }
+                    break;
+                case MantisLordState.ThroneArrive:
+                switch(_owner.Slot)
+                    {
+                        case MantisLordSlot.Left:
+                            _owner.position = new Vector2(EnemyConstants.LeftMantisStandingX, EnemyConstants.SecondaryMantisStandingY+72+18);
+                        break;
+
+                        case MantisLordSlot.Right:
+                            _owner.position = new Vector2(EnemyConstants.RightMantisStandingX,EnemyConstants.SecondaryMantisStandingY+72+18);
+                        break;
+
+                        case MantisLordSlot.Middle:
+                            _owner.position = new Vector2(EnemyConstants.MiddleMantisStandingX,EnemyConstants.PrimaryMantisStandingY+72+18);
+                        break;
+                    }
+                break;
+                case MantisLordState.ThroneWounded:
+                case MantisLordState.ThroneBow:
+                case MantisLordState.Dormant:
+                    switch (_owner.Slot)
+                    {
+                        case MantisLordSlot.Left:
+                            _owner.position = new Vector2(3800, 5000);
+                            break;
+                        case MantisLordSlot.Middle:
+                            _owner.position = new Vector2(4518, 4900);
+                            break;
+                        case MantisLordSlot.Right:
+                            _owner.position = new Vector2(5200, 5000);
+                            break;
+                    }
+                    break;
+
+                case MantisLordState.WallArrive:
+                case MantisLordState.WallReady:
+                case MantisLordState.Throw:
+                case MantisLordState.WallLeave:
+                    _owner.position = new Vector2(3600, 4546);
+                    break;
+
+                case MantisLordState.DashArrive:
+                case MantisLordState.DashAnticipate:
+                case MantisLordState.Dash:
+                case MantisLordState.DashRecover:
+                case MantisLordState.DashLeave:
+                    _owner.position = _owner.FacingDirection == Direction.Right
+                        ? new Vector2(3880, 5000)
+                        : new Vector2(5140, 5000);
+                    break;
+
+                case MantisLordState.DStabArrive:
+                case MantisLordState.DStab:
+                case MantisLordState.DStabLand:
+                case MantisLordState.DStabLeave:
+                    target_knight = false;
+                    _owner.position = new Vector2(_owner.knightPosition.X, _owner.knightPosition.Y - 800);
+                    break;
+            }
+        }
+
+        // Guard the update loop with the freeze check — replace the top of Update:
     }
 }

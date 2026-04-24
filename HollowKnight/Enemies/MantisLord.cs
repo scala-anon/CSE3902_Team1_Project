@@ -147,5 +147,6 @@ namespace HollowKnight.Enemies
 
         protected override void UpdateAlive(GameTime gameTime, float dt)
             => _stateMachine.Update(gameTime, dt);
+
     }
 }

@@ -27,7 +27,7 @@ namespace HollowKnight.Enemies
         private readonly MantisLord _middle;
         private readonly MantisLord _right;
 
-
+        
         // Added for debugger
         public MantisLord Left   => _left;
         public MantisLord Middle => _middle;
@@ -39,6 +39,12 @@ namespace HollowKnight.Enemies
         // Sibling lords must stagger their activation slightly after the middle dies.
         private bool _siblingsCommandedActive;
         private float _siblingStaggerTimer;
+
+        // field
+        private bool _paused = false;
+
+        // method
+        public void TogglePause() => _paused = !_paused;
 
         public IEnumerable<IEnemy> Enemies
         {
@@ -71,11 +77,13 @@ namespace HollowKnight.Enemies
 
         public void Update(GameTime gameTime)
         {
-            if (_phase == BossFightPhase.Dormant || _phase == BossFightPhase.Done)
+            // if (_phase == BossFightPhase.Dormant || _phase == BossFightPhase.Done)
+            //     return;
+
+            if (_phase == BossFightPhase.Dormant || _phase == BossFightPhase.Done || _paused)
                 return;
 
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
             switch (_phase)
             {
                 case BossFightPhase.Phase1_Middle:
