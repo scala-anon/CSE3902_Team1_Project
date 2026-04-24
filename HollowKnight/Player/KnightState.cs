@@ -11,6 +11,8 @@ namespace HollowKnight.Player
         Dashing,
         Healing,
         Damaged,
+        Respawning,
+        Sitting,
         Dead
     }
 }

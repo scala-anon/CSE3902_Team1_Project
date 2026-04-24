@@ -17,6 +17,7 @@ namespace HollowKnight.Levels
         public List<IInteractable> Interactables { get; } = new();
         public List<TransitionZone> Transitions { get; } = new();
         public Vector2 KnightSpawn { get; private set; } = Vector2.Zero;
+        public Vector2? RespawnPoint { get; private set; }
         public BossFightController BossFight { get; private set; }
 
         private Game1 _game;
@@ -47,13 +48,15 @@ namespace HollowKnight.Levels
                 ["Spike_Floor_1"]        = pos => new Spike(SpikeVariant.Floor1, pos),
                 ["Spike_Floor_2"]        = pos => new Spike(SpikeVariant.Floor2, pos),
                 ["Spike_Ceiling"]        = pos => new Spike(SpikeVariant.Ceiling, pos),
+                ["Spike_Wall_1"]         = pos => new Spike(SpikeVariant.Wall1, pos),
                 ["Bench"]               = pos => new Bench(pos),
                 ["Plant1_Idle"]        = pos => new Grass(1,pos, 100, 5, hitOffsetY: 0),
                 ["Plant2_Idle"]        = pos => new Grass(2,pos, 100, 5, hitOffsetY: 0),
-                ["Wall_0"]             = pos => new Wall(0, pos, 80, 200),
+                ["Wall_0"]             = pos => new Wall(0, pos, 282, 10),
+                ["Wall_0_Flipped"]     = pos => new Wall(0, pos, 257, 30, flipped: true, hitOffsetX: 17),
                 ["Wall_1"]             = pos => new Wall(1, pos, 80, 200),
                 ["Wall_2"]             = pos => new Wall(2, pos, 49, 111),
-                ["Wall_3"]              = pos => new Wall(3,pos,49,111),
+                ["Wall_3"]              = pos => new Wall(3,pos,61,139),
                 ["Wall_4"]              = pos => new BreakableWall(4,pos,142,246),
                 ["Wall_5"]              = pos => new Wall(5,pos, 175,305),
                 ["BreakableWall_0"]    = pos => new BreakableWall(0, pos, 80, 200),
@@ -110,6 +113,8 @@ namespace HollowKnight.Levels
                 new TransitionZone(
                 new Rectangle((int)pos.X, (int)pos.Y, GameConstants.TransitionZoneWidth, 80),
                 ParseDestinationRoom(name))),
+
+                ["Respawn"] = (name, pos) => RespawnPoint = pos,
             };
         }
 
@@ -124,6 +129,7 @@ namespace HollowKnight.Levels
             Interactables.Clear();
             Transitions.Clear();
             KnightSpawn = Vector2.Zero;
+            RespawnPoint = null;
             BossFight = null;
 
             XDocument doc  = XDocument.Load(xmlFilePath);

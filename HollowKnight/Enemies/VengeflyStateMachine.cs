@@ -11,6 +11,9 @@ namespace HollowKnight.Enemies
         private Vengefly CurrentVengeFly;
 
         private Direction _patrolDirection = Direction.Right;
+        private float _patrolTarget;
+        private bool _patrolTargetSet = false;
+        private static readonly System.Random _random = new System.Random();
         private double _startleTimer = 0;
         private NavigationGrid _grid;
         private List<Vector2> _currentPath = new List<Vector2>();
@@ -95,25 +98,33 @@ namespace HollowKnight.Enemies
 
         private void UpdatePatrol(float elapsedTime)
         {
+            if (!_patrolTargetSet)
+            {
+                float dist = _random.Next(80, 121);
+                _patrolTarget = _patrolDirection == Direction.Right
+                    ? CurrentVengeFly.position.X + dist
+                    : CurrentVengeFly.position.X - dist;
+                _patrolTargetSet = true;
+            }
+
             float speed = _patrolDirection == Direction.Right
                 ? EnemyConstants.VengeflyPatrolSpeed
                 : -EnemyConstants.VengeflyPatrolSpeed;
             CurrentVengeFly.position.X += speed * elapsedTime;
             CurrentVengeFly.FacingDirection = _patrolDirection;
 
-            float spriteWidth = CurrentVengeFly.SpriteSize.X;
+            bool reachedTarget = _patrolDirection == Direction.Right
+                ? CurrentVengeFly.position.X >= _patrolTarget
+                : CurrentVengeFly.position.X <= _patrolTarget;
 
-            if (CurrentVengeFly.position.X + spriteWidth >= GameConstants.DefaultLevelWidth)
+            if (reachedTarget)
             {
-                CurrentVengeFly.position.X = GameConstants.DefaultLevelWidth - spriteWidth;
-                _patrolDirection = Direction.Left;
-                CurrentVengeFly.FacingDirection = Direction.Left;
-            }
-            else if (CurrentVengeFly.position.X <= 0)
-            {
-                CurrentVengeFly.position.X = 0;
-                _patrolDirection = Direction.Right;
-                CurrentVengeFly.FacingDirection = Direction.Right;
+                _patrolDirection = _patrolDirection == Direction.Right ? Direction.Left : Direction.Right;
+                CurrentVengeFly.FacingDirection = _patrolDirection;
+                float dist = _random.Next(75, 250);
+                _patrolTarget = _patrolDirection == Direction.Right
+                    ? CurrentVengeFly.position.X + dist
+                    : CurrentVengeFly.position.X - dist;
             }
         }
 

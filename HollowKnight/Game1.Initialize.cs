@@ -162,6 +162,7 @@ public void TransitionToRoom(int roomNumber)
     _level.SetGame(this);
     _level.Load(targetFile);
     _currentRoom = roomNumber;
+    ApplyRoomRespawnPoint();
 
     if (_roomEntryPoints.TryGetValue(roomNumber, out Vector2 entryPoint))
         _knight.SetPosition(entryPoint);
@@ -171,6 +172,15 @@ public void TransitionToRoom(int roomNumber)
     LoadObstacles();
     _isTransitioning = false;
     DebugLogger.LogRoomTransition($"TransitionToRoom: room {roomNumber} loaded, knight at {_knight.position}");
+}
+
+private void ApplyRoomRespawnPoint()
+{
+    if (_knight == null) return;
+    if (_level.RespawnPoint.HasValue)
+        _knight.SetRoomRespawnPoint(_level.RespawnPoint.Value);
+    else
+        _knight.ClearRoomRespawnPoint();
 }
 
 private void RestartGame()
@@ -183,6 +193,7 @@ private void RestartGame()
     InitializeLevel();
     InitializeGameplaySystems();
     InitializePlayerAndProjectiles();
+    ApplyRoomRespawnPoint();
     InitializeCameraAndRooms();
     InitializeControllers();
     SetPlaying();

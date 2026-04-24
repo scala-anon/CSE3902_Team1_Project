@@ -12,6 +12,8 @@ namespace HollowKnight.Player
         HealPrep,
         HealPost,
         SpiritCast,
+        Respawning,
+        Sitting,
         Dashing
     }
 }

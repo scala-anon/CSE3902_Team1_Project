@@ -14,6 +14,12 @@
     <Location>6150 400</Location>
 </Item>
 
+<Item>
+    <ObjectType>Respawn</ObjectType>
+    <ObjectName>Respawn</ObjectName>
+    <Location>6150 400</Location>
+</Item>
+
 <!-- TOP PATH (Straight path with 2 spikes and crawlid) -->
 <!-- Main long platform -->
 <Item>
@@ -48,6 +54,11 @@
     <ObjectName>Path_ledge</ObjectName>
     <Location>7250 800</Location>
 </Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_ledge</ObjectName>
+    <Location>7310 800</Location>
+</Item>
 
 
 <!-- LOWER PATH (Next straight path with fly and spike) -->
@@ -62,6 +73,27 @@
     <ObjectName>Spike_Floor_2</ObjectName>
     <Location>6850 980</Location>
 </Item>
+
+<!-- Spikes underneath ledge-->
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Spike_Floor_2</ObjectName>
+    <Location>7075 980</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Spike_Floor_2</ObjectName>
+    <Location>7205 980</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Spike_Floor_2</ObjectName>
+    <Location>7335 980</Location>
+</Item>
+
+
 
 <!-- <Item>
     <ObjectType>Enemy</ObjectType>
@@ -82,8 +114,20 @@
     <Location>5550 1200</Location>
 </Item>
 
-<!-- Walls to contain the paths -->
-<!-- Right Wall -->
+
+<!-- Walls near transition to Room 3 -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>5550 620</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>5550 730</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>5550 840</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>5550 950</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>5550 1060</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>5550 1170</Location></Item>
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6050 1040</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6050 1150</Location></Item>
+
+
+<!-- Main Right Wall -->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 400</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 510</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 620</Location></Item>

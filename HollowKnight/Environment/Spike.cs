@@ -10,7 +10,8 @@ namespace HollowKnight.Environment
     {
         Floor1,
         Floor2,
-        Ceiling
+        Ceiling,
+        Wall1
     }
 
     public class Spike : IObject, IHazard
@@ -59,6 +60,10 @@ namespace HollowKnight.Environment
                 case SpikeVariant.Ceiling:
                     hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, CollisionConstants.SpikeCeilingPrimaryW, CollisionConstants.SpikeCeilingPrimaryH);
                     hitBoxes[1] = new Rectangle((int)position.X + CollisionConstants.SpikeCeilingSecondaryX, (int)position.Y + CollisionConstants.SpikeCeilingSecondaryY, CollisionConstants.SpikeCeilingSecondaryW, CollisionConstants.SpikeCeilingSecondaryH);
+                    break;
+                case SpikeVariant.Wall1:
+                    hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y + CollisionConstants.SpikeWall1OffsetY, CollisionConstants.SpikeWall1W, CollisionConstants.SpikeWall1H);
+                    hitBoxes[1] = hitBoxes[0];
                     break;
             }
             return hitBoxes;

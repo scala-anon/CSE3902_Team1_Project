@@ -113,6 +113,7 @@ namespace HollowKnight.Factories
             platformFrames.Add("Spike_Floor_1", platformAtlas.GetRegion("Spike_Floor_1").SourceRectangle);
             platformFrames.Add("Spike_Floor_2", platformAtlas.GetRegion("Spike_Floor_2").SourceRectangle);
             platformFrames.Add("Spike_Ceiling", platformAtlas.GetRegion("Spike_Ceiling").SourceRectangle);
+            platformFrames.Add("Spike_Wall_1", platformAtlas.GetRegion("Spike_Wall_1").SourceRectangle);
             platformFrames.Add("Path_1", platformAtlas.GetRegion("Path_1").SourceRectangle);
             platformFrames.Add("Path_2", platformAtlas.GetRegion("Path_2").SourceRectangle);
             platformFrames.Add("Path_Stone_3", platformAtlas.GetRegion("Path_Stone_3").SourceRectangle);
@@ -235,6 +236,7 @@ namespace HollowKnight.Factories
                 SpikeVariant.Floor1 => "Spike_Floor_1",
                 SpikeVariant.Floor2 => "Spike_Floor_2",
                 SpikeVariant.Ceiling => "Spike_Ceiling",
+                SpikeVariant.Wall1 => "Spike_Wall_1",
                 _ => "Spike_Floor_1"
             };
             return new StaticSprite(platformSpriteSheet, platformFrames[key], position, 1.0f);
