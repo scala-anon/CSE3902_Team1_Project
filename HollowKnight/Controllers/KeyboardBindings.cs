@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework.Input;
 using HollowKnight.Commands;
 using HollowKnight.Interfaces;
-using HollowKnight.Levels;
 using HollowKnight.Player;
 using HollowKnight.Shared;
 
@@ -11,7 +10,7 @@ namespace HollowKnight.Controllers
     {
         private static ICommand Gameplay(Game1 game, ICommand command) => new GameplayOnlyCommand(game, command);
 
-        public static void BindGameplay(KeyboardController keyboard, TheKnight knight, Game1 game, RoomManager roomManager)
+        public static void BindGameplay(KeyboardController keyboard, TheKnight knight, Game1 game)
         {
             //TODO: remove developer keybinding and change ability and movement binds if needed
 
@@ -84,13 +83,14 @@ namespace HollowKnight.Controllers
             keyboard.RegisterPressedCommand(Keys.E, Gameplay(game, new PlayerTakeDamageCommand(knight)));
 
             // Debug room switching
-            keyboard.RegisterComboPressedCommand(Keys.Right, Keys.LeftControl, Gameplay(game, new SwitchRoomCommand(roomManager, 1)));
-            keyboard.RegisterComboPressedCommand(Keys.Left, Keys.LeftControl, Gameplay(game, new SwitchRoomCommand(roomManager, -1)));
-            keyboard.RegisterComboPressedCommand(Keys.Right, Keys.RightControl, Gameplay(game, new SwitchRoomCommand(roomManager, 1)));
-            keyboard.RegisterComboPressedCommand(Keys.Left, Keys.RightControl, Gameplay(game, new SwitchRoomCommand(roomManager, -1)));
-            keyboard.RegisterPressedCommand(Keys.F1, Gameplay(game, new JumpToRoomCommand(roomManager, 0)));
-            keyboard.RegisterPressedCommand(Keys.F2, Gameplay(game, new JumpToRoomCommand(roomManager, 1)));
-            keyboard.RegisterPressedCommand(Keys.F3, Gameplay(game, new JumpToRoomCommand(roomManager, 2)));
+            keyboard.RegisterComboPressedCommand(Keys.Right, Keys.LeftControl, Gameplay(game, new SwitchRoomCommand(game, 1)));
+            keyboard.RegisterComboPressedCommand(Keys.Left, Keys.LeftControl, Gameplay(game, new SwitchRoomCommand(game, -1)));
+            keyboard.RegisterComboPressedCommand(Keys.Right, Keys.RightControl, Gameplay(game, new SwitchRoomCommand(game, 1)));
+            keyboard.RegisterComboPressedCommand(Keys.Left, Keys.RightControl, Gameplay(game, new SwitchRoomCommand(game, -1)));
+            keyboard.RegisterPressedCommand(Keys.F1, Gameplay(game, new DebugJumpToRoomCommand(game, 1)));
+            keyboard.RegisterPressedCommand(Keys.F2, Gameplay(game, new DebugJumpToRoomCommand(game, 2)));
+            keyboard.RegisterPressedCommand(Keys.F3, Gameplay(game, new DebugJumpToRoomCommand(game, 3)));
+            keyboard.RegisterPressedCommand(Keys.F4, Gameplay(game, new DebugJumpToRoomCommand(game, 4)));
 
             // Debug toggles
             keyboard.RegisterPressedCommand(Keys.H, new ToggleHitboxesCommand(game));
