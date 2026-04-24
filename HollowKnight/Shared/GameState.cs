@@ -17,6 +17,7 @@ namespace HollowKnight.Shared
         {
             game.CheckTransitions();
             game.UpdateKnight(gameTime);
+            game.CheckBenchRespawnTransition();
             game.UpdateRoom(gameTime);
             if (game.KnightIsDead())
             {

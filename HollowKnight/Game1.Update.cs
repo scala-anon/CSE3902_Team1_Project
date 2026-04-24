@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using HollowKnight.Environment;
 using HollowKnight.Interfaces;
 using HollowKnight.Audio;
 using HollowKnight.Shared;
@@ -133,6 +134,8 @@ internal void CheckTransitions()
             {
                 DebugLogger.LogInteraction(interactable.GetType().Name, "ButtonPress", "Up/W");
                 interactable.OnInteract(_knight);
+                if (interactable is Bench)
+                    _knight.SetBenchRoom(_currentRoom);
                 return;
             }
         }

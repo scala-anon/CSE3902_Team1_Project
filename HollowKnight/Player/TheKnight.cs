@@ -40,7 +40,15 @@ namespace HollowKnight.Player
         public float VelocityY => physics.VelocityY;
 
         private Vector2 benchSpawnPoint;
+        private int _benchSpawnRoom = 1;
         private bool _justDied;
+        private bool _needsBenchRoomTransition;
+
+        public int BenchSpawnRoom => _benchSpawnRoom;
+        public Vector2 BenchSpawnPoint => benchSpawnPoint;
+        public void SetBenchRoom(int room) => _benchSpawnRoom = room;
+        public bool NeedsBenchRoomTransition => _needsBenchRoomTransition;
+        public void ConsumeBenchRoomTransition() => _needsBenchRoomTransition = false;
 
         private bool _isSitting;
         private double _sittingTimer;
@@ -385,11 +393,9 @@ namespace HollowKnight.Player
             if (health.Health == 0)
             {
                 _justDied = true;
-                DebugLogger.LogGeneral($"Knight died. Respawning at {benchSpawnPoint}.");
-                SetPosition(benchSpawnPoint);
-                physics.Velocity = Vector2.Zero;
+                DebugLogger.LogGeneral($"Knight died. Respawning at {benchSpawnPoint} (room {_benchSpawnRoom}).");
                 health.ResetHealth();
-                StartSittingIdle();
+                _needsBenchRoomTransition = true;
             }
             else
             {

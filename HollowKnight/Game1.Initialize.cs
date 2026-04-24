@@ -174,6 +174,21 @@ public void TransitionToRoom(int roomNumber)
     DebugLogger.LogRoomTransition($"TransitionToRoom: room {roomNumber} loaded, knight at {_knight.position}");
 }
 
+internal void CheckBenchRespawnTransition()
+{
+    if (!_knight.NeedsBenchRoomTransition) return;
+    _knight.ConsumeBenchRoomTransition();
+
+    int benchRoom = _knight.BenchSpawnRoom;
+    if (benchRoom != _currentRoom)
+        TransitionToRoom(benchRoom);
+
+    _knight.SetPosition(_knight.BenchSpawnPoint);
+    Camera.Instance.SnapTo(_knight.BenchSpawnPoint);
+    _knight.StartSittingIdle();
+    DebugLogger.LogRoomTransition($"CheckBenchRespawnTransition: placed knight at {_knight.BenchSpawnPoint} in room {benchRoom}");
+}
+
 private void ApplyRoomRespawnPoint()
 {
     if (_knight == null) return;
