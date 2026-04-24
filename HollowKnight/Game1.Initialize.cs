@@ -112,10 +112,10 @@ public partial class Game1
         int screenWidth = _graphics.PreferredBackBufferWidth;
 
         KeyboardController keyboard = new KeyboardController();
-        KeyboardBindings.BindGameplay(keyboard, _knight, this, _roomManager);
+        KeyboardBindings.BindGameplay(keyboard, _knight, this);
 
         _controllerList.Add(keyboard);
-        _controllerList.Add(new MouseController(this, screenWidth, _roomManager));
+        _controllerList.Add(new MouseController(this, screenWidth));
     }
 
     private void LoadObstacles()
@@ -168,6 +168,8 @@ public void TransitionToRoom(int roomNumber)
         _knight.SetPosition(entryPoint);
     else
         _knight.SetPosition(_level.KnightSpawn);
+
+    Camera.Instance.SnapTo(_knight.GetPosition());
 
     LoadObstacles();
     _isTransitioning = false;

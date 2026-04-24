@@ -2,7 +2,6 @@ using HollowKnight.Player;
 using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 using System;
-using System.Diagnostics;
 
 namespace HollowKnight.Levels
 {
@@ -12,11 +11,7 @@ namespace HollowKnight.Levels
 
         private readonly TheKnight _knight;
         private readonly Camera _camera;
-        private readonly int _screenWidth;
         private readonly int _levelWidth;
-        private readonly int _roomCount;
-
-        private int _currentRoomIndex;
 
         public RoomManager(
             TheKnight knight,
@@ -27,105 +22,46 @@ namespace HollowKnight.Levels
         {
             _knight = knight;
             _camera = Camera.Instance;
-            _screenWidth = screenWidth;
             _levelWidth = Math.Max(screenWidth, levelWidth);
-            _roomCount = Math.Max(1, (int)Math.Ceiling(_levelWidth / (double)_screenWidth));
 
             _camera.SetBounds(_levelWidth, levelHeight);
-            _camera.SnapTo(new Vector2(_screenWidth / 2f, screenHeight / 2f));
+            _camera.SnapTo(new Vector2(screenWidth / 2f, screenHeight / 2f));
         }
 
         public void Update(GameTime gameTime)
         {
-            HandleAutomaticRoomSwitch();
+            ClampKnightToLevelBounds();
+
             Vector2 knightPosition = _knight.GetPosition();
             Vector2 cameraPosition = Camera.Instance.Position;
+            float xDifference = knightPosition.X - (cameraPosition.X + CameraConstants.cameraCenterOffset);
 
-            float xDifference = _knight.position.X - (Camera.Instance.Position.X + CameraConstants.cameraCenterOffset);
-
-            if (_knight.Facing == Shared.Direction.Right && xDifference >= CameraConstants.cameraFollowKnightMax)
+            if (_knight.Facing == Direction.Right && xDifference >= CameraConstants.cameraFollowKnightMax)
             {
                 cameraPosition.X = knightPosition.X - CameraConstants.cameraFollowKnightMax;
                 cameraPosition.Y = knightPosition.Y;
                 _camera.Follow(cameraPosition);
-            
-
-            } else if (_knight.Facing == Shared.Direction.Left && xDifference <= CameraConstants.cameraFollowKnightMin)
-            {   
+            }
+            else if (_knight.Facing == Direction.Left && xDifference <= CameraConstants.cameraFollowKnightMin)
+            {
                 cameraPosition.X = knightPosition.X + CameraConstants.cameraKnightOffset;
                 cameraPosition.Y = knightPosition.Y;
                 _camera.Follow(cameraPosition);
-                
             }
-            else if ((xDifference <= -CameraConstants.cameraFollowKnightMin) && (xDifference >= CameraConstants.cameraFollowKnightMin))
+            else if (xDifference >= CameraConstants.cameraFollowKnightMin && xDifference <= -CameraConstants.cameraFollowKnightMin)
             {
+                // Dead zone: knight near screen center — hold X, only lerp Y.
                 _camera.SetTempBounds(knightPosition);
-                
-            
-            }else
+            }
+            else
             {
                 _camera.Follow(knightPosition);
             }
-
-            
-            
         }
 
-        public void SwitchRoomByOffset(int offset)
-        {
-            int targetRoomIndex = Math.Clamp(_currentRoomIndex + offset, 0, _roomCount - 1);
-            if (targetRoomIndex == _currentRoomIndex)
-            {
-                return;
-            }
-
-            _currentRoomIndex = targetRoomIndex;
-            float roomLeft = _currentRoomIndex * _screenWidth;
-            _knight.SetPosition(new Vector2(roomLeft + 100f, _knight.GetPosition().Y));
-
-            Vector2 knightPosition = _knight.GetPosition();
-            Vector2 cameraPosition = new Vector2();
-            cameraPosition.X = knightPosition.X - 100;
-            cameraPosition.Y = knightPosition.Y;
-            _camera.SnapTo(cameraPosition);
-        }
-
-        public void JumpToRoomIndex(int roomIndex)
-        {
-            if (roomIndex < 0 || roomIndex >= _roomCount)
-            {
-                return;
-            }
-
-            _currentRoomIndex = roomIndex;
-            float roomLeft = _currentRoomIndex * _screenWidth;
-            _knight.SetPosition(new Vector2(roomLeft + 100f, _knight.GetPosition().Y));
-
-            Vector2 knightPosition = _knight.GetPosition();
-            Vector2 cameraPosition = new Vector2();
-            cameraPosition.X = knightPosition.X - 100;
-            cameraPosition.Y = knightPosition.Y;
-            _camera.SnapTo(cameraPosition);
-        }
-
-        private void HandleAutomaticRoomSwitch()
+        private void ClampKnightToLevelBounds()
         {
             Vector2 position = _knight.GetPosition();
-            float roomLeft = _currentRoomIndex * _screenWidth;
-            float roomRight = roomLeft + _screenWidth;
-
-            if (position.X <= roomLeft && _currentRoomIndex > 0)
-            {
-                _currentRoomIndex--;
-                return;
-            }
-
-            if (position.X + PlayerWidth >= roomRight && _currentRoomIndex < _roomCount - 1)
-            {
-                _currentRoomIndex++;
-                return;
-            }
-
             if (position.X < 0)
             {
                 _knight.SetPosition(new Vector2(0, position.Y));
