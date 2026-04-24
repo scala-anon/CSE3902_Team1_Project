@@ -13,7 +13,9 @@ namespace HollowKnight.Levels
     {
         public List<IEnemy> Enemies        { get; } = new();
         public List<IObject> Backgrounds   { get; } = new();
+        public List<IObject> BackgroundMid   { get; } = new();
         public List<IObject> Platforms     { get; } = new();
+        public List<IObject> Foreground    { get; } = new();
         public List<IInteractable> Interactables { get; } = new();
         public List<TransitionZone> Transitions { get; } = new();
         public Vector2 KnightSpawn { get; private set; } = Vector2.Zero;
@@ -125,7 +127,9 @@ namespace HollowKnight.Levels
             // Clear all lists before loading new level
             Enemies.Clear();
             Backgrounds.Clear();
+            BackgroundMid.Clear();
             Platforms.Clear();
+            Foreground.Clear();
             Interactables.Clear();
             Transitions.Clear();
             KnightSpawn = Vector2.Zero;
@@ -195,9 +199,25 @@ namespace HollowKnight.Levels
             }
         }
 
-        private static readonly HashSet<string> BackgroundNames = new()
+        private enum DecorationLayer { BackgroundFar, BackgroundMid, Foreground }
+
+        // Name → visual layer for non-collidable decorations.
+        // Anything absent falls through to the default logic (collision goes to Platforms).
+        private static readonly Dictionary<string, DecorationLayer> DecorationLayers = new()
         {
-            "Background_1", "Background_2"
+            ["Background_1"]   = DecorationLayer.BackgroundFar,
+            ["Background_2"]   = DecorationLayer.BackgroundFar,
+
+            ["Village_1"]      = DecorationLayer.BackgroundMid,
+            ["Village_2"]      = DecorationLayer.BackgroundMid,
+            ["Village_3"]      = DecorationLayer.BackgroundMid,
+            ["MantisThrone_1"] = DecorationLayer.BackgroundMid,
+            ["MantisThrone_2"] = DecorationLayer.BackgroundMid,
+
+            ["Flag_1"]         = DecorationLayer.Foreground,
+            ["Flag_2"]         = DecorationLayer.Foreground,
+            ["Flag_3"]         = DecorationLayer.Foreground,
+            ["Flag_4"]         = DecorationLayer.Foreground,
         };
 
         private void SpawnPlatform(string name, Vector2 position)
@@ -209,9 +229,18 @@ namespace HollowKnight.Levels
             }
 
             IObject obj = create(position);
-            if (BackgroundNames.Contains(name))
-                Backgrounds.Add(obj);
-            else if (obj is IInteractable interactable && obj is not IBreakable)
+
+            if (DecorationLayers.TryGetValue(name, out var layer))
+            {
+                switch (layer)
+                {
+                    case DecorationLayer.BackgroundFar: Backgrounds.Add(obj);   return;
+                    case DecorationLayer.BackgroundMid: BackgroundMid.Add(obj); return;
+                    case DecorationLayer.Foreground:    Foreground.Add(obj);    return;
+                }
+            }
+
+            if (obj is IInteractable interactable && obj is not IBreakable)
                 Interactables.Add(interactable);
             else
                 Platforms.Add(obj);

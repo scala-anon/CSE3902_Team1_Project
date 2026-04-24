@@ -27,12 +27,14 @@ public partial class Game1
                 transformMatrix: Camera.Instance.GetTransform());
 
         DrawBackgrounds(GameConstants.LayerDepthBackgroundFar);
+        DrawBackgroundMid(GameConstants.LayerDepthBackgroundMid);
         DrawPlatforms(GameConstants.LayerDepthPlatform);
         DrawInteractables(GameConstants.LayerDepthInteractable);
         DrawItems(GameConstants.LayerDepthItem);
         DrawEnemies(GameConstants.LayerDepthEnemy);
         DrawProjectiles(GameConstants.LayerDepthProjectile);
         DrawKnight(GameConstants.LayerDepthKnight);
+        DrawForeground(GameConstants.LayerDepthForeground);
         DrawDebugOverlay();
 
         _spriteBatch.End();
@@ -40,20 +42,44 @@ public partial class Game1
 
     private void DrawInteractables(float layerDepth)
     {
+        int i = 0;
         foreach (IInteractable interactable in _level.Interactables)
         {
             if(interactable != null)
             {
-                interactable.Draw(_spriteBatch, SpriteEffects.None, layerDepth);
+                interactable.Draw(_spriteBatch, SpriteEffects.None, layerDepth + i * GameConstants.LayerDepthEpsilon);
+                i++;
             }
         }
     }
 
     private void DrawBackgrounds(float layerDepth)
     {
+        int i = 0;
         foreach (IObject bg in _level.Backgrounds)
         {
-            bg.Draw(_spriteBatch, SpriteEffects.None, layerDepth);
+            bg.Draw(_spriteBatch, SpriteEffects.None, layerDepth + i * GameConstants.LayerDepthEpsilon);
+            i++;
+        }
+    }
+
+    private void DrawBackgroundMid(float layerDepth)
+    {
+        int i = 0;
+        foreach (IObject obj in _level.BackgroundMid)
+        {
+            obj?.Draw(_spriteBatch, SpriteEffects.None, layerDepth + i * GameConstants.LayerDepthEpsilon);
+            i++;
+        }
+    }
+
+    private void DrawForeground(float layerDepth)
+    {
+        int i = 0;
+        foreach (IObject obj in _level.Foreground)
+        {
+            obj?.Draw(_spriteBatch, SpriteEffects.None, layerDepth + i * GameConstants.LayerDepthEpsilon);
+            i++;
         }
     }
 
@@ -64,39 +90,47 @@ public partial class Game1
 
     private void DrawPlatforms(float layerDepth)
     {
+        int i = 0;
         foreach (IObject obj in _level.Platforms)
         {
             if (obj != null)
             {
-                obj.Draw(_spriteBatch, SpriteEffects.None, layerDepth);
+                obj.Draw(_spriteBatch, SpriteEffects.None, layerDepth + i * GameConstants.LayerDepthEpsilon);
+                i++;
             }
         }
     }
 
     private void DrawEnemies(float layerDepth)
     {
+        int i = 0;
         foreach (IEnemy enemy in _level.Enemies)
         {
-            enemy.Draw(_spriteBatch, SpriteEffects.None, layerDepth);
+            enemy.Draw(_spriteBatch, SpriteEffects.None, layerDepth + i * GameConstants.LayerDepthEpsilon);
+            i++;
         }
     }
 
     private void DrawItems(float layerDepth)
     {
+        int i = 0;
         foreach (Spirit item in _items)
         {
             if (item.IsActive)
             {
-                item.Draw(_spriteBatch, layerDepth);
+                item.Draw(_spriteBatch, layerDepth + i * GameConstants.LayerDepthEpsilon);
+                i++;
             }
         }
     }
 
     private void DrawProjectiles(float layerDepth)
     {
+        int i = 0;
         foreach (var p in _projectileManager.All)
         {
-            p.Draw(_spriteBatch, Direction.Right, layerDepth);
+            p.Draw(_spriteBatch, Direction.Right, layerDepth + i * GameConstants.LayerDepthEpsilon);
+            i++;
         }
     }
 
