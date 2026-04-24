@@ -202,6 +202,7 @@ namespace HollowKnight.Enemies
                     break;
 
                 case MantisLordState.WallReady:
+                    _owner.position.Y = EnemyConstants.MantisWallHangY + EnemyConstants.MantisWallHangOffset;
                     // Loops until controller forces a throw or duration elapses.
                     // TODO: spawn projectile here (when WallReady times out)
                     if(_owner.Sprite.IsFinished){
@@ -240,13 +241,13 @@ namespace HollowKnight.Enemies
                     break;
 
                 case MantisLordState.Dash:
-                    _owner.position.Y = EnemyConstants.MantisDashY + EnemyConstants.MantisDashAnticipateSpriteHeightOffset;
+                    _owner.position.Y = EnemyConstants.MantisDashY + EnemyConstants.MantisDashAnticipateSpriteHeightOffset + 100;
                     if(_owner.FacingDirection == Direction.Right)
                     {
-                       //_owner.position.X -= EnemyConstants.MantisDashSpeed * elapsedTime;
+                       _owner.position.X -= EnemyConstants.MantisDashSpeed * elapsedTime;
                     } else
                     {
-                       //_owner.position.X += EnemyConstants.MantisDashSpeed * elapsedTime;
+                       _owner.position.X += EnemyConstants.MantisDashSpeed * elapsedTime;
                     }
                     if (_owner.Sprite.IsFinished)
                         EnterState(MantisLordState.DashRecover);
@@ -258,6 +259,7 @@ namespace HollowKnight.Enemies
                     break;
 
                 case MantisLordState.DashLeave:
+                    _owner.position.Y = EnemyConstants.MantisDashY;
                     if (_owner.Sprite.IsFinished)
                         StartAttackCooldown();
                     break;
@@ -278,7 +280,6 @@ namespace HollowKnight.Enemies
                 case MantisLordState.DStab:
                     _owner.position.Y += EnemyConstants.MantisStabSpeed * elapsedTime;
                     if (_owner.Sprite.IsFinished)
-                        target_knight = false;
                         EnterState(MantisLordState.DStabLand);
                     break;
 
