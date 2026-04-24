@@ -148,6 +148,7 @@ namespace HollowKnight.Controllers
                 keyboard.RegisterComboPressedCommand(Keys.N, Keys.LeftControl, new FreezeMantisCommand(bossFight.Right));
 
                 keyboard.RegisterComboPressedCommand(Keys.F, Keys.LeftShift, new ToggleFightPauseCommand(bossFight));
+                keyboard.RegisterComboPressedCommand(Keys.F, Keys.LeftShift, new ToggleFightPauseCommand(bossFight));
             }
             // Quit
             keyboard.RegisterPressedCommand(Keys.Q, new QuitCommand(game));
