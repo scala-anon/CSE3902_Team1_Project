@@ -1,4 +1,5 @@
 using HollowKnight.Enemies;
+using HollowKnight.Environment;
 using HollowKnight.Projectiles;
 using HollowKnight.Player;
 using HollowKnight.Shared;
@@ -84,6 +85,54 @@ namespace HollowKnight.Collision
                 a.Bottom - b.Top,
                 b.Bottom - a.Top
             );
+        }
+
+        public static void ResolveCrawlidBlockCollision(Crawlid crawlid, ICollidable block)
+        {
+            if (crawlid == null || block == null) return;
+            if (!block.IsActive) return;
+            if (block is Spike) return;
+
+            Rectangle enemyBounds = crawlid.Bounds;
+            Rectangle blockBounds = block.Bounds;
+
+            // Ground probe extends slightly below the sprite so a crawlid sitting exactly
+            // on a platform surface (no actual overlap) still re-confirms grounding each frame.
+            Rectangle probe = new Rectangle(enemyBounds.X, enemyBounds.Y, enemyBounds.Width, enemyBounds.Height + GameConstants.GroundProbeExtension);
+            if (!probe.Intersects(blockBounds)) return;
+
+            var (overlapLeft, overlapRight, overlapTop, overlapBottom) = CalculateOverlaps(enemyBounds, blockBounds);
+
+            // Probe touched but bounds don't actually overlap: crawlid is resting on top.
+            if (overlapTop <= 0 && overlapBottom > 0 && enemyBounds.Right > blockBounds.Left && enemyBounds.Left < blockBounds.Right)
+            {
+                crawlid.position.Y = blockBounds.Top - enemyBounds.Height;
+                crawlid.Land();
+                return;
+            }
+
+            if (overlapLeft <= 0 || overlapRight <= 0 || overlapTop <= 0 || overlapBottom <= 0) return;
+
+            if (Math.Min(overlapLeft, overlapRight) < Math.Min(overlapTop, overlapBottom))
+            {
+                if (overlapLeft < overlapRight)
+                    crawlid.position.X -= overlapLeft;
+                else
+                    crawlid.position.X += overlapRight;
+                crawlid.OnWallHit();
+            }
+            else
+            {
+                if (overlapTop < overlapBottom)
+                {
+                    crawlid.position.Y = blockBounds.Top - enemyBounds.Height;
+                    crawlid.Land();
+                }
+                else
+                {
+                    crawlid.position.Y += overlapBottom;
+                }
+            }
         }
 
         public static void ResolveEnemyBlockCollision(Vengefly vengefly, ICollidable block)

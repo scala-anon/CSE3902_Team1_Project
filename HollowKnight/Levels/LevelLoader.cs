@@ -41,7 +41,7 @@ namespace HollowKnight.Levels
                 ["Background_1"]  = pos => new Background(1, pos),
                 ["Background_2"] = pos => new Background(2, pos),
                 // <Region name="Path_1" x="265" y="223" width="1060" height="83" />
-                ["Path_1"]               = pos => new Path(1, pos, 1050, 32, hitOffsetY: 10),
+                ["Path_1"]               = pos => new Path(1, pos, 1050, 32, hitOffsetY: 15),
                 ["Path_2"]               = pos => new Path(2, pos, 940, 32, hitOffsetY: 40),
                 ["Path_ledge"]           = pos => new PathLedge(pos),
                 ["Spike_Floor_1"]        = pos => new Spike(SpikeVariant.Floor1, pos),
@@ -52,7 +52,7 @@ namespace HollowKnight.Levels
                 ["Plant2_Idle"]        = pos => new Grass(2,pos, 100, 5, hitOffsetY: 0),
                 ["Wall_0"]             = pos => new Wall(0, pos, 80, 200),
                 ["Wall_1"]             = pos => new Wall(1, pos, 80, 200),
-                ["Wall_2"]             = pos => new Wall(2, pos, 80, 111),
+                ["Wall_2"]             = pos => new Wall(2, pos, 49, 111),
                 ["Wall_3"]              = pos => new Wall(3,pos,49,111),
                 ["Wall_4"]              = pos => new BreakableWall(4,pos,142,246),
                 ["Wall_5"]              = pos => new Wall(5,pos, 175,305),

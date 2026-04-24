@@ -65,6 +65,7 @@ namespace HollowKnight.Shared
         public const int CrawlidFeetHeight = 4;
         public const int CrawlidEdgeProbeOffset = 4;
         public const int CrawlidGroundProbeExtension = 1;
+        public const int CrawlidSpikeDetectRange = 28;
 
         // Vengeful Spirit Projectile Hitbox
         public const int VengefulSpiritLeadingHitboxWidth = 35;
