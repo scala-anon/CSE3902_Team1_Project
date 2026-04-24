@@ -96,6 +96,12 @@
     <Location>0 840</Location>
 </Item>
 
+<!-- Ceiling background row 0 (top cap of wall column) -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>0 302</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>848 302</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>1696 302</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>2544 302</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3392 302</Location></Item>
 <!-- Ceiling background row 1 -->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>0 753</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>848 753</Location></Item>
@@ -109,10 +115,17 @@
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>2544 1202</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3392 1202</Location></Item>
 
+<!--Ceiling background row 3/parkour-->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4240 308</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5088 308</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5936 308</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>6784 308</Location></Item>
+
+
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Bench</ObjectName>
-    <Location>305 1930</Location>
+    <Location>308 1930</Location>
 </Item>
 
 <Item>
@@ -211,11 +224,15 @@
     <Location>5200 1800</Location>
 </Item> -->
 
-<Item>
-    <ObjectType>Platform</ObjectType>
-    <ObjectName>Wall_1</ObjectName>
-    <Location>6000 1900</Location>
-</Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6000 1214</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6000 1325</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6000 1436</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6000 1547</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6000 1658</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6000 1769</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6000 1880</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6000 1991</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6000 2102</Location></Item>
 
 <!-- TODO: Fix -->
 <!-- <Item>
