@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.Contracts;
+using HollowKnight.Enemies;
+using Microsoft.Xna.Framework;
 
 namespace HollowKnight.Shared
 {
@@ -73,5 +76,58 @@ namespace HollowKnight.Shared
         public const float MantisDashArriveSpriteHeigthOffset = 556/2;
         //FIX
         public const float MantisDashAnticipateSpriteHeightOffset = MantisDashArriveSpriteHeigthOffset + (297 - 110);
-    }
+        public static readonly Dictionary<MantisLordState, Rectangle> mantisLordHitBoxes = new Dictionary<MantisLordState, Rectangle>()
+        {
+            // [MantisLordState.IdleOnThrone] = new Rectangle(0, 0, 0, 0),
+            // [MantisLordState.ThroneStand] = new Rectangle(20, 0, 40, 60),
+            // [MantisLordState.ThroneLeave] = new Rectangle(20, 0, 40, 60),
+            // [MantisLordState.ThroneArrive] = new Rectangle(20, 0, 40, 60),
+            // [MantisLordState.ThroneWounded] = new Rectangle(20, 0, 40, 60),
+            // [MantisLordState.ThroneBow] = new Rectangle(20, 0, 40, 60),
+            // [MantisLordState.Throw] = new Rectangle(0, 0, 0, 0),
+            // [MantisLordState.DashArrive] = new Rectangle(0, 0, 0, 0),
+            // [MantisLordState.DashAnticipate] = new Rectangle(0, 0, 0, 0),
+            // [MantisLordState.Dash] = new Rectangle(0, 0, 0, 0),
+            // [MantisLordState.DashRecover] = new Rectangle(0, 0, 0, 0),
+            // [MantisLordState.DashLeave] = new Rectangle(0, 0, 0, 0),
+            // [MantisLordState.DStabArrive] = new Rectangle(0, 0, 0, 0),
+            // [MantisLordState.DStab] = new Rectangle(0, 0, 0, 0),
+            // [MantisLordState.DStabLand] = new Rectangle(0, 0, 0, 0),
+            // [MantisLordState.DStabLeave] = new Rectangle(0, 0, 0, 0),
+            // [MantisLordState.WallArrive] = new Rectangle(0, 0, 0, 0),
+            // [MantisLordState.WallReady] = new Rectangle(0, 0, 0, 0),
+            // [MantisLordState.WallLeave] = new Rectangle(0, 0, 0, 0),
+            // [MantisLordState.Death] = new Rectangle(0, 0, 0, 0),
+            // [MantisLordState.DeathLeaveOne] = new Rectangle(0, 0, 0, 0),
+            // [MantisLordState.DeathLeaveTwo] = new Rectangle(0, 0, 0, 0),
+            // [MantisLordState.Dormant] = new Rectangle(0, 0, 0, 0),
+            [MantisLordState.IdleOnThrone] = new Rectangle(0, 0, 0, 0),
+            [MantisLordState.ThroneStand] = new Rectangle(0, 0, 0, 0),
+            [MantisLordState.ThroneLeave] = new Rectangle(0, 0, 0, 0),
+            [MantisLordState.ThroneArrive] = new Rectangle(0, 0, 0, 0),
+            [MantisLordState.ThroneWounded] = new Rectangle(0, 0, 0, 0),
+            [MantisLordState.ThroneBow] = new Rectangle(0, 0, 0, 0),
+
+            // Requested categories
+            [MantisLordState.Throw] = new Rectangle(0, 0, 614, 570),
+            [MantisLordState.DashAnticipate] = new Rectangle(0, 0, 470, 284),
+            [MantisLordState.Dash] = new Rectangle(0, 0, 557, 176),
+            [MantisLordState.DashRecover] = new Rectangle(0, 0, 482, 243),
+            [MantisLordState.DStabLand] = new Rectangle(0, 0, 321, 357),
+            [MantisLordState.WallReady] = new Rectangle(0, 0, 250, 504),
+
+            // Everything else zeroed
+            [MantisLordState.DashArrive] = new Rectangle(0, 0, 0, 0),
+            [MantisLordState.DashLeave] = new Rectangle(0, 0, 0, 0),
+            [MantisLordState.DStabArrive] = new Rectangle(0, 0, 0, 0),
+            [MantisLordState.DStab] = new Rectangle(0, 0, 0, 0),
+            [MantisLordState.DStabLeave] = new Rectangle(0, 0, 0, 0),
+            [MantisLordState.WallArrive] = new Rectangle(0, 0, 0, 0),
+            [MantisLordState.WallLeave] = new Rectangle(0, 0, 0, 0),
+            [MantisLordState.Death] = new Rectangle(0, 0, 0, 0),
+            [MantisLordState.DeathLeaveOne] = new Rectangle(0, 0, 0, 0),
+            [MantisLordState.DeathLeaveTwo] = new Rectangle(0, 0, 0, 0),
+            [MantisLordState.Dormant] = new Rectangle(0, 0, 0, 0),
+            };
+        }
 }

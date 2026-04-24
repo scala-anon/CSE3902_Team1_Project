@@ -47,7 +47,6 @@ namespace HollowKnight.Enemies
         // Once activated the lord stays drawn even when HP hits zero (wounded/bow phases).
         // _activated tracks whether the fight has started for this lord.
         private bool _activated;
-
         public override bool IsActive => !Dead || _activated;
 
         private readonly Dictionary<MantisLordState, ISprite> _sprites;
@@ -149,5 +148,10 @@ namespace HollowKnight.Enemies
         protected override void UpdateAlive(GameTime gameTime, float dt)
             => _stateMachine.Update(gameTime, dt);
 
+        public override Rectangle[] GetBounds()
+        {
+            hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, EnemyConstants.mantisLordHitBoxes[State].Width, EnemyConstants.mantisLordHitBoxes[State].Height);
+            return hitBoxes;
+        }
     }
 }

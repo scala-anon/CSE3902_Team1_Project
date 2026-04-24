@@ -283,7 +283,6 @@ namespace HollowKnight.Enemies
                         target_knight = false;
                         EnterState(MantisLordState.DStabLand);
                     break;
-
                 case MantisLordState.DStabLand:
                     if (_owner.Sprite.IsFinished)
                         EnterState(MantisLordState.DStabLeave);
