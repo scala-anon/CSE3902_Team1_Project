@@ -117,13 +117,15 @@ namespace HollowKnight.Enemies
                     switch(_owner.Slot)
                     {
                         case MantisLordSlot.Left:
-                            _owner.position = new Vector2(3800, 5000);
+                            _owner.position = new Vector2(EnemyConstants.LeftMantisStandingX, EnemyConstants.SecondaryMantisStandingY);
                         break;
 
                         case MantisLordSlot.Right:
+                            _owner.position = new Vector2(EnemyConstants.RightMantisStandingX,EnemyConstants.SecondaryMantisStandingY);
                         break;
 
                         case MantisLordSlot.Middle:
+                            _owner.position = new Vector2(EnemyConstants.MiddleMantisStandingX,EnemyConstants.PrimaryMantisStandingY);
                         break;
                     }
                     if (_owner.Sprite.IsFinished)
@@ -131,11 +133,45 @@ namespace HollowKnight.Enemies
                     break;
 
                 case MantisLordState.ThroneLeave:
-                    if (_owner.Sprite.IsFinished)
+                    switch(_owner.Slot)
+                    {
+                        case MantisLordSlot.Left:
+                            _owner.FacingDirection = Direction.Left;
+                            _owner.position = new Vector2(EnemyConstants.LeftMantisStandingX, EnemyConstants.SecondaryMantisStandingY+72+18);
+                        break;
+
+                        case MantisLordSlot.Right:
+                            _owner.FacingDirection = Direction.Right;
+                            _owner.position = new Vector2(EnemyConstants.RightMantisStandingX,EnemyConstants.SecondaryMantisStandingY+72+18);
+                        break;
+
+                        case MantisLordSlot.Middle:
+                            _owner.FacingDirection = Direction.Right;
+                            _owner.position = new Vector2(EnemyConstants.MiddleMantisStandingX,EnemyConstants.PrimaryMantisStandingY+72+18);
+                        break;
+                    }
+                    if(_owner.Sprite.IsFinished)
+                    {
                         CommandBeginAttackLoop();
+                    }
                     break;
 
+
                 case MantisLordState.ThroneArrive:
+                    switch(_owner.Slot)
+                    {
+                        case MantisLordSlot.Left:
+                            _owner.position = new Vector2(EnemyConstants.LeftMantisStandingX, EnemyConstants.SecondaryMantisStandingY);
+                        break;
+
+                        case MantisLordSlot.Right:
+                            _owner.position = new Vector2(EnemyConstants.RightMantisStandingX,EnemyConstants.SecondaryMantisStandingY);
+                        break;
+
+                        case MantisLordSlot.Middle:
+                            _owner.position = new Vector2(EnemyConstants.MiddleMantisStandingX,EnemyConstants.PrimaryMantisStandingY);
+                        break;
+                    }
                     if (_owner.Sprite.IsFinished)
                     {
                         IsInWoundedPose = true;
@@ -362,9 +398,57 @@ namespace HollowKnight.Enemies
             switch (state)
             {
                 case MantisLordState.ThroneStand:
+                    switch(_owner.Slot)
+                        {
+                            case MantisLordSlot.Left:
+                                _owner.position = new Vector2(EnemyConstants.LeftMantisStandingX, EnemyConstants.SecondaryMantisStandingY);
+                            break;
+
+                            case MantisLordSlot.Right:
+                                _owner.position = new Vector2(EnemyConstants.RightMantisStandingX,EnemyConstants.SecondaryMantisStandingY);
+                            break;
+
+                            case MantisLordSlot.Middle:
+                                _owner.position = new Vector2(EnemyConstants.MiddleMantisStandingX,EnemyConstants.PrimaryMantisStandingY);
+                            break;
+                    }
+                break;
                 case MantisLordState.IdleOnThrone:
                 case MantisLordState.ThroneLeave:
+                switch(_owner.Slot)
+                    {
+                        case MantisLordSlot.Left:
+                            _owner.FacingDirection = Direction.Left;
+                            _owner.position = new Vector2(EnemyConstants.LeftMantisStandingX, EnemyConstants.SecondaryMantisStandingY);
+                        break;
+
+                        case MantisLordSlot.Right:
+                            _owner.FacingDirection = Direction.Right;
+                            _owner.position = new Vector2(EnemyConstants.RightMantisStandingX,EnemyConstants.SecondaryMantisStandingY);
+                        break;
+
+                        case MantisLordSlot.Middle:
+                            _owner.FacingDirection = Direction.Right;
+                            _owner.position = new Vector2(EnemyConstants.MiddleMantisStandingX,EnemyConstants.PrimaryMantisStandingY);
+                        break;
+                    }
+                    break;
                 case MantisLordState.ThroneArrive:
+                switch(_owner.Slot)
+                    {
+                        case MantisLordSlot.Left:
+                            _owner.position = new Vector2(EnemyConstants.LeftMantisStandingX, EnemyConstants.SecondaryMantisStandingY+72+18);
+                        break;
+
+                        case MantisLordSlot.Right:
+                            _owner.position = new Vector2(EnemyConstants.RightMantisStandingX,EnemyConstants.SecondaryMantisStandingY+72+18);
+                        break;
+
+                        case MantisLordSlot.Middle:
+                            _owner.position = new Vector2(EnemyConstants.MiddleMantisStandingX,EnemyConstants.PrimaryMantisStandingY+72+18);
+                        break;
+                    }
+                break;
                 case MantisLordState.ThroneWounded:
                 case MantisLordState.ThroneBow:
                 case MantisLordState.Dormant:

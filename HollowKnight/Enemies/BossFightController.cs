@@ -27,7 +27,7 @@ namespace HollowKnight.Enemies
         private readonly MantisLord _middle;
         private readonly MantisLord _right;
 
-
+        
         // Added for debugger
         public MantisLord Left   => _left;
         public MantisLord Middle => _middle;
@@ -84,7 +84,6 @@ namespace HollowKnight.Enemies
                 return;
 
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
             switch (_phase)
             {
                 case BossFightPhase.Phase1_Middle:

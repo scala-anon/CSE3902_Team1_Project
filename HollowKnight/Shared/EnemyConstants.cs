@@ -52,6 +52,12 @@ namespace HollowKnight.Shared
         public const float MantisThroneRightOffsetX      = 255f;
         public const float MantisPrimaryThroneOffsetY    = -35f;
         public const float MantisSecondaryThroneOffsetY = 70f;
+
+        public const float LeftMantisStandingX = 4274;
+        public const float RightMantisStandingX = 4778;
+        public const float MiddleMantisStandingX = 4524;  
+        public const float SecondaryMantisStandingY = 4820;
+        public const float PrimaryMantisStandingY = 4716;
         public const float MantisStabSpeed = 5f;
         public const float MantisDashSpeed = 5f;
     }
