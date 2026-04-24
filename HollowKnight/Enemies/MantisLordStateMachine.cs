@@ -191,22 +191,23 @@ namespace HollowKnight.Enemies
                 case MantisLordState.WallArrive:
                     if (_owner.FacingDirection == Direction.Right)
                     {
-                        _owner.position = new Vector2(3600, 4546);
+                        _owner.position = new Vector2(EnemyConstants.MantisWallHangLeftX, EnemyConstants.MantisWallHangY);
                     } else
                     {
-                        _owner.position = new Vector2(3600, 4546);
+                        _owner.position = new Vector2(EnemyConstants.MantisWallHangRightX, EnemyConstants.MantisWallHangY);
                     }
 
                     if (_owner.Sprite.IsFinished)
                         EnterState(MantisLordState.WallReady);
                     break;
 
+
+
                 case MantisLordState.WallReady:
                     _owner.position.Y = EnemyConstants.MantisWallHangY + EnemyConstants.MantisWallHangOffset;
                     // Loops until controller forces a throw or duration elapses.
                     // TODO: spawn projectile here (when WallReady times out)
                     if(_owner.Sprite.IsFinished){
-                    if (_stateTimer >= EnemyConstants.MantisWallReadyDuration)
                         EnterState(MantisLordState.Throw);
                     }
                     break;
@@ -220,10 +221,10 @@ namespace HollowKnight.Enemies
                 case MantisLordState.DashArrive:
                     if(_owner.FacingDirection == Direction.Right)
                     {
-                        _owner.position = new Vector2(3880, 5000);
+                        _owner.position = new Vector2(EnemyConstants.MantisDashArriveRightX, EnemyConstants.MantisDashY);
                     } else
                     {
-                        _owner.position = new Vector2(5140, 5000);
+                        _owner.position = new Vector2(EnemyConstants.MantisDashArriveLeftX, EnemyConstants.MantisDashY);
                     }
                     if (_owner.Sprite.IsFinished)
                     {
@@ -233,7 +234,7 @@ namespace HollowKnight.Enemies
                     break;
 
                 case MantisLordState.DashAnticipate:
-                    _owner.position.Y = 5000 + (556/2);
+                    _owner.position.Y = EnemyConstants.MantisDashY + EnemyConstants.MantisDashArriveSpriteHeigthOffset;
                     if (_owner.Sprite.IsFinished)
                     {
                         // TODO: damage hitbox — activate dash contact damage here
@@ -266,13 +267,11 @@ namespace HollowKnight.Enemies
                     break;
 
                 // ---- DStab sequence ----
+                case MantisLordState.DStabStart:
+                     _owner.position = new Vector2(_owner.knightPosition.X - (765/2), _owner.knightPosition.Y - 950);
+                     EnterState(MantisLordState.DStabArrive);
+                     break;
                 case MantisLordState.DStabArrive:
-
-                    if (target_knight == false){
-                        target_knight = true;
-                        _owner.position = new Vector2(_owner.knightPosition.X, _owner.knightPosition.Y - 800);
-                    }
-
                     if (_owner.Sprite.IsFinished)
                     {
                         // TODO: damage hitbox — activate DStab contact damage here
@@ -297,8 +296,6 @@ namespace HollowKnight.Enemies
 
                 // ---- Attack cooldown (idle state after attack completes) ----
                 case MantisLordState.IdleOnThrone:
-                    if (_stateTimer >= EnemyConstants.MantisAttackCooldown)
-                        PickNextAttack();
                     break;
 
                 // ---- Death sequence ----
@@ -361,6 +358,13 @@ namespace HollowKnight.Enemies
                         
                     }
                     break;
+                    case MantisLordState.GracePeriod:
+                        _owner.position = new Vector2(0,0);
+                        if(_stateTimer >= EnemyConstants.MantisAttackCooldown)
+                        {
+                            PickNextAttack();
+                        }
+                    break;
                 default:
                     break;
             }
@@ -379,9 +383,8 @@ namespace HollowKnight.Enemies
         {
             IsAttacking = false;
             _stateTimer = 0f;
-            // Re-use IdleOnThrone as the "between attacks" state.
-            _owner.SetState(MantisLordState.IdleOnThrone);
             _owner.Sprite.Reset();
+            _owner.SetState(MantisLordState.GracePeriod);
         }
 
         /// <summary>
@@ -390,20 +393,30 @@ namespace HollowKnight.Enemies
         private void PickNextAttack()
         {
             IsAttacking = true;
-            int roll = _rng.Next(3);
-            // TODO: audio hook — play attack start sound
+            int roll = _rng.Next(10);
+            
             switch (roll)
             {
                 case 0:
+                case 1:
                     EnterState(MantisLordState.WallArrive);
                     break;
-                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
                     EnterState(MantisLordState.DashArrive);
                     break;
-                default:
-                    EnterState(MantisLordState.DStabArrive);
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                    EnterState(MantisLordState.DStabStart);
                     break;
             }
+
+
+
         }
         // Add this field at the top with the other fields
         private bool _frozen = false;

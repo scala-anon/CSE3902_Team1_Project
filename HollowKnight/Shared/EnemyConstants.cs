@@ -76,9 +76,9 @@ namespace HollowKnight.Shared
         public const float MantisDashArriveSpriteHeigthOffset = 556/2;
         public const float MantisDashAnticipateSpriteHeightOffset = 556/3;
         public const float MantisWallHangOffset = 199;
-    }
+    
         //FIX
-        public const float MantisDashAnticipateSpriteHeightOffset = MantisDashArriveSpriteHeigthOffset + (297 - 110);
+        
         public static readonly Dictionary<MantisLordState, Rectangle> mantisLordHitBoxes = new Dictionary<MantisLordState, Rectangle>()
         {
             // [MantisLordState.IdleOnThrone] = new Rectangle(0, 0, 0, 0),
@@ -131,6 +131,8 @@ namespace HollowKnight.Shared
             [MantisLordState.DeathLeaveOne] = new Rectangle(0, 0, 0, 0),
             [MantisLordState.DeathLeaveTwo] = new Rectangle(0, 0, 0, 0),
             [MantisLordState.Dormant] = new Rectangle(0, 0, 0, 0),
+            [MantisLordState.GracePeriod] = new Rectangle(0, 0, 0, 0),
+            [MantisLordState.DStabStart] = new Rectangle(0,0,0,0),
             };
         }
 }
