@@ -191,10 +191,10 @@ namespace HollowKnight.Enemies
                 case MantisLordState.WallArrive:
                     if (_owner.FacingDirection == Direction.Right)
                     {
-                        _owner.position = new Vector2(EnemyConstants.MantisWallHangLeftX, EnemyConstants.MantisWallHangY);
+                        _owner.position = new Vector2(3600, 4546);
                     } else
                     {
-                        _owner.position = new Vector2(EnemyConstants.MantisWallHangRightX, EnemyConstants.MantisWallHangY);
+                        _owner.position = new Vector2(3600, 4546);
                     }
 
                     if (_owner.Sprite.IsFinished)
@@ -206,6 +206,7 @@ namespace HollowKnight.Enemies
                     // Loops until controller forces a throw or duration elapses.
                     // TODO: spawn projectile here (when WallReady times out)
                     if(_owner.Sprite.IsFinished){
+                    if (_stateTimer >= EnemyConstants.MantisWallReadyDuration)
                         EnterState(MantisLordState.Throw);
                     }
                     break;
@@ -219,10 +220,10 @@ namespace HollowKnight.Enemies
                 case MantisLordState.DashArrive:
                     if(_owner.FacingDirection == Direction.Right)
                     {
-                        _owner.position = new Vector2(EnemyConstants.MantisDashArriveRightX, EnemyConstants.MantisDashY);
+                        _owner.position = new Vector2(3880, 5000);
                     } else
                     {
-                        _owner.position = new Vector2(EnemyConstants.MantisDashArriveLeftX, EnemyConstants.MantisDashY);
+                        _owner.position = new Vector2(5140, 5000);
                     }
                     if (_owner.Sprite.IsFinished)
                     {
@@ -232,7 +233,7 @@ namespace HollowKnight.Enemies
                     break;
 
                 case MantisLordState.DashAnticipate:
-                    _owner.position.Y = EnemyConstants.MantisDashY + EnemyConstants.MantisDashArriveSpriteHeigthOffset;
+                    _owner.position.Y = 5000 + (556/2);
                     if (_owner.Sprite.IsFinished)
                     {
                         // TODO: damage hitbox — activate dash contact damage here
@@ -265,11 +266,13 @@ namespace HollowKnight.Enemies
                     break;
 
                 // ---- DStab sequence ----
-                case MantisLordState.DStabStart:
-                     _owner.position = new Vector2(_owner.knightPosition.X - (765/2), _owner.knightPosition.Y - 950);
-                     EnterState(MantisLordState.DStabArrive);
-                     break;
                 case MantisLordState.DStabArrive:
+
+                    if (target_knight == false){
+                        target_knight = true;
+                        _owner.position = new Vector2(_owner.knightPosition.X, _owner.knightPosition.Y - 800);
+                    }
+
                     if (_owner.Sprite.IsFinished)
                     {
                         // TODO: damage hitbox — activate DStab contact damage here
@@ -282,7 +285,6 @@ namespace HollowKnight.Enemies
                     if (_owner.Sprite.IsFinished)
                         EnterState(MantisLordState.DStabLand);
                     break;
-
                 case MantisLordState.DStabLand:
                     if (_owner.Sprite.IsFinished)
                         EnterState(MantisLordState.DStabLeave);
@@ -295,6 +297,9 @@ namespace HollowKnight.Enemies
 
                 // ---- Attack cooldown (idle state after attack completes) ----
                 case MantisLordState.IdleOnThrone:
+                    if (_stateTimer >= EnemyConstants.MantisAttackCooldown)
+                        PickNextAttack();
+                    break;
 
                 // ---- Death sequence ----
                 case MantisLordState.Death:
@@ -314,6 +319,20 @@ namespace HollowKnight.Enemies
 
                 // ---- Bow sequence ----
                 case MantisLordState.ThroneBow:
+                    switch(_owner.Slot)
+                    {
+                        case MantisLordSlot.Left:
+                            _owner.position = new Vector2(EnemyConstants.LeftMantisStandingX-5, EnemyConstants.SecondaryMantisStandingY);
+                        break;
+
+                        case MantisLordSlot.Right:
+                            _owner.position = new Vector2(EnemyConstants.RightMantisStandingX,EnemyConstants.SecondaryMantisStandingY);
+                        break;
+
+                        case MantisLordSlot.Middle:
+                            _owner.position = new Vector2(EnemyConstants.MiddleMantisStandingX,EnemyConstants.PrimaryMantisStandingY+10);
+                        break;
+                    }
                     if (_owner.Sprite.IsFinished)
                         IsBowComplete = true;
                     break;
@@ -321,16 +340,25 @@ namespace HollowKnight.Enemies
                 // States with no automatic transition handled here:
                 // ThroneWounded, Dormant — wait for external command.
                 case MantisLordState.ThroneWounded:
+                    switch(_owner.Slot)
+                    {
+                        case MantisLordSlot.Left:
+                            _owner.FacingDirection = Direction.Left;
+                            _owner.position = new Vector2(EnemyConstants.LeftMantisStandingX-24, EnemyConstants.SecondaryMantisStandingY-100);
+                        break;
+
+                        case MantisLordSlot.Right:
+                            _owner.FacingDirection = Direction.Right;
+                            _owner.position = new Vector2(EnemyConstants.RightMantisStandingX-4,EnemyConstants.SecondaryMantisStandingY-100);
+                        break;
+
+                        case MantisLordSlot.Middle:
+                            _owner.position = new Vector2(EnemyConstants.MiddleMantisStandingX,EnemyConstants.PrimaryMantisStandingY-200+90);
+                        break;
+                    }         
                     if (_owner.Sprite.IsFinished)
                     {
                         
-                    }
-                    break;
-                case MantisLordState.GracePeriod:
-                    _owner.position = new Vector2(0,0);
-                    if(_stateTimer >= EnemyConstants.MantisAttackCooldown)
-                    {
-                        PickNextAttack();
                     }
                     break;
                 default:
@@ -351,8 +379,9 @@ namespace HollowKnight.Enemies
         {
             IsAttacking = false;
             _stateTimer = 0f;
+            // Re-use IdleOnThrone as the "between attacks" state.
+            _owner.SetState(MantisLordState.IdleOnThrone);
             _owner.Sprite.Reset();
-            _owner.SetState(MantisLordState.GracePeriod);
         }
 
         /// <summary>
@@ -361,25 +390,18 @@ namespace HollowKnight.Enemies
         private void PickNextAttack()
         {
             IsAttacking = true;
-            int roll = _rng.Next(10);
-            
+            int roll = _rng.Next(3);
+            // TODO: audio hook — play attack start sound
             switch (roll)
             {
                 case 0:
-                case 1:
                     EnterState(MantisLordState.WallArrive);
                     break;
-                case 2:
-                case 3:
-                case 4:
-                case 5:
+                case 1:
                     EnterState(MantisLordState.DashArrive);
                     break;
-                case 6:
-                case 7:
-                case 8:
-                case 9:
-                    EnterState(MantisLordState.DStabStart);
+                default:
+                    EnterState(MantisLordState.DStabArrive);
                     break;
             }
         }
@@ -459,7 +481,37 @@ namespace HollowKnight.Enemies
                     }
                 break;
                 case MantisLordState.ThroneWounded:
+                switch(_owner.Slot)
+                    {
+                        case MantisLordSlot.Left:
+                            _owner.position = new Vector2(EnemyConstants.LeftMantisStandingX-24, EnemyConstants.SecondaryMantisStandingY-100);
+                        break;
+
+                        case MantisLordSlot.Right:
+                            _owner.position = new Vector2(EnemyConstants.RightMantisStandingX-4,EnemyConstants.SecondaryMantisStandingY-100);
+                        break;
+
+                        case MantisLordSlot.Middle:
+                            _owner.position = new Vector2(EnemyConstants.MiddleMantisStandingX,EnemyConstants.PrimaryMantisStandingY-200+90);
+                        break;
+                    }
+                break;
                 case MantisLordState.ThroneBow:
+                switch(_owner.Slot)
+                    {
+                        case MantisLordSlot.Left:
+                            _owner.position = new Vector2(EnemyConstants.LeftMantisStandingX-5, EnemyConstants.SecondaryMantisStandingY);
+                        break;
+
+                        case MantisLordSlot.Right:
+                            _owner.position = new Vector2(EnemyConstants.RightMantisStandingX,EnemyConstants.SecondaryMantisStandingY);
+                        break;
+
+                        case MantisLordSlot.Middle:
+                            _owner.position = new Vector2(EnemyConstants.MiddleMantisStandingX,EnemyConstants.PrimaryMantisStandingY+10);
+                        break;
+                    }
+                break;
                 case MantisLordState.Dormant:
                     switch (_owner.Slot)
                     {
