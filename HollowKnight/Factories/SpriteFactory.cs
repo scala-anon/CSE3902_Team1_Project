@@ -87,10 +87,13 @@ namespace HollowKnight.Factories
             mantisVillageSpriteSheet = mantisVillageAtlas.Texture;
             // Knight movement frames
             knightSingleFrames.Add("Damaged", knightAtlas.GetRegion("Damaged").SourceRectangle);
-            
+            knightSingleFrames.Add("Sitting_Idle_0", knightAtlas.GetRegion("Sitting_Idle_0").SourceRectangle);
+            knightSingleFrames.Add("Sitting_Idle_1", knightAtlas.GetRegion("Sitting_Idle_1").SourceRectangle);
+
             knightAnimations.Add("Idle", knightAtlas.GetAnimationFrames("Idle"));
             knightAnimations.Add("Walking", knightAtlas.GetAnimationFrames("Walking"));
             knightAnimations.Add("Jumping", knightAtlas.GetAnimationFrames("Jumping"));
+            knightAnimations.Add("Sitting", knightAtlas.GetAnimationFrames("Sitting"));
 
             // Knight abilities frames
             knightAnimations.Add("UpSword", knightAttacksAtlas.GetAnimationFrames("UpSword"));
@@ -259,6 +262,26 @@ namespace HollowKnight.Factories
         {
             return new AnimatedSprite(knightVarietySheet, knightAnimations["Jumping"], position, 0.1, 1.0f);
         }
+        public ISprite CreateKnightSittingSprite(Vector2 position)
+        {
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["Sitting"], position, 0.15, 1.0f);
+        }
+        public ISprite CreateKnightStandingUpSprite(Vector2 position)
+        {
+            var frames = knightAnimations["Sitting"];
+            var reversed = new System.Collections.Generic.List<Microsoft.Xna.Framework.Rectangle>(frames);
+            reversed.Reverse();
+            return new AnimatedSprite(knightVarietySheet, reversed.ToArray(), position, 0.15, 1.0f, loop: false);
+        }
+        public ISprite CreateKnightSittingIdleSprite(Vector2 position)
+        {
+            return new StaticSprite(knightVarietySheet, knightSingleFrames["Sitting_Idle_0"], position, 1.0f);
+        }
+        public ISprite CreateKnightSittingIdleLongSprite(Vector2 position)
+        {
+            return new StaticSprite(knightVarietySheet, knightSingleFrames["Sitting_Idle_1"], position, 1.0f);
+        }
+
         public ISprite CreateKnightDashSprite(Vector2 position)
         {
             //TODO: Updated to dash animation once we have them

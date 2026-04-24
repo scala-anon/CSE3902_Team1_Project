@@ -32,6 +32,15 @@
 		<Region name="Jumping_10" x="2405" y="1344" width="102" height="126" />
 		<Region name="Jumping_11" x="2548" y="1344" width="102" height="126" />
 
+		<!--sitting frames animation-->
+		<Region name="Sitting_0" x="94" y="1472" width="76" height="120" />
+		<Region name="Sitting_1" x="189" y="1475" width="78" height="122" />
+		
+		<!--static sitting frame-->
+		<Region name="Sitting_Idle_0" x="281" y="1471" width="77" height="124" />
+		
+		<!--if knight is there for a while-->
+		<Region name="Sitting_Idle_1" x="380" y="1475" width="77" height="117" />
 
 	</Regions>
 </TextureAtlas>

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using HollowKnight.Factories;
 using HollowKnight.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -40,9 +41,56 @@ namespace HollowKnight.Player
 
         private Vector2 benchSpawnPoint;
         private bool _justDied;
+
+        private bool _isSitting;
+        private double _sittingTimer;
+        private ISprite _sittingSprite;
+        private ISprite _sittingIdleSprite;
+        private ISprite _sittingIdleLongSprite;
+        private const double SittingIdleDelay = 0.3;
+        private const double SittingIdleLongDelay = 5.0;
+        private float _sittingStartX;
+        private float _sittingTargetX;
+        private float _sittingStartY;
+        private float _sittingTargetY;
+        private bool _isStandingUp;
+        private double _standingUpTimer;
+        private ISprite _standingUpSprite;
         public bool JustDied => _justDied;
         public void ConsumeJustDied() => _justDied = false;
         public void SetBenchSpawnPoint(Vector2 pos) => benchSpawnPoint = pos;
+        public bool IsSitting => _isSitting;
+        public void StartSitting(Vector2 benchPosition)
+        {
+            if (!physics.IsGrounded) return;
+            float targetX = benchPosition.X + CollisionConstants.BenchHitboxWidth / 2f - baseSize.X / 2f - 6f;
+            float targetY = position.Y + 5f;
+            benchSpawnPoint = new Vector2(targetX, targetY);
+            if (CurrentState != KnightState.Idle && CurrentState != KnightState.Running) return;
+            _isSitting = true;
+            _sittingTimer = 0;
+            _sittingStartX = position.X;
+            _sittingTargetX = targetX;
+            _sittingStartY = position.Y;
+            _sittingTargetY = targetY;
+            physics.Velocity = Vector2.Zero;
+        }
+        public void StopSitting()
+        {
+            _isSitting = false;
+            _sittingTimer = 0;
+        }
+        public void StartSittingIdle()
+        {
+            _isSitting = true;
+            _isStandingUp = false;
+            _sittingTimer = SittingIdleDelay;
+            _sittingTargetX = benchSpawnPoint.X;
+            _sittingTargetY = benchSpawnPoint.Y;
+            position.X = _sittingTargetX;
+            position.Y = _sittingTargetY;
+            physics.Velocity = Vector2.Zero;
+        }
 
         private Vector2? _roomRespawnPoint;
         public bool HasRespawnPoint => _roomRespawnPoint.HasValue;
@@ -67,6 +115,11 @@ namespace HollowKnight.Player
             currentSprite.SetPosition(position);
 
             baseSize = this.sprites[KnightSpriteType.Idle].GetSize();
+
+            _sittingSprite = this.sprites[KnightSpriteType.Sitting];
+            _sittingIdleSprite = SpriteFactory.Instance.CreateKnightSittingIdleSprite(position);
+            _sittingIdleLongSprite = SpriteFactory.Instance.CreateKnightSittingIdleLongSprite(position);
+            _standingUpSprite = SpriteFactory.Instance.CreateKnightStandingUpSprite(position);
         }
 
         public void Update(GameTime gameTime)
@@ -86,6 +139,51 @@ namespace HollowKnight.Player
             health.Update(gameTime);
             combat.Update(gameTime, position, Facing, currentSprite);
             dash.Update(gameTime.ElapsedGameTime.TotalSeconds);
+
+            if (_isSitting)
+            {
+                _sittingTimer += dt;
+                CurrentState = KnightState.Sitting;
+                currentSpriteType = KnightSpriteType.Sitting;
+
+                if (_isStandingUp)
+                {
+                    _standingUpTimer += dt;
+                    if (_standingUpTimer >= SittingIdleDelay)
+                    {
+                        _isSitting = false;
+                        _isStandingUp = false;
+                        _sittingTimer = 0;
+                        _standingUpTimer = 0;
+                        _standingUpSprite = SpriteFactory.Instance.CreateKnightStandingUpSprite(position);
+                        return;
+                    }
+                    currentSprite = _standingUpSprite;
+                    currentSprite.SetPosition(new Vector2(position.X, position.Y - 5f));
+                    currentSprite.Update(gameTime);
+                    return;
+                }
+
+                if (_sittingTimer >= SittingIdleDelay)
+                {
+                    position.X = _sittingTargetX;
+                    position.Y = _sittingTargetY;
+                    currentSprite = _sittingTimer >= SittingIdleLongDelay ? _sittingIdleLongSprite : _sittingIdleSprite;
+                    currentSprite.SetPosition(new Vector2(position.X, position.Y - 18f));
+                }
+                else
+                {
+                    float t = (float)(_sittingTimer / SittingIdleDelay);
+                    float tEased = 1f - (1f - t) * (1f - t); //equation for easing out when sittingn on bench
+                    position.X = _sittingStartX + (_sittingTargetX - _sittingStartX) * tEased;
+                    position.Y = _sittingStartY + (_sittingTargetY - _sittingStartY) * tEased;
+                    currentSprite = _sittingSprite;
+                    currentSprite.SetPosition(new Vector2(position.X, position.Y - 5f));
+                }
+
+                currentSprite.Update(gameTime);
+                return;
+            }
 
             if (health.IsHealing)
             {
@@ -190,6 +288,7 @@ namespace HollowKnight.Player
         // --- Movement ---
         public void MoveRight()
         {
+            if (_isSitting) { if (!_isStandingUp && _sittingTimer >= SittingIdleDelay) { _isStandingUp = true; _standingUpTimer = 0; } return; }
             if (combat.IsAttacking || dash.IsDashing || combat.IsCastPulseActive) return;
             health.CancelHeal();
             Facing = Direction.Right;
@@ -198,6 +297,7 @@ namespace HollowKnight.Player
 
         public void MoveLeft()
         {
+            if (_isSitting) { if (!_isStandingUp && _sittingTimer >= SittingIdleDelay) { _isStandingUp = true; _standingUpTimer = 0; } return; }
             if (combat.IsAttacking || dash.IsDashing || combat.IsCastPulseActive) return;
             health.CancelHeal();
             Facing = Direction.Left;
@@ -209,6 +309,7 @@ namespace HollowKnight.Player
 
         public void Jump()
         {
+            if (_isSitting) { if (!_isStandingUp && _sittingTimer >= SittingIdleDelay) { _isStandingUp = true; _standingUpTimer = 0; } return; }
             if (dash.IsDashing) return;
             if (!physics.IsGrounded) return;
             health.CancelHeal();
@@ -288,6 +389,7 @@ namespace HollowKnight.Player
                 SetPosition(benchSpawnPoint);
                 physics.Velocity = Vector2.Zero;
                 health.ResetHealth();
+                StartSittingIdle();
             }
             else
             {
