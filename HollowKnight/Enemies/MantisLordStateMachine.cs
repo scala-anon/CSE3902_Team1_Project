@@ -32,6 +32,7 @@ namespace HollowKnight.Enemies
         private bool _healthDepleted;
         private bool _postDeathTimer;
         private bool _fightStarted;
+        private float _attackCooldownTimer;
 
         private bool target_knight = false;
 
@@ -97,6 +98,7 @@ namespace HollowKnight.Enemies
             if (_frozen) return; // add this line
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             _stateTimer += dt;
+            _attackCooldownTimer += dt;
 
             // Waiting for post-death delay before entering ThroneWounded.
             if (_postDeathTimer)
@@ -360,7 +362,7 @@ namespace HollowKnight.Enemies
                     break;
                     case MantisLordState.GracePeriod:
                         _owner.position = new Vector2(0,0);
-                        if(_stateTimer >= EnemyConstants.MantisAttackCooldown)
+                        if(_attackCooldownTimer >= EnemyConstants.MantisAttackCooldown)
                         {
                             PickNextAttack();
                         }
@@ -382,8 +384,7 @@ namespace HollowKnight.Enemies
         private void StartAttackCooldown()
         {
             IsAttacking = false;
-            _stateTimer = 0f;
-            _owner.Sprite.Reset();
+            _attackCooldownTimer = 0f;
             _owner.SetState(MantisLordState.GracePeriod);
         }
 

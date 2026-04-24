@@ -47,7 +47,7 @@ namespace HollowKnight.Shared
         public const int MantisLordMiddleHealth          = 36;
         public const int MantisLordSideHealth            = 18;
 
-        public const float MantisAttackCooldown          = 1.2f;
+        public const float MantisAttackCooldown          = 2.0f;
         public const float MantisSiblingStaggerDelay     = 0.6f;
         public const float MantisWallAttackInterval      = 6.0f;
         public const float MantisPostDeathToWoundedDelay = 0.2f;

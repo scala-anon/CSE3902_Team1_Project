@@ -99,10 +99,10 @@
         <Region name="Dash_Recover_6" x="533" y="5958" width="526" height="256" />
         <Region name="Dash_Recover_7" x="1063" y="5958" width="526" height="256" />
 
-        <Region name="Dash_Leave_0" x="3" y="6237" width="597" height="556" />
-        <Region name="Dash_Leave_1" x="604" y="6237" width="597" height="556" />
-        <Region name="Dash_Leave_2" x="1205" y="6237" width="597" height="556" />
-        <Region name="Dash_Leave_3" x="1806" y="6237" width="597" height="556" />
+        <!-- <Region name="Dash_Leave_0" x="3" y="6237" width="597" height="556" /> -->
+        <Region name="Dash_Leave_0" x="604" y="6237" width="597" height="556" />
+        <Region name="Dash_Leave_1" x="1205" y="6237" width="597" height="556" />
+        <Region name="Dash_Leave_2" x="1806" y="6237" width="597" height="556" />
 
         <Region name="DStab_Arrive_0" x="3" y="6816" width="765" height="642" />
         <Region name="DStab_Arrive_1" x="772" y="6816" width="765" height="642" />

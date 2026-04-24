@@ -114,11 +114,12 @@ namespace HollowKnight.Enemies
         {
             _wallAttackTimer += dt;
 
-            if (_wallAttackTimer >= EnemyConstants.MantisWallAttackInterval)
+            /*if (_wallAttackTimer >= EnemyConstants.MantisWallAttackInterval)
             {
                 _wallAttackTimer = 0f;
                 _middle.StateMachine.CommandForceWallAttack();
             }
+            */
 
             // Middle lord depleted → enter transition to phase 2
             if (_middle.StateMachine.IsInWoundedPose)
