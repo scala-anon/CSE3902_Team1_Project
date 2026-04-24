@@ -28,6 +28,7 @@ namespace HollowKnight.Collision
                 // Enemy contact damages knight
                 _handler.Register<Crawlid, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
                 _handler.Register<Vengefly, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
+                //_handler.Register<MantisLord, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
 
                 // Hitting spikes damages the knight
                 _handler.Register<Spike, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
@@ -38,6 +39,7 @@ namespace HollowKnight.Collision
                 // Sword damages enemies
                 _handler.Register<SwordHitbox, Crawlid>(side, (a, b) => { if (((Crawlid)b).TakeDamage(side) && _currentKnight != null) _currentKnight.GainSoul(); });
                 _handler.Register<SwordHitbox, Vengefly>(side, (a, b) => { if (((Vengefly)b).TakeDamage(side) && _currentKnight != null) _currentKnight.GainSoul(); });
+                _handler.Register<SwordHitbox, MantisLord>(side, (a, b) => { if (((MantisLord)b).TakeDamage(side) && _currentKnight != null) _currentKnight.GainSoul(); });
 
                 // Item pickup
                 _handler.Register<Spirit, TheKnight>(side, (a, b) => ((TheKnight)b).Collect(side));

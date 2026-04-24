@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using HollowKnight.Interfaces;
+using System.Security.Cryptography.X509Certificates;
 
 namespace HollowKnight.Sprites
 {
@@ -26,6 +27,8 @@ namespace HollowKnight.Sprites
         public int Width => (int)(_frames[_currentFrame].Width * _scale);
         public int Height => (int)(_frames[_currentFrame].Height * _scale);
         public bool IsFinished => false;
+        public bool _finished;
+        public bool _loop;
 
         /// <summary>
         /// Create a horizontally moving animated sprite.
@@ -37,7 +40,7 @@ namespace HollowKnight.Sprites
         /// <param name="speed">Movement speed in pixels per second (default 150)</param>
         /// <param name="frameInterval">Time in seconds between frames (default 0.15)</param>
         /// <param name="scale">Scale multiplier (default 2.0)</param>
-        public MovingAnimatedSprite(Texture2D texture, Rectangle[] frames, Vector2 position, int screenWidth, float speed = 150f, double frameInterval = 0.15, float scale = 2.0f)
+        public MovingAnimatedSprite(Texture2D texture, Rectangle[] frames, Vector2 position, int screenWidth, float speed = 150f, double frameInterval = 0.15, float scale = 2.0f, bool loop = true)
         {
             _texture = texture;
             _frames = frames;
@@ -51,6 +54,8 @@ namespace HollowKnight.Sprites
             _currentFrame = 0;
             _frameTimer = 0;
             _frameInterval = frameInterval;
+            _loop = loop;
+            _finished = false;
         }
 
         public void Update(GameTime gameTime)
@@ -77,7 +82,16 @@ namespace HollowKnight.Sprites
                 _currentFrame++;
                 if (_currentFrame >= _frames.Length)
                 {
-                    _currentFrame = 0;
+                    if (_loop)
+                    {
+                        _currentFrame = 0;
+                    }
+                    else
+                    {
+                        _currentFrame = _frames.Length - 1;
+                        _finished = true;
+                    }
+                    
                 }
                 _frameTimer = 0;
             }
@@ -104,6 +118,7 @@ namespace HollowKnight.Sprites
             _direction = 1;
             _currentFrame = 0;
             _frameTimer = 0;
+            _finished = false;
         }
 
         public void SetPosition(Vector2 position)
