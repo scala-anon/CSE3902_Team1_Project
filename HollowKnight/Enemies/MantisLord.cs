@@ -10,6 +10,7 @@ namespace HollowKnight.Enemies
 {
     public enum MantisLordState
     {
+        DStabStart,
         IdleOnThrone,
         ThroneStand,
         ThroneLeave,
@@ -32,7 +33,8 @@ namespace HollowKnight.Enemies
         Death,
         DeathLeaveOne,
         DeathLeaveTwo,
-        Dormant
+        Dormant,
+        GracePeriod
     }
 
     public class MantisLord : BaseEnemy
@@ -60,7 +62,16 @@ namespace HollowKnight.Enemies
             IsGrounded = false;
 
             // Left lord faces right (toward center) — use the existing FacingDirection flip in BaseEnemy.Draw.
-            FacingDirection = slot == MantisLordSlot.Left ? Direction.Right : Direction.Left;
+            if (slot == MantisLordSlot.Left)
+            {
+                FacingDirection = Direction.Right;
+            } else if (slot == MantisLordSlot.Right)
+            {
+                FacingDirection = Direction.Left;
+            } else
+            {
+                FacingDirection = Direction.Right;
+            }
 
             Health = slot == MantisLordSlot.Middle
                 ? EnemyConstants.MantisLordMiddleHealth
@@ -100,8 +111,10 @@ namespace HollowKnight.Enemies
         public void SetState(MantisLordState newState)
         {
             State = newState;
-            Sprite = _sprites[newState];
-            Sprite.Reset();
+            if (newState != MantisLordState.DStabStart && newState != MantisLordState.GracePeriod){
+                Sprite = _sprites[newState];
+                Sprite.Reset();
+            }
         }
 
         public void Activate()

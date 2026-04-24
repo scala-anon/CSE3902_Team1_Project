@@ -1,3 +1,7 @@
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.Contracts;
+
 namespace HollowKnight.Shared
 {
     public static class EnemyConstants
@@ -54,5 +58,14 @@ namespace HollowKnight.Shared
         public const float MantisSecondaryThroneOffsetY = 70f;
         public const float MantisStabSpeed = 5f;
         public const float MantisDashSpeed = 5f;
+        public const float MantisWallHangLeftX = 3600f;
+        public const float MantisWallHangRightX = 5140f;
+        public const float MantisWallHangY = 4546f;
+        public const float MantisDashArriveLeftX = 3880f;
+        public const float MantisDashArriveRightX = 5140f;
+        public const float MantisDashY = 5050f;
+        public const float MantisDashArriveSpriteHeigthOffset = 556/2;
+        //FIX
+        public const float MantisDashAnticipateSpriteHeightOffset = MantisDashArriveSpriteHeigthOffset + (297 - 110);
     }
 }
