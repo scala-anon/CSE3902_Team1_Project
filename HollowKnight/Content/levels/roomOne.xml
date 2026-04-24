@@ -91,7 +91,7 @@
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Path_1</ObjectName>
-    <Location>4000 2200</Location>
+    <Location>4225 2200</Location>
 </Item>
 
 <Item>
@@ -230,12 +230,34 @@
 </Item>
 
 
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Background_1</ObjectName>
+    <Location>6100 750</Location>
+</Item>
 
 <Item>
   <ObjectType>TransitionV</ObjectType>
   <ObjectName>ToRoom2</ObjectName>
   <Location>6050 800</Location>
 </Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Background_1</ObjectName>
+    <Location>6050 1200</Location>
+</Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Background_1</ObjectName>
+    <Location>6050 1650</Location>
+</Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Background_1</ObjectName>
+    <Location>6050 1800</Location>
+</Item>
+
 
 <Item>
     <ObjectType>Platform</ObjectType>
