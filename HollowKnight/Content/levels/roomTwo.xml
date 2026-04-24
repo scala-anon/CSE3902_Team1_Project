@@ -54,6 +54,11 @@
     <ObjectName>Path_ledge</ObjectName>
     <Location>7250 800</Location>
 </Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_ledge</ObjectName>
+    <Location>7310 800</Location>
+</Item>
 
 
 <!-- LOWER PATH (Next straight path with fly and spike) -->

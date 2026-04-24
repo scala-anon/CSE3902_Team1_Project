@@ -18,6 +18,9 @@ namespace HollowKnight.Player
 
         private ISprite slashEffect;
         private bool isSlashEffectActive;
+        private Vector2 _slashEffectFixedSize;
+        private Vector2 _knightFixedSize;
+        private bool _slashSizesCaptured;
 
         private ISprite castPulseEffect;
         private bool isCastPulseActive;
@@ -78,23 +81,31 @@ namespace HollowKnight.Player
         {
             if (!isSlashEffectActive || slashEffect == null) return;
             Vector2 knightSize = currentSprite.GetSize();
+
+            if (!_slashSizesCaptured)
+            {
+                _slashEffectFixedSize = new Vector2(slashEffect.Width, slashEffect.Height);
+                _knightFixedSize = knightSize;
+                _slashSizesCaptured = true;
+            }
+
             Vector2 slashPosition = position;
 
             switch (AttackType)
             {
                 case KnightSpriteType.SideSlash:
                     slashPosition.X += facing == Direction.Right
-                        ? knightSize.X - knightSize.X / KnightConstants.SlashEffectRightDivisor
-                        : -slashEffect.Width + knightSize.X / KnightConstants.SlashEffectLeftDivisor;
-                    slashPosition.Y += knightSize.Y / KnightConstants.SlashEffectYDivisor;
+                        ? _knightFixedSize.X - _knightFixedSize.X / KnightConstants.SlashEffectRightDivisor
+                        : -_slashEffectFixedSize.X + _knightFixedSize.X / KnightConstants.SlashEffectLeftDivisor;
+                    slashPosition.Y += _knightFixedSize.Y / KnightConstants.SlashEffectYDivisor;
                     break;
                 case KnightSpriteType.UpSlash:
-                    slashPosition.X += (knightSize.X - slashEffect.Width) / 2;
-                    slashPosition.Y -= slashEffect.Height - knightSize.Y / KnightConstants.UpSlashEffectYDivisor;
+                    slashPosition.X += (_knightFixedSize.X - _slashEffectFixedSize.X) / 2;
+                    slashPosition.Y -= _slashEffectFixedSize.Y - _knightFixedSize.Y / KnightConstants.UpSlashEffectYDivisor;
                     break;
                 case KnightSpriteType.DownSlash:
-                    slashPosition.X += (knightSize.X - slashEffect.Width) / 2 - knightSize.X / KnightConstants.DownSlashEffectXDivisor;
-                    slashPosition.Y += knightSize.Y - knightSize.Y / KnightConstants.DownSlashEffectYDivisor;
+                    slashPosition.X += (_knightFixedSize.X - _slashEffectFixedSize.X) / 2 - _knightFixedSize.X / KnightConstants.DownSlashEffectXDivisor;
+                    slashPosition.Y += _knightFixedSize.Y - _knightFixedSize.Y / KnightConstants.DownSlashEffectYDivisor;
                     break;
             }
             slashEffect.SetPosition(slashPosition);
@@ -140,6 +151,7 @@ namespace HollowKnight.Player
                 KnightSpriteType.DownSlash => SpriteFactory.Instance.CreateDownSlashEffect(position),
                 _ => null
             };
+            _slashSizesCaptured = false;
             AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Hero_Attack());
 
             return true;
