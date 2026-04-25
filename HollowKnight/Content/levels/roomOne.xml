@@ -10,6 +10,12 @@
 
 <Item>
     <ObjectType>Platform</ObjectType>
+    <ObjectName>Plant1_Idle</ObjectName>
+    <Location>50 1853</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
     <ObjectName>Plant2_Idle</ObjectName>
     <Location>1200 1853</Location>
 </Item>
@@ -21,10 +27,22 @@
     <Location>1600 1853</Location>
 </Item>
 
+<!-- Backgrounds underneath first Path_1 row (8px overlap, stops at Wall_3 x=4197) -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>-10 2047</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>838 2047</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>1686 2047</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>2534 2047</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3382 2047</Location></Item>
+
+<!-- Backgrounds underneath second Path_1 row (8px overlap, starts after Wall_3 x=4258) -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4235 2245</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5085 2245</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5935 2245</Location></Item>
+
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Path_1</ObjectName>
-    <Location>0 2000</Location>
+    <Location>-35 2000</Location>
 </Item>
 
 <Item>
@@ -125,22 +143,22 @@
 
 <!-- Ceiling background row 0 (top cap of wall column) -->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>-10 302</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>841 302</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>1692 302</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>2543 302</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3394 302</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>838 302</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>1686 302</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>2534 302</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3382 302</Location></Item>
 <!-- Ceiling background row 1 -->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>-10 753</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>841 753</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>1692 753</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>2543 753</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3394 753</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>838 753</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>1686 753</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>2534 753</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3382 753</Location></Item>
 <!-- Ceiling background row 2 -->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>-10 1202</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>841 1202</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>1692 1202</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>2543 1202</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3394 1202</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>838 1202</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>1686 1202</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>2534 1202</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3382 1202</Location></Item>
 
 <!--Ceiling background row 3/parkour-->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4240 308</Location></Item>
