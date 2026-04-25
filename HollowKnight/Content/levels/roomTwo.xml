@@ -9,13 +9,21 @@
 </Item>
 
 <!-- Background left of ToRoom1 transition (bottom at y=40) -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4700 -352</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4700 0</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4700 150</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5200 -352</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5200 0</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5200 100</Location></Item>
+
+<!-- Front background layer to "cut off" path-->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1_Front</ObjectName><Location>5200 120</Location></Item>
+
 
 <!-- Ceiling row above vengefly (bottom at y=40, 20px horizontal overlap) -->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>6030 -411</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>6866 -411</Location></Item>
+
+
 
 <!-- Background right of rightmost Wall_2 (20px vertical overlap between tiles) -->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>7449 0</Location></Item>
@@ -52,6 +60,12 @@
     <ObjectType>Platform</ObjectType>
     <ObjectName>Spike_Floor_2</ObjectName>
     <Location>6950 425</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1_Flipped</ObjectName>
+    <Location>5500 500</Location>
 </Item>
 
 <Item>
@@ -107,6 +121,7 @@
 </Item>
 
 
+
 <!-- Transition out (End of the path, dropping into the big shaft) -->
 <Item>
     <ObjectType>Enemy</ObjectType>
@@ -119,6 +134,8 @@
     <ObjectName>ToRoom3</ObjectName>
     <Location>5550 1200</Location>
 </Item>
+
+
 
 
 <!-- Background right of right transition wall, below lower path (20px vertical overlap) -->
@@ -160,5 +177,11 @@
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 730</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 840</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 950</Location></Item>
+
+<!-- Background_2 top-right aligned with top-left of topmost right Wall_2 -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_2</ObjectName><Location>7270 -40</Location></Item>
+
+<!-- Background_2_Flipped top-left aligned with top-left of left transition Wall_2 -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_2_Flipped</ObjectName><Location>5550 480</Location></Item>
 
 </Level>

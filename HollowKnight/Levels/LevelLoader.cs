@@ -41,10 +41,13 @@ namespace HollowKnight.Levels
                 ["Tutorial_Platform_8"]  = pos => new TutorialPlatform(8, pos, 105, 62),
                 ["Tutorial_Platform_9"]  = pos => new TutorialPlatform(9, pos, 110, 62),
                 ["Tutorial_Platform_10"] = pos => new TutorialPlatform(10, pos, 174, 70),
-                ["Background_1"]  = pos => new Background(1, pos),
-                ["Background_2"] = pos => new Background(2, pos),
+                ["Background_1"]         = pos => new Background(1, pos),
+                ["Background_1_Front"]   = pos => new Background(1, pos),
+                ["Background_2"]         = pos => new Background(2, pos),
+                ["Background_2_Flipped"] = pos => new Background(2, pos, flipped: true),
                 // <Region name="Path_1" x="265" y="223" width="1060" height="83" />
                 ["Path_1"]               = pos => new Path(1, pos, 1050, 32, hitOffsetY: 15),
+                ["Path_1_Flipped"]       = pos => new Path(1, pos, 1050, 32, hitOffsetY: 15, flipped: true),
                 ["Path_2"]               = pos => new Path(2, pos, 940, 32, hitOffsetY: 40),
                 ["Path_ledge"]           = pos => new PathLedge(pos),
                 ["Spike_Floor_1"]        = pos => new Spike(SpikeVariant.Floor1, pos),
@@ -205,8 +208,10 @@ namespace HollowKnight.Levels
         // Anything absent falls through to the default logic (collision goes to Platforms).
         private static readonly Dictionary<string, DecorationLayer> DecorationLayers = new()
         {
-            ["Background_1"]   = DecorationLayer.BackgroundFar,
-            ["Background_2"]   = DecorationLayer.BackgroundFar,
+            ["Background_1"]         = DecorationLayer.BackgroundFar,
+            ["Background_1_Front"]   = DecorationLayer.Foreground,
+            ["Background_2"]         = DecorationLayer.Foreground,
+            ["Background_2_Flipped"] = DecorationLayer.Foreground,
 
             ["Village_1"]      = DecorationLayer.BackgroundMid,
             ["Village_2"]      = DecorationLayer.BackgroundMid,
