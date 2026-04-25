@@ -270,21 +270,30 @@ namespace HollowKnight.Enemies
 
                 // ---- DStab sequence ----
                 case MantisLordState.DStabStart:
-                     _owner.position = new Vector2(_owner.knightPosition.X - (765/2), _owner.knightPosition.Y - 950);
+                //- (765/2)
+                     _owner.position = new Vector2(_owner.knightPosition.X-765/2+35 , _owner.knightPosition.Y - 950);
                      EnterState(MantisLordState.DStabArrive);
                      break;
                 case MantisLordState.DStabArrive:
+                    // _owner.position.X = _owner.knightPosition.X - 60;
                     if (_owner.Sprite.IsFinished)
                     {
                         // TODO: damage hitbox — activate DStab contact damage here
-                        EnterState(MantisLordState.DStab);
+                        EnterState(MantisLordState.DStabOffset);
                     }
                     break;
-
+                case MantisLordState.DStabOffset:
+                    _owner.position.X += 250;
+                    EnterState(MantisLordState.DStab);
+                    break;
                 case MantisLordState.DStab:
                     _owner.position.Y += EnemyConstants.MantisStabSpeed * elapsedTime;
                     if (_owner.Sprite.IsFinished)
-                        EnterState(MantisLordState.DStabLand);
+                        EnterState(MantisLordState.DStabLandOffset);
+                    break;
+                case MantisLordState.DStabLandOffset:
+                    _owner.position.X-= 120;
+                    EnterState(MantisLordState.DStabLand);
                     break;
                 case MantisLordState.DStabLand:
                     if (_owner.Sprite.IsFinished)

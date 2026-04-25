@@ -25,7 +25,9 @@ namespace HollowKnight.Enemies
         DashRecover,
         DashLeave,
         DStabArrive,
+        DStabOffset,
         DStab,
+        DStabLandOffset,
         DStabLand,
         DStabLeave,
         WallArrive,
@@ -111,7 +113,7 @@ namespace HollowKnight.Enemies
         public void SetState(MantisLordState newState)
         {
             State = newState;
-            if (newState != MantisLordState.DStabStart && newState != MantisLordState.GracePeriod){
+            if (newState != MantisLordState.DStabStart && newState != MantisLordState.GracePeriod && newState != MantisLordState.DStabOffset && newState != MantisLordState.DStabLandOffset){
                 Sprite = _sprites[newState];
                 Sprite.Reset();
             }

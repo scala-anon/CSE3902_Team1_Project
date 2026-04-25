@@ -65,7 +65,7 @@ namespace HollowKnight.Shared
         public const float MiddleMantisStandingX = 4524;  
         public const float SecondaryMantisStandingY = 4820;
         public const float PrimaryMantisStandingY = 4716;
-        public const float MantisStabSpeed = 3700f;
+        public const float MantisStabSpeed = 2840f;
         public const float MantisDashSpeed = 3750f;
         public const float MantisWallHangLeftX = 3625f;
         public const float MantisWallHangRightX = 5115f;
@@ -123,7 +123,9 @@ namespace HollowKnight.Shared
             [MantisLordState.DashArrive] = new Rectangle(0, 0, 0, 0),
             [MantisLordState.DashLeave] = new Rectangle(0, 0, 0, 0),
             [MantisLordState.DStabArrive] = new Rectangle(0, 0, 0, 0),
+            [MantisLordState.DStabOffset] = new Rectangle(0, 0, 0, 0),
             [MantisLordState.DStab] = new Rectangle(0, 0, 0, 0),
+            [MantisLordState.DStabLandOffset] = new Rectangle(0,0,0,0),
             [MantisLordState.DStabLeave] = new Rectangle(0, 0, 0, 0),
             [MantisLordState.WallArrive] = new Rectangle(0, 0, 0, 0),
             [MantisLordState.WallLeave] = new Rectangle(0, 0, 0, 0),
