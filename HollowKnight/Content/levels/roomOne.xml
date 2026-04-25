@@ -109,38 +109,38 @@
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Background_1</ObjectName>
-    <Location>0 0</Location>
+    <Location>-10 0</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Background_1</ObjectName>
-    <Location>0 430</Location>
+    <Location>-10 430</Location>
 </Item>
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Background_1</ObjectName>
-    <Location>0 840</Location>
+    <Location>-10 840</Location>
 </Item>
 
 <!-- Ceiling background row 0 (top cap of wall column) -->
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>0 302</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>848 302</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>1696 302</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>2544 302</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3392 302</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>-10 302</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>841 302</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>1692 302</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>2543 302</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3394 302</Location></Item>
 <!-- Ceiling background row 1 -->
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>0 753</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>848 753</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>1696 753</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>2544 753</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3392 753</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>-10 753</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>841 753</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>1692 753</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>2543 753</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3394 753</Location></Item>
 <!-- Ceiling background row 2 -->
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>0 1202</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>848 1202</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>1696 1202</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>2544 1202</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3392 1202</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>-10 1202</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>841 1202</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>1692 1202</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>2543 1202</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3394 1202</Location></Item>
 
 <!--Ceiling background row 3/parkour-->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4240 308</Location></Item>

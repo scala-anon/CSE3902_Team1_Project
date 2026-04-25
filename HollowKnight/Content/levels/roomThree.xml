@@ -9,29 +9,40 @@
 </Item>
 
 <!-- Ceiling (bottom at y=2000, 20px horizontal overlap) -->
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5500 1549</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>6336 1549</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>7172 1549</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>8008 1549</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5500 1559</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>6336 1559</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>7172 1559</Location></Item>
+
 
 <!-- Left side of left wall (20px vertical overlap, +10px right to close seam) -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4654 1570</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4654 2000</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4654 2431</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4654 2862</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4654 3313</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4654 3293</Location></Item>
 
-<!-- Right of top-right wall (x=6094, 20px vertical overlap) -->
+<!-- Right of top-right wall (x=6094, bottom aligned with wall bottom y=2777) -->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>6094 2000</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>6094 2431</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>6094 2450</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>6094 2326</Location></Item>
+<!--Right of top-right wall, 20px horizontal overlap-->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>6134 2020</Location></Item> 
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>6918 2020</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>7702 2020</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>6134 2326</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>6918 2326</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1_Front</ObjectName><Location>7702 2326</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1_Front</ObjectName><Location>8486 2326</Location></Item>
+
 
 <!-- Right of bottom-right wall (x=7899, 20px vertical overlap) -->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>7899 3790</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>7899 4221</Location></Item>
 
-<!-- Right of far-right wall (x=8317, 20px vertical overlap) -->
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>8317 2928</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>8317 3359</Location></Item>
+<!-- Right of far-right wall (x=8317) -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>8317 2450</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>8317 2896</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>8317 3327</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1_Front</ObjectName><Location>8317 3758</Location></Item>
 
 <Item>
     <ObjectType>Knight</ObjectType>
@@ -45,7 +56,7 @@
     <Location>5785 3400</Location>
 </Item>
 
-<!-- RIGHTSIDE -->
+<!-- RIGHTSIDE Inital Drop-->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6045 2000</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6045 2111</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6045 2222</Location></Item>
@@ -53,24 +64,29 @@
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6045 2444</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6045 2555</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6045 2666</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6045 2777</Location></Item>
 
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7850 3790</Location></Item>
+
+<!--Vertical spikes-->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7770 3801</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7770 3841</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7770 3931</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7770 4021</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7770 4111</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7770 4201</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7770 4291</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7770 4381</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7770 4471</Location></Item>
+
+<!-- RIGHTSIDE Wall for vertical spikes-->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7850 3795</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7850 3901</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7850 4012</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7850 4123</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7850 4234</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7850 4345</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7850 4456</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7768 3785</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7768 3881</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7768 3977</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7768 4073</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7768 4169</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7768 4265</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7768 4361</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>7768 4457</Location></Item>
-<!-- <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6045 2888</Location></Item> -->
+
+
 
 <!-- LEFTSIDE -->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5500 2000</Location></Item>
@@ -159,6 +175,7 @@
 <Item><ObjectType>Enemy</ObjectType><ObjectName>Vengefly</ObjectName><Location>6700 3000</Location></Item>
 <Item><ObjectType>Enemy</ObjectType><ObjectName>Vengefly</ObjectName><Location>7950 3000</Location></Item>
 
+<!--Row 1 of spikes-->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>5550 3708</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>5670 3708</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>5790 3708</Location></Item>
@@ -173,7 +190,6 @@
 <Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6870 3708</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>6990 3708</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>7110 3708</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>7866 3708</Location></Item>
 <!-- Ledges below row 1 of floor spikes to prevent clipping -->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>5550 3795</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>5635 3795</Location></Item>
@@ -195,9 +211,14 @@
 <Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>6995 3795</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>7080 3795</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>7125 3795</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>7986 3708</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>8106 3708</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>8226 3708</Location></Item>
+
+<!--Row 2 of spikes-->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>7858 3708</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>7978 3708</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>8058 3708</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>8118 3708</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Floor_2</ObjectName><Location>8158 3708</Location></Item>
+
 <!-- Ledges below row 2 of floor spikes to prevent clipping -->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>7866 3799</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>7951 3799</Location></Item>
@@ -206,7 +227,9 @@
 <Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>8206 3799</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Path_ledge</ObjectName><Location>8251 3799</Location></Item>
 
-<!-- Vertical wall on right side of furthest spike section (built upward) -->
+<!-- Rightmost side wall of furthest spike section-->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>8268 2706</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>8268 2817</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>8268 2928</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>8268 3039</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>8268 3150</Location></Item>
@@ -216,8 +239,16 @@
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>8268 3594</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>8268 3708</Location></Item>
 
+
+<!-- Backgrounds underneath lowermost paths (20px horizontal overlap) -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5475 4597</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>6311 4597</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>7147 4570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>7983 4570</Location></Item>
+
 <Item><ObjectType>Platform</ObjectType><ObjectName>Path_1</ObjectName><Location>5475 4550</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Path_1</ObjectName><Location>5790 4550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Path_1</ObjectName><Location>6105 4550</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Path_1</ObjectName><Location>6830 4550</Location></Item>
 
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>6230 3818</Location></Item>
