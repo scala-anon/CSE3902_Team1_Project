@@ -9,8 +9,9 @@
 </Item>
 
 <!-- Background left of ToRoom1 transition (bottom at y=40) -->
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5194 -411</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5194 -352</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5200 -352</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5200 0</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5200 100</Location></Item>
 
 <!-- Ceiling row above vengefly (bottom at y=40, 20px horizontal overlap) -->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>6030 -411</Location></Item>
@@ -120,10 +121,15 @@
 </Item>
 
 
+<!-- Background right of right transition wall, below lower path (20px vertical overlap) -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>6099 1040</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>6929 1040</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>7759 1040</Location></Item>
+
 <!-- Background left of leftmost Wall_2 (20px vertical overlap) -->
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4699 510</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4699 941</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4699 1372</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4704 510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4704 941</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4704 1372</Location></Item>
 
 <!-- Walls near transition to Room 3  (Left side of transition)-->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5550 510</Location></Item>
@@ -154,8 +160,5 @@
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 730</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 840</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 950</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 1060</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 1170</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 1280</Location></Item>
 
 </Level>
