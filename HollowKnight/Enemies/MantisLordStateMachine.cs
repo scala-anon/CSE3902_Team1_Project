@@ -1,5 +1,6 @@
 using System.Collections;
 using HollowKnight.Player;
+using HollowKnight.Projectiles;
 using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -185,7 +186,12 @@ namespace HollowKnight.Enemies
                 case MantisLordState.Throw:
                     if (_owner.Sprite.IsFinished)
                     {
-                        // TODO: spawn projectile here
+                        Vector2 direction = _owner.FacingDirection == Direction.Right
+                            ? new Vector2(1f, 0f)
+                            : new Vector2(-1f, 0f);
+
+                        _owner._projectileSpawner.SpawnMantisLordProjectile(_owner.position, direction, EnemyConstants.EnemyProjectileSpeed, ProjectileFaction.Enemy);
+                        
                         EnterState(MantisLordState.WallLeave);
                     }
                     break;

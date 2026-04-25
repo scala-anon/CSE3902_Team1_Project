@@ -10,9 +10,12 @@ namespace HollowKnight.Enemies
         private readonly ICollidable _enemy;
         private readonly ProjectileSpawner _spawner;
 
+        
         private float _timer = 0f;
         private readonly float _interval = EnemyConstants.EnemyProjectileInterval;
         private readonly float _speed = EnemyConstants.EnemyProjectileSpeed;
+
+        
 
         public EnemyProjectile(ICollidable enemy, ProjectileSpawner spawner)
         {

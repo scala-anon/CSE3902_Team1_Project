@@ -5,6 +5,7 @@ using HollowKnight.Shared;
 using HollowKnight.Collision;
 using Microsoft.Xna.Framework;
 using System;
+using HollowKnight.Projectiles;
 
 
 namespace HollowKnight.Enemies
@@ -54,6 +55,9 @@ namespace HollowKnight.Enemies
 
         // Expose the state machine so BossFightController can command it.
         public MantisLordStateMachine StateMachine => _stateMachine;
+
+        public ProjectileManager _projectileManager;
+        public ProjectileSpawner _projectileSpawner;
 
         public MantisLord(Vector2 position, MantisLordSlot slot)
         {
@@ -106,6 +110,9 @@ namespace HollowKnight.Enemies
 
             Sprite = _sprites[MantisLordState.IdleOnThrone];
             _stateMachine = new MantisLordStateMachine(this);
+            _projectileManager = new ProjectileManager();
+            _projectileSpawner = new ProjectileSpawner(_projectileManager);
+            
         }
 
         public void SetState(MantisLordState newState)

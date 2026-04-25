@@ -186,6 +186,7 @@ namespace HollowKnight.Factories
             mantisLordAnimations.Add("Death", mantisLordAtlas.GetAnimationFrames("Death"));
             mantisLordAnimations.Add("Death_Leave_One", mantisLordAtlas.GetAnimationFrames("Death_Leave_One"));
             mantisLordAnimations.Add("Death_Leave_Two", mantisLordAtlas.GetAnimationFrames("Death_Leave_Two"));
+            mantisLordAnimations.Add("Air_Projectile", mantisLordAtlas.GetAnimationFrames("Air_Projectile"));
 
             for (int i = 1; i <= 8; i++)
             {
@@ -466,6 +467,11 @@ namespace HollowKnight.Factories
         }
 
         // Mantis Lord factory methods
+
+        public ISprite CreateMantisProjectile(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Air_Projectile"], position, .1, 1.0f);
+        }
         public ISprite CreateMantisThroneIdle(Vector2 position)
         {
             return new StaticSprite(mantisLordSpriteSheet, mantisLordFrames["Throne_Idle"], position, 1.00f);

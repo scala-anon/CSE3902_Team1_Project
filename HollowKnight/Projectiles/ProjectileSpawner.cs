@@ -20,5 +20,13 @@ namespace HollowKnight.Projectiles
                 new VengefulSpiritProjectile(spawnPosition, direction * speed, faction)
             );
         }
+
+        public void SpawnMantisLordProjectile(Vector2 spawnPosition, Vector2 direction, float speed, ProjectileFaction faction)
+        {
+            DebugLogger.LogObject($"MantisLordsProjectile spawned at ({spawnPosition.X:F0},{spawnPosition.Y:F0}) faction = {faction}");
+            _projectileManager.Spawn(new MantisLordsProjectile(spawnPosition, direction * speed, faction));
+        }
+
+        
     }
 }
