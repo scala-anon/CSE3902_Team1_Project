@@ -35,6 +35,7 @@ public partial class Game1 : Game
     private LevelLoader _level;
     private Dictionary<int, Vector2> _roomEntryPoints = new();
     private bool _isTransitioning = false;
+    private readonly ScreenFader _fader = new();
 
 
     public Game1()
@@ -99,6 +100,7 @@ public partial class Game1 : Game
         DrawWorld();
         DrawHud();
         DrawOverlay();
+        DrawFadeOverlay();
 
         base.Draw(gameTime);
     }

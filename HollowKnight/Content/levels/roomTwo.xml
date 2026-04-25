@@ -5,8 +5,22 @@
 <Item>
     <ObjectType>TransitionV</ObjectType>
     <ObjectName>ToRoom1</ObjectName>
-    <Location>6050 0</Location>
+    <Location>6000 0</Location>
 </Item>
+
+<!-- Background left of ToRoom1 transition (bottom at y=40) -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5194 -411</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5194 -352</Location></Item>
+
+<!-- Ceiling row above vengefly (bottom at y=40, 20px horizontal overlap) -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>6030 -411</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>6866 -411</Location></Item>
+
+<!-- Background right of rightmost Wall_2 (20px vertical overlap between tiles) -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>7449 0</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>7449 400</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>7449 831</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>7449 1262</Location></Item>
 
 <Item>
     <ObjectType>Knight</ObjectType>
@@ -20,92 +34,83 @@
     <Location>6150 400</Location>
 </Item>
 
-<!-- TOP PATH (Straight path with 2 spikes and crawlid) -->
-<!-- Main long platform -->
+<!-- TOP PATH (Straight path with 2 spikes and fly) -->
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Vengefly</ObjectName>
+    <Location>6650 200</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Spike_Floor_2</ObjectName>
+    <Location>6650 435</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Spike_Floor_2</ObjectName>
+    <Location>6950 425</Location>
+</Item>
+
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Path_1</ObjectName>
     <Location>6050 500</Location>
 </Item>
 
-<Item>
-    <ObjectType>Enemy</ObjectType>
-    <ObjectName>Crawlid</ObjectName>
-    <Location>6350 450</Location>
-</Item>
-
-<Item>
-    <ObjectType>Platform</ObjectType>
-    <ObjectName>Spike_Floor_2</ObjectName>
-    <Location>6650 480</Location>
-</Item>
-
-<Item>
-    <ObjectType>Platform</ObjectType>
-    <ObjectName>Spike_Floor_2</ObjectName>
-    <Location>6950 480</Location>
-</Item>
-
-
-
 <!-- SHORT LEDGE UNDERNEATH -->
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Path_ledge</ObjectName>
-    <Location>7250 800</Location>
+    <Location>7250 810</Location>
 </Item>
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Path_ledge</ObjectName>
-    <Location>7310 800</Location>
+    <Location>7310 810</Location>
 </Item>
 
-
-<!-- LOWER PATH (Next straight path with fly and spike) -->
-<Item>
-    <ObjectType>Platform</ObjectType>
-    <ObjectName>Path_1</ObjectName>
-    <Location>6050 1000</Location>
-</Item>
-
-<Item>
-    <ObjectType>Platform</ObjectType>
-    <ObjectName>Spike_Floor_2</ObjectName>
-    <Location>6850 980</Location>
-</Item>
 
 <!-- Spikes underneath ledge-->
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Spike_Floor_2</ObjectName>
-    <Location>7075 980</Location>
+    <Location>7065 980</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Spike_Floor_2</ObjectName>
-    <Location>7205 980</Location>
+    <Location>7185 980</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Spike_Floor_2</ObjectName>
-    <Location>7335 980</Location>
+    <Location>7305 980</Location>
 </Item>
 
 
+<!-- LOWER PATH (Next straight path with crawlid and spike) -->
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>6050 1015</Location>
+</Item>
 
-<!-- <Item>
-    <ObjectType>Enemy</ObjectType>
-    <ObjectName>Vengefly</ObjectName>
-    <Location>6450 800</Location>
-</Item> -->
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Spike_Floor_2</ObjectName>
+    <Location>6750 970</Location>
+</Item>
+
 
 <!-- Transition out (End of the path, dropping into the big shaft) -->
 <Item>
     <ObjectType>Enemy</ObjectType>
     <ObjectName>Crawlid</ObjectName>
-    <Location>6200 950</Location>
+    <Location>6200 965</Location>
 </Item>
 
 <Item>
@@ -115,19 +120,34 @@
 </Item>
 
 
-<!-- Walls near transition to Room 3 -->
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>5550 620</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>5550 730</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>5550 840</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>5550 950</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>5550 1060</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>5550 1170</Location></Item>
+<!-- Background left of leftmost Wall_2 (20px vertical overlap) -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4699 510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4699 941</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4699 1372</Location></Item>
 
+<!-- Walls near transition to Room 3  (Left side of transition)-->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5550 510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5550 620</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5550 730</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5550 840</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5550 950</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5550 1060</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5550 1170</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5550 1280</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>5550 1390</Location></Item>
+
+<!-- Right side of transition -->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6050 1040</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6050 1150</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6050 1260</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6050 1370</Location></Item>
 
 
 <!-- Main Right Wall -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 0</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 70</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 180</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 290</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 400</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 510</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>7400 620</Location></Item>

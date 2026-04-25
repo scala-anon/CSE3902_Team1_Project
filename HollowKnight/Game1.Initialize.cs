@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using HollowKnight.Controllers;
@@ -180,15 +181,21 @@ internal void CheckBenchRespawnTransition()
 {
     if (!_knight.NeedsBenchRoomTransition) return;
     _knight.ConsumeBenchRoomTransition();
-
     int benchRoom = _knight.BenchSpawnRoom;
-    if (benchRoom != _currentRoom)
-        TransitionToRoom(benchRoom);
+    _fader.StartFadeOut(() =>
+    {
+        if (benchRoom != _currentRoom)
+            TransitionToRoom(benchRoom);
+        _knight.SetPosition(_knight.BenchSpawnPoint);
+        Camera.Instance.SnapTo(_knight.BenchSpawnPoint);
+        _knight.StartSittingIdle();
+        DebugLogger.LogRoomTransition($"Bench respawn to room {benchRoom} at {_knight.BenchSpawnPoint}");
+    });
+}
 
-    _knight.SetPosition(_knight.BenchSpawnPoint);
-    Camera.Instance.SnapTo(_knight.BenchSpawnPoint);
-    _knight.StartSittingIdle();
-    DebugLogger.LogRoomTransition($"CheckBenchRespawnTransition: placed knight at {_knight.BenchSpawnPoint} in room {benchRoom}");
+internal void UpdateFade(GameTime gameTime)
+{
+    _fader.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 }
 
 private void ApplyRoomRespawnPoint()
@@ -203,7 +210,8 @@ private void ApplyRoomRespawnPoint()
 private void RestartGame()
 {
     _roomEntryPoints.Clear();
-    _currentRoom = 1; // reset room on restart
+    _currentRoom = 1;
+    _fader.Reset();
     InitializeNavigationGrid();
     _projectileManager.Clear();
     InitializeItems();

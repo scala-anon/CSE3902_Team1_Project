@@ -15,6 +15,7 @@ namespace HollowKnight.Shared
     {
         public override void Update(Game1 game, GameTime gameTime)
         {
+            game.UpdateFade(gameTime);
             game.CheckTransitions();
             game.UpdateKnight(gameTime);
             game.CheckBenchRespawnTransition();

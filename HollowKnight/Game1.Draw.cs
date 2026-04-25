@@ -168,6 +168,14 @@ public partial class Game1
         _spriteBatch.End();
     }
 
+    private void DrawFadeOverlay()
+    {
+        if (!_fader.IsActive) return;
+        _spriteBatch.Begin();
+        _fader.Draw(_spriteBatch, _overlayPixel, GetOverlayBounds());
+        _spriteBatch.End();
+    }
+
     private void DrawCenteredOverlay(string title, string prompt, Color tint, Color titleColor)
     {
         Rectangle overlayBounds = new(

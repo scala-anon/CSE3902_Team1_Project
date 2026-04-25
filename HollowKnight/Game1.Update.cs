@@ -32,15 +32,15 @@ internal void CheckTransitions()
         {
             _isTransitioning = true;
 
-            // offset spawn away from the transition so we don't re-trigger it on return
             Vector2 safeSpawn = _knight.position;
-            if (zone.Bounds.Width > zone.Bounds.Height) // horizontal transition
-                safeSpawn.Y -= 100; // push up
-            else // vertical transition
-                safeSpawn.X += _knight.position.X < zone.Bounds.Center.X ? -100 : 100; // push away laterally
+            if (zone.Bounds.Width > zone.Bounds.Height)
+                safeSpawn.Y -= 100;
+            else
+                safeSpawn.X += _knight.position.X < zone.Bounds.Center.X ? -100 : 100;
 
             _roomEntryPoints[_currentRoom] = safeSpawn;
-            TransitionToRoom(zone.DestinationRoom);
+            int dest = zone.DestinationRoom;
+            _fader.StartFadeOut(() => TransitionToRoom(dest));
             return;
         }
     }
