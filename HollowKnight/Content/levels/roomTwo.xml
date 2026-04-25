@@ -116,6 +116,17 @@
 
 <Item>
     <ObjectType>Platform</ObjectType>
+    <ObjectName>Plant2_Idle</ObjectName>
+    <Location>6380 864</Location>
+</Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Plant1_Idle</ObjectName>
+    <Location>6300 864</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
     <ObjectName>Spike_Floor_2</ObjectName>
     <Location>6750 970</Location>
 </Item>
