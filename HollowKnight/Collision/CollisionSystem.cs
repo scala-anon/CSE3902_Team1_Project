@@ -192,6 +192,7 @@ namespace HollowKnight.Collision
             foreach (IEnemy enemy in enemies)
             {
                 if (!(enemy is Crawlid crawlid)) continue;
+                if (!crawlid.IsActive) continue;
                 crawlid.SetAirborne();
                 for (int i = 0; i < platforms.Count; i++)
                 {
