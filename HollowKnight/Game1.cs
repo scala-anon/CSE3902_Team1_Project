@@ -24,7 +24,7 @@ public partial class Game1 : Game
     private List<IController> _controllerList;
     private readonly List<Spirit> _items = new();
 
-    private GameState _gameState = new PlayingState();
+    private GameState _gameState = new TitleState();
 
     private TheKnight _knight;
     private CollisionSystem _collisionSystem;
@@ -79,7 +79,16 @@ public partial class Game1 : Game
     protected override void Update(GameTime gameTime)
     {
         if (_gameState is PlayingState)
+        {
             UpdateCollisions();
+            if (KnightIsDead())
+            {
+                SetGameOver();
+                UpdateAudio();
+                base.Update(gameTime);
+                return;
+            }
+        }
 
         UpdateControllers(gameTime);
 
@@ -107,8 +116,12 @@ public partial class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        DrawWorld();
-        DrawHud();
+        if (!IsTitleScreenOpen())
+        {
+            DrawWorld();
+            DrawHud();
+        }
+
         DrawOverlay();
 
         base.Draw(gameTime);

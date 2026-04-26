@@ -284,10 +284,10 @@ namespace HollowKnight.Player
             if (health.Health == 0)
             {
                 _justDied = true;
-                DebugLogger.LogGeneral($"Knight died. Respawning at {benchSpawnPoint}.");
-                SetPosition(benchSpawnPoint);
+                DebugLogger.LogGeneral("Knight died. Entering game over state.");
                 physics.Velocity = Vector2.Zero;
-                health.ResetHealth();
+                physics.StopMovingHorizontal();
+                physics.StopMovingVertical();
             }
             else
             {

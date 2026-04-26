@@ -6,6 +6,11 @@ namespace HollowKnight;
 
 public partial class Game1
 {
+    public void StartGame()
+    {
+        _gameState = new PlayingState();
+    }
+
     public void TogglePause()
     {
         if (_gameState is PlayingState)
@@ -48,6 +53,11 @@ public partial class Game1
     public bool AllowsGameplayInput()
     {
         return _gameState is PlayingState;
+    }
+
+    public bool IsTitleScreenOpen()
+    {
+        return _gameState is TitleState;
     }
 
     public void StartMantisFight()
