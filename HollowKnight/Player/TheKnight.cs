@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using HollowKnight.Factories;
 using HollowKnight.Interfaces;
+using HollowKnight.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using HollowKnight.Shared;
@@ -35,6 +36,9 @@ namespace HollowKnight.Player
         public static bool GodmodeEnabled = false;
         public KnightProjectile Projectiles { get; set; }
         public KnightDash Dash => dash;
+
+        private ProjectileManager _projectileManager;
+        public void SetProjectileManager(ProjectileManager pm) => _projectileManager = pm;
 
         public bool IsActive => true;
         public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, (int)baseSize.X, (int)baseSize.Y);
@@ -396,7 +400,10 @@ namespace HollowKnight.Player
                 _justDied = true;
                 DebugLogger.LogGeneral($"Knight died. Respawning at {benchSpawnPoint} (room {_benchSpawnRoom}).");
                 health.ResetHealth();
-                _needsBenchRoomTransition = true;
+                if (_projectileManager != null)
+                    _projectileManager.Spawn(new LowHealthEffect(position + baseSize / 2f, () => _needsBenchRoomTransition = true));
+                else
+                    _needsBenchRoomTransition = true;
             }
             else
             {

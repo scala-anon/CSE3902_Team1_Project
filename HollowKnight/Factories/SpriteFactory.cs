@@ -667,7 +667,7 @@ namespace HollowKnight.Factories
 
         public ISprite CreateLowHealthEffect(Vector2 position)
         {
-            return new AnimatedSprite(spriteEffectsSheet, spriteEffectsAnimations["low_health"], position, 0.1, 1.0f);
+            return new AnimatedSprite(spriteEffectsSheet, spriteEffectsAnimations["low_health"], position, 0.1, 1.0f, loop: false);
         }
 
         public ISprite CreateTransitionLight(Vector2 position)
