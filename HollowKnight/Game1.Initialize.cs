@@ -29,6 +29,8 @@ public partial class Game1
     private void InitializeSharedResources()
     {
         SpriteFactory.Instance.LoadAllTextures(Content);
+        _parallaxBackground = new ParallaxBackground(SpriteFactory.Instance.GetMainBackgroundTexture());
+
     }
 
     private void InitializeAudio()

@@ -36,6 +36,7 @@ public partial class Game1 : Game
     private Dictionary<int, Vector2> _roomEntryPoints = new();
     private bool _isTransitioning = false;
     private readonly ScreenFader _fader = new();
+    private ParallaxBackground _parallaxBackground;
 
 
     public Game1()

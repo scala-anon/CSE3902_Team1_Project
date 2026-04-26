@@ -19,6 +19,8 @@ namespace HollowKnight.Factories
         private Texture2D tutorialPlatformSpriteSheet;
         private Texture2D spellsSpriteSheet;
         private Texture2D backgroundSpriteSheet;
+        private Texture2D mainBackgroundTexture;
+        public Texture2D GetMainBackgroundTexture() => mainBackgroundTexture;
         private Texture2D mantisLordSpriteSheet;
         private Texture2D mantisVillageSpriteSheet;
 
@@ -76,6 +78,7 @@ namespace HollowKnight.Factories
             TextureAtlas platformAtlas = TextureAtlas.FromFile(content, "sprites/platform-atlas.xml");
             TextureAtlas tutorialPlatformAtlas = TextureAtlas.FromFile(content, "sprites/tutorial-platform-atlas.xml");
             TextureAtlas backgroundAtlas = TextureAtlas.FromFile(content, "sprites/background-atlas.xml");
+            mainBackgroundTexture = content.Load<Texture2D>("sprites/main-background");
             TextureAtlas mantisLordAtlas = TextureAtlas.FromFile(content, "sprites/mantisLords-atlas.xml");
             TextureAtlas mantisVillageAtlas = TextureAtlas.FromFile(content,"sprites/village-atlas.xml");
             enemySpriteSheet = enemyAtlas.Texture;
@@ -421,6 +424,11 @@ namespace HollowKnight.Factories
         public ISprite CreateBackgroundSprite(int variant, Vector2 position)
         {
             // TODO: Fix constants
+            if (variant == 3)
+            {
+                var fullRect = new Rectangle(0, 0, mainBackgroundTexture.Width, mainBackgroundTexture.Height);
+                return new StaticSprite(mainBackgroundTexture, fullRect, position, 1.0f);
+            }
             string key = variant switch
             {
                 1 => "Background_1",

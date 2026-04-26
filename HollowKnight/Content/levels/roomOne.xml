@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Level name="roomOne">
 
+
 <Item>
     <ObjectType>Knight</ObjectType>
     <ObjectName>Knight</ObjectName>
@@ -96,6 +97,7 @@
     <Location>4197 2121</Location>
 </Item>
 
+
 <!-- Wall_3 along right edge of backgrounds -->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>4197 753</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>4197 864</Location></Item>
@@ -105,6 +107,19 @@
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>4197 1308</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>4197 1419</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>4197 1530</Location></Item>
+
+<!-- Spike_Wall_1 along right Wall_2 column (5px overlap, x=5918) -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 1214</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 1308</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 1402</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 1496</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 1590</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 1684</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 1778</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 1872</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 1966</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 2060</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 2154</Location></Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
@@ -293,6 +308,8 @@
     <ObjectName>Vengefly</ObjectName>
     <Location>5200 1800</Location>
 </Item>
+
+
 
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6000 1214</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6000 1325</Location></Item>

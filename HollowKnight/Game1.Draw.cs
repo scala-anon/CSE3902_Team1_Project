@@ -18,6 +18,18 @@ public partial class Game1
 
     private void DrawWorld()
     {
+        if (_currentRoom != 4)
+        {
+            _spriteBatch.Begin();
+            _parallaxBackground.Draw(
+                _spriteBatch,
+                Camera.Instance.Position,
+                _graphics.PreferredBackBufferWidth,
+                _graphics.PreferredBackBufferHeight,
+                new Color(234, 255, 255)); // 220, 251, 255 RGB tint for background - change if needed
+            _spriteBatch.End();
+        }
+
         // Single world-space batch. FrontToBack sort:
         // layerDepth 0.0 = farthest back, 1.0 = frontmost.
         _spriteBatch.Begin(
