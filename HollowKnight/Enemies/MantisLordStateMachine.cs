@@ -36,6 +36,17 @@ namespace HollowKnight.Enemies
 
         private bool target_knight = false;
 
+        // Public state observation — needed for the controller
+        public MantisLordState CurrentState => _owner.State;
+        public bool IsInLeavePhase =>
+            _owner.State == MantisLordState.DashLeave ||
+            _owner.State == MantisLordState.DStabLeave ||
+            _owner.State == MantisLordState.WallLeave1 ||
+            _owner.State == MantisLordState.WallLeave2;
+
+        // Categorize attacks so the controller can pick the opposite
+        public enum AttackKind { None, Wall, Dash, DStab }
+
         public MantisLordStateMachine(MantisLord owner)
         {
             _owner = owner;
@@ -397,13 +408,6 @@ namespace HollowKnight.Enemies
             }
         }
 
-        // ---- Private helpers ----
-
-        // private void EnterState(MantisLordState state)
-        // {
-        //     _stateTimer = 0f;
-        //     _owner.SetState(state);
-        // }
         private void EnterState(MantisLordState state)
         {
             _stateTimer = 0f;          // keep this
@@ -444,9 +448,6 @@ namespace HollowKnight.Enemies
                     if (_owner.FacingDirection == Direction.Right)
                     {
                         _owner.position.Y = EnemyConstants.MantisWallHangY + 30;
-                        // _owner.position.Y = EnemyConstants.MantisWallHangY
-                        //                 + EnemyConstants.MantisWallHangOffset;
-                        
                     }
                     else
                     {
@@ -454,7 +455,6 @@ namespace HollowKnight.Enemies
                         _owner.position.Y = EnemyConstants.MantisWallHangY + 30;
                     }
                     break;
-
                 case MantisLordState.Throw:
                     if (_owner.FacingDirection == Direction.Left)
                     {
@@ -510,8 +510,16 @@ namespace HollowKnight.Enemies
         /// <summary>
         /// Randomly selects the next attack from {Throw (via Wall), Dash, DStab}.
         /// </summary>
+        private bool _suppressAutoPick;
+        public void SetAutoPickSuppressed(bool suppressed) => _suppressAutoPick = suppressed;
         private void PickNextAttack()
         {
+            if (_suppressAutoPick)
+            {
+                _suppressAutoPick = false;
+                return;  // controller will dictate this cycle
+            }
+         
             IsAttacking = true;
             int roll = _rng.Next(10);
             
@@ -687,6 +695,41 @@ namespace HollowKnight.Enemies
                     _owner.position = new Vector2(_owner.knightPosition.X, _owner.knightPosition.Y - 800);
                     break;
             }
+        }
+        public AttackKind CurrentAttackKind
+        {
+            get
+            {
+                var s = _owner.State;
+                if (s == MantisLordState.WallArrive || s == MantisLordState.WallReady ||
+                    s == MantisLordState.Throw || s == MantisLordState.WallLeave1 ||
+                    s == MantisLordState.WallLeave2) return AttackKind.Wall;
+                if (s == MantisLordState.DashArrive || s == MantisLordState.DashAnticipate ||
+                    s == MantisLordState.Dash || s == MantisLordState.DashRecover ||
+                    s == MantisLordState.DashLeave) return AttackKind.Dash;
+                if (s == MantisLordState.DStabStart || s == MantisLordState.DStabArrive ||
+                    s == MantisLordState.DStabOffset || s == MantisLordState.DStab ||
+                    s == MantisLordState.DStabLandOffset || s == MantisLordState.DStabLand ||
+                    s == MantisLordState.DStabLeave) return AttackKind.DStab;
+                return AttackKind.None;
+            }
+        }
+
+        // Force-attack commands — controller uses these
+        public void CommandForceDashAttack()
+        {
+            if (_healthDepleted) return;
+            IsAttacking = true;
+            _suppressAutoPick = true;
+            EnterState(MantisLordState.DashArrive);
+        }
+
+        public void CommandForceDStabAttack()
+        {
+            if (_healthDepleted) return;
+            IsAttacking = true;
+            _suppressAutoPick = true;
+            EnterState(MantisLordState.DStabStart);
         }
 
         // Guard the update loop with the freeze check — replace the top of Update:
