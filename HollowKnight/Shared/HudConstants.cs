@@ -19,6 +19,6 @@ namespace HollowKnight.Shared
 
         // HUD Colors
         public static readonly Color InactiveHealthPipColor = new(28, 32, 44, 255);
-        public static readonly Color SoulGaugeMinColor = new(0, 0, 0, 255);
+        public static readonly Color SoulGaugeMinColor = new(85, 85, 85, 255);
     }
 }
