@@ -251,16 +251,7 @@ namespace HollowKnight.Levels
         };
 
         // TODO: Add the rocks that need to be inside the foreground!
-        private static readonly HashSet<string> foregroundNames = new()
-        {
-            
-        };
-
-        // TODO: Add the rocks that need to be inside the foreground!
-        private static readonly HashSet<string> foregroundNames = new()
-        {
-            
-        };
+        private static readonly HashSet<string> foregroundNames = new();
 
         private void SpawnPlatform(string name, Vector2 position)
         {

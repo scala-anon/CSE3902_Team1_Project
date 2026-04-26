@@ -14,6 +14,7 @@ using HollowKnight.Abilities;
 using HollowKnight.Audio;
 using Microsoft.Xna.Framework.Media;
 using System;
+using HollowKnight.Enemies;
 
 namespace HollowKnight;
 
@@ -121,7 +122,7 @@ public partial class Game1
         int screenWidth = _graphics.PreferredBackBufferWidth;
 
         KeyboardController keyboard = new KeyboardController();
-        KeyboardBindings.BindGameplay(keyboard, _knight, this);
+        KeyboardBindings.BindGameplay(keyboard, _knight, this, _level.BossFight);
 
         _controllerList.Add(keyboard);
         _controllerList.Add(new MouseController(this, screenWidth));
@@ -152,20 +153,23 @@ public partial class Game1
     _level.Load(rooms[_currentRoom - 1]);
     LoadObstacles();
     DebugLogger.LogRoomTransition($"InitializeLevel: room 1 loaded");
+    
+    
+    
 }
 
 
-private void InitializeControllers()
-{
-    _controllerList.Clear();
-    int screenWidth = _graphics.PreferredBackBufferWidth;
+// private void InitializeControllers()
+// {
+//     _controllerList.Clear();
+//     int screenWidth = _graphics.PreferredBackBufferWidth;
 
-    KeyboardController keyboard = new KeyboardController();
-    KeyboardBindings.BindGameplay(keyboard, _knight, this, _roomManager, _level.BossFight);
+//     KeyboardController keyboard = new KeyboardController();
+//     KeyboardBindings.BindGameplay(keyboard, _knight, this, _roomManager, _level.BossFight);
 
-    _controllerList.Add(keyboard);
-    _controllerList.Add(new MouseController(this, screenWidth, _roomManager));
-}
+//     _controllerList.Add(keyboard);
+//     _controllerList.Add(new MouseController(this, screenWidth, _roomManager));
+// }
 
 public void TransitionToRoom(int roomNumber)
 {
@@ -197,6 +201,19 @@ public void TransitionToRoom(int roomNumber)
     _isTransitioning = false;
     _pendingControllerInit = true; // replaces InitializeControllers()
     DebugLogger.LogRoomTransition($"TransitionToRoom: room {roomNumber} loaded, knight at {_knight.position}");
+
+    if (_level.BossFight != null)
+        {
+             DebugLogger.LogObject($"BossFight is initialized");
+
+            _mantisProjectileLeft = new EnemyProjectile(_level.BossFight.Left, _projectileSpawner);
+            _mantisProjectileMiddle = new EnemyProjectile(_level.BossFight.Middle, _projectileSpawner);
+            _mantisProjectileRight = new EnemyProjectile(_level.BossFight.Right, _projectileSpawner);
+
+            _level.BossFight.Left.Projectiles = _mantisProjectileLeft; 
+            _level.BossFight.Middle.Projectiles = _mantisProjectileMiddle; 
+            _level.BossFight.Right.Projectiles = _mantisProjectileRight; 
+        }
 }
 
 private void ApplyRoomRespawnPoint()

@@ -11,7 +11,7 @@ namespace HollowKnight.Controllers
     {
         private static ICommand Gameplay(Game1 game, ICommand command) => new GameplayOnlyCommand(game, command);
 
-        public static void BindGameplay(KeyboardController keyboard, TheKnight knight, Game1 game)
+        public static void BindGameplay(KeyboardController keyboard, TheKnight knight, Game1 game, BossFightController bossFight = null)
         {
             //TODO: remove developer keybinding and change ability and movement binds if needed
 

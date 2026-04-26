@@ -6,6 +6,7 @@ using HollowKnight.Collision;
 using Microsoft.Xna.Framework;
 using System;
 using HollowKnight.Projectiles;
+using System.Data;
 
 
 namespace HollowKnight.Enemies
@@ -56,7 +57,10 @@ namespace HollowKnight.Enemies
         // Expose the state machine so BossFightController can command it.
         public MantisLordStateMachine StateMachine => _stateMachine;
 
-        public ProjectileManager _projectileManager;
+        public Direction _direction;
+
+        public EnemyProjectile Projectiles { get; set; }
+        
         public ProjectileSpawner _projectileSpawner;
 
         public MantisLord(Vector2 position, MantisLordSlot slot)
@@ -76,6 +80,8 @@ namespace HollowKnight.Enemies
             {
                 FacingDirection = Direction.Right;
             }
+
+            _direction = FacingDirection;
 
             Health = slot == MantisLordSlot.Middle
                 ? EnemyConstants.MantisLordMiddleHealth
@@ -110,8 +116,6 @@ namespace HollowKnight.Enemies
 
             Sprite = _sprites[MantisLordState.IdleOnThrone];
             _stateMachine = new MantisLordStateMachine(this);
-            _projectileManager = new ProjectileManager();
-            _projectileSpawner = new ProjectileSpawner(_projectileManager);
             
         }
 
@@ -151,7 +155,6 @@ namespace HollowKnight.Enemies
             // TODO: contact-damage hitbox logic would be checked here
             return base.TakeDamage(side);
         }
-
         protected override void UpdateAlive(GameTime gameTime, float dt)
             => _stateMachine.Update(gameTime, dt);
 

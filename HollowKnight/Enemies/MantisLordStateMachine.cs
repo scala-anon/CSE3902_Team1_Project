@@ -186,11 +186,7 @@ namespace HollowKnight.Enemies
                 case MantisLordState.Throw:
                     if (_owner.Sprite.IsFinished)
                     {
-                        Vector2 direction = _owner.FacingDirection == Direction.Right
-                            ? new Vector2(1f, 0f)
-                            : new Vector2(-1f, 0f);
-
-                        _owner._projectileSpawner.SpawnMantisLordProjectile(_owner.position, direction, EnemyConstants.EnemyProjectileSpeed, ProjectileFaction.Enemy);
+                        _owner.Projectiles?.Fire();
                         
                         EnterState(MantisLordState.WallLeave);
                     }

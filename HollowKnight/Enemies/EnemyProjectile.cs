@@ -7,7 +7,7 @@ namespace HollowKnight.Enemies
 {
     public class EnemyProjectile
     {
-        private readonly ICollidable _enemy;
+        private readonly MantisLord _enemy;
         private readonly ProjectileSpawner _spawner;
 
         
@@ -17,25 +17,28 @@ namespace HollowKnight.Enemies
 
         
 
-        public EnemyProjectile(ICollidable enemy, ProjectileSpawner spawner)
+        public EnemyProjectile(MantisLord enemy, ProjectileSpawner spawner)
         {
             _enemy = enemy;
             _spawner = spawner;
         }
 
-        public void Update(GameTime gameTime, Vector2 direction)
+        public void Update(GameTime gameTime)
         {
-            _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //In MantisLordsProjectile.cs
+        }
 
-            if (_timer >= _interval)
-            {
-                _timer = 0f;
+        public void Fire()
+        {
+            Vector2 direction = _enemy._direction == Direction.Right
+                            ? new Vector2(1f, 0f)
+                            : new Vector2(-1f, 0f);
 
-                Rectangle bounds = _enemy.Bounds;
-                Vector2 spawn = bounds.Center.ToVector2();
+                        Vector2 spawn = _enemy.FacingDirection == Direction.Right
+                            ? new Vector2(_enemy.Bounds.Right, _enemy.Bounds.Top + _enemy.Bounds.Height / 2f)
+                            : new Vector2(_enemy.Bounds.Left, _enemy.Bounds.Top + _enemy.Bounds.Height / 2f);
 
-                _spawner.Spawn(spawn, direction, _speed, ProjectileFaction.Enemy);
-            }
+                        _spawner.SpawnMantisLordProjectile(spawn, direction, EnemyConstants.EnemyProjectileSpeed, ProjectileFaction.Enemy);
         }
     }
 }
