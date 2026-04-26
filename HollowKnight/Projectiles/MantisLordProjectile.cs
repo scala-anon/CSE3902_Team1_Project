@@ -65,7 +65,16 @@ namespace HollowKnight.Projectiles
 
             float localY = ySpeed * _timer;
 
-            Position = new Vector2(StartPosition.X + localX, StartPosition.Y + localY);
+            if (_facing == Direction.Left)
+            {
+                Position = new Vector2(StartPosition.X + -localX, StartPosition.Y + localY);
+                
+            } else
+            {
+                Position = new Vector2(StartPosition.X + localX, StartPosition.Y + localY);
+            }
+
+            
 
             _currentSprite.SetPosition(Position);
             _currentSprite.Update(gameTime);

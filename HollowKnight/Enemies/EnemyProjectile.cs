@@ -31,8 +31,8 @@ namespace HollowKnight.Enemies
         public void Fire()
         {
             Vector2 direction = _enemy._direction == Direction.Right
-                            ? new Vector2(1f, 0f)
-                            : new Vector2(-1f, 0f);
+                            ? new Vector2(-1f, 0f)
+                            : new Vector2(1f, 0f);
 
                         Vector2 spawn = _enemy.FacingDirection == Direction.Right
                             ? new Vector2(_enemy.Bounds.Right, _enemy.Bounds.Top + _enemy.Bounds.Height / 2f)

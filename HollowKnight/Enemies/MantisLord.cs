@@ -78,7 +78,7 @@ namespace HollowKnight.Enemies
                 FacingDirection = Direction.Left;
             } else
             {
-                FacingDirection = Direction.Right;
+                FacingDirection = Direction.Left;
             }
 
             _direction = FacingDirection;
