@@ -150,13 +150,16 @@ namespace HollowKnight.Enemies
         {
             _wallAttackTimer += dt;
 
-            if (_wallAttackTimer >= EnemyConstants.MantisWallAttackInterval)
-            {
-                _wallAttackTimer = 0f;
-                // Both side lords attack simultaneously for the wall attack.
-                _left.StateMachine.CommandForceWallAttack();
-                _right.StateMachine.CommandForceWallAttack();
-            }
+            
+            // TODO: Refacctor to see if mantisleft or right in wall attack and force the other one to go into it
+            
+            // if (_wallAttackTimer >= EnemyConstants.MantisWallAttackInterval)
+            // {
+            //     _wallAttackTimer = 0f;
+            //     // Both side lords attack simultaneously for the wall attack.
+            //     _left.StateMachine.CommandForceWallAttack();
+            //     _right.StateMachine.CommandForceWallAttack();
+            // }
 
             bool leftWounded  = _left.StateMachine.IsInWoundedPose;
             bool rightWounded = _right.StateMachine.IsInWoundedPose;
@@ -186,15 +189,15 @@ namespace HollowKnight.Enemies
         {
             _wallAttackTimer += dt;
 
-            if (_wallAttackTimer >= EnemyConstants.MantisWallAttackInterval)
-            {
-                _wallAttackTimer = 0f;
-                // Force wall attack on whichever lord is still fighting
-                if (!_left.StateMachine.IsInWoundedPose)
-                    _left.StateMachine.CommandForceWallAttack();
-                else if (!_right.StateMachine.IsInWoundedPose)
-                    _right.StateMachine.CommandForceWallAttack();
-            }
+            // if (_wallAttackTimer >= EnemyConstants.MantisWallAttackInterval)
+            // {
+            //     _wallAttackTimer = 0f;
+            //     // Force wall attack on whichever lord is still fighting
+            //     if (!_left.StateMachine.IsInWoundedPose)
+            //         _left.StateMachine.CommandForceWallAttack();
+            //     else if (!_right.StateMachine.IsInWoundedPose)
+            //         _right.StateMachine.CommandForceWallAttack();
+            // }
 
             bool leftWounded  = _left.StateMachine.IsInWoundedPose;
             bool rightWounded = _right.StateMachine.IsInWoundedPose;

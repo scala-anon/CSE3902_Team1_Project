@@ -183,10 +183,16 @@ namespace HollowKnight.Enemies
 
                 // ---- Throw sequence ----
                 case MantisLordState.Throw:
+                    if(_owner.FacingDirection == Direction.Left)
+                    {
+                        // TODO: tweak these positions to make better looking
+                        _owner.position.Y = EnemyConstants.MantisWallHangY + 190;
+                        _owner.position.X = EnemyConstants.MantisWallHangRightX -170;
+                    }
                     if (_owner.Sprite.IsFinished)
                     {
                         // TODO: spawn projectile here
-                        EnterState(MantisLordState.WallLeave);
+                        EnterState(MantisLordState.WallLeave1);
                     }
                     break;
 
@@ -206,7 +212,15 @@ namespace HollowKnight.Enemies
 
 
                 case MantisLordState.WallReady:
-                    _owner.position.Y = EnemyConstants.MantisWallHangY + EnemyConstants.MantisWallHangOffset;
+                    if(_owner.FacingDirection == Direction.Right)
+                    {
+                        _owner.position.Y = EnemyConstants.MantisWallHangY + EnemyConstants.MantisWallHangOffset;
+                    }
+                    else
+                    {
+                        _owner.position.X = EnemyConstants.MantisWallHangRightX - 30;
+                        _owner.position.Y = EnemyConstants.MantisWallHangY+30;
+                    }
                     // Loops until controller forces a throw or duration elapses.
                     // TODO: spawn projectile here (when WallReady times out)
                     if(_owner.Sprite.IsFinished){
@@ -214,10 +228,25 @@ namespace HollowKnight.Enemies
                     }
                     break;
 
-                case MantisLordState.WallLeave:
+                case MantisLordState.WallLeave1:
+                    if(_owner.FacingDirection == Direction.Left)
+                    {
+                        _owner.position.X = EnemyConstants.MantisWallHangRightX + 160;
+                        _owner.position.Y = EnemyConstants.MantisWallHangY + 200;
+                    }
+                    if (_owner.Sprite.IsFinished)
+                        EnterState(MantisLordState.WallLeave2);
+                    break;
+                case MantisLordState.WallLeave2:
+                if(_owner.FacingDirection == Direction.Left)
+                    {
+                        // _owner.position.X = EnemyConstants.MantisWallHangRightX + 160;
+                        // _owner.position.Y = EnemyConstants.MantisWallHangY + 200;
+                    }
                     if (_owner.Sprite.IsFinished)
                         StartAttackCooldown();
                     break;
+                    
 
                 // ---- Dash sequence ----
                 case MantisLordState.DashArrive:
@@ -245,7 +274,7 @@ namespace HollowKnight.Enemies
                     break;
 
                 case MantisLordState.Dash:
-                    _owner.position.Y = EnemyConstants.MantisDashY + EnemyConstants.MantisDashAnticipateSpriteHeightOffset + 100;
+                    _owner.position.Y = EnemyConstants.MantisDashY + EnemyConstants.MantisDashAnticipateSpriteHeightOffset + 120;
                     if(_owner.FacingDirection == Direction.Right)
                     {
                        _owner.position.X -= EnemyConstants.MantisDashSpeed * elapsedTime;
@@ -271,7 +300,14 @@ namespace HollowKnight.Enemies
                 // ---- DStab sequence ----
                 case MantisLordState.DStabStart:
                 //- (765/2)
-                     _owner.position = new Vector2(_owner.knightPosition.X-765/2+35 , _owner.knightPosition.Y - 950);
+                    if(_owner.FacingDirection == Direction.Right)
+                    {
+                        _owner.position = new Vector2(_owner.knightPosition.X-765/2+35 , _owner.knightPosition.Y - 950);
+                    }
+                    else
+                    {
+                        _owner.position = new Vector2(_owner.knightPosition.X-765/2-35 , _owner.knightPosition.Y - 950);
+                    }
                      EnterState(MantisLordState.DStabArrive);
                      break;
                 case MantisLordState.DStabArrive:
@@ -283,7 +319,14 @@ namespace HollowKnight.Enemies
                     }
                     break;
                 case MantisLordState.DStabOffset:
-                    _owner.position.X += 250;
+                    if(_owner.FacingDirection == Direction.Right)
+                    {
+                        _owner.position.X += 250;
+                    }
+                    else
+                    {
+                        _owner.position.X += 400;
+                    }
                     EnterState(MantisLordState.DStab);
                     break;
                 case MantisLordState.DStab:
@@ -292,7 +335,14 @@ namespace HollowKnight.Enemies
                         EnterState(MantisLordState.DStabLandOffset);
                     break;
                 case MantisLordState.DStabLandOffset:
-                    _owner.position.X-= 120;
+                    if(_owner.FacingDirection == Direction.Right)
+                    {
+                        _owner.position.X-= 120;
+                    }
+                    else
+                    {
+                        _owner.position.X -= 240;
+                    }
                     EnterState(MantisLordState.DStabLand);
                     break;
                 case MantisLordState.DStabLand:
@@ -553,9 +603,11 @@ namespace HollowKnight.Enemies
                 case MantisLordState.WallArrive:
                 case MantisLordState.WallReady:
                 case MantisLordState.Throw:
-                case MantisLordState.WallLeave:
+                case MantisLordState.WallLeave1:
+                case MantisLordState.WallLeave2:
                     _owner.position = new Vector2(3600, 4546);
                     break;
+                
 
                 case MantisLordState.DashArrive:
                 case MantisLordState.DashAnticipate:
