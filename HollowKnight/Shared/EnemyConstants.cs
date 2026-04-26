@@ -77,6 +77,14 @@ namespace HollowKnight.Shared
         public const float MantisDashArriveSpriteHeigthOffset = 556/2;
         public const float MantisDashAnticipateSpriteHeightOffset = 556/3;
         public const float MantisWallHangOffset = 199;
+
+        public const float MantisProjectileXVelocity = 800f;
+        public const float MantisProjectileXAcceleration = -400f;
+        public const float MantisProjectileYSpeed = 100f;
+        public const float MantisProjectileDuration = 20f;
+
+        public const float Power2 = 2f;
+        public const float half = .5f;
     
         //FIX
         
