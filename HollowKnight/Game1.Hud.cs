@@ -7,6 +7,9 @@ namespace HollowKnight;
 public partial class Game1
 {
     private const float OverlayTextLineSpacing = 18f;
+    private const float MantisChallengePromptScale = 1.25f;
+    private const float MantisChallengePromptLineSpacing = 16f;
+    private const float MantisChallengeTriggerHalfWidth = 150f;
     private const float InventoryTitleScale = 0.9f;
     private const int InventoryTitleY = 26;
 
@@ -62,12 +65,15 @@ public partial class Game1
     private const string InventoryTitle = "INVENTORY";
     private const string InventoryPrompt = "Tab close  |  U / I items  |  Click to select";
     private const string WinTitle = "YOU WIN";
+    private const string MantisChallengeTitle = "CHALLENGE";
+    private const string MantisChallengePrompt = "Press L to Challenge";
 
     private SpriteFont _hudFont;
     private HealthHud _healthHud;
     private SoulHud _soulHud;
     private Texture2D _overlayPixel;
     private bool _restartRequested;
+    private bool _showMantisChallengePrompt;
 
     private static readonly Color ScreenTint = new(0, 0, 0, 190);
     private static readonly Color InventoryTint = new(6, 8, 18, 218);

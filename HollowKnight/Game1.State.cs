@@ -55,6 +55,17 @@ public partial class Game1
         _level.BossFight?.Activate();
     }
 
+    public void TryStartMantisFight()
+    {
+        if (!_showMantisChallengePrompt)
+        {
+            return;
+        }
+
+        StartMantisFight();
+        _showMantisChallengePrompt = false;
+    }
+
     public bool IsInventoryOpen()
     {
         return _gameState is InventoryState;

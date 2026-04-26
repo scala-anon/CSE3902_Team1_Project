@@ -155,6 +155,7 @@ public partial class Game1
         _spriteBatch.Begin();
         _healthHud.Draw(_spriteBatch, _knight.GetHealth(), _knight.GetMaxHealth());
         _soulHud.Draw(_spriteBatch, _knight.GetSoul(), _knight.GetMaxSoul());
+        DrawMantisChallengePrompt();
         _spriteBatch.End();
     }
 
@@ -199,6 +200,30 @@ public partial class Game1
                 blockTop + titleSize.Y + OverlayTextLineSpacing);
             _spriteBatch.DrawString(_hudFont, prompt!, promptPosition, Color.White);
         }
+    }
+
+    private void DrawMantisChallengePrompt()
+    {
+        if (!_showMantisChallengePrompt)
+        {
+            return;
+        }
+
+        Rectangle overlayBounds = GetOverlayBounds();
+        Vector2 titleSize = _hudFont.MeasureString(MantisChallengeTitle) * MantisChallengePromptScale;
+        Vector2 promptSize = _hudFont.MeasureString(MantisChallengePrompt) * MantisChallengePromptScale;
+        float blockHeight = titleSize.Y + MantisChallengePromptLineSpacing + promptSize.Y;
+        float blockTop = overlayBounds.Height * 0.52f;
+
+        Vector2 titlePosition = new(
+            overlayBounds.Width / 2f - titleSize.X / 2f,
+            blockTop);
+        Vector2 promptPosition = new(
+            overlayBounds.Width / 2f - promptSize.X / 2f,
+            blockTop + titleSize.Y + MantisChallengePromptLineSpacing);
+
+        _spriteBatch.DrawString(_hudFont, MantisChallengeTitle, titlePosition, Color.White, 0f, Vector2.Zero, MantisChallengePromptScale, SpriteEffects.None, 0f);
+        _spriteBatch.DrawString(_hudFont, MantisChallengePrompt, promptPosition, Color.White, 0f, Vector2.Zero, MantisChallengePromptScale, SpriteEffects.None, 0f);
     }
 
     private void DrawInventoryOverlay()

@@ -11,6 +11,6 @@ namespace HollowKnight.Commands
             _game = game;
         }
 
-        public void Execute() => _game.StartMantisFight();
+        public void Execute() => _game.TryStartMantisFight();
     }
 }
