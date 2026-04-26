@@ -94,10 +94,11 @@ namespace HollowKnight.Enemies
 
             if (!IsActive)
             {
-                UpdateDead(dt);
-                Sprite.SetPosition(position);
-                Sprite.Update(gameTime);
-                return;
+                // UpdateDead(dt);
+                // Sprite.SetPosition(position);
+                // Sprite.Update(gameTime);
+                // return;
+                
             }
 
             UpdateDamageTimer(dt);

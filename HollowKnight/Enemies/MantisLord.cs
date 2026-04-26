@@ -115,8 +115,14 @@ namespace HollowKnight.Enemies
 
         public void SetState(MantisLordState newState)
         {
+            // State = newState;
+            // if (newState != MantisLordState.DStabStart && newState != MantisLordState.GracePeriod && newState != MantisLordState.DStabOffset && newState != MantisLordState.DStabLandOffset){
+            //     Sprite = _sprites[newState];
+            //     Sprite.Reset();
+            // }
             State = newState;
-            if (newState != MantisLordState.DStabStart && newState != MantisLordState.GracePeriod && newState != MantisLordState.DStabOffset && newState != MantisLordState.DStabLandOffset){
+            if (newState != MantisLordState.DStabStart && newState != MantisLordState.GracePeriod && newState != MantisLordState.DStabOffset && newState != MantisLordState.DStabLandOffset)
+            {
                 Sprite = _sprites[newState];
                 Sprite.Reset();
             }

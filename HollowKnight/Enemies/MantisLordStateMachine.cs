@@ -180,15 +180,8 @@ namespace HollowKnight.Enemies
                         EnterState(MantisLordState.ThroneWounded);
                     }
                     break;
-
-                // ---- Throw sequence ----
                 case MantisLordState.Throw:
-                    if(_owner.FacingDirection == Direction.Left)
-                    {
-                        // TODO: tweak these positions to make better looking
-                        _owner.position.Y = EnemyConstants.MantisWallHangY + 190;
-                        _owner.position.X = EnemyConstants.MantisWallHangRightX -170;
-                    }
+                    
                     if (_owner.Sprite.IsFinished)
                     {
                         // TODO: spawn projectile here
@@ -197,52 +190,23 @@ namespace HollowKnight.Enemies
                     break;
 
                 case MantisLordState.WallArrive:
-                    if (_owner.FacingDirection == Direction.Right)
-                    {
-                        _owner.position = new Vector2(EnemyConstants.MantisWallHangLeftX, EnemyConstants.MantisWallHangY);
-                    } else
-                    {
-                        _owner.position = new Vector2(EnemyConstants.MantisWallHangRightX, EnemyConstants.MantisWallHangY);
-                    }
-
                     if (_owner.Sprite.IsFinished)
                         EnterState(MantisLordState.WallReady);
                     break;
 
-
-
                 case MantisLordState.WallReady:
-                    if(_owner.FacingDirection == Direction.Right)
-                    {
-                        _owner.position.Y = EnemyConstants.MantisWallHangY + EnemyConstants.MantisWallHangOffset;
-                    }
-                    else
-                    {
-                        _owner.position.X = EnemyConstants.MantisWallHangRightX - 30;
-                        _owner.position.Y = EnemyConstants.MantisWallHangY+30;
-                    }
                     // Loops until controller forces a throw or duration elapses.
                     // TODO: spawn projectile here (when WallReady times out)
-                    if(_owner.Sprite.IsFinished){
+                    if (_owner.Sprite.IsFinished)
                         EnterState(MantisLordState.Throw);
-                    }
                     break;
 
                 case MantisLordState.WallLeave1:
-                    if(_owner.FacingDirection == Direction.Left)
-                    {
-                        _owner.position.X = EnemyConstants.MantisWallHangRightX + 160;
-                        _owner.position.Y = EnemyConstants.MantisWallHangY + 200;
-                    }
                     if (_owner.Sprite.IsFinished)
                         EnterState(MantisLordState.WallLeave2);
                     break;
+
                 case MantisLordState.WallLeave2:
-                if(_owner.FacingDirection == Direction.Left)
-                    {
-                        // _owner.position.X = EnemyConstants.MantisWallHangRightX + 160;
-                        // _owner.position.Y = EnemyConstants.MantisWallHangY + 200;
-                    }
                     if (_owner.Sprite.IsFinished)
                         StartAttackCooldown();
                     break;
@@ -252,10 +216,12 @@ namespace HollowKnight.Enemies
                 case MantisLordState.DashArrive:
                     if(_owner.FacingDirection == Direction.Right)
                     {
-                        _owner.position = new Vector2(EnemyConstants.MantisDashArriveRightX, EnemyConstants.MantisDashY);
+                        
+                        _owner.position = new Vector2(EnemyConstants.MantisDashArriveRightX,  EnemyConstants.MantisDashY);
                     } else
                     {
-                        _owner.position = new Vector2(EnemyConstants.MantisDashArriveLeftX, EnemyConstants.MantisDashY);
+                    
+                        _owner.position = new Vector2(EnemyConstants.MantisDashArriveLeftX,  EnemyConstants.MantisDashY);
                     }
                     if (_owner.Sprite.IsFinished)
                     {
@@ -433,11 +399,105 @@ namespace HollowKnight.Enemies
 
         // ---- Private helpers ----
 
+        // private void EnterState(MantisLordState state)
+        // {
+        //     _stateTimer = 0f;
+        //     _owner.SetState(state);
+        // }
         private void EnterState(MantisLordState state)
         {
-            _stateTimer = 0f;
+            _stateTimer = 0f;          // keep this
             _owner.SetState(state);
+            ApplyStateEntryPosition(state);
         }
+        private void ApplyStateEntryPosition(MantisLordState s)
+        {
+            switch (s)
+            {
+                case MantisLordState.DashArrive:
+                    _owner.position.Y = EnemyConstants.MantisDashY;
+                    break;
+                case MantisLordState.DashAnticipate:
+                    _owner.position.Y = EnemyConstants.MantisDashY + (556 - 297);
+                    break;
+                case MantisLordState.Dash:
+                    _owner.position.Y = EnemyConstants.MantisDashY + (556 - 187);
+                    break;
+                case MantisLordState.DashRecover:
+                    _owner.position.Y = EnemyConstants.MantisDashY + (556 - 256);
+                    break;
+                case MantisLordState.DashLeave:
+                    _owner.position.Y = EnemyConstants.MantisDashY;
+                    break;
+                
+                // Working
+                case MantisLordState.WallArrive:
+                    if (_owner.FacingDirection == Direction.Right)
+                        _owner.position = new Vector2(EnemyConstants.MantisWallHangLeftX,
+                                                    EnemyConstants.MantisWallHangY);
+                    else
+                        _owner.position = new Vector2(EnemyConstants.MantisWallHangRightX,
+                                                    EnemyConstants.MantisWallHangY);
+                    break;
+
+                case MantisLordState.WallReady:
+                    if (_owner.FacingDirection == Direction.Right)
+                    {
+                        _owner.position.Y = EnemyConstants.MantisWallHangY + 30;
+                        // _owner.position.Y = EnemyConstants.MantisWallHangY
+                        //                 + EnemyConstants.MantisWallHangOffset;
+                        
+                    }
+                    else
+                    {
+                        _owner.position.X = EnemyConstants.MantisWallHangRightX - 30;
+                        _owner.position.Y = EnemyConstants.MantisWallHangY + 30;
+                    }
+                    break;
+
+                case MantisLordState.Throw:
+                    if (_owner.FacingDirection == Direction.Left)
+                    {
+                        _owner.position.Y = EnemyConstants.MantisWallHangY + 190;
+                        _owner.position.X = EnemyConstants.MantisWallHangRightX - 170;
+                    }
+                    // added
+                    else
+                    {
+                        _owner.position.Y = EnemyConstants.MantisWallHangY
+                          + EnemyConstants.MantisWallHangOffset;  // 199
+                    }
+                    break;
+
+                case MantisLordState.WallLeave1:
+                    if (_owner.FacingDirection == Direction.Left)
+                    {
+                        _owner.position.X = EnemyConstants.MantisWallHangRightX + 160;
+                        _owner.position.Y = EnemyConstants.MantisWallHangY + 200;
+                    }
+                    else
+                    {
+                        _owner.position.Y = EnemyConstants.MantisWallHangY
+                          + EnemyConstants.MantisWallHangOffset;  // 199
+                    }
+                    break;
+
+                case MantisLordState.WallLeave2:
+                    if (_owner.FacingDirection == Direction.Left)
+                    {
+                        _owner.position.X = EnemyConstants.MantisWallHangRightX - 150;
+                        _owner.position.Y = EnemyConstants.MantisWallHangY + 80 + 23;
+                    }
+                    else
+                    {
+                        _owner.position.Y = EnemyConstants.MantisWallHangY
+                          + EnemyConstants.MantisWallHangOffset;
+                    }
+                    break;
+            }
+        }
+
+
 
         /// <summary>Starts the cooldown pause before the next attack.</summary>
         private void StartAttackCooldown()
