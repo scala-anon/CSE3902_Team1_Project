@@ -14,6 +14,7 @@ namespace HollowKnight.Enemies
     {
         private readonly MantisLord _owner;
         private float _stateTimer;
+        public bool lowAttack = false;
 
         // Shared RNG across all MantisLord instances; seeded once from environment tick count.
         private static readonly System.Random _rng = new System.Random(System.Environment.TickCount);
@@ -186,7 +187,8 @@ namespace HollowKnight.Enemies
                 case MantisLordState.Throw:
                     if (_owner.Sprite.IsFinished)
                     {
-                        _owner.Projectiles?.Fire();
+                        _owner.Projectiles?.Fire(lowAttack);
+                        lowAttack = !lowAttack;
                         
                         EnterState(MantisLordState.WallLeave);
                     }

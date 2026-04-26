@@ -9,7 +9,7 @@ using System;
 
 namespace HollowKnight.Projectiles
 {
-    public class MantisLordsProjectile : Projectile
+    public class MantisLordsProjectile2 : Projectile
     {
         private enum State { Moving }
         private State _state = State.Moving;
@@ -21,9 +21,9 @@ namespace HollowKnight.Projectiles
         public float duration;
         public float _timer;
 
-        float initialXVelocity = EnemyConstants.MantisProjectile2XVelocity;
-        float xAcceleration = EnemyConstants.MantisProjectile2XAcceleration;
-        float ySpeed = EnemyConstants.MantisProjectile2YSpeed;
+        float initialXVelocity = EnemyConstants.MantisProjectileXVelocity;
+        float xAcceleration = EnemyConstants.MantisProjectileXAcceleration;
+        float ySpeed = EnemyConstants.MantisProjectileYSpeed;
         
 
         public override Rectangle Bounds
@@ -34,7 +34,7 @@ namespace HollowKnight.Projectiles
             }
         }
 
-        public MantisLordsProjectile(Vector2 position, Vector2 velocity, ProjectileFaction faction)
+        public MantisLordsProjectile2(Vector2 position, Vector2 velocity, ProjectileFaction faction)
             : base(position, velocity, faction)
         {
             _facing = velocity.X >= 0 ? Direction.Right : Direction.Left;

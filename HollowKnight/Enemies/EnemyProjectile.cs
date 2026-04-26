@@ -28,8 +28,10 @@ namespace HollowKnight.Enemies
             //In MantisLordsProjectile.cs
         }
 
-        public void Fire()
+        public void Fire(bool low)
         {
+
+            
             Vector2 direction = _enemy._direction == Direction.Right
                             ? new Vector2(-1f, 0f)
                             : new Vector2(1f, 0f);
@@ -38,7 +40,14 @@ namespace HollowKnight.Enemies
                             ? new Vector2(_enemy.Bounds.Right, _enemy.Bounds.Top + _enemy.Bounds.Height / 2f)
                             : new Vector2(_enemy.Bounds.Left, _enemy.Bounds.Top + _enemy.Bounds.Height / 2f);
 
-                        _spawner.SpawnMantisLordProjectile(spawn, direction, EnemyConstants.EnemyProjectileSpeed, ProjectileFaction.Enemy);
-        }
+            if (low == true)
+            {
+                _spawner.SpawnMantisLordProjectile(spawn, direction, EnemyConstants.EnemyProjectileSpeed, ProjectileFaction.Enemy);
+        
+            } else
+            {
+                 _spawner.SpawnMantisLordProjectile2(spawn, direction, EnemyConstants.EnemyProjectileSpeed, ProjectileFaction.Enemy);
+            }
+        }               
     }
 }

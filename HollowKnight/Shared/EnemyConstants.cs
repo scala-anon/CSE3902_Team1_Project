@@ -82,6 +82,11 @@ namespace HollowKnight.Shared
         public const float MantisProjectileXAcceleration = -400f;
         public const float MantisProjectileYSpeed = 100f;
         public const float MantisProjectileDuration = 20f;
+        public const float MantisProjectile2XVelocity = 550f;
+        public const float MantisProjectile2XAcceleration = -350f;
+        public const float MantisProjectile2YSpeed = 100f;
+
+
 
         public const float Power2 = 2f;
         public const float half = .5f;
