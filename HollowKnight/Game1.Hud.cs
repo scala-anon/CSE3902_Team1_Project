@@ -22,5 +22,7 @@ public partial class Game1
     private HealthHud _healthHud;
     private SoulHud _soulHud;
     private Texture2D _overlayPixel;
+    private Texture2D _titleBackgroundTexture;
+    private Texture2D _titleLogoTexture;
     private bool _restartRequested;
 }

@@ -458,9 +458,20 @@ public partial class Game1
     {
         Rectangle overlayBounds = GetOverlayBounds();
         MouseState mouseState = Mouse.GetState();
-        _spriteBatch.Draw(_overlayPixel, overlayBounds, HudConstants.TitleBackdropTint);
+        _spriteBatch.Draw(_titleBackgroundTexture, overlayBounds, Color.White);
 
-        DrawCenteredScaledText(LandingTitle, new Vector2(overlayBounds.Center.X, overlayBounds.Center.Y - 118), HudConstants.TitleScale, HudConstants.TitleAccentColor);
+        float logoMaxWidth = overlayBounds.Width * 1.0f;
+        float logoMaxHeight = overlayBounds.Height * 1.0f;
+        float logoScale = Math.Min(
+            logoMaxWidth / _titleLogoTexture.Width,
+            logoMaxHeight / _titleLogoTexture.Height);
+        Vector2 logoSize = new(_titleLogoTexture.Width * logoScale, _titleLogoTexture.Height * logoScale);
+        Rectangle logoBounds = new(
+            (int)(overlayBounds.Center.X - (logoSize.X / 2f)),
+            (int)(overlayBounds.Center.Y - 650),
+            (int)logoSize.X,
+            (int)logoSize.Y);
+        _spriteBatch.Draw(_titleLogoTexture, logoBounds, Color.White);
 
         Rectangle startButtonBounds = GetTitleButtonBounds(0);
         Rectangle quitButtonBounds = GetTitleButtonBounds(1);
@@ -501,7 +512,7 @@ public partial class Game1
     private Rectangle GetTitleButtonBounds(int index)
     {
         Rectangle overlayBounds = GetOverlayBounds();
-        int buttonsTop = overlayBounds.Center.Y - 2;
+        int buttonsTop = overlayBounds.Center.Y + 20;
 
         return new Rectangle(
             overlayBounds.Center.X - (HudConstants.TitleButtonWidth / 2),
