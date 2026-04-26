@@ -45,8 +45,9 @@ namespace HollowKnight.Levels
                 ["Background_1"]         = pos => new Background(1, pos),
                 ["Background_1_Front"]   = pos => new Background(1, pos),
                 ["Background_2"]         = pos => new Background(2, pos),
-                ["Background_2_Flipped"] = pos => new Background(2, pos, flipped: true),
-                ["Background_Main"]      = pos => new Background(3, pos),
+                ["Background_2_Flipped"]      = pos => new Background(2, pos, flipped: true),
+                ["Background_2_Flipped_Back"] = pos => new Background(2, pos, flipped: true),
+                ["Background_Main"]           = pos => new Background(3, pos),
                 // <Region name="Path_1" x="265" y="223" width="1060" height="83" />
                 ["Path_1"]               = pos => new Path(1, pos, 1050, 32, hitOffsetY: 15),
                 ["Path_1_Flipped"]       = pos => new Path(1, pos, 1050, 32, hitOffsetY: 15, flipped: true),
@@ -215,7 +216,8 @@ namespace HollowKnight.Levels
             ["Background_1"]         = DecorationLayer.BackgroundFar,
             ["Background_1_Front"]   = DecorationLayer.Foreground,
             ["Background_2"]         = DecorationLayer.Foreground,
-            ["Background_2_Flipped"] = DecorationLayer.Foreground,
+            ["Background_2_Flipped"]      = DecorationLayer.Foreground,
+            ["Background_2_Flipped_Back"] = DecorationLayer.BackgroundFar,
             ["Background_Main"]      = DecorationLayer.BackgroundFar,
 
             ["Village_1"]      = DecorationLayer.BackgroundMid,

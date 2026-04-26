@@ -3,6 +3,7 @@
 
 <Item><ObjectType>ParallaxBG</ObjectType><ObjectName>main</ObjectName><Location>0 0</Location></Item>
 
+<Item><ObjectType>Respawn</ObjectType><ObjectName>Respawn</ObjectName><Location>4125 1850</Location></Item>
 
 
 <Item>
@@ -91,17 +92,17 @@
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Wall_3</ObjectName>
-    <Location>4197 2010</Location>
+    <Location>4197 2020</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Wall_3</ObjectName>
-    <Location>4197 2121</Location>
+    <Location>4197 2131</Location>
 </Item>
 
 
-<!-- Wall_3 along right edge of backgrounds -->
+<!-- Wall_3 along left side of parkour section -->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>4197 753</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>4197 864</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>4197 975</Location></Item>
@@ -123,6 +124,14 @@
 <Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 1966</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 2060</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 2154</Location></Item>
+
+
+
+<Item>
+    <ObjectType>Plant</ObjectType>
+    <ObjectName>Plant_1</ObjectName>
+    <Location>4500 2067</Location>
+</Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>

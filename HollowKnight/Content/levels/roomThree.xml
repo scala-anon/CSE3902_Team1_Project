@@ -22,6 +22,12 @@
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4654 2431</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4654 2862</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4654 3293</Location></Item>
+<!-- Bottom aligned with first ledge row bottom (y=3795+32=3827) -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4654 3396</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_2_Flipped_Back</ObjectName><Location>5500 3757</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4654 3827</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4654 4258</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4654 4689</Location></Item>
 
 <!-- Right of top-right wall (x=6094, bottom aligned with wall bottom y=2777) -->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>6094 2000</Location></Item>
@@ -253,6 +259,10 @@
 <Item><ObjectType>Platform</ObjectType><ObjectName>Path_1</ObjectName><Location>6105 4550</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Path_1</ObjectName><Location>6830 4550</Location></Item>
 
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6200 3818</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6200 3944</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6200 4070</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6200 4196</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>6230 3818</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>6230 3944</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>6230 4070</Location></Item>
