@@ -23,7 +23,7 @@ namespace HollowKnight.Enemies
             _spawner = spawner;
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             //In MantisLordsProjectile.cs
         }

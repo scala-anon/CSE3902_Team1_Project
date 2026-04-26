@@ -18,7 +18,7 @@ namespace HollowKnight.Projectiles
         public override bool PiercesEnemies => true;
         private float _distanceX = 0f;
         //y = a(x - h)^2 + k
-        private float _a = .005f;
+        private float _a = .2f;
         private float _h = 200f;
         private float _k = -100f;
         public float _speed = EnemyConstants.EnemyProjectileSpeed;
