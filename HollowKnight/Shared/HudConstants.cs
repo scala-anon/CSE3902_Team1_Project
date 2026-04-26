@@ -5,11 +5,11 @@ namespace HollowKnight.Shared
     public static class HudConstants
     {
         // Health HUD
-        public const int HealthPipWidth = 22;
-        public const int HealthPipHeight = 32;
+        public const int HealthPipWidth = 36;
+        public const int HealthPipHeight = 52;
         public const int HealthPipStartX = 118;
         public const int HealthPipStartY = 28;
-        public const int HealthPipSpacing = 14;
+        public const int HealthPipSpacing = 0;
 
         // Soul HUD
         public const int SoulGaugeWidth = 102;
