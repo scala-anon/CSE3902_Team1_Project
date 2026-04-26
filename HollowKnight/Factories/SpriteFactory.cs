@@ -5,6 +5,8 @@ using HollowKnight.Interfaces;
 using HollowKnight.Sprites;
 using HollowKnight.Graphics;
 using HollowKnight.Environment;
+using HollowKnight.Shared;
+using System;
 using System.Collections.Generic;
 using HollowKnight.Shared;
 
@@ -120,6 +122,7 @@ namespace HollowKnight.Factories
             platformFrames.Add("Spike_Floor_1", platformAtlas.GetRegion("Spike_Floor_1").SourceRectangle);
             platformFrames.Add("Spike_Floor_2", platformAtlas.GetRegion("Spike_Floor_2").SourceRectangle);
             platformFrames.Add("Spike_Ceiling", platformAtlas.GetRegion("Spike_Ceiling").SourceRectangle);
+            platformFrames.Add("Spike_Wall_1", platformAtlas.GetRegion("Spike_Wall_1").SourceRectangle);
             platformFrames.Add("Path_1", platformAtlas.GetRegion("Path_1").SourceRectangle);
             platformFrames.Add("Path_2", platformAtlas.GetRegion("Path_2").SourceRectangle);
             platformFrames.Add("Path_Stone_3", platformAtlas.GetRegion("Path_Stone_3").SourceRectangle);
@@ -269,6 +272,7 @@ namespace HollowKnight.Factories
                 SpikeVariant.Floor1 => "Spike_Floor_1",
                 SpikeVariant.Floor2 => "Spike_Floor_2",
                 SpikeVariant.Ceiling => "Spike_Ceiling",
+                SpikeVariant.Wall1 => "Spike_Wall_1",
                 _ => "Spike_Floor_1"
             };
             return new StaticSprite(platformSpriteSheet, platformFrames[key], position, 1.0f);
@@ -454,6 +458,30 @@ namespace HollowKnight.Factories
                 _ => "Wall_0"
             };
             return new StaticSprite(backgroundSpriteSheet, backgroundFrames[key], position, scale);
+        }
+
+        public ISprite CreateBrokenWallSprite(int variant, Vector2 position)
+        {
+            // TODO: replace fallback with broken wall sprite once art assets are added to atlas
+            // Add to LoadAllTextures(): backgroundFrames.Add("Wall_0_Broken", backgroundAtlas.GetRegion("Wall_0_Broken").SourceRectangle); etc.
+            float scale = 1.25f;
+            if (variant == 4) scale = .8f;
+            string brokenKey = $"Wall_{variant}_Broken";
+            if (backgroundFrames.ContainsKey(brokenKey))
+            {
+                // Happy path: broken art asset exists — return the broken sprite.
+                return new StaticSprite(backgroundSpriteSheet, backgroundFrames[brokenKey], position, scale);
+            }
+
+            // Fallback: broken art asset is MISSING.
+            // StaticSprite does not accept a Color tint parameter, so we use a
+            // half-width source rectangle as a deliberately obvious placeholder so
+            // QA can see at a glance that the fallback fired (left half of the sprite).
+            DebugLogger.LogObject($"[SpriteFactory] MISSING BROKEN VARIANT for {brokenKey} — using placeholder");
+            string fallbackKey = variant switch { 0 => "Wall_0", 1 => "Wall_1", 2 => "Wall_2", 3 => "Wall_3", 4 => "Wall_4", 5 => "Wall_5", _ => "Wall_0" };
+            Rectangle src = backgroundFrames[fallbackKey];
+            Rectangle halfWidthSrc = new Rectangle(src.X, src.Y, Math.Max(1, src.Width / 2), src.Height);
+            return new StaticSprite(backgroundSpriteSheet, halfWidthSrc, position, scale);
         }
 
         public ISprite CreateDoorSprite(Vector2 position)

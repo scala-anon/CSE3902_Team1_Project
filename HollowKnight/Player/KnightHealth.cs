@@ -66,6 +66,12 @@ namespace HollowKnight.Player
             return true;
         }
 
+        public void CancelDamageState()
+        {
+            IsDamaged = false;
+            damagedTimer = 0;
+        }
+
         public void ResetHealth()
         {
             Health = MaxHealth;

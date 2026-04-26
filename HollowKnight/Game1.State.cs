@@ -1,4 +1,6 @@
 using HollowKnight.Shared;
+using Microsoft.Xna.Framework;
+using System;
 
 namespace HollowKnight;
 
@@ -65,11 +67,26 @@ public partial class Game1
 
     public void SwitchToNextRoom()
     {
-        _roomManager.SwitchRoomByOffset(1);
+        TransitionToRoom(_currentRoom + 1);
     }
 
     public void SwitchToPreviousRoom()
     {
-        _roomManager.SwitchRoomByOffset(-1);
+        TransitionToRoom(_currentRoom - 1);
+    }
+
+    // Quick in-world jump by one screen-width (used by mouse-click navigation).
+    // Does NOT trigger a room transition — just teleports the knight in world coords.
+    public void QuickNavigateHorizontally(int direction)
+    {
+        if (direction == 0) return;
+
+        int screenWidth = _graphics.PreferredBackBufferWidth;
+        Vector2 pos = _knight.GetPosition();
+        float newX = pos.X + direction * screenWidth;
+        newX = Math.Clamp(newX, 0, GameConstants.DefaultLevelWidth - screenWidth);
+
+        _knight.SetPosition(new Vector2(newX, pos.Y));
+        Camera.Instance.SnapTo(_knight.GetPosition());
     }
 }

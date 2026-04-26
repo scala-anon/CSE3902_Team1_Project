@@ -115,6 +115,18 @@ public partial class Game1
             GameConstants.DefaultLevelHeight);
     }
 
+    private void InitializeControllers()
+    {
+        _controllerList.Clear();
+        int screenWidth = _graphics.PreferredBackBufferWidth;
+
+        KeyboardController keyboard = new KeyboardController();
+        KeyboardBindings.BindGameplay(keyboard, _knight, this);
+
+        _controllerList.Add(keyboard);
+        _controllerList.Add(new MouseController(this, screenWidth));
+    }
+
     private void LoadObstacles()
     {
         foreach (IObject obj in _level.Platforms)
@@ -172,16 +184,28 @@ public void TransitionToRoom(int roomNumber)
     _level.SetGame(this);
     _level.Load(targetFile);
     _currentRoom = roomNumber;
+    ApplyRoomRespawnPoint();
 
     if (_roomEntryPoints.TryGetValue(roomNumber, out Vector2 entryPoint))
         _knight.SetPosition(entryPoint);
     else
         _knight.SetPosition(_level.KnightSpawn);
 
+    Camera.Instance.SnapTo(_knight.GetPosition());
+
     LoadObstacles();
     _isTransitioning = false;
     _pendingControllerInit = true; // replaces InitializeControllers()
     DebugLogger.LogRoomTransition($"TransitionToRoom: room {roomNumber} loaded, knight at {_knight.position}");
+}
+
+private void ApplyRoomRespawnPoint()
+{
+    if (_knight == null) return;
+    if (_level.RespawnPoint.HasValue)
+        _knight.SetRoomRespawnPoint(_level.RespawnPoint.Value);
+    else
+        _knight.ClearRoomRespawnPoint();
 }
 
 private void RestartGame()
@@ -194,6 +218,7 @@ private void RestartGame()
     InitializeLevel();
     InitializeGameplaySystems();
     InitializePlayerAndProjectiles();
+    ApplyRoomRespawnPoint();
     InitializeCameraAndRooms();
     InitializeControllers();
     SetPlaying();

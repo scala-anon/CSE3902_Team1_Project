@@ -39,6 +39,22 @@ namespace HollowKnight.Player
         public float VelocityY => physics.VelocityY;
 
         private Vector2 benchSpawnPoint;
+        private bool _justDied;
+        public bool JustDied => _justDied;
+        public void ConsumeJustDied() => _justDied = false;
+        public void SetBenchSpawnPoint(Vector2 pos) => benchSpawnPoint = pos;
+
+        private Vector2? _roomRespawnPoint;
+        public bool HasRespawnPoint => _roomRespawnPoint.HasValue;
+        public void SetRoomRespawnPoint(Vector2 pos) => _roomRespawnPoint = pos;
+        public void ClearRoomRespawnPoint() => _roomRespawnPoint = null;
+
+        public void Respawn()
+        {
+            SetPosition(_roomRespawnPoint.Value);
+            physics.Velocity = Vector2.Zero;
+            health.CancelDamageState();
+        }
 
         public TheKnight(Dictionary<KnightSpriteType, ISprite> sprites, Vector2 position)
         {
@@ -267,6 +283,7 @@ namespace HollowKnight.Player
 
             if (health.Health == 0)
             {
+                _justDied = true;
                 DebugLogger.LogGeneral($"Knight died. Respawning at {benchSpawnPoint}.");
                 SetPosition(benchSpawnPoint);
                 physics.Velocity = Vector2.Zero;
@@ -280,6 +297,7 @@ namespace HollowKnight.Player
 
         public int GetHealth() => health.Health;
         public int GetMaxHealth() => health.MaxHealth;
+        public void FullHeal() => health.ResetHealth();
         public int GetSoul() => health.Soul;
         public int GetMaxSoul() => health.MaxSoul;
         public float GetSoulFillRatio() => health.GetSoulFillRatio();
