@@ -16,7 +16,10 @@ namespace HollowKnight.Projectiles
             : base(position, Vector2.Zero, ProjectileFaction.Player)
         {
             _direction = direction;
-            _sprite = SpriteFactory.Instance.CreateDashEffect(position);
+            Vector2 offset = direction == Direction.Left
+                ? new Vector2(-90f, -40f)
+                : new Vector2(-145f, -40f);
+            _sprite = SpriteFactory.Instance.CreateDashEffect(position + offset);
             Damage = 0;
         }
 

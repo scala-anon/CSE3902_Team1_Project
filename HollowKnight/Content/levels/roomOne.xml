@@ -286,6 +286,7 @@
   <ObjectName>ToRoom2</ObjectName>
   <Location>6050 800</Location>
 </Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Transition_Light</ObjectName><Location>5620 605</Location></Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>

@@ -48,6 +48,8 @@ namespace HollowKnight.Levels
                 ["Background_2_Flipped"]      = pos => new Background(2, pos, flipped: true),
                 ["Background_2_Flipped_Back"] = pos => new Background(2, pos, flipped: true),
                 ["Background_Main"]           = pos => new Background(3, pos),
+                ["Transition_Light"]          = pos => new Background(4, pos),
+                ["Transition_Light_Flipped"]  = pos => new Background(5, pos),
                 // <Region name="Path_1" x="265" y="223" width="1060" height="83" />
                 ["Path_1"]               = pos => new Path(1, pos, 1050, 32, hitOffsetY: 15),
                 ["Path_1_Flipped"]       = pos => new Path(1, pos, 1050, 32, hitOffsetY: 15, flipped: true),
@@ -218,7 +220,9 @@ namespace HollowKnight.Levels
             ["Background_2"]         = DecorationLayer.Foreground,
             ["Background_2_Flipped"]      = DecorationLayer.Foreground,
             ["Background_2_Flipped_Back"] = DecorationLayer.BackgroundFar,
-            ["Background_Main"]      = DecorationLayer.BackgroundFar,
+            ["Background_Main"]         = DecorationLayer.BackgroundFar,
+            ["Transition_Light"]         = DecorationLayer.Foreground,
+            ["Transition_Light_Flipped"] = DecorationLayer.Foreground,
 
             ["Village_1"]      = DecorationLayer.BackgroundMid,
             ["Village_2"]      = DecorationLayer.BackgroundMid,

@@ -14,26 +14,24 @@ namespace HollowKnight.Sprites
         private Rectangle _sourceRect;
         private Vector2 _position;
         private Vector2 _startPosition;
-        private float _scale;
+        private Vector2 _scale;
+        private readonly SpriteEffects _defaultEffects;
 
-        public int Width => (int)(_sourceRect.Width * _scale);
-        public int Height => (int)(_sourceRect.Height * _scale);
+        public int Width => (int)(_sourceRect.Width * _scale.X);
+        public int Height => (int)(_sourceRect.Height * _scale.Y);
         public bool IsFinished => true;
 
-        /// <summary>
-        /// Create a static sprite from a sprite sheet.
-        /// </summary>
-        /// <param name="texture">The sprite sheet texture</param>
-        /// <param name="sourceRect">Rectangle defining which part of the texture to draw</param>
-        /// <param name="position">Initial position in world coordinates</param>
-        /// <param name="scale">Scale multiplier (default 2.0)</param>
-        public StaticSprite(Texture2D texture, Rectangle sourceRect, Vector2 position, float scale = 2.0f)
+        public StaticSprite(Texture2D texture, Rectangle sourceRect, Vector2 position, float scale = 2.0f, SpriteEffects defaultEffects = SpriteEffects.None)
+            : this(texture, sourceRect, position, new Vector2(scale, scale), defaultEffects) { }
+
+        public StaticSprite(Texture2D texture, Rectangle sourceRect, Vector2 position, Vector2 scale, SpriteEffects defaultEffects = SpriteEffects.None)
         {
             _texture = texture;
             _sourceRect = sourceRect;
             _position = position;
             _startPosition = position;
             _scale = scale;
+            _defaultEffects = defaultEffects;
         }
 
         public void Update(GameTime gameTime)
@@ -61,7 +59,7 @@ namespace HollowKnight.Sprites
                 0f,
                 Vector2.Zero,
                 _scale,
-                effects,
+                effects | _defaultEffects,
                 layerDepth
             );
         }
@@ -73,7 +71,7 @@ namespace HollowKnight.Sprites
 
         public Vector2 GetSize()
         {
-            return new Vector2(_sourceRect.Width * _scale, _sourceRect.Height * _scale);
+            return new Vector2(_sourceRect.Width * _scale.X, _sourceRect.Height * _scale.Y);
         }
     }
 }

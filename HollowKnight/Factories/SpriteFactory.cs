@@ -441,6 +441,8 @@ namespace HollowKnight.Factories
                 var fullRect = new Rectangle(0, 0, mainBackgroundTexture.Width, mainBackgroundTexture.Height);
                 return new StaticSprite(mainBackgroundTexture, fullRect, position, 1.0f);
             }
+            if (variant == 4) return CreateTransitionLight(position);
+            if (variant == 5) return CreateTransitionLightFlipped(position);
             string key = variant switch
             {
                 1 => "Background_1",
@@ -662,7 +664,7 @@ namespace HollowKnight.Factories
         // Sprite effects factory methods
         public ISprite CreateDashEffect(Vector2 position)
         {
-            return new AnimatedSprite(spriteEffectsSheet, spriteEffectsAnimations["dash"], position, 0.08, 1.0f, loop: false);
+            return new AnimatedSprite(spriteEffectsSheet, spriteEffectsAnimations["dash"], position, 0.08, 0.75f, loop: false);
         }
 
         public ISprite CreateLowHealthEffect(Vector2 position)
@@ -672,7 +674,12 @@ namespace HollowKnight.Factories
 
         public ISprite CreateTransitionLight(Vector2 position)
         {
-            return new StaticSprite(spriteEffectsSheet, spriteEffectsSingleFrames["transition_light"], position, 1.0f);
+            return new StaticSprite(spriteEffectsSheet, spriteEffectsSingleFrames["transition_light"], position, new Vector2(1.0f, 2.25f));
+        }
+
+        public ISprite CreateTransitionLightFlipped(Vector2 position)
+        {
+            return new StaticSprite(spriteEffectsSheet, spriteEffectsSingleFrames["transition_light"], position, new Vector2(1.0f, 2.25f), SpriteEffects.FlipHorizontally);
         }
     }
 }
