@@ -223,6 +223,7 @@
 /processorParam:TextureFormat=Color
 /build:sprites/MantisVillageAssets.png
 
+#begin sprites/health-pip.png
 #begin sprites/title-screen-background.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -233,6 +234,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+/build:sprites/health-pip.png
 /build:sprites/title-screen-background.png
 
 #begin sprites/title-screen-logo.png
