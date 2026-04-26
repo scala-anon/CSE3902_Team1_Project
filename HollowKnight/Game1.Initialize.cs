@@ -69,6 +69,8 @@ public partial class Game1
     {
         DebugRenderer.Initialize(GraphicsDevice);
         _hudFont = Content.Load<SpriteFont>("fonts/Credits");
+        _titleBackgroundTexture = Content.Load<Texture2D>("sprites/title-screen-background");
+        _titleLogoTexture = Content.Load<Texture2D>("sprites/title-screen-logo");
         DebugRenderer.LoadFont(_hudFont);
         TextureAtlas hudAtlas = TextureAtlas.FromFile(Content, "sprites/hud-atlas.xml");
         Texture2D healthPipTexture = Content.Load<Texture2D>("sprites/health-pip");

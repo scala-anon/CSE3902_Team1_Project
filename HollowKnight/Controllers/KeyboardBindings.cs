@@ -12,6 +12,9 @@ namespace HollowKnight.Controllers
 
         public static void BindGameplay(KeyboardController keyboard, TheKnight knight, Game1 game)
         {
+            keyboard.RegisterPressedCommand(Keys.Enter, new StartGameCommand(game));
+            keyboard.RegisterPressedCommand(Keys.Escape, new QuitCommand(game));
+
             //TODO: remove developer keybinding and change ability and movement binds if needed
 
             // Move Left — A and Left Arrow
