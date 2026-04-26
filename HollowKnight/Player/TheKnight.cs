@@ -34,6 +34,7 @@ namespace HollowKnight.Player
         public KnightState CurrentState { get; private set; } = KnightState.Idle;
         public static bool GodmodeEnabled = false;
         public KnightProjectile Projectiles { get; set; }
+        public KnightDash Dash => dash;
 
         public bool IsActive => true;
         public Rectangle Bounds => new Rectangle((int)position.X, (int)position.Y, (int)baseSize.X, (int)baseSize.Y);
@@ -332,7 +333,7 @@ namespace HollowKnight.Player
         {
             health.CancelHeal();
             AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Hero_Dash());
-            dash.StartDash(Facing, physics.IsGrounded);
+            dash.StartDash(Facing, physics.IsGrounded, position);
         }
 
         public void StopJump()

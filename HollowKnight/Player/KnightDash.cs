@@ -1,4 +1,5 @@
 using System;
+using HollowKnight.Projectiles;
 using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 
@@ -10,6 +11,9 @@ namespace HollowKnight.Player
     public bool IsDashing {get; private set;}
     public bool DashAvailable {get; private set;}
     public bool IsOnDashCooldown {get; private set;}
+
+    private ProjectileManager _projectileManager;
+    public void SetProjectileManager(ProjectileManager pm) => _projectileManager = pm;
 
     private Direction dashDirection;
     private double dashTimer;
@@ -43,7 +47,7 @@ namespace HollowKnight.Player
       }
     }
 
-    public void StartDash(Direction direction, bool isGrounded)
+    public void StartDash(Direction direction, bool isGrounded, Vector2 spawnPosition = default)
     {
       if (IsDashing) return;
 
@@ -67,6 +71,7 @@ namespace HollowKnight.Player
 
       dashDirection = direction;
       dashTimer = 0;
+      _projectileManager?.Spawn(new DashEffect(spawnPosition, direction));
     }
 
     public void OnJump()

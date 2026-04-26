@@ -91,6 +91,7 @@ public partial class Game1
         _knight = new TheKnight(sprites, _level.KnightSpawn);
         _knightProjectile = new KnightProjectile(_knight, _projectileSpawner);
         _knight.Projectiles = _knightProjectile;
+        _knight.Dash.SetProjectileManager(_projectileManager);
     }
 
     private void InitializeCameraAndRooms()

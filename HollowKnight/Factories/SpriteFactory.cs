@@ -23,6 +23,7 @@ namespace HollowKnight.Factories
         public Texture2D GetMainBackgroundTexture() => mainBackgroundTexture;
         private Texture2D mantisLordSpriteSheet;
         private Texture2D mantisVillageSpriteSheet;
+        private Texture2D spriteEffectsSheet;
 
         private SpriteFont defaultFont;
 
@@ -42,6 +43,8 @@ namespace HollowKnight.Factories
         private readonly Dictionary<string, Rectangle> mantisLordFrames;
         private readonly Dictionary<string, Rectangle[]> mantisLordAnimations;
         private readonly Dictionary<string, Rectangle> mantisVillageFrames;
+        private readonly Dictionary<string, Rectangle> spriteEffectsSingleFrames;
+        private readonly Dictionary<string, Rectangle[]> spriteEffectsAnimations;
 
         private static SpriteFactory instance = new SpriteFactory();
 
@@ -65,6 +68,8 @@ namespace HollowKnight.Factories
             mantisLordFrames = new Dictionary<string, Rectangle>();
             mantisLordAnimations = new Dictionary<string, Rectangle[]>();
             mantisVillageFrames = new Dictionary<string, Rectangle>();
+            spriteEffectsSingleFrames = new Dictionary<string, Rectangle>();
+            spriteEffectsAnimations = new Dictionary<string, Rectangle[]>();
         }
 
         public void LoadAllTextures(ContentManager content)
@@ -210,6 +215,13 @@ namespace HollowKnight.Factories
                 string key = $"Village_{i}";
                 mantisVillageFrames.Add(key, mantisVillageAtlas.GetRegion(key).SourceRectangle);
             }
+
+            // Sprite effects sheet
+            TextureAtlas spriteEffectsAtlas = TextureAtlas.FromFile(content, "sprites/sprite_effects.xml");
+            spriteEffectsSheet = spriteEffectsAtlas.Texture;
+            spriteEffectsSingleFrames.Add("transition_light", spriteEffectsAtlas.GetRegion("transition_light").SourceRectangle);
+            spriteEffectsAnimations.Add("dash",       spriteEffectsAtlas.GetAnimationFrames("dash"));
+            spriteEffectsAnimations.Add("low_health", spriteEffectsAtlas.GetAnimationFrames("low_health"));
         }
 
         // Consolidated platform factory methods
@@ -645,6 +657,22 @@ namespace HollowKnight.Factories
                 _ => "Village_1"
             };
             return new StaticSprite(mantisVillageSpriteSheet, mantisVillageFrames[key], position, 1.0f);
+        }
+
+        // Sprite effects factory methods
+        public ISprite CreateDashEffect(Vector2 position)
+        {
+            return new AnimatedSprite(spriteEffectsSheet, spriteEffectsAnimations["dash"], position, 0.08, 1.0f, loop: false);
+        }
+
+        public ISprite CreateLowHealthEffect(Vector2 position)
+        {
+            return new AnimatedSprite(spriteEffectsSheet, spriteEffectsAnimations["low_health"], position, 0.1, 1.0f);
+        }
+
+        public ISprite CreateTransitionLight(Vector2 position)
+        {
+            return new StaticSprite(spriteEffectsSheet, spriteEffectsSingleFrames["transition_light"], position, 1.0f);
         }
     }
 }
