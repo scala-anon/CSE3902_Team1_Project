@@ -18,7 +18,7 @@ public partial class Game1
 
     private void DrawWorld()
     {
-        if (_currentRoom != 4)
+        if (_level.HasParallaxBackground)
         {
             _spriteBatch.Begin();
             _parallaxBackground.Draw(

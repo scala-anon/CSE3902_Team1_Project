@@ -23,6 +23,11 @@ namespace HollowKnight.Graphics
             int drawX = (screenWidth  - w) / 2 - (int)(cameraPosition.X * ParallaxFactor);
             int drawY = (screenHeight - h) / 2 - (int)(cameraPosition.Y * ParallaxFactor);
 
+            drawX = Math.Min(drawX, 0);
+            drawX = Math.Max(drawX, screenWidth  - w);
+            drawY = Math.Min(drawY, 0);
+            drawY = Math.Max(drawY, screenHeight - h);
+
             spriteBatch.Draw(_texture, new Rectangle(drawX, drawY, w, h), tint);
         }
     }

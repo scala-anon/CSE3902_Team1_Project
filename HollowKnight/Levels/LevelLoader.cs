@@ -21,6 +21,7 @@ namespace HollowKnight.Levels
         public Vector2 KnightSpawn { get; private set; } = Vector2.Zero;
         public Vector2? RespawnPoint { get; private set; }
         public BossFightController BossFight { get; private set; }
+        public bool HasParallaxBackground { get; private set; } = false;
 
         private Game1 _game;
         private readonly Dictionary<string, Func<Vector2, IObject>> _platformMap;
@@ -120,7 +121,8 @@ namespace HollowKnight.Levels
                 new Rectangle((int)pos.X, (int)pos.Y, GameConstants.TransitionZoneWidth, 80),
                 ParseDestinationRoom(name))),
 
-                ["Respawn"] = (name, pos) => RespawnPoint = pos,
+                ["Respawn"]      = (name, pos) => RespawnPoint = pos,
+                ["ParallaxBG"]   = (name, pos) => HasParallaxBackground = true,
             };
         }
 
@@ -139,6 +141,7 @@ namespace HollowKnight.Levels
             KnightSpawn = Vector2.Zero;
             RespawnPoint = null;
             BossFight = null;
+            HasParallaxBackground = false;
 
             XDocument doc  = XDocument.Load(xmlFilePath);
             XElement  root = doc.Root
