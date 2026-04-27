@@ -5,6 +5,8 @@ using HollowKnight.Shared;
 using HollowKnight.Collision;
 using Microsoft.Xna.Framework;
 using System;
+using HollowKnight.Projectiles;
+using System.Data;
 
 
 namespace HollowKnight.Enemies
@@ -12,6 +14,8 @@ namespace HollowKnight.Enemies
     public enum MantisLordState
     {
         DStabStart,
+        WallStart,
+        DashStart,
         IdleOnThrone,
         ThroneStand,
         ThroneLeave,
@@ -58,6 +62,12 @@ namespace HollowKnight.Enemies
         // Expose the state machine so BossFightController can command it.
         public MantisLordStateMachine StateMachine => _stateMachine;
 
+        public Direction _direction;
+
+        public EnemyProjectile Projectiles { get; set; }
+        
+        public ProjectileSpawner _projectileSpawner;
+
         public MantisLord(Vector2 position, MantisLordSlot slot)
         {
             this.position = position;
@@ -74,8 +84,10 @@ namespace HollowKnight.Enemies
             } 
             else
             {
-                FacingDirection = Direction.Right;
+                FacingDirection = Direction.Left;
             }
+
+            _direction = FacingDirection;
 
             Health = slot == MantisLordSlot.Middle
                 ? EnemyConstants.MantisLordMiddleHealth
@@ -111,6 +123,7 @@ namespace HollowKnight.Enemies
 
             Sprite = _sprites[MantisLordState.IdleOnThrone];
             _stateMachine = new MantisLordStateMachine(this);
+            
         }
 
         public void SetState(MantisLordState newState)
@@ -123,6 +136,7 @@ namespace HollowKnight.Enemies
             State = newState;
             if (newState != MantisLordState.DStabStart && newState != MantisLordState.GracePeriod && newState != MantisLordState.DStabOffset && newState != MantisLordState.DStabLandOffset)
             {
+            if (newState != MantisLordState.DStabStart && newState != MantisLordState.GracePeriod && newState != MantisLordState.DashStart && newState != MantisLordState.WallStart){
                 Sprite = _sprites[newState];
                 Sprite.Reset();
             }
@@ -155,7 +169,6 @@ namespace HollowKnight.Enemies
             // TODO: contact-damage hitbox logic would be checked here
             return base.TakeDamage(side);
         }
-
         protected override void UpdateAlive(GameTime gameTime, float dt)
             => _stateMachine.Update(gameTime, dt);
 

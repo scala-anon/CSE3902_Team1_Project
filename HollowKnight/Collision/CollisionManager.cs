@@ -1,9 +1,11 @@
 using HollowKnight.Enemies;
+using HollowKnight.Environment;
 using HollowKnight.Projectiles;
 using HollowKnight.Player;
 using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 using System;
+using static HollowKnight.Shared.CollisionLayerMatrix;
 
 namespace HollowKnight.Collision
 {
@@ -37,6 +39,7 @@ namespace HollowKnight.Collision
                 // Blocks first: projectile dies on impact
                 for (int i = 0; i < blocks.Length && p.Alive; i++)
                 {
+                    if (!ShouldCollide(p, blocks[i])) continue;
                     CollisionSide side = CollisionDetector.Detect(p, blocks[i]);
                     if (side != CollisionSide.None)
                     {
@@ -44,25 +47,23 @@ namespace HollowKnight.Collision
                     }
                 }
 
-                // Enemy hits (player faction only)
-                if (p.Faction == ProjectileFaction.Player)
+                // Enemy hits (player projectiles only)
+                for (int i = 0; i < enemies.Length && p.Alive; i++)
                 {
-                    for (int i = 0; i < enemies.Length && p.Alive; i++)
+                    if (!ShouldCollide(p, enemies[i])) continue;
+                    CollisionSide side = CollisionDetector.Detect(p, enemies[i]);
+                    if (side != CollisionSide.None)
                     {
-                        CollisionSide side = CollisionDetector.Detect(p, enemies[i]);
-                        if (side != CollisionSide.None)
+                        onEnemyHit?.Invoke(i);
+                        if (!p.PiercesEnemies)
                         {
-                            onEnemyHit?.Invoke(i);
-                            if (!p.PiercesEnemies)
-                            {
-                                p.OnCollide(enemies[i], side);
-                            }
+                            p.OnCollide(enemies[i], side);
                         }
                     }
                 }
 
-                // Player hits (enemy faction only)
-                if (p.Faction == ProjectileFaction.Enemy && p.Alive)
+                // Player hits (enemy projectiles only)
+                if (p.Alive && ShouldCollide(p, player))
                 {
                     CollisionSide side = CollisionDetector.Detect(p, player);
                     if (side != CollisionSide.None)
@@ -84,6 +85,54 @@ namespace HollowKnight.Collision
                 a.Bottom - b.Top,
                 b.Bottom - a.Top
             );
+        }
+
+        public static void ResolveCrawlidBlockCollision(Crawlid crawlid, ICollidable block)
+        {
+            if (crawlid == null || block == null) return;
+            if (!block.IsActive) return;
+            if (block is Spike) return;
+
+            Rectangle enemyBounds = crawlid.Bounds;
+            Rectangle blockBounds = block.Bounds;
+
+            // Ground probe extends slightly below the sprite so a crawlid sitting exactly
+            // on a platform surface (no actual overlap) still re-confirms grounding each frame.
+            Rectangle probe = new Rectangle(enemyBounds.X, enemyBounds.Y, enemyBounds.Width, enemyBounds.Height + GameConstants.GroundProbeExtension);
+            if (!probe.Intersects(blockBounds)) return;
+
+            var (overlapLeft, overlapRight, overlapTop, overlapBottom) = CalculateOverlaps(enemyBounds, blockBounds);
+
+            // Probe touched but bounds don't actually overlap: crawlid is resting on top.
+            if (overlapTop <= 0 && overlapBottom > 0 && enemyBounds.Right > blockBounds.Left && enemyBounds.Left < blockBounds.Right)
+            {
+                crawlid.position.Y = blockBounds.Top - enemyBounds.Height;
+                crawlid.Land();
+                return;
+            }
+
+            if (overlapLeft <= 0 || overlapRight <= 0 || overlapTop <= 0 || overlapBottom <= 0) return;
+
+            if (Math.Min(overlapLeft, overlapRight) < Math.Min(overlapTop, overlapBottom))
+            {
+                if (overlapLeft < overlapRight)
+                    crawlid.position.X -= overlapLeft;
+                else
+                    crawlid.position.X += overlapRight;
+                crawlid.OnWallHit();
+            }
+            else
+            {
+                if (overlapTop < overlapBottom)
+                {
+                    crawlid.position.Y = blockBounds.Top - enemyBounds.Height;
+                    crawlid.Land();
+                }
+                else
+                {
+                    crawlid.position.Y += overlapBottom;
+                }
+            }
         }
 
         public static void ResolveEnemyBlockCollision(Vengefly vengefly, ICollidable block)

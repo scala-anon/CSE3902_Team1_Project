@@ -50,6 +50,8 @@ namespace HollowKnight.Enemies
         public virtual float GetChaseRadius() => 0f;
         public virtual void SetPlatform(IObject platform) { }
         public abstract string GetStateName();
+        public void SetAirborne() { IsGrounded = false; }
+        public virtual void Land() { IsGrounded = true; }
 
         // --- Shared implementations ---
 

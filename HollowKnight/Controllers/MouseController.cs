@@ -1,5 +1,4 @@
 using HollowKnight.Interfaces;
-using HollowKnight.Levels;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -9,14 +8,12 @@ namespace HollowKnight.Controllers
     {
         private readonly Game1 _game;
         private readonly int _screenWidth;
-        private readonly RoomManager _roomManager;
         private MouseState _previousState;
 
-        public MouseController(Game1 game, int screenWidth, RoomManager roomManager)
+        public MouseController(Game1 game, int screenWidth)
         {
             _game = game;
             _screenWidth = screenWidth;
-            _roomManager = roomManager;
             _previousState = Mouse.GetState();
         }
 
@@ -28,6 +25,24 @@ namespace HollowKnight.Controllers
 
             if (leftClickPressed)
             {
+                if (_game.TryActivateTitleButton(new Point(currentState.X, currentState.Y)))
+                {
+                    _previousState = currentState;
+                    return;
+                }
+
+                if (_game.TryActivatePauseButton(new Point(currentState.X, currentState.Y)))
+                {
+                    _previousState = currentState;
+                    return;
+                }
+
+                if (_game.TryActivateGameOverButton(new Point(currentState.X, currentState.Y)))
+                {
+                    _previousState = currentState;
+                    return;
+                }
+
                 if (_game.TrySelectInventoryItem(new Point(currentState.X, currentState.Y)))
                 {
                     _previousState = currentState;
@@ -36,14 +51,8 @@ namespace HollowKnight.Controllers
 
                 if (_game.AllowsGameplayInput())
                 {
-                    if (currentState.X < _screenWidth / 2)
-                    {
-                        _roomManager.SwitchRoomByOffset(-1);
-                    }
-                    else
-                    {
-                        _roomManager.SwitchRoomByOffset(1);
-                    }
+                    int direction = currentState.X < _screenWidth / 2 ? -1 : 1;
+                    _game.QuickNavigateHorizontally(direction);
                 }
             }
 

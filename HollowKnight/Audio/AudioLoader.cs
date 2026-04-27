@@ -171,6 +171,16 @@ namespace HollowKnight.Audio
         {
             return sfx[SoundId.MantisDeath3];
         }
+
+        public SoundEffect Get_Mantis_Throw()
+        {
+            return sfx[SoundId.MantisThrow];
+        } 
+
+        public SoundEffect Get_Mantis_Projectile()
+        {
+            return sfx[SoundId.MantisProjectile];
+        }
         #endregion Get SFX
 
     }

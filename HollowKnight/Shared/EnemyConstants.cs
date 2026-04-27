@@ -22,6 +22,7 @@ namespace HollowKnight.Shared
         public const float CrawlidPatrolSpeed = 175f;
         public const float CrawlidTurnDuration = 0.08f;
         public const int CrawlidDamage = 1;
+        public const float CrawlidGravity = 600f;
 
         // Vengefly
         public const float VengeflyDetectionRadius = 400f;
@@ -76,34 +77,24 @@ namespace HollowKnight.Shared
         public const float MantisDashArriveSpriteHeigthOffset = 556/2;
         public const float MantisDashAnticipateSpriteHeightOffset = 556/3;
         public const float MantisWallHangOffset = 199;
+
+        public const float MantisProjectileXVelocity = 800f;
+        public const float MantisProjectileXAcceleration = -400f;
+        public const float MantisProjectileYSpeed = 100f;
+        public const float MantisProjectileDuration = 20f;
+        public const float MantisProjectile2XVelocity = 550f;
+        public const float MantisProjectile2XAcceleration = -350f;
+        public const float MantisProjectile2YSpeed = 100f;
+
+
+
+        public const float Power2 = 2f;
+        public const float half = .5f;
     
         //FIX
         
         public static readonly Dictionary<MantisLordState, Rectangle> mantisLordHitBoxes = new Dictionary<MantisLordState, Rectangle>()
         {
-            // [MantisLordState.IdleOnThrone] = new Rectangle(0, 0, 0, 0),
-            // [MantisLordState.ThroneStand] = new Rectangle(20, 0, 40, 60),
-            // [MantisLordState.ThroneLeave] = new Rectangle(20, 0, 40, 60),
-            // [MantisLordState.ThroneArrive] = new Rectangle(20, 0, 40, 60),
-            // [MantisLordState.ThroneWounded] = new Rectangle(20, 0, 40, 60),
-            // [MantisLordState.ThroneBow] = new Rectangle(20, 0, 40, 60),
-            // [MantisLordState.Throw] = new Rectangle(0, 0, 0, 0),
-            // [MantisLordState.DashArrive] = new Rectangle(0, 0, 0, 0),
-            // [MantisLordState.DashAnticipate] = new Rectangle(0, 0, 0, 0),
-            // [MantisLordState.Dash] = new Rectangle(0, 0, 0, 0),
-            // [MantisLordState.DashRecover] = new Rectangle(0, 0, 0, 0),
-            // [MantisLordState.DashLeave] = new Rectangle(0, 0, 0, 0),
-            // [MantisLordState.DStabArrive] = new Rectangle(0, 0, 0, 0),
-            // [MantisLordState.DStab] = new Rectangle(0, 0, 0, 0),
-            // [MantisLordState.DStabLand] = new Rectangle(0, 0, 0, 0),
-            // [MantisLordState.DStabLeave] = new Rectangle(0, 0, 0, 0),
-            // [MantisLordState.WallArrive] = new Rectangle(0, 0, 0, 0),
-            // [MantisLordState.WallReady] = new Rectangle(0, 0, 0, 0),
-            // [MantisLordState.WallLeave] = new Rectangle(0, 0, 0, 0),
-            // [MantisLordState.Death] = new Rectangle(0, 0, 0, 0),
-            // [MantisLordState.DeathLeaveOne] = new Rectangle(0, 0, 0, 0),
-            // [MantisLordState.DeathLeaveTwo] = new Rectangle(0, 0, 0, 0),
-            // [MantisLordState.Dormant] = new Rectangle(0, 0, 0, 0),
             [MantisLordState.IdleOnThrone] = new Rectangle(0, 0, 0, 0),
             [MantisLordState.ThroneStand] = new Rectangle(0, 0, 0, 0),
             [MantisLordState.ThroneLeave] = new Rectangle(0, 0, 0, 0),
@@ -136,6 +127,8 @@ namespace HollowKnight.Shared
             [MantisLordState.Dormant] = new Rectangle(0, 0, 0, 0),
             [MantisLordState.GracePeriod] = new Rectangle(0, 0, 0, 0),
             [MantisLordState.DStabStart] = new Rectangle(0,0,0,0),
+            [MantisLordState.DashStart] = new Rectangle(0,0,0,0),
+            [MantisLordState.WallStart] = new Rectangle(0,0,0,0),
             };
         }
 }

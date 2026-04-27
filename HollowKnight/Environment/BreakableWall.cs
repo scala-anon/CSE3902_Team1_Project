@@ -6,22 +6,23 @@ using Microsoft.Xna.Framework;
 
 namespace HollowKnight.Environment
 {
-    public enum DoorState { Full, Half, Broken }
-
-    public class Door : BreakableEnvironmentObject
+    public class BreakableWall : BreakableEnvironmentObject
     {
-        public override string Label => "Door";
+        private readonly int variant;
+
+        public override string Label => $"BreakableWall_{variant}";
 
         public override InteractionType InteractionType => InteractionType.SwordHit;
 
-        public Door(Vector2 position, int hitWidth, int hitHeight, int hitOffsetY = 0)
+        public BreakableWall(int variant, Vector2 position, int hitWidth, int hitHeight, int hitOffsetY = 0)
         {
+            this.variant = variant;
             this.position = position;
             this.hitWidth = hitWidth;
             this.hitHeight = hitHeight;
             this.hitOffsetY = hitOffsetY;
             hitBoxes = new Rectangle[1];
-            sprite = SpriteFactory.Instance.CreateDoorSprite(position);
+            sprite = SpriteFactory.Instance.CreateWallSprite(variant, position);
         }
 
         public override Rectangle[] GetInteractionBounds()
@@ -38,14 +39,13 @@ namespace HollowKnight.Environment
 
         protected override void ApplyBrokenSprite()
         {
-            // TODO: swap to broken door sprite once art asset exists; Door_1 used as placeholder
-            sprite = SpriteFactory.Instance.CreateDoorHitSprite(position);
-            DebugLogger.LogObject($"Door broken: {Label}");
+            sprite = SpriteFactory.Instance.CreateBrokenWallSprite(variant, position);
+            DebugLogger.LogObject($"BreakableWall broken: {Label}");
         }
 
         public override void OnInteract(TheKnight knight)
         {
-            DebugLogger.LogObject($"Door hit: {Label} ({_hitCount + 1}/{CollisionConstants.BreakableHitsToBreak})");
+            DebugLogger.LogObject($"BreakableWall hit: {Label} ({_hitCount + 1}/{CollisionConstants.BreakableHitsToBreak})");
             base.OnInteract(knight);
         }
     }

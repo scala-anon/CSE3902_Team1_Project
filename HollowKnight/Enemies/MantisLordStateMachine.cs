@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
+using HollowKnight.Audio;
 using HollowKnight.Player;
+using HollowKnight.Projectiles;
 using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,6 +16,7 @@ namespace HollowKnight.Enemies
     {
         private readonly MantisLord _owner;
         private float _stateTimer;
+        public bool lowAttack = false;
 
         // Shared RNG across all MantisLord instances; seeded once from environment tick count.
         private static readonly System.Random _rng = new System.Random(System.Environment.TickCount);
@@ -208,13 +211,41 @@ namespace HollowKnight.Enemies
 
                 case MantisLordState.WallArrive:
                     if (_owner.Sprite.IsFinished)
+                        _owner.Projectiles?.Fire(lowAttack);
+                        lowAttack = !lowAttack;
+
+                        AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Mantis_Jump_Cage());
+                        EnterState(MantisLordState.WallLeave);
+                    }
+                    break;
+                case MantisLordState.WallStart:
+                    AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Mantis_Land_Cage());
+                    if (_owner.FacingDirection == Direction.Right)
+                    {
+                        _owner.position = new Vector2(EnemyConstants.MantisWallHangLeftX, EnemyConstants.MantisWallHangY);
+                    } else
+                    {
+                        _owner.position = new Vector2(EnemyConstants.MantisWallHangRightX, EnemyConstants.MantisWallHangY);
+                    }
+                    EnterState(MantisLordState.WallArrive);
+                    break;
+
+
+                case MantisLordState.WallArrive:
+                    
+                    
+
+                    if (_owner.Sprite.IsFinished){
+                    
                         EnterState(MantisLordState.WallReady);
+                    }
                     break;
 
                 case MantisLordState.WallReady:
                     // Loops until controller forces a throw or duration elapses.
                     // TODO: spawn projectile here (when WallReady times out)
-                    if (_owner.Sprite.IsFinished)
+                    if(_owner.Sprite.IsFinished){
+                        AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Mantis_Throw());
                         EnterState(MantisLordState.Throw);
                     break;
 
@@ -230,7 +261,7 @@ namespace HollowKnight.Enemies
                     
 
                 // ---- Dash sequence ----
-                case MantisLordState.DashArrive:
+                case MantisLordState.DashStart:
                     if(_owner.FacingDirection == Direction.Right)
                     {
                         
@@ -240,9 +271,12 @@ namespace HollowKnight.Enemies
                     
                         _owner.position = new Vector2(EnemyConstants.MantisDashArriveLeftX,  EnemyConstants.MantisDashY);
                     }
+                    AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Mantis_Land_Ground());
+                    EnterState(MantisLordState.DashArrive);
+                    break;
+                case MantisLordState.DashArrive:
                     if (_owner.Sprite.IsFinished)
                     {
-                        // TODO: audio hook — play dash anticipate sound
                         EnterState(MantisLordState.DashAnticipate);
                     }
                     break;
@@ -251,6 +285,7 @@ namespace HollowKnight.Enemies
                     _owner.position.Y = EnemyConstants.MantisDashY + EnemyConstants.MantisDashArriveSpriteHeigthOffset;
                     if (_owner.Sprite.IsFinished)
                     {
+                        AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Mantis_Dash());
                         // TODO: damage hitbox — activate dash contact damage here
                         EnterState(MantisLordState.Dash);
                     }
@@ -270,14 +305,17 @@ namespace HollowKnight.Enemies
                     break;
 
                 case MantisLordState.DashRecover:
-                    if (_owner.Sprite.IsFinished)
+                    if (_owner.Sprite.IsFinished){
+                        AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Mantis_Jump_Ground());
                         EnterState(MantisLordState.DashLeave);
+                    }
                     break;
 
                 case MantisLordState.DashLeave:
                     _owner.position.Y = EnemyConstants.MantisDashY;
-                    if (_owner.Sprite.IsFinished)
+                    if (_owner.Sprite.IsFinished){
                         StartAttackCooldown();
+                    }
                     break;
 
                 // ---- DStab sequence ----
@@ -327,10 +365,18 @@ namespace HollowKnight.Enemies
                         _owner.position.X -= 240;
                     }
                     EnterState(MantisLordState.DStabLand);
+                    
+                    if (_owner.Sprite.IsFinished){
+                        AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Mantis_Land_Ground());
+                        EnterState(MantisLordState.DStabLand);
+                        }
                     break;
                 case MantisLordState.DStabLand:
-                    if (_owner.Sprite.IsFinished)
+                  
+                    if (_owner.Sprite.IsFinished){
+                        AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Mantis_Jump_Ground());
                         EnterState(MantisLordState.DStabLeave);
+                    }
                     break;
 
                 case MantisLordState.DStabLeave:

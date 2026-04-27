@@ -13,11 +13,14 @@ namespace HollowKnight.Levels
     {
         public List<IEnemy> Enemies        { get; } = new();
         public List<IObject> Backgrounds   { get; } = new();
+        public List<IObject> BackgroundMid   { get; } = new();
         public List<IObject> Foregrounds    {get;} = new();
         public List<IObject> Platforms     { get; } = new();
+        public List<IObject> Foreground    { get; } = new();
         public List<IInteractable> Interactables { get; } = new();
         public List<TransitionZone> Transitions { get; } = new();
         public Vector2 KnightSpawn { get; private set; } = Vector2.Zero;
+        public Vector2? RespawnPoint { get; private set; }
         public BossFightController BossFight { get; private set; }
 
         private Game1 _game;
@@ -42,22 +45,30 @@ namespace HollowKnight.Levels
                 ["Background_1"]  = pos => new Background(1, pos),
                 ["Background_2"] = pos => new Background(2, pos),
                 // <Region name="Path_1" x="265" y="223" width="1060" height="83" />
-                ["Path_1"]               = pos => new Path(1, pos, 1050, 32, hitOffsetY: 10),
+                ["Path_1"]               = pos => new Path(1, pos, 1050, 32, hitOffsetY: 15),
                 ["Path_2"]               = pos => new Path(2, pos, 940, 32, hitOffsetY: 40),
                 ["Path_ledge"]           = pos => new PathLedge(pos),
                 ["Spike_Floor_1"]        = pos => new Spike(SpikeVariant.Floor1, pos),
                 ["Spike_Floor_2"]        = pos => new Spike(SpikeVariant.Floor2, pos),
                 ["Spike_Ceiling"]        = pos => new Spike(SpikeVariant.Ceiling, pos),
+                ["Spike_Wall_1"]         = pos => new Spike(SpikeVariant.Wall1, pos),
                 ["Bench"]               = pos => new Bench(pos),
                 ["Plant1_Idle"]        = pos => new Grass(1,pos, 100, 5, hitOffsetY: 0),
                 ["Plant2_Idle"]        = pos => new Grass(2,pos, 100, 5, hitOffsetY: 0),
-                ["Wall_0"]             = pos => new Wall(0, pos, 80, 200),
+                ["Wall_0"]             = pos => new Wall(0, pos, 282, 10),
+                ["Wall_0_Flipped"]     = pos => new Wall(0, pos, 257, 30, flipped: true, hitOffsetX: 17),
                 ["Wall_1"]             = pos => new Wall(1, pos, 80, 200),
-                ["Wall_2"]             = pos => new Wall(2, pos, 80, 111),
-                ["Wall_3"]              = pos => new Wall(3,pos,49,111),
-                ["Wall_4"]              = pos => new Wall(4,pos,142,246),
+                ["Wall_2"]             = pos => new Wall(2, pos, 49, 111),
+                ["Wall_3"]              = pos => new Wall(3,pos,61,139),
+                ["Wall_4"]              = pos => new BreakableWall(4,pos,142,246),
                 ["Wall_5"]              = pos => new Wall(5,pos, 175,305),
-                ["Door_0"]             = pos => new Door(pos, 60, 150),
+                ["BreakableWall_0"]    = pos => new BreakableWall(0, pos, 80, 200),
+                ["BreakableWall_1"]    = pos => new BreakableWall(1, pos, 80, 200),
+                ["BreakableWall_2"]    = pos => new BreakableWall(2, pos, 80, 111),
+                ["BreakableWall_3"]    = pos => new BreakableWall(3, pos, 49, 111),
+                ["BreakableWall_4"]    = pos => new BreakableWall(4, pos, 142, 246),
+                ["BreakableWall_5"]    = pos => new BreakableWall(5, pos, 175, 305),
+                ["Door_0"]             = pos => new Door(pos, 87, 236),
                 ["Brick_1"]            = pos => new Brick(1,pos,272,62),
                 ["Brick_2"] = pos => new Brick(2, pos, 122, 39),
                 ["Brick_3"] = pos => new Brick(3, pos, 274, 132),
@@ -134,6 +145,8 @@ namespace HollowKnight.Levels
                 new TransitionZone(
                 new Rectangle((int)pos.X, (int)pos.Y, GameConstants.TransitionZoneWidth, 80),
                 ParseDestinationRoom(name))),
+
+                ["Respawn"] = (name, pos) => RespawnPoint = pos,
             };
         }
 
@@ -144,9 +157,13 @@ namespace HollowKnight.Levels
             // Clear all lists before loading new level
             Enemies.Clear();
             Backgrounds.Clear();
+            BackgroundMid.Clear();
             Platforms.Clear();
+            Foreground.Clear();
+            Interactables.Clear();
             Transitions.Clear();
             KnightSpawn = Vector2.Zero;
+            RespawnPoint = null;
             BossFight = null;
 
             XDocument doc  = XDocument.Load(xmlFilePath);
@@ -212,16 +229,29 @@ namespace HollowKnight.Levels
             }
         }
 
-        private static readonly HashSet<string> BackgroundNames = new()
+        private enum DecorationLayer { BackgroundFar, BackgroundMid, Foreground }
+
+        // Name → visual layer for non-collidable decorations.
+        // Anything absent falls through to the default logic (collision goes to Platforms).
+        private static readonly Dictionary<string, DecorationLayer> DecorationLayers = new()
         {
-            "Background_1", "Background_2"
+            ["Background_1"]   = DecorationLayer.BackgroundFar,
+            ["Background_2"]   = DecorationLayer.BackgroundFar,
+
+            ["Village_1"]      = DecorationLayer.BackgroundMid,
+            ["Village_2"]      = DecorationLayer.BackgroundMid,
+            ["Village_3"]      = DecorationLayer.BackgroundMid,
+            ["MantisThrone_1"] = DecorationLayer.BackgroundMid,
+            ["MantisThrone_2"] = DecorationLayer.BackgroundMid,
+
+            ["Flag_1"]         = DecorationLayer.Foreground,
+            ["Flag_2"]         = DecorationLayer.Foreground,
+            ["Flag_3"]         = DecorationLayer.Foreground,
+            ["Flag_4"]         = DecorationLayer.Foreground,
         };
 
         // TODO: Add the rocks that need to be inside the foreground!
-        private static readonly HashSet<string> foregroundNames = new()
-        {
-            
-        };
+        private static readonly HashSet<string> foregroundNames = new();
 
         private void SpawnPlatform(string name, Vector2 position)
         {
@@ -232,9 +262,18 @@ namespace HollowKnight.Levels
             }
 
             IObject obj = create(position);
-            if (BackgroundNames.Contains(name))
-                Backgrounds.Add(obj);
-            else if (obj is IInteractable interactable)
+
+            if (DecorationLayers.TryGetValue(name, out var layer))
+            {
+                switch (layer)
+                {
+                    case DecorationLayer.BackgroundFar: Backgrounds.Add(obj);   return;
+                    case DecorationLayer.BackgroundMid: BackgroundMid.Add(obj); return;
+                    case DecorationLayer.Foreground:    Foreground.Add(obj);    return;
+                }
+            }
+
+            if (obj is IInteractable interactable && obj is not IBreakable)
                 Interactables.Add(interactable);
             else
                 Platforms.Add(obj);

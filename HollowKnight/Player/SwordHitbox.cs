@@ -34,7 +34,7 @@ namespace HollowKnight.Player
           width = CollisionConstants.SideSlashWidth;
           height = CollisionConstants.SideSlashHeight;
           xOffset = facing == Direction.Right ? knightBounds.Width : -width;
-          yOffset = (knightBounds.Height-height)/2;
+          yOffset = (knightBounds.Height - height) / 2 + CollisionConstants.SideSlashOffsetY;
           break;
         case KnightSpriteType.UpSlash:
           width = CollisionConstants.UpSlashWidth;

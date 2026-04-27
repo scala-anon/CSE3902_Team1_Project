@@ -9,6 +9,18 @@ using HollowKnight.Shared;
 
 namespace HollowKnight.Commands
 {
+    public class StartGameCommand : ICommand
+    {
+        private readonly Game1 _game;
+
+        public StartGameCommand(Game1 game)
+        {
+            _game = game;
+        }
+
+        public void Execute() => _game.StartGame();
+    }
+
     public class QuitCommand : ICommand
     {
         private readonly Game _game;
@@ -135,30 +147,20 @@ namespace HollowKnight.Commands
 
     public class SwitchRoomCommand : ICommand
     {
-        private readonly RoomManager _roomManager;
+        private readonly Game1 _game;
         private readonly int _offset;
 
-        public SwitchRoomCommand(RoomManager roomManager, int offset)
+        public SwitchRoomCommand(Game1 game, int offset)
         {
-            _roomManager = roomManager;
+            _game = game;
             _offset = offset;
         }
 
-        public void Execute() => _roomManager.SwitchRoomByOffset(_offset);
-    }
-
-    public class JumpToRoomCommand : ICommand
-    {
-        private readonly RoomManager _roomManager;
-        private readonly int _roomIndex;
-
-        public JumpToRoomCommand(RoomManager roomManager, int roomIndex)
+        public void Execute()
         {
-            _roomManager = roomManager;
-            _roomIndex = roomIndex;
+            if (_offset > 0) _game.SwitchToNextRoom();
+            else if (_offset < 0) _game.SwitchToPreviousRoom();
         }
-
-        public void Execute() => _roomManager.JumpToRoomIndex(_roomIndex);
     }
 
     public class DebugJumpToRoomCommand : ICommand

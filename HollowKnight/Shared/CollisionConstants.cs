@@ -29,10 +29,11 @@ namespace HollowKnight.Shared
         public const int KnightHitboxHeightShrink = 10;
 
         // Sword Hitbox Dimensions
-        public const int SideSlashWidth = 160;
-        public const int SideSlashHeight = 110;
-        public const int UpSlashWidth = 90;
-        public const int UpSlashHeight = 120;
+        public const int SideSlashWidth = 193;
+        public const int SideSlashHeight = 83;
+        public const int SideSlashOffsetY = -15;
+        public const int UpSlashWidth = 143;
+        public const int UpSlashHeight = 146;
         public const int DownSlashWidth = 90;
         public const int DownSlashHeight = 120;
 
@@ -52,6 +53,11 @@ namespace HollowKnight.Shared
         public const int SpikeFloor2SecondaryW = 100;
         public const int SpikeFloor2SecondaryH = 40;
 
+        // Spike Hitbox Dimensions — Wall1 (137x99 sprite)
+        public const int SpikeWall1W = 137;
+        public const int SpikeWall1H = 99;
+        public const int SpikeWall1OffsetY = 0;
+
         // Spike Hitbox Dimensions — Ceiling
         public const int SpikeCeilingPrimaryW = 230;
         public const int SpikeCeilingPrimaryH = 70;
@@ -65,6 +71,7 @@ namespace HollowKnight.Shared
         public const int CrawlidFeetHeight = 4;
         public const int CrawlidEdgeProbeOffset = 4;
         public const int CrawlidGroundProbeExtension = 1;
+        public const int CrawlidSpikeDetectRange = 28;
 
         // Vengeful Spirit Projectile Hitbox
         public const int VengefulSpiritLeadingHitboxWidth = 35;
@@ -81,6 +88,13 @@ namespace HollowKnight.Shared
         public const int BenchInteractionMarginY = 0; //prev 20
         public const int BenchInteractionWidth = 158; //prev286
         public const int BenchInteractionHeight = 92; //prev132
+
+        // Breakable Wall Interaction Bounds
+        public const int BreakableWallInteractionExpand = 10;
+
+        // Breakable Environment Objects (BreakableWall, Door)
+        public const int BreakableHitsToBreak = 3;
+        public const double BreakableHitCooldownSeconds = 0.5; // was 500ms wall-clock
 
     }
 }

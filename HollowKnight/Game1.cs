@@ -11,6 +11,7 @@ using HollowKnight.Shared;
 using HollowKnight.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using HollowKnight.Abilities;
+using HollowKnight.Enemies;
 
 namespace HollowKnight;
 
@@ -23,7 +24,7 @@ public partial class Game1 : Game
     private List<IController> _controllerList;
     private readonly List<Spirit> _items = new();
 
-    private GameState _gameState = new PlayingState();
+    private GameState _gameState = new TitleState();
 
     private TheKnight _knight;
     private CollisionSystem _collisionSystem;
@@ -31,6 +32,9 @@ public partial class Game1 : Game
     private readonly ProjectileManager _projectileManager = new();
     private ProjectileSpawner _projectileSpawner;
     private KnightProjectile _knightProjectile;
+    private EnemyProjectile _mantisProjectileLeft;
+    private EnemyProjectile _mantisProjectileMiddle;
+    private EnemyProjectile _mantisProjectileRight;
     private RoomManager _roomManager;
     private LevelLoader _level;
     private Dictionary<int, Vector2> _roomEntryPoints = new();
@@ -50,6 +54,7 @@ public partial class Game1 : Game
 
     protected override void Initialize()
     {
+        CollisionLayerMatrix.ValidateSymmetry();
         _controllerList = new List<IController>();
         base.Initialize();
     }
@@ -65,6 +70,7 @@ public partial class Game1 : Game
         InitializeDebug();
         InitializeGameplaySystems();
         InitializePlayerAndProjectiles();
+        ApplyRoomRespawnPoint();
         InitializeCameraAndRooms();
         InitializeControllers();
         InitializeFullScreen();
@@ -73,7 +79,16 @@ public partial class Game1 : Game
     protected override void Update(GameTime gameTime)
     {
         if (_gameState is PlayingState)
+        {
             UpdateCollisions();
+            if (KnightIsDead())
+            {
+                SetGameOver();
+                UpdateAudio();
+                base.Update(gameTime);
+                return;
+            }
+        }
 
         UpdateControllers(gameTime);
 
@@ -101,8 +116,12 @@ public partial class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        DrawWorld();
-        DrawHud();
+        if (!IsTitleScreenOpen())
+        {
+            DrawWorld();
+            DrawHud();
+        }
+
         DrawOverlay();
 
         base.Draw(gameTime);

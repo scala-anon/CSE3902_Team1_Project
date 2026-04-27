@@ -30,11 +30,19 @@ namespace HollowKnight.Collision
                 _handler.Register<Vengefly, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
                 // _handler.Register<MantisLord, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
 
-                // Hitting spikes damages the knight
-                _handler.Register<Spike, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
+                // Hitting spikes damages the knight; respawn at checkpoint only if knight survived
+                _handler.Register<Spike, TheKnight>(side, (a, b) => {
+                    var knight = (TheKnight)b;
+                    knight.TakeDamage(side);
+                    if (knight.HasRespawnPoint && !knight.JustDied) knight.Respawn();
+                    knight.ConsumeJustDied();
+                });
 
                 // Spikes instantly kill vengefly
                 _handler.Register<Spike, Vengefly>(side, (a, b) => ((Vengefly)b).Kill());
+
+                // Spikes instantly kill crawlid
+                _handler.Register<Spike, Crawlid>(side, (a, b) => ((Crawlid)b).Kill());
 
                 // Sword damages enemies
                 _handler.Register<SwordHitbox, Crawlid>(side, (a, b) => { if (((Crawlid)b).TakeDamage(side) && _currentKnight != null) _currentKnight.GainSoul(); });
@@ -62,10 +70,18 @@ namespace HollowKnight.Collision
             foreach (IObject obj in platforms)
             {
                 if (obj == null) continue;
+                if (!CollisionLayerMatrix.ShouldCollide(obj, knight)) continue;
                 CollisionSide side = CollisionDetector.Detect(obj, knight);
                 if (side != CollisionSide.None)
                     DebugLogger.LogCollision($"{obj.GetType().Name} vs Knight side={side}");
                 _handler.HandleCollision(obj, knight, side);
+            }
+
+            // Supply crawlids with the current platform list for edge/spike detection
+            foreach (IEnemy enemy in enemies)
+            {
+                if (enemy is Crawlid crawlidForPlatforms)
+                    crawlidForPlatforms.SetPlatforms(platforms);
             }
 
             // Enemy collisions
@@ -74,6 +90,7 @@ namespace HollowKnight.Collision
                 enemy.SetKnightPosition(knightPosition);
                 enemy.SetNavigationGrid(navigationGrid);
                 if (!enemy.IsActive) continue;
+                if (!CollisionLayerMatrix.ShouldCollide(enemy, knight)) continue;
                 CollisionSide side = CollisionDetector.Detect(enemy, knight);
                 if (side != CollisionSide.None)
                     DebugLogger.LogCollision($"{enemy.GetType().Name} vs Knight side={side}");
@@ -87,6 +104,7 @@ namespace HollowKnight.Collision
                 foreach (IObject obj in platforms)
                 {
                     if (!(obj is Spike spike)) continue;
+                    if (!CollisionLayerMatrix.ShouldCollide(spike, enemy)) continue;
                     CollisionSide side = CollisionDetector.Detect(spike, enemy);
                     _handler.HandleCollision(spike, enemy, side);
                 }
@@ -99,10 +117,28 @@ namespace HollowKnight.Collision
                 foreach (IEnemy enemy in enemies)
                 {
                     if (!enemy.IsActive) continue;
+                    if (!CollisionLayerMatrix.ShouldCollide(swordHitbox, enemy)) continue;
                     CollisionSide side = CollisionDetector.Detect(swordHitbox, enemy);
                     if (side != CollisionSide.None)
                         DebugLogger.LogCollision($"SwordHitbox vs {enemy.GetType().Name} side={side}");
                     _handler.HandleCollision(swordHitbox, enemy, side);
+                }
+
+                // Sword vs BreakableTerrain: process IBreakable objects here via the
+                // PlayerAttack<->BreakableTerrain matrix pairing so they are handled in
+                // a single canonical place (prevents double-hit if they also appear in interactables).
+                foreach (IObject obj in platforms)
+                {
+                    if (obj == null || !obj.IsActive) continue;
+                    if (obj is not IBreakable) continue;
+                    if (!(obj is IInteractable breakableInteractable)) continue;
+                    if (!CollisionLayerMatrix.ShouldCollide(swordHitbox, obj)) continue;
+                    CollisionSide side = CollisionDetector.Detect(swordHitbox, obj);
+                    if (side != CollisionSide.None && breakableInteractable.IsInteractable(_currentKnight))
+                    {
+                        DebugLogger.LogInteraction(obj.GetType().Name, "SwordHit-Breakable", "platforms");
+                        breakableInteractable.OnInteract(_currentKnight);
+                    }
                 }
 
                 foreach (IInteractable interactable in interactables)
@@ -114,6 +150,12 @@ namespace HollowKnight.Collision
                         continue;
                     }
 
+                    // IBreakable objects are processed via the PlayerAttack<->BreakableTerrain
+                    // layer pairing in the platforms loop above. Skipping here prevents a single
+                    // sword swing from decrementing _hitCount twice.
+                    if (interactable is IBreakable) continue;
+
+                    if (!CollisionLayerMatrix.ShouldCollide(swordHitbox, interactable)) continue;
                     CollisionSide side = CollisionDetector.Detect(swordHitbox, interactable);
                     if (side != CollisionSide.None && interactable.IsInteractable(_currentKnight))
                     {
@@ -128,7 +170,10 @@ namespace HollowKnight.Collision
             for (int i = 0; i < platforms.Count; i++)
             {
                 if (platforms[i] is ICollidable blockObj)
+                {
+                    if (!CollisionLayerMatrix.ShouldCollide(blockObj, knight)) continue;
                     CollisionManager.ResolvePlayerBlockCollision(knight, blockObj);
+                }
             }
 
             // Block resolution for vengefly enemies (includes dead vengeflies falling)
@@ -138,7 +183,25 @@ namespace HollowKnight.Collision
                 for (int i = 0; i < platforms.Count; i++)
                 {
                     if (platforms[i] is ICollidable blockObj)
+                    {
+                        if (!CollisionLayerMatrix.ShouldCollide(blockObj, vengefly)) continue;
                         CollisionManager.ResolveEnemyBlockCollision(vengefly, blockObj);
+                    }
+                }
+            }
+
+            // Block resolution for crawlid enemies (gravity fall + landing)
+            foreach (IEnemy enemy in enemies)
+            {
+                if (!(enemy is Crawlid crawlid)) continue;
+                crawlid.SetAirborne();
+                for (int i = 0; i < platforms.Count; i++)
+                {
+                    if (platforms[i] is ICollidable blockObj)
+                    {
+                        if (!CollisionLayerMatrix.ShouldCollide(blockObj, crawlid)) continue;
+                        CollisionManager.ResolveCrawlidBlockCollision(crawlid, blockObj);
+                    }
                 }
             }
             
@@ -159,6 +222,7 @@ namespace HollowKnight.Collision
             // Item collisions
             foreach (Spirit item in items)
             {
+                if (!CollisionLayerMatrix.ShouldCollide(item, knight)) continue;
                 CollisionSide side = CollisionDetector.Detect(item, knight);
                 _handler.HandleCollision(item, knight, side);
                 if (side != CollisionSide.None)

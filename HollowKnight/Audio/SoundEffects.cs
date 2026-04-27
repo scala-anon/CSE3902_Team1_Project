@@ -34,5 +34,7 @@ namespace HollowKnight.Audio
         public const string MantisDeath1 = "Audio/sfx/Mantis Lord Death 01";
         public const string MantisDeath2 = "Audio/sfx/Mantis Lord Death 02";
         public const string MantisDeath3 = "Audio/sfx/Mantis Lord Death 03";
-    }
+        public const string MantisThrow = "Audio/sfx/Mantis Sword";
+        public const string MantisProjectile = "Audio/sfx/Mantis Heavy Flyer Projectile Fly Loop";
+    }   
 }

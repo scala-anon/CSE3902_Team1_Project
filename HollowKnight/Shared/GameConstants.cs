@@ -142,7 +142,6 @@ namespace HollowKnight.Shared
         // Rendering — Layer Depth (FrontToBack: 0.0 = back, 1.0 = front)
         public const float LayerDepthBackgroundFar = 0.00f;
         public const float LayerDepthBackgroundMid = 0.10f;
-        public const float LayerDepthBackgroundRocks = 0.15f;
         public const float LayerDepthPlatform = 0.20f;
         public const float LayerDepthInteractable = 0.30f;
         public const float LayerDepthItem = 0.40f;
@@ -152,5 +151,10 @@ namespace HollowKnight.Shared
         public const float LayerDepthKnightEffects = 0.85f;
         public const float LayerDepthForeground = 0.90f;
         public const float LayerDepthDebug = 1.00f;
+
+        // Per-instance sub-depth offset used to break ties within a layer.
+        // FrontToBack sort is unstable; identical depths can flicker when batch size changes
+        // (e.g. a slash sprite appears mid-frame). Each object in a bucket gets baseDepth + i*epsilon.
+        public const float LayerDepthEpsilon = 0.0001f;
     }
 }

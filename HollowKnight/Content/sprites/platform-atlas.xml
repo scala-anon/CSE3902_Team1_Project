@@ -10,5 +10,6 @@
 		<Region name="Path_ledge" x="2311" y="53" width="119" height="45" />
 		<Region name="Spike_Floor_2" x="2311" y="105" width="137" height="99" />
 		<Region name="Path_Stone_3" x="2311" y="209" width="342" height="42" />
+		<Region name="Spike_Wall_1" x="2656" y="277" width="137" height="99" />
 	</Regions>
 </TextureAtlas>
