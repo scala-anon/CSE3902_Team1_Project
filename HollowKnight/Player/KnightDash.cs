@@ -1,5 +1,6 @@
 using System;
 using HollowKnight.Shared;
+using HollowKnight.Audio;
 using Microsoft.Xna.Framework;
 
 namespace HollowKnight.Player
@@ -51,6 +52,7 @@ namespace HollowKnight.Player
       if (!isGrounded)
       {
         if (!DashAvailable) return;
+        AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Hero_Dash());
         IsDashing = true;
         DashAvailable = false;
         isCurrentlyAirborne = true;
@@ -59,6 +61,7 @@ namespace HollowKnight.Player
       else
       {
         if (IsOnDashCooldown) return;
+        AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Hero_Dash());
         IsDashing = true;
         IsOnDashCooldown = true;
         dashCooldownTimer = 0;

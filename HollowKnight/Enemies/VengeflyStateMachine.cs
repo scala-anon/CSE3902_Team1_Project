@@ -22,6 +22,8 @@ namespace HollowKnight.Enemies
         private float _currentBackoffDelay = 0f;
         private int frameCounter = 0;
 
+        private bool found = false;
+
         public void SetNavigationGrid(NavigationGrid grid) => _grid = grid;
         public List<Vector2> GetCurrentPath() => _currentPath;
 
@@ -37,8 +39,10 @@ namespace HollowKnight.Enemies
         {
             CurrentVengeFly.Health--;
             AudioManager.Instance.PlaySoundEffectIfInView(AudioLoader.Instance.Get_Enemy_Damage(), CurrentVengeFly.position);
+            AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_Damage());
             if (CurrentVengeFly.Health <= 0)
             {
+                AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_On_Kill());
                 CurrentVengeFly.Dead = true;
                 CurrentVengeFly.SetState(CurrentVengeFly.IsGrounded
                     ? VengeflyState.DeathLand
@@ -55,6 +59,14 @@ namespace HollowKnight.Enemies
             }
             frameCounter++;
 
+
+            found = AudioManager.Instance.TryPlaySoundEffect(CurrentVengeFly.position);
+            if (found == true)
+            {
+                AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_VengeFly());
+                found = true;
+            }
+            
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             Vector2 enemyCenter = CurrentVengeFly.GetCenter();
             float distanceFromKnight = Vector2.Distance(enemyCenter, CurrentVengeFly.knightPosition);

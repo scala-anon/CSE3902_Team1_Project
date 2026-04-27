@@ -8,6 +8,7 @@ using HollowKnight.Projectiles;
 using HollowKnight.Abilities;
 using HollowKnight.Pathfinding;
 using HollowKnight.Shared;
+using HollowKnight.Audio;
 
 namespace HollowKnight.Collision
 {
@@ -34,6 +35,7 @@ namespace HollowKnight.Collision
                 _handler.Register<Spike, TheKnight>(side, (a, b) => {
                     var knight = (TheKnight)b;
                     knight.TakeDamage(side);
+                    AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_Spikes());
                     if (knight.HasRespawnPoint && !knight.JustDied) knight.Respawn();
                     knight.ConsumeJustDied();
                 });

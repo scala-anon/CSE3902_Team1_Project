@@ -36,5 +36,16 @@ namespace HollowKnight.Audio
         public const string MantisDeath3 = "Audio/sfx/Mantis Lord Death 03";
         public const string MantisThrow = "Audio/sfx/Mantis Sword";
         public const string MantisProjectile = "Audio/sfx/Mantis Heavy Flyer Projectile Fly Loop";
+
+        //Goofy SFX
+        public const string GoofyTakeDamage = "Audio/GoofySFX/GoofyTakeDamage";
+        public const string GoofyDealDamage = "Audio/GoofySFX/GoofyDamage1";
+        public const string GoofyVengeFly = "Audio/GoofySFX/GoofyFoundVengeFly";
+        public const string GoofyCrawlid = "Audio/GoofySFX/GoofyFoundCrawlid";
+        public const string GoofyMantisLords = "Audio/GoofySFX/GoofyFoundMantisLords";
+        public const string GoofyDeath = "Audio/GoofySFX/GoofyDeath";
+        public const string GoofySpikes = "Audio/GoofySFX/GoofyTouchSpikes";
+        public const string GoofyWin = "Audio/GoofySFX/GoofyOnKill";
+        public const string GoofySpirit = "Audio/GoofySFX/GoofySpirit";
     }   
 }

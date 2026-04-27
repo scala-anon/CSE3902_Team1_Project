@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using System;
 using HollowKnight.Projectiles;
 using System.Data;
+using HollowKnight.Audio;
 
 
 namespace HollowKnight.Enemies
@@ -159,8 +160,14 @@ namespace HollowKnight.Enemies
         protected override void OnHealthChanged()
         {
             Health--;
+            AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Enemy_Damage());
+            AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_Damage());
             if (Health <= 0)
+            {
                 _stateMachine.OnHealthDepleted();
+                AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_On_Kill());
+            }
+                
         }
 
         public override bool TakeDamage(CollisionSide side)

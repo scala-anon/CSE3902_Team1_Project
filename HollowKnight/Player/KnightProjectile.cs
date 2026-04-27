@@ -36,6 +36,7 @@ namespace HollowKnight.Player
                 : new Vector2(_knight.Bounds.Left - KnightConstants.KnightProjectileSpawnOffsetLeft, _knight.Bounds.Top + _knight.Bounds.Height / 2f);
 
             _spawner.Spawn(spawn, direction, KnightConstants.KnightProjectileSpeed, ProjectileFaction.Player);
+            AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_Spirit());
         }
     }
 }

@@ -72,5 +72,35 @@
     <Item>
         <FilePath>Audio/sfx/Mantis Heavy Flyer Projectile Fly Loop</FilePath>
     </Item>
+    <Item>
+        <FilePath>Audio/GoofySFX/GoofyDamage1</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/GoofySFX/GoofyTakeDamage</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/GoofySFX/GoofyFoundVengeFly</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/GoofySFX/GoofyFoundCrawlid</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/GoofySFX/GoofyFoundMantisLords</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/GoofySFX/GoofyDeath</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/GoofySFX/GoofyTouchSpikes</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/GoofySFX/GoofyWin</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/GoofySFX/GoofyOnKill</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/GoofySFX/GoofySpirit</FilePath>
+    </Item>
 
 </XnaContent>

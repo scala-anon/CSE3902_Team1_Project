@@ -5,6 +5,8 @@ using HollowKnight.Interfaces;
 using HollowKnight.Shared;
 using HollowKnight.Collision;
 using System;
+using HollowKnight.Audio;
+using Microsoft.Xna.Framework.Audio;
 
 
 namespace HollowKnight.Projectiles
@@ -27,6 +29,7 @@ namespace HollowKnight.Projectiles
 
         public float AudioCount = 0;
         public bool AudioPlaying = false;
+        public SoundEffectInstance _soundEffect;
         
 
         public override Rectangle Bounds
@@ -83,6 +86,23 @@ namespace HollowKnight.Projectiles
             _currentSprite.Update(gameTime);
 
             if (_timer >= duration) Alive = false;
+
+
+            AudioCount++;
+            if (AudioPlaying == false)
+            {
+                _soundEffect = AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Mantis_Projectile());
+                AudioPlaying = true;
+            } else if (AudioCount % 120 == 0)
+            {
+                _soundEffect = AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Mantis_Projectile());
+            }
+
+            if (Alive == false) {
+                AudioManager.Instance.StopSoundEffect(_soundEffect);
+                AudioPlaying = false;
+            }
+
         }
 
         public override void Draw(SpriteBatch spriteBatch, Direction facing, float layerDepth = 0f)
@@ -91,15 +111,7 @@ namespace HollowKnight.Projectiles
             if (_state == State.Moving && !HasMoved) return;
 
             SpriteEffects effects = SpriteEffects.None;
-            //if (_state == State.Moving)
-            //{
-            //    effects = _facing == Direction.Right ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            //}
-            //else
-            //{
-            //    // If moving left, use right-facing explosion. If moving right, use left-facing explosion.
-            //    effects = _facing == Direction.Left ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            //}
+            
 
             _currentSprite.Draw(spriteBatch, effects, layerDepth);
         }
