@@ -1,9 +1,13 @@
 using System;
 using System.Collections.Generic;
 using HollowKnight.Audio;
+using HollowKnight.Environment;
 using HollowKnight.Interfaces;
 using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
+
+// Camera lives in the root HollowKnight namespace
+using HollowKnight;
 
 namespace HollowKnight.Enemies
 {
@@ -41,6 +45,8 @@ namespace HollowKnight.Enemies
         // Sibling lords must stagger their activation slightly after the middle dies.
         private bool _siblingsCommandedActive;
         private float _siblingStaggerTimer;
+
+        private readonly List<InvisibleBarrier> _spawnedBarriers = new();
 
         // field
         private bool _paused = false;
@@ -83,7 +89,7 @@ namespace HollowKnight.Enemies
         public void Activate()
         {
             if (_phase != BossFightPhase.Dormant) return;
-            // TODO: lock room exit here
+            EngageArenaLock();
             _phase = BossFightPhase.Phase1_Middle;
             AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_Mantis_Lords());
             _middle.StateMachine.CommandActivate();
@@ -283,6 +289,34 @@ namespace HollowKnight.Enemies
                 BeginVictoryBow();
         }
 
+        private void EngageArenaLock()
+        {
+            var leftBarrier = new InvisibleBarrier(
+                new Vector2(BossArenaConstants.LeftBarrierX - BossArenaConstants.BarrierWidth / 2f, BossArenaConstants.BarrierTopY),
+                BossArenaConstants.BarrierWidth,
+                BossArenaConstants.BarrierHeight);
+
+            var rightBarrier = new InvisibleBarrier(
+                new Vector2(BossArenaConstants.RightBarrierX - BossArenaConstants.BarrierWidth / 2f, BossArenaConstants.BarrierTopY),
+                BossArenaConstants.BarrierWidth,
+                BossArenaConstants.BarrierHeight);
+
+            _game.LevelPlatforms.Add(leftBarrier);
+            _game.LevelPlatforms.Add(rightBarrier);
+            _spawnedBarriers.Add(leftBarrier);
+            _spawnedBarriers.Add(rightBarrier);
+
+            Camera.Instance.EnterBossClamp(BossArenaConstants.CameraClampCenter);
+        }
+
+        private void DisengageArenaLock()
+        {
+            foreach (var barrier in _spawnedBarriers)
+                _game.LevelPlatforms.Remove(barrier);
+            _spawnedBarriers.Clear();
+            Camera.Instance.ExitBossClamp();
+        }
+
         private void BeginVictoryBow()
         {
             _phase = BossFightPhase.Victory_Bow;
@@ -299,6 +333,7 @@ namespace HollowKnight.Enemies
                 _right.StateMachine.IsBowComplete)
             {
                 AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_Win());
+                DisengageArenaLock();
                 _phase = BossFightPhase.Done;
                 _game.SetWin();
             }

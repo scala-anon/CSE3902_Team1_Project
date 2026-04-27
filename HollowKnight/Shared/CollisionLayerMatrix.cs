@@ -14,7 +14,7 @@ namespace HollowKnight.Shared
         {
             [CollisionLayer.Player]           = CollisionLayer.Enemy | CollisionLayer.Hazard | CollisionLayer.Terrain
                                               | CollisionLayer.Interactable | CollisionLayer.EnemyProjectile | CollisionLayer.Pickup
-                                              | CollisionLayer.BreakableTerrain,
+                                              | CollisionLayer.BreakableTerrain | CollisionLayer.BossArenaBarrier,
             [CollisionLayer.PlayerAttack]     = CollisionLayer.Enemy | CollisionLayer.Interactable
                                               | CollisionLayer.BreakableTerrain | CollisionLayer.Hazard,
             [CollisionLayer.Enemy]            = CollisionLayer.Player | CollisionLayer.Terrain | CollisionLayer.Hazard
@@ -35,6 +35,7 @@ namespace HollowKnight.Shared
             [CollisionLayer.BreakableTerrain] = CollisionLayer.Player | CollisionLayer.Enemy
                                               | CollisionLayer.PlayerProjectile | CollisionLayer.EnemyProjectile
                                               | CollisionLayer.PlayerAttack,
+            [CollisionLayer.BossArenaBarrier] = CollisionLayer.Player,
         };
 
         public static CollisionLayer GetLayer(ICollidable obj)
@@ -55,6 +56,7 @@ namespace HollowKnight.Shared
                 case IInteractable _: return CollisionLayer.Interactable;
                 case IEnemy _:       return CollisionLayer.Enemy;
                 case Spirit _:       return CollisionLayer.Pickup;
+                case InvisibleBarrier _: return CollisionLayer.BossArenaBarrier;
                 case Projectile p:
                     return p.Faction == ProjectileFaction.Player
                         ? CollisionLayer.PlayerProjectile

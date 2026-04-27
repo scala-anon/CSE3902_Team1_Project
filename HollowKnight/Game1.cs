@@ -37,6 +37,7 @@ public partial class Game1 : Game
     private EnemyProjectile _mantisProjectileRight;
     private RoomManager _roomManager;
     private LevelLoader _level;
+    internal List<Interfaces.IObject> LevelPlatforms => _level.Platforms;
     private Dictionary<int, Vector2> _roomEntryPoints = new();
     private readonly HashSet<string> _destroyedObjects = new();
     public void RegisterDestroyed(string key) => _destroyedObjects.Add(key);
