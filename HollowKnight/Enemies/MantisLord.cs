@@ -134,12 +134,12 @@ namespace HollowKnight.Enemies
             //     Sprite.Reset();
             // }
             State = newState;
-            if (newState != MantisLordState.DStabStart && newState != MantisLordState.GracePeriod && newState != MantisLordState.DStabOffset && newState != MantisLordState.DStabLandOffset)
+            if (newState != MantisLordState.DStabStart && newState != MantisLordState.GracePeriod && newState != MantisLordState.DStabOffset && newState != MantisLordState.DStabLandOffset && newState != MantisLordState.DashStart && newState != MantisLordState.WallStart)
             {
-            if (newState != MantisLordState.DStabStart && newState != MantisLordState.GracePeriod && newState != MantisLordState.DashStart && newState != MantisLordState.WallStart){
                 Sprite = _sprites[newState];
                 Sprite.Reset();
             }
+            
         }
 
         public void Activate()
