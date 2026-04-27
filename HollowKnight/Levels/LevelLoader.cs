@@ -17,6 +17,7 @@ namespace HollowKnight.Levels
         public List<IObject> BackgroundMid   { get; } = new();
         public List<IObject> Platforms     { get; } = new();
         public List<IObject> Foreground    { get; } = new();
+        public List<IObject> ForegroundParallax { get; } = new();
         public List<IInteractable> Interactables { get; } = new();
         public List<TransitionZone> Transitions { get; } = new();
         public Vector2 KnightSpawn { get; private set; } = Vector2.Zero;
@@ -146,6 +147,7 @@ namespace HollowKnight.Levels
             BackgroundMid.Clear();
             Platforms.Clear();
             Foreground.Clear();
+            ForegroundParallax.Clear();
             Interactables.Clear();
             Transitions.Clear();
             KnightSpawn = Vector2.Zero;
@@ -217,7 +219,7 @@ namespace HollowKnight.Levels
             }
         }
 
-        private enum DecorationLayer { BackgroundFar, BackgroundMid, Foreground }
+        private enum DecorationLayer { BackgroundFar, BackgroundMid, Foreground, ForegroundParallax }
 
         // Name → visual layer for non-collidable decorations.
         // Anything absent falls through to the default logic (collision goes to Platforms).
@@ -231,10 +233,10 @@ namespace HollowKnight.Levels
             ["Background_Main"]         = DecorationLayer.BackgroundFar,
             ["Transition_Light"]         = DecorationLayer.Foreground,
             ["Transition_Light_Flipped"] = DecorationLayer.Foreground,
-            ["Pillar_0"]                 = DecorationLayer.Foreground,
-            ["Pillar_1"]                 = DecorationLayer.Foreground,
-            ["Pillar_0_Flipped"]         = DecorationLayer.Foreground,
-            ["Pillar_1_Flipped"]         = DecorationLayer.Foreground,
+            ["Pillar_0"]                 = DecorationLayer.ForegroundParallax,
+            ["Pillar_1"]                 = DecorationLayer.ForegroundParallax,
+            ["Pillar_0_Flipped"]         = DecorationLayer.ForegroundParallax,
+            ["Pillar_1_Flipped"]         = DecorationLayer.ForegroundParallax,
 
             ["Village_1"]      = DecorationLayer.BackgroundMid,
             ["Village_2"]      = DecorationLayer.BackgroundMid,
@@ -273,9 +275,10 @@ namespace HollowKnight.Levels
             {
                 switch (layer)
                 {
-                    case DecorationLayer.BackgroundFar: Backgrounds.Add(obj);   return;
-                    case DecorationLayer.BackgroundMid: BackgroundMid.Add(obj); return;
-                    case DecorationLayer.Foreground:    Foreground.Add(obj);    return;
+                    case DecorationLayer.BackgroundFar:      Backgrounds.Add(obj);          return;
+                    case DecorationLayer.BackgroundMid:      BackgroundMid.Add(obj);        return;
+                    case DecorationLayer.Foreground:         Foreground.Add(obj);           return;
+                    case DecorationLayer.ForegroundParallax: ForegroundParallax.Add(obj);   return;
                 }
             }
 

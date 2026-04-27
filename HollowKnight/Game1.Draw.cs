@@ -46,17 +46,18 @@ public partial class Game1
         DrawEnemies(GameConstants.LayerDepthEnemy);
         DrawProjectiles(GameConstants.LayerDepthProjectile);
         DrawKnight(GameConstants.LayerDepthKnight);
+        DrawForeground(GameConstants.LayerDepthForeground);
         DrawDebugOverlay();
 
         _spriteBatch.End();
 
-        // Foreground drawn in a separate batch with a 1.5x parallax transform so it scrolls faster
+        // Parallax foreground (pillars) drawn in a separate batch at 1.5x scroll speed
         _spriteBatch.Begin(
             sortMode: SpriteSortMode.FrontToBack,
             blendState: BlendState.AlphaBlend,
             samplerState: SamplerState.PointClamp,
             transformMatrix: Camera.Instance.GetParallaxTransform(GameConstants.ForegroundParallaxFactor));
-        DrawForeground(GameConstants.LayerDepthForeground);
+        DrawForegroundParallax(GameConstants.LayerDepthForeground);
         _spriteBatch.End();
     }
 
@@ -97,6 +98,16 @@ public partial class Game1
     {
         int i = 0;
         foreach (IObject obj in _level.Foreground)
+        {
+            obj?.Draw(_spriteBatch, SpriteEffects.None, layerDepth + i * GameConstants.LayerDepthEpsilon);
+            i++;
+        }
+    }
+
+    private void DrawForegroundParallax(float layerDepth)
+    {
+        int i = 0;
+        foreach (IObject obj in _level.ForegroundParallax)
         {
             obj?.Draw(_spriteBatch, SpriteEffects.None, layerDepth + i * GameConstants.LayerDepthEpsilon);
             i++;
