@@ -51,6 +51,7 @@ namespace HollowKnight.Player
 
         public void Respawn()
         {
+            if (!_roomRespawnPoint.HasValue) return;
             SetPosition(_roomRespawnPoint.Value);
             physics.Velocity = Vector2.Zero;
             health.CancelDamageState();
@@ -284,14 +285,26 @@ namespace HollowKnight.Player
             if (health.Health == 0)
             {
                 _justDied = true;
-                DebugLogger.LogGeneral($"Knight died. Respawning at {benchSpawnPoint}.");
-                SetPosition(benchSpawnPoint);
-                physics.Velocity = Vector2.Zero;
-                health.ResetHealth();
+                OnDeath();
             }
             else
             {
                 physics.ApplyKnockback(side);
+            }
+        }
+
+        private void OnDeath()
+        {
+            DebugLogger.LogGeneral("Knight died. Respawning at room respawn point.");
+            health.ResetHealth();
+            if (_roomRespawnPoint.HasValue)
+            {
+                Respawn();
+            }
+            else
+            {
+                SetPosition(benchSpawnPoint);
+                physics.Velocity = Vector2.Zero;
             }
         }
 
@@ -301,7 +314,6 @@ namespace HollowKnight.Player
         public int GetSoul() => health.Soul;
         public int GetMaxSoul() => health.MaxSoul;
         public float GetSoulFillRatio() => health.GetSoulFillRatio();
-        public bool IsDead() => health.Health <= 0;
         public void GainSoul(int amount) => health.AddSoul(amount);
 
         public void StartHeal()

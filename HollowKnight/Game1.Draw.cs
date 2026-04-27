@@ -13,7 +13,6 @@ public partial class Game1
 {
     internal void DrawPausedStateOverlay() => DrawCenteredOverlay(PauseTitle, PausePrompt, ScreenTint, Color.White);
     internal void DrawInventoryStateOverlay() => DrawInventoryOverlay();
-    internal void DrawGameOverStateOverlay() => DrawCenteredOverlay(GameOverTitle, GameOverPrompt, ScreenTint, Color.White);
     internal void DrawWinStateOverlay() => DrawCenteredOverlay(WinTitle, string.Empty, ScreenTint, Color.Yellow);
 
     private void DrawWorld()

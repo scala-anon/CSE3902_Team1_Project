@@ -55,8 +55,6 @@ public partial class Game1
     private const int InventoryBodyBottomCenterWidth = 24;
     private const int InventoryBodyBottomCenterHeight = 14;
 
-    private const string GameOverTitle = "GAME OVER";
-    private const string GameOverPrompt = "Press R to Restart";
     private const string PauseTitle = "PAUSED";
     private const string PausePrompt = "Press P to Resume";
     private const string InventoryTitle = "INVENTORY";
