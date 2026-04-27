@@ -6,8 +6,8 @@ namespace HollowKnight.Shared
         public const float KnightMoveSpeed = 250f;
         public const float KnightJumpSpeed = -700f;
         public const float KnightGravity = 900f;
-        public const float KnightKnockbackSpeed = 250f;
-        public const float KnightKnockbackUpwards = -300f;
+        public const float KnightKnockbackSpeed = 400f;
+        public const float KnightKnockbackUpwards = -450f;
         public const float KnightKnockbackDuration = 0.3f;
         public const float KnightKnockbackTimer = 0f;
 

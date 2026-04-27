@@ -78,19 +78,20 @@ namespace HollowKnight.Enemies
         public override void Land()
         {
             IsGrounded = true;
-            _knockbackVelocity = Vector2.Zero;
+            _knockbackVelocity.Y = 0f;
             stateMachine.ResetVerticalVelocity();
         }
+
+        private const float CrawlidKnockbackDistance = 80f;
 
         protected override void ApplyKnockback(CollisionSide side)
         {
             switch (side)
             {
-                case CollisionSide.Left: _knockbackVelocity = new Vector2(-EnemyConstants.EnemyKnockbackSpeed, 0f); break;
-                case CollisionSide.Right: _knockbackVelocity = new Vector2(EnemyConstants.EnemyKnockbackSpeed, 0f); break;
-                default: _knockbackVelocity = Vector2.Zero; break;
+                case CollisionSide.Left:  position.X -= CrawlidKnockbackDistance; break;
+                case CollisionSide.Right: position.X += CrawlidKnockbackDistance; break;
+                default:                  break;
             }
-            if (_knockbackVelocity.Y < 0) IsGrounded = false;
         }
 
         protected override void OnDeath(bool grounded) => SetState(grounded ? CrawlidState.DeathLand : CrawlidState.DeathAir);
