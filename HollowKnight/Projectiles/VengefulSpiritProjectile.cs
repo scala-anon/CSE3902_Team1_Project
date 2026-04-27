@@ -38,6 +38,7 @@ namespace HollowKnight.Projectiles
             : base(position, velocity, faction)
         {
             _facing = velocity.X >= 0 ? Direction.Right : Direction.Left;
+            Damage = GameConstants.SpiritProjectileDamage;
             _currentSprite = SpriteFactory.Instance.CreateSpiritMovingSprite(position);
 
             Vector2 size = _currentSprite.GetSize();

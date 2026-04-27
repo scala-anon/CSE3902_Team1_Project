@@ -3,10 +3,10 @@ namespace HollowKnight.Shared
     public static class KnightConstants
     {
         // Physics
-        public const float KnightMoveSpeed = 250f;
-        public const float KnightJumpSpeed = -750f;
-        public const float KnightPogoVelocity = -280f; // 2/5 of max jump
-        public const float KnightGravity = 800f;
+        public const float KnightMoveSpeed = 375f;
+        public const float KnightJumpSpeed = -1050f;
+        public const float KnightPogoVelocity = -350f; // 2/5 of max jump
+        public const float KnightGravity = 1750f;
         public const float KnightKnockbackSpeed = 250f;
         public const float KnightKnockbackUpwards = -300f;
         public const float KnightKnockbackDuration = 0.3f;
@@ -14,11 +14,11 @@ namespace HollowKnight.Shared
 
         // Combat
         public const double KnightAttackDuration = 0.25;
-        public const double KnightAttackCooldown = 0.67;
+        public const double KnightAttackCooldown = 0.45;
         public const int KnightDamage = 1;
 
         // Dash
-        public const float KnightDashSpeed = 600f;
+        public const float KnightDashSpeed = 650f;
         public const float KnightDashDuration = 0.5f;
         public const float KnightDashCooldown = 0.65f;
 

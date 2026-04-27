@@ -397,6 +397,7 @@ namespace HollowKnight.Player
                 DebugLogger.LogGeneral($"Godmode: ignored damage from {side} side");
                 return;
             }
+            if (_deathAnimPlaying) return;
             if (!health.TakeDamage()) return;
             AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Hero_Take_Damage());
             DebugLogger.LogGeneral($"Knight took damage from {side} side, health={health.Health}");
