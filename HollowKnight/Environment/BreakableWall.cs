@@ -81,7 +81,11 @@ namespace HollowKnight.Environment
 
             DebugLogger.LogObject($"BreakableWall hit: {Label} ({_hitCount}/3)");
 
-            if (_hitCount >= 3)
+            if (_hitCount == 1)
+            {
+                sprite = SpriteFactory.Instance.CreateWallSprite(5, position);
+            }
+            else if (_hitCount >= 3)
             {
                 _isPlayingBreakAnim = true;
                 _animSpritePos = position;

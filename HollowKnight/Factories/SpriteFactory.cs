@@ -457,7 +457,7 @@ namespace HollowKnight.Factories
         public ISprite CreateWallSprite(int variant, Vector2 position)
         {
             float scale = 1.25f;
-            if(variant==4) scale = .8f;
+            if(variant==4 || variant==5) scale = .8f;
             string key = variant switch
             {
                 0 => "Wall_0",
