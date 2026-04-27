@@ -66,5 +66,11 @@
     <Item>
         <FilePath>Audio/sfx/Mantis Lord Death 03</FilePath>
     </Item>
+    <Item>
+        <FilePath>Audio/sfx/Mantis Sword</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/sfx/Mantis Heavy Flyer Projectile Fly Loop</FilePath>
+    </Item>
 
 </XnaContent>

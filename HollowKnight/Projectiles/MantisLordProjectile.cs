@@ -21,9 +21,12 @@ namespace HollowKnight.Projectiles
         public float duration;
         public float _timer;
 
-        float initialXVelocity = EnemyConstants.MantisProjectile2XVelocity;
-        float xAcceleration = EnemyConstants.MantisProjectile2XAcceleration;
-        float ySpeed = EnemyConstants.MantisProjectile2YSpeed;
+        public float initialXVelocity = EnemyConstants.MantisProjectile2XVelocity;
+        public float xAcceleration = EnemyConstants.MantisProjectile2XAcceleration;
+        public float ySpeed = EnemyConstants.MantisProjectile2YSpeed;
+
+        public float AudioCount = 0;
+        public bool AudioPlaying = false;
         
 
         public override Rectangle Bounds

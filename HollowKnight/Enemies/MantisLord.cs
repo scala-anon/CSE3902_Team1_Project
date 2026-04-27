@@ -14,6 +14,8 @@ namespace HollowKnight.Enemies
     public enum MantisLordState
     {
         DStabStart,
+        WallStart,
+        DashStart,
         IdleOnThrone,
         ThroneStand,
         ThroneLeave,
@@ -122,7 +124,7 @@ namespace HollowKnight.Enemies
         public void SetState(MantisLordState newState)
         {
             State = newState;
-            if (newState != MantisLordState.DStabStart && newState != MantisLordState.GracePeriod){
+            if (newState != MantisLordState.DStabStart && newState != MantisLordState.GracePeriod && newState != MantisLordState.DashStart && newState != MantisLordState.WallStart){
                 Sprite = _sprites[newState];
                 Sprite.Reset();
             }
