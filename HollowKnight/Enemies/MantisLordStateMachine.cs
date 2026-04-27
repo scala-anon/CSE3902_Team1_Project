@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using HollowKnight.Player;
 using HollowKnight.Shared;
@@ -71,10 +72,15 @@ namespace HollowKnight.Enemies
         /// <summary>Force an immediate wall attack (used by BossFightController for simultaneous throws).</summary>
         public void CommandForceWallAttack()
         {
-            if (_healthDepleted) return;  // do not interrupt death sequence
+            // if (_healthDepleted) return;  // do not interrupt death sequence
+            // IsAttacking = true;
+            // // TODO: audio hook — play wall-arrive sound
+            // EnterState(MantisLordState.WallArrive);
+            Console.WriteLine($"[{_owner.Slot}] CommandForceWallAttack called. _healthDepleted={_healthDepleted}, current state={_owner.State}");
+            if (_healthDepleted) return;
             IsAttacking = true;
-            // TODO: audio hook — play wall-arrive sound
             EnterState(MantisLordState.WallArrive);
+            Console.WriteLine($"[{_owner.Slot}] After EnterState(WallArrive). Position={_owner.position}");
         }
 
         /// <summary>Called when sibling / middle has been defeated and this lord should return wounded.</summary>
@@ -418,6 +424,12 @@ namespace HollowKnight.Enemies
         {
             switch (s)
             {
+                case MantisLordState.DStabStart:
+                    if (_owner.FacingDirection == Direction.Right)
+                        _owner.position = new Vector2(_owner.knightPosition.X - 765/2 + 35, _owner.knightPosition.Y - 950);
+                    else
+                        _owner.position = new Vector2(_owner.knightPosition.X - 765/2 - 35, _owner.knightPosition.Y - 950);
+                    break;
                 case MantisLordState.DashArrive:
                     _owner.position.Y = EnemyConstants.MantisDashY;
                     break;
@@ -510,41 +522,74 @@ namespace HollowKnight.Enemies
         /// <summary>
         /// Randomly selects the next attack from {Throw (via Wall), Dash, DStab}.
         /// </summary>
+        // private bool _suppressAutoPick;
+        // public void SetAutoPickSuppressed(bool suppressed) => _suppressAutoPick = suppressed;
+        // private void PickNextAttack()
+        // {
+        //     if (_suppressAutoPick)
+        //     {
+        //         // Don't roll an attack, but enter the proper idle state
+        //         // so the controller has a clean "ready" signal to work with.
+        //         IsAttacking = false;
+        //         _attackCooldownTimer = 0f;
+        //         _owner.SetState(MantisLordState.GracePeriod);
+        //         return;
+        //     }
+         
+        //     IsAttacking = true;
+        //     int roll = _rng.Next(10);
+            
+        //     switch (roll)
+        //     {
+        //         case 0:
+        //         case 1:
+        //             EnterState(MantisLordState.WallArrive);
+        //             break;
+        //         case 2:
+        //         case 3:
+        //         case 4:
+        //         case 5:
+        //             EnterState(MantisLordState.DashArrive);
+        //             break;
+        //         case 6:
+        //         case 7:
+        //         case 8:
+        //         case 9:
+        //             EnterState(MantisLordState.DStabStart);
+        //             break;
+        //     }
+
+
+
+        // }
+
+        // Add field (somewhere with the other private fields, e.g. near _attackCooldownTimer)
         private bool _suppressAutoPick;
+
+        // Add public setter (somewhere in the public methods region)
         public void SetAutoPickSuppressed(bool suppressed) => _suppressAutoPick = suppressed;
+
+        // And modify PickNextAttack:
         private void PickNextAttack()
         {
             if (_suppressAutoPick)
             {
-                _suppressAutoPick = false;
-                return;  // controller will dictate this cycle
+                // Don't roll an attack, but enter the proper idle state
+                // so the controller has a clean "ready" signal to work with.
+                IsAttacking = false;
+                _attackCooldownTimer = 0f;
+                _owner.SetState(MantisLordState.GracePeriod);
+                return;
             }
-         
+
             IsAttacking = true;
             int roll = _rng.Next(10);
-            
             switch (roll)
             {
-                case 0:
-                case 1:
-                    EnterState(MantisLordState.WallArrive);
-                    break;
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                    EnterState(MantisLordState.DashArrive);
-                    break;
-                case 6:
-                case 7:
-                case 8:
-                case 9:
-                    EnterState(MantisLordState.DStabStart);
-                    break;
+                case 0: case 1: EnterState(MantisLordState.WallArrive); break;
+                case 2: case 3: case 4: case 5: EnterState(MantisLordState.DashArrive); break;
+                case 6: case 7: case 8: case 9: EnterState(MantisLordState.DStabStart); break;
             }
-
-
-
         }
         // Add this field at the top with the other fields
         private bool _frozen = false;
@@ -720,7 +765,6 @@ namespace HollowKnight.Enemies
         {
             if (_healthDepleted) return;
             IsAttacking = true;
-            _suppressAutoPick = true;
             EnterState(MantisLordState.DashArrive);
         }
 
@@ -728,7 +772,6 @@ namespace HollowKnight.Enemies
         {
             if (_healthDepleted) return;
             IsAttacking = true;
-            _suppressAutoPick = true;
             EnterState(MantisLordState.DStabStart);
         }
 

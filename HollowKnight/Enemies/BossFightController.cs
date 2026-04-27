@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using HollowKnight.Interfaces;
 using HollowKnight.Shared;
@@ -45,12 +46,7 @@ namespace HollowKnight.Enemies
 
         // method
         public void TogglePause() => _paused = !_paused;
-        // Add fields
-        // private MantisLord _phase2Leader;
-        // private bool _phase2FollowerCommanded;
-        // private float _phase2FollowerDelay;
-        // private const float FollowerDelayAfterLead = 0.0f;  // small extra delay if you want one
-
+        
         // Add fields
         private MantisLord _phase2Leader;
         private MantisLord _phase2Follower;
@@ -58,6 +54,10 @@ namespace HollowKnight.Enemies
         private float _phase2FollowerDelay;
         private const float FollowerDelayAfterLead = 0.0f;
         private bool _phase2RolesInitialized;
+        private static readonly System.Random _phase2Rng = new System.Random();
+        private const float DoubleDashChance = 0.5f;  // tune to taste
+        private bool _phase2DashRollMade;
+        private bool _phase2DoMirrorDash;
         public IEnumerable<IEnemy> Enemies
         {
             get
@@ -89,8 +89,6 @@ namespace HollowKnight.Enemies
 
         public void Update(GameTime gameTime)
         {
-            // if (_phase == BossFightPhase.Dormant || _phase == BossFightPhase.Done)
-            //     return;
 
             if (_phase == BossFightPhase.Dormant || _phase == BossFightPhase.Done || _paused)
                 return;
@@ -126,13 +124,6 @@ namespace HollowKnight.Enemies
         {
             _wallAttackTimer += dt;
 
-            /*if (_wallAttackTimer >= EnemyConstants.MantisWallAttackInterval)
-            {
-                _wallAttackTimer = 0f;
-                _middle.StateMachine.CommandForceWallAttack();
-            }
-            */
-
             // Middle lord depleted → enter transition to phase 2
             if (_middle.StateMachine.IsInWoundedPose)
             {
@@ -145,6 +136,10 @@ namespace HollowKnight.Enemies
 
         private void UpdatePhase2Transition(float dt)
         {
+            Console.WriteLine(
+                $"[Phase2] L:state={_left.State},attacking={_left.StateMachine.IsAttacking},pos={_left.position} " +
+                $"R:state={_right.State},attacking={_right.StateMachine.IsAttacking},pos={_right.position} " +
+                $"leader={_phase2Leader?.Slot},commanded={_phase2FollowerCommanded}");
             _siblingStaggerTimer += dt;
 
             if (!_siblingsCommandedActive &&
@@ -158,49 +153,7 @@ namespace HollowKnight.Enemies
             }
         }
 
-        // private void UpdatePhase2Sides(float dt)
-        // {
-        //     _wallAttackTimer += dt;
 
-            
-        //     // TODO: Refacctor to see if mantisleft or right in wall attack and force the other one to go into it
-            
-               
-            
-        //     // if (_wallAttackTimer >= EnemyConstants.MantisWallAttackInterval)
-        //     // {
-        //     //     _wallAttackTimer = 0f;
-        //     //     // Both side lords attack simultaneously for the wall attack.
-        //     //     _left.StateMachine.CommandForceWallAttack();
-        //     //     _right.StateMachine.CommandForceWallAttack();
-        //     // }
-
-        //     bool leftWounded  = _left.StateMachine.IsInWoundedPose;
-        //     bool rightWounded = _right.StateMachine.IsInWoundedPose;
-
-        //     // If one side lord is defeated before the other, the remaining lord enters Phase3.
-        //     if (leftWounded && !rightWounded)
-        //     {
-        //         _phase = BossFightPhase.Phase3_Solo;
-        //         _wallAttackTimer = 0f;
-        //         return;
-        //     }
-        //     if (rightWounded && !leftWounded)
-        //     {
-        //         _phase = BossFightPhase.Phase3_Solo;
-        //         _wallAttackTimer = 0f;
-        //         return;
-        //     }
-
-        //     // // Both wounded → all three bow
-        //     // if (leftWounded && rightWounded)
-        //     // {
-        //     //     BeginVictoryBow();
-        //     // }
-        // }
-
-
-        // was working TODO:
         private void UpdatePhase2Sides(float dt)
         {
             // ---- Wounded checks (unchanged) ----
@@ -210,73 +163,73 @@ namespace HollowKnight.Enemies
             if (rightWounded && !leftWounded) { _phase = BossFightPhase.Phase3_Solo; ResetPhase2(); return; }
             if (leftWounded && rightWounded)  { BeginVictoryBow(); return; }
 
-            // ---- Coordination ----
-            var leftKind  = _left.StateMachine.CurrentAttackKind;
-            var rightKind = _right.StateMachine.CurrentAttackKind;
-
-            // Cycle complete: both back to non-attacking → clear leader for next cycle
-            if (_phase2Leader != null && !_phase2Leader.StateMachine.IsAttacking)
+            if (!_phase2RolesInitialized)
             {
-                var follower = (_phase2Leader == _left) ? _right : _left;
-                if (!follower.StateMachine.IsAttacking)
-                {
-                    _phase2Leader = null;
-                    _phase2FollowerCommanded = false;
-                }
+                AssignRoles(leaderIsLeft: true);
+                _phase2RolesInitialized = true;
             }
 
-            // No active leader: pick whichever lord just started attacking
-            if (_phase2Leader == null)
-            {
-                if (leftKind != MantisLordStateMachine.AttackKind.None &&
-                    rightKind == MantisLordStateMachine.AttackKind.None)
-                    _phase2Leader = _left;
-                else if (rightKind != MantisLordStateMachine.AttackKind.None &&
-                        leftKind == MantisLordStateMachine.AttackKind.None)
-                    _phase2Leader = _right;
-                else
-                    return;  // neither attacking yet, or both somehow started — wait
+            bool leaderAttacking   = _phase2Leader.StateMachine.IsAttacking;
+            bool followerAttacking = _phase2Follower.StateMachine.IsAttacking;
 
-                _phase2FollowerCommanded = false;
-                _phase2FollowerDelay = 0f;
+            // Cycle complete: follower has finished its commanded action.
+            // Leader may still be mid-attack — that's fine, it becomes the new follower.
+            if (_phase2FollowerCommanded && !followerAttacking)
+            {
+                AssignRoles(leaderIsLeft: _phase2Leader == _right);
+                return;
             }
 
-            // We have a leader — handle the follower
+            // Leader hasn't started attacking yet — wait
+            if (!leaderAttacking) return;
+
+            // Don't force-command the new follower if it's still finishing a previous attack
+            if (followerAttacking) return;
+
+            // Follower already commanded for this cycle — wait for cycle to finish
             if (_phase2FollowerCommanded) return;
 
-            var leader   = _phase2Leader;
-            var follow   = (leader == _left) ? _right : _left;
-            var leadKind = leader.StateMachine.CurrentAttackKind;
-
+            // Leader is mid-attack; figure out what to tell the follower
+            var leadKind = _phase2Leader.StateMachine.CurrentAttackKind;
             switch (leadKind)
             {
                 case MantisLordStateMachine.AttackKind.Wall:
-                    // Sync immediately — both attack the wall together
-                    follow.StateMachine.CommandForceWallAttack();
+                    _phase2Follower.StateMachine.CommandForceWallAttack();
                     _phase2FollowerCommanded = true;
                     break;
 
                 case MantisLordStateMachine.AttackKind.Dash:
-                    // Wait until leader is in leave phase, then follower does DStab
-                    if (leader.StateMachine.IsInLeavePhase)
+                    if (!_phase2DashRollMade)
                     {
-                        _phase2FollowerDelay += dt;
-                        if (_phase2FollowerDelay >= FollowerDelayAfterLead)
+                        _phase2DoMirrorDash = _phase2Rng.NextDouble() < DoubleDashChance;
+                        _phase2DashRollMade = true;
+                    }
+                    if (_phase2DoMirrorDash)
+                    {
+                        _phase2Follower.StateMachine.CommandForceDashAttack();
+                        _phase2FollowerCommanded = true;
+                    }
+                    else
+                    {
+                        if (_phase2Leader.StateMachine.IsInLeavePhase)
                         {
-                            follow.StateMachine.CommandForceDStabAttack();
-                            _phase2FollowerCommanded = true;
+                            _phase2FollowerDelay += dt;
+                            if (_phase2FollowerDelay >= FollowerDelayAfterLead)
+                            {
+                                _phase2Follower.StateMachine.CommandForceDStabAttack();
+                                _phase2FollowerCommanded = true;
+                            }
                         }
                     }
                     break;
 
                 case MantisLordStateMachine.AttackKind.DStab:
-                    // Wait until leader is in leave phase, then follower does Dash
-                    if (leader.StateMachine.IsInLeavePhase)
+                    if (_phase2Leader.StateMachine.IsInLeavePhase)
                     {
                         _phase2FollowerDelay += dt;
                         if (_phase2FollowerDelay >= FollowerDelayAfterLead)
                         {
-                            follow.StateMachine.CommandForceDashAttack();
+                            _phase2Follower.StateMachine.CommandForceDashAttack();
                             _phase2FollowerCommanded = true;
                         }
                     }
@@ -284,11 +237,34 @@ namespace HollowKnight.Enemies
             }
         }
 
-        private void ResetPhase2()
+        private void AssignRoles(bool leaderIsLeft)
         {
-            _phase2Leader = null;
+            _phase2Leader   = leaderIsLeft ? _left  : _right;
+            _phase2Follower = leaderIsLeft ? _right : _left;
+            if (_phase2Leader == null || _phase2Follower == null ||
+                _phase2Leader.StateMachine == null || _phase2Follower.StateMachine == null)
+            {
+                Console.WriteLine($"[AssignRoles] BAILING: leader={_phase2Leader}, leaderSM={_phase2Leader?.StateMachine}, follower={_phase2Follower}, followerSM={_phase2Follower?.StateMachine}");
+                return;
+            }
+            _phase2Leader.StateMachine.SetAutoPickSuppressed(false);
+            _phase2Follower.StateMachine.SetAutoPickSuppressed(true);
             _phase2FollowerCommanded = false;
             _phase2FollowerDelay = 0f;
+            _phase2DashRollMade = false;   
+            _phase2DoMirrorDash = false;   
+        }
+
+        private void ResetPhase2()
+        {
+            // Phase 3 takes over — un-suppress whichever lord is still alive
+            _left.StateMachine.SetAutoPickSuppressed(false);
+            _right.StateMachine.SetAutoPickSuppressed(false);
+            _phase2Leader = null;
+            _phase2Follower = null;
+            _phase2FollowerCommanded = false;
+            _phase2FollowerDelay = 0f;
+            _phase2RolesInitialized = false;
             _wallAttackTimer = 0f;
         }
 
@@ -297,16 +273,6 @@ namespace HollowKnight.Enemies
         private void UpdatePhase3Solo(float dt)
         {
             _wallAttackTimer += dt;
-
-            // if (_wallAttackTimer >= EnemyConstants.MantisWallAttackInterval)
-            // {
-            //     _wallAttackTimer = 0f;
-            //     // Force wall attack on whichever lord is still fighting
-            //     if (!_left.StateMachine.IsInWoundedPose)
-            //         _left.StateMachine.CommandForceWallAttack();
-            //     else if (!_right.StateMachine.IsInWoundedPose)
-            //         _right.StateMachine.CommandForceWallAttack();
-            // }
 
             bool leftWounded  = _left.StateMachine.IsInWoundedPose;
             bool rightWounded = _right.StateMachine.IsInWoundedPose;
