@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using HollowKnight.Interfaces;
 using HollowKnight.Environment;
 using HollowKnight.Enemies;
@@ -50,10 +51,10 @@ namespace HollowKnight.Levels
                 ["Background_Main"]           = pos => new Background(3, pos),
                 ["Transition_Light"]          = pos => new Background(4, pos),
                 ["Transition_Light_Flipped"]  = pos => new Background(5, pos),
-                ["Pillar_0"]                  = pos => new Background(6, pos),
-                ["Pillar_1"]                  = pos => new Background(7, pos),
-                ["Pillar_0_Flipped"]          = pos => new Background(8, pos),
-                ["Pillar_1_Flipped"]          = pos => new Background(9, pos),
+                ["Pillar_0"]                  = pos => new Background(6, pos, tint: new Color(EnvironmentConstants.PillarForegroundTint, EnvironmentConstants.PillarForegroundTint, EnvironmentConstants.PillarForegroundTint)),
+                ["Pillar_1"]                  = pos => new Background(7, pos, tint: new Color(EnvironmentConstants.PillarForegroundTint, EnvironmentConstants.PillarForegroundTint, EnvironmentConstants.PillarForegroundTint)),
+                ["Pillar_0_Flipped"]          = pos => new Background(8, pos, tint: new Color(EnvironmentConstants.PillarForegroundTint, EnvironmentConstants.PillarForegroundTint, EnvironmentConstants.PillarForegroundTint)),
+                ["Pillar_1_Flipped"]          = pos => new Background(9, pos, tint: new Color(EnvironmentConstants.PillarForegroundTint, EnvironmentConstants.PillarForegroundTint, EnvironmentConstants.PillarForegroundTint)),
                 // <Region name="Path_1" x="265" y="223" width="1060" height="83" />
                 ["Path_1"]               = pos => new Path(1, pos, 1050, 32, hitOffsetY: 15),
                 ["Path_1_Flipped"]       = pos => new Path(1, pos, 1050, 32, hitOffsetY: 15, flipped: true),

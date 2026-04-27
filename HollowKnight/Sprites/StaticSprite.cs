@@ -16,6 +16,9 @@ namespace HollowKnight.Sprites
         private Vector2 _startPosition;
         private Vector2 _scale;
         private readonly SpriteEffects _defaultEffects;
+        private Color _tint = Color.White;
+
+        public void SetTint(Color tint) => _tint = tint;
 
         public int Width => (int)(_sourceRect.Width * _scale.X);
         public int Height => (int)(_sourceRect.Height * _scale.Y);
@@ -55,7 +58,7 @@ namespace HollowKnight.Sprites
                 _texture,
                 _position,
                 _sourceRect,
-                Color.White,
+                _tint,
                 0f,
                 Vector2.Zero,
                 _scale,
