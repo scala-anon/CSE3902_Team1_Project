@@ -112,6 +112,11 @@
 </Item>
 
 
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Flag_3</ObjectName>
+    <Location>4030 5060</Location>
+</Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
@@ -125,11 +130,6 @@
     <Location>5035 5260</Location>
 </Item>
 
-<Item>
-    <ObjectType>Platform</ObjectType>
-    <ObjectName>Flag_3</ObjectName>
-    <Location>4030 5060</Location>
-</Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>

@@ -253,7 +253,7 @@ namespace HollowKnight.Levels
 
             ["Flag_1"]         = DecorationLayer.BackgroundMid,
             ["Flag_2"]         = DecorationLayer.BackgroundMid,
-            ["Flag_3"]         = DecorationLayer.BackgroundMid,
+            ["Flag_3"]         = DecorationLayer.BackgroundFar,
             ["Flag_4"]         = DecorationLayer.BackgroundMid,
 
             ["Brick_9"] = DecorationLayer.BackgroundMid,
