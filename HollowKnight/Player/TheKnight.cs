@@ -24,6 +24,8 @@ namespace HollowKnight.Player
         public Direction Facing { get; private set; } = Direction.Right;
         public Vector2 position;
 
+        public bool GoofyMode = false;
+
         private readonly KnightPhysics physics = new();
         private readonly KnightCombat combat = new();
         private readonly KnightHealth health = new();
@@ -148,6 +150,8 @@ namespace HollowKnight.Player
             if (combat.IsCastPulseActive)
                 physics.StopMovingVertical();
             position += physics.Velocity * dt;
+
+            
 
             // Absorb sub-pixel gravity drift when grounded to prevent vertical jitter
             if (physics.IsGrounded)
@@ -440,7 +444,7 @@ namespace HollowKnight.Player
             health.ConsumeSoul(KnightConstants.KnightSpellCastSoulCost);
             DebugLogger.LogGeneral($"Casting spell! Remaining soul: {health.Soul}");
             physics.ApplyCastKnockback(Facing);
-            Projectiles?.Fire();
+            Projectiles?.Fire(GoofyMode);
         }
 
         public void GiveFullSoul()
@@ -479,6 +483,11 @@ namespace HollowKnight.Player
             position = newPosition;
             physics.Velocity = Vector2.Zero;
             currentSprite.SetPosition(position);
+        }
+
+        public void ToggleGoofyMode()
+        {
+            GoofyMode = !GoofyMode;
         }
     }
 }

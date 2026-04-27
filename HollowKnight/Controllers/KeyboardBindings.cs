@@ -155,6 +155,7 @@ namespace HollowKnight.Controllers
 
             //Toggle Goofy SFX
             keyboard.RegisterPressedCommand(Keys.OemTilde, new ToggleGoofyCommand());
+            keyboard.RegisterPressedCommand(Keys.RightControl, new ToggleGoofyMode(knight));
 
 
         }

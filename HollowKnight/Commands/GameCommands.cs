@@ -161,6 +161,20 @@ namespace HollowKnight.Commands
 
     public class ToggleGoofyCommand : ICommand
     {
-        public void Execute() => AudioManager.Instance.ToggleGoofy();
+        public void Execute()
+        {
+            AudioManager.Instance.ToggleGoofy();
+        } 
+    }
+
+    public class ToggleGoofyMode : ICommand
+    {
+        private TheKnight knight;
+        public ToggleGoofyMode(TheKnight _knight)
+        {
+            knight = _knight;
+        }
+
+        public void Execute() => knight.ToggleGoofyMode();
     }
 }
