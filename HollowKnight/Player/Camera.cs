@@ -62,6 +62,7 @@ namespace HollowKnight
         {
             _bossClampActive = true;
             _bossClampAnchor = anchor;
+            position = ComputeClampedTarget(anchor);
         }
 
         public void ExitBossClamp()
@@ -71,7 +72,11 @@ namespace HollowKnight
 
         public void Follow(Vector2 target)
         {
-            if (_bossClampActive) target = _bossClampAnchor;
+            if (_bossClampActive)
+            {
+                position = ComputeClampedTarget(_bossClampAnchor);
+                return;
+            }
             Vector2 desired = ComputeClampedTarget(target);
             position = Vector2.Lerp(position, desired, CameraConstants.cameraLerpFactor);
         }
