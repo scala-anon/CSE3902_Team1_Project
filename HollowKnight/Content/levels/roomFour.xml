@@ -8,6 +8,11 @@
 </Item>
 
 
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3800 5600</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3000 5600</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4648 5600</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5496 5600</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5915 5600</Location></Item>
 <Item>
     <ObjectType>Enemy</ObjectType>
     <ObjectName>MantisLord</ObjectName>
