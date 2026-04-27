@@ -8,6 +8,11 @@
 </Item>
 
 
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3800 5600</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3000 5600</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4648 5600</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5496 5600</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5915 5600</Location></Item>
 <Item>
     <ObjectType>Enemy</ObjectType>
     <ObjectName>MantisLord</ObjectName>
@@ -112,6 +117,11 @@
 </Item>
 
 
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Flag_3</ObjectName>
+    <Location>4030 5060</Location>
+</Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
@@ -125,11 +135,6 @@
     <Location>5035 5260</Location>
 </Item>
 
-<Item>
-    <ObjectType>Platform</ObjectType>
-    <ObjectName>Flag_3</ObjectName>
-    <Location>4030 5060</Location>
-</Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>

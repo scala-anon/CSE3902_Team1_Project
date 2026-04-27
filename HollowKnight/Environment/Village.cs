@@ -1,9 +1,11 @@
 using HollowKnight.Factories;
+using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace HollowKnight.Environment
 {
-    public class Village : BaseEnvironmentObject
+    public class Village : SizedEnvironmentObject
     {
         private int id;
         private int width;
@@ -19,11 +21,6 @@ namespace HollowKnight.Environment
             hitBoxes = new Rectangle[1];
             sprite = SpriteFactory.Instance.CreateVillageSprite(id, position);
         }
-
-        public override Rectangle[] GetBounds()
-        {
-            hitBoxes[0] = new Rectangle(0,0,0,0);
-            return hitBoxes;
-        }
+        
     }
 }
