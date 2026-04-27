@@ -36,6 +36,9 @@ namespace HollowKnight.Enemies
         private BossFightPhase _phase = BossFightPhase.Dormant;
         private float _wallAttackTimer;
 
+        public BossFightPhase Phase => _phase;
+        public bool IsDormant => _phase == BossFightPhase.Dormant;
+
         // Sibling lords must stagger their activation slightly after the middle dies.
         private bool _siblingsCommandedActive;
         private float _siblingStaggerTimer;
@@ -65,14 +68,16 @@ namespace HollowKnight.Enemies
         }
 
         /// <summary>
-        /// Begins the fight — activates the middle lord and locks the room.
+        /// Begins the fight — activates all three lords and locks the room.
         /// </summary>
         public void Activate()
         {
             if (_phase != BossFightPhase.Dormant) return;
             // TODO: lock room exit here
             _phase = BossFightPhase.Phase1_Middle;
+            _left.StateMachine.CommandActivate();
             _middle.StateMachine.CommandActivate();
+            _right.StateMachine.CommandActivate();
         }
 
         public void Update(GameTime gameTime)

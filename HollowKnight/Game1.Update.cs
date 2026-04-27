@@ -55,6 +55,7 @@ internal void CheckTransitions()
     internal void UpdateRoom(GameTime gameTime)
     {
         _roomManager.Update(gameTime);
+        UpdateMantisChallengePrompt();
     }
 
     internal void UpdateCollisions()
@@ -146,4 +147,21 @@ internal void CheckTransitions()
         }
     }
 }
+
+    private void UpdateMantisChallengePrompt()
+    {
+        _showMantisChallengePrompt = false;
+
+        if (_currentRoom != 4 || _level.BossFight == null || !_level.BossFight.IsDormant)
+        {
+            return;
+        }
+
+        float knightX = _knight.GetPosition().X;
+        float middleMantisX = EnemyConstants.MiddleMantisStandingX;
+
+        _showMantisChallengePrompt =
+            knightX >= middleMantisX - MantisChallengeTriggerHalfWidth &&
+            knightX <= middleMantisX + MantisChallengeTriggerHalfWidth;
+    }
 }
