@@ -43,6 +43,12 @@ namespace HollowKnight.Enemies
 
         public override Rectangle[] GetBounds()
         {
+            if (!Alive)
+            {
+                hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, 1, 1);
+                hitBoxes[1] = new Rectangle((int)position.X, (int)position.Y, 1, 1);
+                return hitBoxes;
+            }
             Vector2 size = Sprite.GetSize();
             hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
             int feetWidth = (int)size.X - CollisionConstants.CrawlidFeetWidthShrink;

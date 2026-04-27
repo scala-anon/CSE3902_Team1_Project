@@ -1,3 +1,4 @@
+using System;
 using HollowKnight.Factories;
 using HollowKnight.Interfaces;
 using HollowKnight.Player;
@@ -13,8 +14,11 @@ namespace HollowKnight.Environment
         private bool _isPlayingBreakAnim;
         private Vector2 _animSpritePos;
         private float _breakAnimTimer;
+        private Action _onDestroyed;
         private const float BreakDriftSpeed = 400f;
         private const float BreakAnimDuration = 0.3f;
+
+        public void SetDestroyedCallback(Action onDestroyed) => _onDestroyed = onDestroyed;
 
         public override string Label => $"BreakableWall_{variant}";
         public override InteractionType InteractionType => InteractionType.SwordHit;
@@ -45,6 +49,7 @@ namespace HollowKnight.Environment
                 {
                     _broken = true;
                     _isPlayingBreakAnim = false;
+                    _onDestroyed?.Invoke();
                 }
             }
         }

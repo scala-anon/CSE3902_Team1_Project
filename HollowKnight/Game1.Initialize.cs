@@ -214,6 +214,7 @@ private void ApplyRoomRespawnPoint()
 private void RestartGame()
 {
     _roomEntryPoints.Clear();
+    _destroyedObjects.Clear();
     _currentRoom = 1;
     _fader.Reset();
     InitializeNavigationGrid();

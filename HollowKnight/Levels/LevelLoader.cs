@@ -131,6 +131,8 @@ namespace HollowKnight.Levels
 
         public void SetGame(Game1 game) { _game = game; }
 
+        private string _levelName = "";
+
         public void Load(string xmlFilePath)
         {
             // Clear all lists before loading new level
@@ -149,6 +151,7 @@ namespace HollowKnight.Levels
             XDocument doc  = XDocument.Load(xmlFilePath);
             XElement  root = doc.Root
                 ?? throw new Exception($"[LevelLoader] Bad XML root in {xmlFilePath}");
+            _levelName = root.Attribute("name")?.Value ?? xmlFilePath;
 
             foreach (XElement item in root.Elements("Item"))
             {
@@ -236,6 +239,9 @@ namespace HollowKnight.Levels
             ["Flag_4"]         = DecorationLayer.Foreground,
         };
 
+        private string DestroyedKey(string name, Vector2 position)
+            => $"{_levelName}_{name}_{(int)position.X}_{(int)position.Y}";
+
         private void SpawnPlatform(string name, Vector2 position)
         {
             if (!_platformMap.TryGetValue(name, out var create))
@@ -244,7 +250,15 @@ namespace HollowKnight.Levels
                 return;
             }
 
+            string key = DestroyedKey(name, position);
+            if (_game != null && _game.IsDestroyed(key)) return;
+
             IObject obj = create(position);
+
+            if (obj is Door door)
+                door.SetDestroyedCallback(() => _game?.RegisterDestroyed(key));
+            else if (obj is BreakableWall wall)
+                wall.SetDestroyedCallback(() => _game?.RegisterDestroyed(key));
 
             if (DecorationLayers.TryGetValue(name, out var layer))
             {
