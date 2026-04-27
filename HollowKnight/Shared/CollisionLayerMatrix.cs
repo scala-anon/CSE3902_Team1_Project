@@ -16,12 +16,13 @@ namespace HollowKnight.Shared
                                               | CollisionLayer.Interactable | CollisionLayer.EnemyProjectile | CollisionLayer.Pickup
                                               | CollisionLayer.BreakableTerrain,
             [CollisionLayer.PlayerAttack]     = CollisionLayer.Enemy | CollisionLayer.Interactable
-                                              | CollisionLayer.BreakableTerrain,
+                                              | CollisionLayer.BreakableTerrain | CollisionLayer.Hazard,
             [CollisionLayer.Enemy]            = CollisionLayer.Player | CollisionLayer.Terrain | CollisionLayer.Hazard
                                               | CollisionLayer.PlayerProjectile | CollisionLayer.PlayerAttack
                                               | CollisionLayer.BreakableTerrain,
             [CollisionLayer.Hazard]           = CollisionLayer.Player | CollisionLayer.Enemy
-                                              | CollisionLayer.PlayerProjectile | CollisionLayer.EnemyProjectile,
+                                              | CollisionLayer.PlayerProjectile | CollisionLayer.EnemyProjectile
+                                              | CollisionLayer.PlayerAttack,
             [CollisionLayer.Terrain]          = CollisionLayer.Player | CollisionLayer.Enemy
                                               | CollisionLayer.PlayerProjectile | CollisionLayer.EnemyProjectile,
             [CollisionLayer.Interactable]     = CollisionLayer.Player | CollisionLayer.PlayerAttack,
