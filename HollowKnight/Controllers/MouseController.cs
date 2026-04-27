@@ -37,12 +37,6 @@ namespace HollowKnight.Controllers
                     return;
                 }
 
-                if (_game.TryActivateGameOverButton(new Point(currentState.X, currentState.Y)))
-                {
-                    _previousState = currentState;
-                    return;
-                }
-
                 if (_game.TrySelectInventoryItem(new Point(currentState.X, currentState.Y)))
                 {
                     _previousState = currentState;

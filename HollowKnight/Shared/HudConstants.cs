@@ -8,11 +8,11 @@ namespace HollowKnight.Shared
         public const float OverlayTextLineSpacing = 18f;
 
         // Health HUD
-        public const int HealthPipWidth = 22;
-        public const int HealthPipHeight = 32;
+        public const int HealthPipWidth = 36;
+        public const int HealthPipHeight = 52;
         public const int HealthPipStartX = 118;
         public const int HealthPipStartY = 28;
-        public const int HealthPipSpacing = 14;
+        public const int HealthPipSpacing = 0;
 
         // Soul HUD
         public const int SoulGaugeWidth = 102;
@@ -80,11 +80,6 @@ namespace HollowKnight.Shared
         public const int PauseButtonSpacing = 18;
         public const float PauseTitleScale = 1.05f;
         public const float PauseButtonScale = 0.66f;
-        public const int GameOverButtonWidth = 250;
-        public const int GameOverButtonHeight = 52;
-        public const int GameOverButtonSpacing = 18;
-        public const float GameOverTitleScale = 1.05f;
-        public const float GameOverButtonScale = 0.66f;
 
         // HUD / menu colors
         public static readonly Color ScreenTint = new(0, 0, 0, 190);
@@ -115,6 +110,6 @@ namespace HollowKnight.Shared
         public static readonly Color TitleButtonHoverColor = new(255, 244, 214, 255);
         public static readonly Color TitleButtonTextColor = new(18, 25, 42, 255);
         public static readonly Color InactiveHealthPipColor = new(28, 32, 44, 255);
-        public static readonly Color SoulGaugeMinColor = new(0, 0, 0, 255);
+        public static readonly Color SoulGaugeMinColor = new(85, 85, 85, 255);
     }
 }

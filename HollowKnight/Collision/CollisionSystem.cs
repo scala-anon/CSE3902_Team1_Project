@@ -30,11 +30,11 @@ namespace HollowKnight.Collision
                 _handler.Register<Vengefly, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
                 // _handler.Register<MantisLord, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
 
-                // Hitting spikes damages the knight; respawn at checkpoint only if knight survived
+                // Spike contact: TakeDamage handles fatal-hit respawn via OnDeath; for surviving hits, respawn at checkpoint here
                 _handler.Register<Spike, TheKnight>(side, (a, b) => {
                     var knight = (TheKnight)b;
                     knight.TakeDamage(side);
-                    if (knight.HasRespawnPoint && !knight.JustDied) knight.Respawn();
+                    if (knight.HasRespawnPoint && !knight.JustDied && !knight.DeathAnimPlaying) knight.Respawn();
                     knight.ConsumeJustDied();
                 });
 
@@ -194,6 +194,7 @@ namespace HollowKnight.Collision
             foreach (IEnemy enemy in enemies)
             {
                 if (!(enemy is Crawlid crawlid)) continue;
+                if (!crawlid.IsActive) continue;
                 crawlid.SetAirborne();
                 for (int i = 0; i < platforms.Count; i++)
                 {

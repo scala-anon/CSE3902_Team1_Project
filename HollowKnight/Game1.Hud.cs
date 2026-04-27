@@ -6,7 +6,6 @@ namespace HollowKnight;
 
 public partial class Game1
 {
-    private const string GameOverTitle = "GAME OVER";
     private const string PauseTitle = "PAUSED";
     private const string InventoryTitle = "INVENTORY";
     private const string InventoryPrompt = "Tab close  |  U / I items  |  Click to select";
@@ -22,5 +21,7 @@ public partial class Game1
     private HealthHud _healthHud;
     private SoulHud _soulHud;
     private Texture2D _overlayPixel;
+    private Texture2D _titleBackgroundTexture;
+    private Texture2D _titleLogoTexture;
     private bool _restartRequested;
 }

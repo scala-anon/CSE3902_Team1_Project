@@ -156,5 +156,12 @@ namespace HollowKnight.Shared
         // FrontToBack sort is unstable; identical depths can flicker when batch size changes
         // (e.g. a slash sprite appears mid-frame). Each object in a bucket gets baseDepth + i*epsilon.
         public const float LayerDepthEpsilon = 0.0001f;
+
+        // Rendering — Per-sprite opacity (multiplied into SpriteBatch.Draw color tint)
+        // Contract: opacity is normalized in [MinSpriteOpacity, MaxSpriteOpacity].
+        // Callers are responsible for staying in range; Draw implementations do not clamp.
+        public const float DefaultSpriteOpacity = 1.0f;
+        public const float MinSpriteOpacity = 0.0f;
+        public const float MaxSpriteOpacity = 1.0f;
     }
 }

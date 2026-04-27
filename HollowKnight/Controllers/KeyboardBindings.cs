@@ -79,10 +79,6 @@ namespace HollowKnight.Controllers
             keyboard.RegisterPressedCommand(Keys.Tab, new ToggleInventoryCommand(game));
             keyboard.RegisterPressedCommand(Keys.R, new RestartGameCommand(game));
 
-            // GameState (debug)
-            keyboard.RegisterPressedCommand(Keys.F5, new SetGameOverCommand(game));
-            keyboard.RegisterPressedCommand(Keys.F6, new SetWinCommand(game));
-
             // Damage (debug)
             keyboard.RegisterPressedCommand(Keys.E, Gameplay(game, new PlayerTakeDamageCommand(knight)));
 

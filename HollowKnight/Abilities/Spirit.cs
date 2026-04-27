@@ -28,9 +28,9 @@ namespace HollowKnight.Abilities
             sprite.Update(gameTime);
         }
 
-        public void Draw(SpriteBatch spriteBatch, float layerDepth = 0f)
+        public void Draw(SpriteBatch spriteBatch, float layerDepth = 0f, float opacity = GameConstants.DefaultSpriteOpacity)
         {
-            sprite.Draw(spriteBatch, SpriteEffects.None, layerDepth);
+            sprite.Draw(spriteBatch, SpriteEffects.None, layerDepth, opacity);
         }
 
         public Rectangle[] GetBounds()

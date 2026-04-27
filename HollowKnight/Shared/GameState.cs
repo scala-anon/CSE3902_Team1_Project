@@ -26,14 +26,11 @@ namespace HollowKnight.Shared
     {
         public override void Update(Game1 game, GameTime gameTime)
         {
+            game.UpdateFade(gameTime);
             game.CheckTransitions();
             game.UpdateKnight(gameTime);
+            game.CheckBenchRespawnTransition();
             game.UpdateRoom(gameTime);
-            if (game.KnightIsDead())
-            {
-                game.SetGameOver();
-                return;
-            }
 
             game.UpdateEnemies(gameTime);
             game.UpdateKnightProjectiles(gameTime);
@@ -62,17 +59,6 @@ namespace HollowKnight.Shared
         }
 
         public override void DrawOverlay(Game1 game, SpriteBatch spriteBatch) => game.DrawInventoryStateOverlay();
-    }
-
-    public sealed class GameOverState : GameState
-    {
-        public override bool ShowsHealthHud => false;
-
-        public override void Update(Game1 game, GameTime gameTime)
-        {
-        }
-
-        public override void DrawOverlay(Game1 game, SpriteBatch spriteBatch) => game.DrawGameOverStateOverlay();
     }
 
     public sealed class WinState : GameState

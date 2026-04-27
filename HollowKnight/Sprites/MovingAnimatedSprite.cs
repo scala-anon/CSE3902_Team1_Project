@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using HollowKnight.Interfaces;
-using System.Security.Cryptography.X509Certificates;
+using HollowKnight.Shared;
 
 namespace HollowKnight.Sprites
 {
@@ -97,13 +97,13 @@ namespace HollowKnight.Sprites
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch, SpriteEffects effects, float layerDepth = 0f)
+        public void Draw(SpriteBatch spriteBatch, SpriteEffects effects, float layerDepth = 0f, float opacity = GameConstants.DefaultSpriteOpacity)
         {
             spriteBatch.Draw(
                 _texture,
                 _position,
                 _frames[_currentFrame],
-                Color.White,
+                Color.White * opacity,
                 0f,
                 Vector2.Zero,
                 _scale,

@@ -28,6 +28,7 @@ namespace HollowKnight.Enemies
 
         public void OnWallHit()
         {
+            if (!CurrentCrawlid.Alive) return;
             if (_isTurning) return;
             FlipDirection();
             CrawlidTurn();
@@ -39,6 +40,8 @@ namespace HollowKnight.Enemies
             AudioManager.Instance.PlaySoundEffectIfInView(AudioLoader.Instance.Get_Enemy_Damage(), CurrentCrawlid.position);
             if (CurrentCrawlid.Health <= 0)
             {
+                _isTurning = false;
+                _turnTimer = 0f;
                 CurrentCrawlid.Alive = false;
                 CurrentCrawlid.SetState(CurrentCrawlid.IsGrounded
                     ? CrawlidState.DeathLand

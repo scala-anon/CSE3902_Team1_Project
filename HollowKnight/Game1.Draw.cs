@@ -15,11 +15,22 @@ public partial class Game1
     internal void DrawTitleStateOverlay() => DrawTitleScreen();
     internal void DrawPausedStateOverlay() => DrawPauseScreen();
     internal void DrawInventoryStateOverlay() => DrawInventoryOverlay();
-    internal void DrawGameOverStateOverlay() => DrawGameOverScreen();
     internal void DrawWinStateOverlay() => DrawCenteredOverlay(WinTitle, string.Empty, HudConstants.ScreenTint, Color.Yellow);
 
     private void DrawWorld()
     {
+        if (_level.HasParallaxBackground)
+        {
+            _spriteBatch.Begin();
+            _parallaxBackground.Draw(
+                _spriteBatch,
+                Camera.Instance.Position,
+                _graphics.PreferredBackBufferWidth,
+                _graphics.PreferredBackBufferHeight,
+                new Color(234, 255, 255)); // 220, 251, 255 RGB tint for background - change if needed
+            _spriteBatch.End();
+        }
+
         // Single world-space batch. FrontToBack sort:
         // layerDepth 0.0 = farthest back, 1.0 = frontmost.
         _spriteBatch.Begin(
@@ -47,7 +58,7 @@ public partial class Game1
         int i = 0;
         foreach (IInteractable interactable in _level.Interactables)
         {
-            if(interactable != null)
+            if (interactable != null && interactable.IsActive)
             {
                 interactable.Draw(_spriteBatch, SpriteEffects.None, layerDepth + i * GameConstants.LayerDepthEpsilon);
                 i++;
@@ -95,7 +106,7 @@ public partial class Game1
         int i = 0;
         foreach (IObject obj in _level.Platforms)
         {
-            if (obj != null)
+            if (obj != null && obj.IsActive)
             {
                 obj.Draw(_spriteBatch, SpriteEffects.None, layerDepth + i * GameConstants.LayerDepthEpsilon);
                 i++;
@@ -167,6 +178,14 @@ public partial class Game1
         _spriteBatch.Begin();
         _gameState.DrawOverlay(this, _spriteBatch);
 
+        _spriteBatch.End();
+    }
+
+    private void DrawFadeOverlay()
+    {
+        if (!_fader.IsActive) return;
+        _spriteBatch.Begin();
+        _fader.Draw(_spriteBatch, _overlayPixel, GetOverlayBounds());
         _spriteBatch.End();
     }
 
@@ -256,28 +275,6 @@ public partial class Game1
         }
 
         if (GetPauseButtonBounds(2).Contains(mousePosition))
-        {
-            Exit();
-            return true;
-        }
-
-        return false;
-    }
-
-    internal bool TryActivateGameOverButton(Point mousePosition)
-    {
-        if (_gameState is not GameOverState)
-        {
-            return false;
-        }
-
-        if (GetGameOverButtonBounds(0).Contains(mousePosition))
-        {
-            ResetGame();
-            return true;
-        }
-
-        if (GetGameOverButtonBounds(1).Contains(mousePosition))
         {
             Exit();
             return true;
@@ -458,9 +455,20 @@ public partial class Game1
     {
         Rectangle overlayBounds = GetOverlayBounds();
         MouseState mouseState = Mouse.GetState();
-        _spriteBatch.Draw(_overlayPixel, overlayBounds, HudConstants.TitleBackdropTint);
+        _spriteBatch.Draw(_titleBackgroundTexture, overlayBounds, Color.White);
 
-        DrawCenteredScaledText(LandingTitle, new Vector2(overlayBounds.Center.X, overlayBounds.Center.Y - 118), HudConstants.TitleScale, HudConstants.TitleAccentColor);
+        float logoMaxWidth = overlayBounds.Width * 1.0f;
+        float logoMaxHeight = overlayBounds.Height * 1.0f;
+        float logoScale = Math.Min(
+            logoMaxWidth / _titleLogoTexture.Width,
+            logoMaxHeight / _titleLogoTexture.Height);
+        Vector2 logoSize = new(_titleLogoTexture.Width * logoScale, _titleLogoTexture.Height * logoScale);
+        Rectangle logoBounds = new(
+            (int)(overlayBounds.Center.X - (logoSize.X / 2f)),
+            (int)(overlayBounds.Center.Y - 650),
+            (int)logoSize.X,
+            (int)logoSize.Y);
+        _spriteBatch.Draw(_titleLogoTexture, logoBounds, Color.White);
 
         Rectangle startButtonBounds = GetTitleButtonBounds(0);
         Rectangle quitButtonBounds = GetTitleButtonBounds(1);
@@ -484,24 +492,10 @@ public partial class Game1
         DrawPauseButton(quitButtonBounds, QuitGameLabel, quitButtonBounds.Contains(mouseState.Position));
     }
 
-    private void DrawGameOverScreen()
-    {
-        Rectangle overlayBounds = GetOverlayBounds();
-        MouseState mouseState = Mouse.GetState();
-        _spriteBatch.Draw(_overlayPixel, overlayBounds, HudConstants.ScreenTint);
-
-        DrawCenteredScaledText(GameOverTitle, new Vector2(overlayBounds.Center.X, overlayBounds.Center.Y - 118), HudConstants.GameOverTitleScale, Color.White);
-
-        Rectangle restartButtonBounds = GetGameOverButtonBounds(0);
-        Rectangle quitButtonBounds = GetGameOverButtonBounds(1);
-        DrawGameOverButton(restartButtonBounds, RestartGameLabel, restartButtonBounds.Contains(mouseState.Position));
-        DrawGameOverButton(quitButtonBounds, QuitGameLabel, quitButtonBounds.Contains(mouseState.Position));
-    }
-
     private Rectangle GetTitleButtonBounds(int index)
     {
         Rectangle overlayBounds = GetOverlayBounds();
-        int buttonsTop = overlayBounds.Center.Y - 2;
+        int buttonsTop = overlayBounds.Center.Y + 20;
 
         return new Rectangle(
             overlayBounds.Center.X - (HudConstants.TitleButtonWidth / 2),
@@ -522,18 +516,6 @@ public partial class Game1
             HudConstants.PauseButtonHeight);
     }
 
-    private Rectangle GetGameOverButtonBounds(int index)
-    {
-        Rectangle overlayBounds = GetOverlayBounds();
-        int buttonsTop = overlayBounds.Center.Y - 8;
-
-        return new Rectangle(
-            overlayBounds.Center.X - (HudConstants.GameOverButtonWidth / 2),
-            buttonsTop + (index * (HudConstants.GameOverButtonHeight + HudConstants.GameOverButtonSpacing)),
-            HudConstants.GameOverButtonWidth,
-            HudConstants.GameOverButtonHeight);
-    }
-
     private void DrawTitleButton(Rectangle bounds, string label, bool isHovered)
     {
         DrawShadow(bounds, 6, 6);
@@ -548,14 +530,6 @@ public partial class Game1
         _spriteBatch.Draw(_overlayPixel, bounds, isHovered ? HudConstants.TitleButtonHoverColor : HudConstants.TitleButtonColor);
         DrawPanelBorder(bounds, 2, HudConstants.TitleAccentColor);
         DrawCenteredScaledText(label, new Vector2(bounds.Center.X, bounds.Center.Y), HudConstants.PauseButtonScale, HudConstants.TitleButtonTextColor);
-    }
-
-    private void DrawGameOverButton(Rectangle bounds, string label, bool isHovered)
-    {
-        DrawShadow(bounds, 6, 6);
-        _spriteBatch.Draw(_overlayPixel, bounds, isHovered ? HudConstants.TitleButtonHoverColor : HudConstants.TitleButtonColor);
-        DrawPanelBorder(bounds, 2, HudConstants.TitleAccentColor);
-        DrawCenteredScaledText(label, new Vector2(bounds.Center.X, bounds.Center.Y), HudConstants.GameOverButtonScale, HudConstants.TitleButtonTextColor);
     }
 
     private void DrawCenteredScaledText(string text, Vector2 center, float scale, Color color)
