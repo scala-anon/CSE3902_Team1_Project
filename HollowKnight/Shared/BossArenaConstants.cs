@@ -10,8 +10,8 @@ namespace HollowKnight.Shared
         public const float BarrierHeight = 1400f;
         public const float BarrierTopY   = 4200f;
 
-        public const float CameraClampCenterX = 4334f;
-        public const float CameraClampCenterY = 5673f;
+        public const float CameraClampCenterX = 4394f;
+        public const float CameraClampCenterY = 5323f;
         public static readonly Vector2 CameraClampCenter = new Vector2(CameraClampCenterX, CameraClampCenterY);
     }
 }
