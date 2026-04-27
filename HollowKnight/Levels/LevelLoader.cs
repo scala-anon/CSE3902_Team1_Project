@@ -77,6 +77,8 @@ namespace HollowKnight.Levels
                 ["Brick_6"] = pos => new Brick(6, pos, 197, 127),
                 ["Brick_7"] = pos => new Brick(7, pos, 81, 302),
                 ["Brick_8"] = pos => new Brick(8, pos, 78, 280),
+                ["Brick_9"] = pos => new Brick(9, pos, 302, 81),
+                ["Brick_10"] = pos => new Brick(10, pos, 280, 78),
 
                 ["MantisThrone_1"] = pos => new MantisThrone(1, pos, 119, 613),
                 ["MantisThrone_2"] = pos => new MantisThrone(2, pos, 112, 374),
@@ -93,6 +95,8 @@ namespace HollowKnight.Levels
                 ["Village_1"] = pos => new Village(1, pos, 243, 507),
                 ["Village_2"] = pos => new Village(2, pos, 262, 511),
                 ["Village_3"] = pos => new Village(3, pos, 161, 520),
+                ["Village_4"] = pos => new Village(4, pos, 511, 189),
+                ["Village_5"] = pos => new Village(5, pos, 119, 515),
 
                 ["Cage_1"] = pos => new Middleground(1,pos),
                 ["Cage_2"] = pos => new Middleground(2,pos),
@@ -241,13 +245,19 @@ namespace HollowKnight.Levels
             ["Village_1"]      = DecorationLayer.BackgroundMid,
             ["Village_2"]      = DecorationLayer.BackgroundMid,
             ["Village_3"]      = DecorationLayer.BackgroundMid,
+            ["Village_4"]     = DecorationLayer.BackgroundFar,
+            ["Village_5"]      = DecorationLayer.BackgroundFar, 
+
             ["MantisThrone_1"] = DecorationLayer.BackgroundMid,
             ["MantisThrone_2"] = DecorationLayer.BackgroundMid,
 
-            ["Flag_1"]         = DecorationLayer.Foreground,
-            ["Flag_2"]         = DecorationLayer.Foreground,
-            ["Flag_3"]         = DecorationLayer.Foreground,
-            ["Flag_4"]         = DecorationLayer.Foreground,
+            ["Flag_1"]         = DecorationLayer.BackgroundMid,
+            ["Flag_2"]         = DecorationLayer.BackgroundMid,
+            ["Flag_3"]         = DecorationLayer.BackgroundMid,
+            ["Flag_4"]         = DecorationLayer.BackgroundMid,
+
+            ["Brick_9"] = DecorationLayer.BackgroundMid,
+            ["Brick_10"] = DecorationLayer.BackgroundMid,
         };
 
         // TODO: Add the rocks that need to be inside the foreground!

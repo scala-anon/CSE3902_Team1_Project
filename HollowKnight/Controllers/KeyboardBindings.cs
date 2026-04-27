@@ -10,7 +10,7 @@ namespace HollowKnight.Controllers
     public static class KeyboardBindings
     {
         private static ICommand Gameplay(Game1 game, ICommand command) => new GameplayOnlyCommand(game, command);
-
+ 
         public static void BindGameplay(KeyboardController keyboard, TheKnight knight, Game1 game, BossFightController bossFight = null)
         {
             keyboard.RegisterPressedCommand(Keys.Enter, new StartGameCommand(game));

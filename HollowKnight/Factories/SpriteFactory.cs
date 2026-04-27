@@ -192,7 +192,7 @@ namespace HollowKnight.Factories
             mantisLordAnimations.Add("Death_Leave_Two", mantisLordAtlas.GetAnimationFrames("Death_Leave_Two"));
             mantisLordAnimations.Add("Air_Projectile", mantisLordAtlas.GetAnimationFrames("Air_Projectile"));
 
-            for (int i = 1; i <= 8; i++)
+            for (int i = 1; i <= 10; i++)
             {
                 string key = $"Brick_{i}";
                 mantisVillageFrames.Add(key, mantisVillageAtlas.GetRegion(key).SourceRectangle);
@@ -212,7 +212,7 @@ namespace HollowKnight.Factories
                 string key = $"Flag_{i}";
                 mantisVillageFrames.Add(key, mantisVillageAtlas.GetRegion(key).SourceRectangle);
             }
-            for (int i = 1; i <= 3; i++)
+            for (int i = 1; i <= 5; i++)
             {
                 string key = $"Village_{i}";
                 mantisVillageFrames.Add(key, mantisVillageAtlas.GetRegion(key).SourceRectangle);
@@ -603,6 +603,7 @@ namespace HollowKnight.Factories
         }
         public ISprite CreateBrickSprite(int variant, Vector2 position)
         {
+            float scale =1.0f;
             string key = variant switch
             {
                 1 => "Brick_1",
@@ -613,9 +614,15 @@ namespace HollowKnight.Factories
                 6 => "Brick_6",
                 7 => "Brick_7",
                 8 => "Brick_8",
+                9 => "Brick_9",
+                10 => "Brick_10",
                 _ => "Brick_1"
             };
-            return new StaticSprite(mantisVillageSpriteSheet, mantisVillageFrames[key], position, 1.0f);
+            if(variant ==9 || variant == 10)
+            {
+                scale = .5f;
+            }
+            return new StaticSprite(mantisVillageSpriteSheet, mantisVillageFrames[key], position, scale);
         }
         public ISprite CreateMantisThroneSprite(int variant, Vector2 position)
         {
@@ -640,6 +647,7 @@ namespace HollowKnight.Factories
         }
         public ISprite CreateFlagSprite(int variant, Vector2 position)
         {
+            float scale = 1.0f;
             string key = variant switch
             {
                 1 => "Flag_1",
@@ -648,18 +656,39 @@ namespace HollowKnight.Factories
                 4 => "Flag_4",
                 _ => "Flag_1"
             };
-            return new StaticSprite(mantisVillageSpriteSheet, mantisVillageFrames[key], position, 1.0f);
+            if(variant == 3)
+            {
+                scale = .75f;
+            }
+            if(variant == 2)
+            {
+                scale = .9f;
+            }
+            return new StaticSprite(mantisVillageSpriteSheet, mantisVillageFrames[key], position, scale);
         }
         public ISprite CreateVillageSprite(int variant, Vector2 position)
         {
+            float scale = 1.0f;
+            Color? color = null;
             string key = variant switch
             {
                 1 => "Village_1",
                 2 => "Village_2",
                 3 => "Village_3",
+                4 => "Village_4",
+                5 => "Village_5",
                 _ => "Village_1"
             };
-            return new StaticSprite(mantisVillageSpriteSheet, mantisVillageFrames[key], position, 1.0f);
+            if(variant == 4)
+            {
+                scale = 1.5f;
+                color = Color.White*.5f;
+            }
+            if(variant == 5)
+            {
+                scale = 1.25f;
+            }
+            return new StaticSprite(mantisVillageSpriteSheet, mantisVillageFrames[key], position, scale,0,color);
         }
 
         public ISprite CreateLayerSprite(int variant, Vector2 position)

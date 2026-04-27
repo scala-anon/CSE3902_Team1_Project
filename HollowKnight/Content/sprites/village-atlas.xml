@@ -18,7 +18,7 @@
         <Region name="Floor_1" x="5387" y="797" width="249" height="141" />
         <Region name="Floor_2" x="5731" y="803" width="249" height="141" />
         <Region name="Floor_3" x="4586" y="2547" width="625" height="141" />
-
+ 
         <Region name="Flag_1" x="4443" y="729" width="119" height="622" />
         <Region name="Flag_2" x="4688" y="723" width="102" height="622" />
         <Region name="Flag_3" x="4906" y="719" width="121" height="621" />
@@ -41,5 +41,10 @@
         <Region name="Floor_Spike_1" x="5644" y="162" width="162" height="103" />
         <Region name="Floor_Spike_2" x="5858" y="164" width="162" height="103" />
         <Region name="Floor_Spike_3" x="6066" y="175" width="162" height="103" />
+
+        <Region name="Village_4" x="4396" y="2095" width="511" height="189" />
+        <Region name="Village_5" x="5416" y="2143" width="119" height="515" />
+        <Region name="Brick_9" x="4251" y="550" width="302" height="81" />
+        <Region name="Brick_10" x="4663" y="491" width="280" height="78" />
     </Regions>
 </TextureAtlas>
