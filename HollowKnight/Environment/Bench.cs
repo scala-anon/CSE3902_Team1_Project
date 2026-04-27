@@ -45,6 +45,7 @@ namespace HollowKnight.Environment
         {
             knight.FullHeal();
             knight.SetBenchSpawnPoint(position);
+            knight.StartSitting(position);
             DebugLogger.LogObject($"Bench used: health restored to {knight.GetMaxHealth()}, spawn point set to {position}.");
         }
     }

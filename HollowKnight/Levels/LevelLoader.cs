@@ -21,6 +21,7 @@ namespace HollowKnight.Levels
         public Vector2 KnightSpawn { get; private set; } = Vector2.Zero;
         public Vector2? RespawnPoint { get; private set; }
         public BossFightController BossFight { get; private set; }
+        public bool HasParallaxBackground { get; private set; } = false;
 
         private Game1 _game;
         private readonly Dictionary<string, Func<Vector2, IObject>> _platformMap;
@@ -41,10 +42,17 @@ namespace HollowKnight.Levels
                 ["Tutorial_Platform_8"]  = pos => new TutorialPlatform(8, pos, 105, 62),
                 ["Tutorial_Platform_9"]  = pos => new TutorialPlatform(9, pos, 110, 62),
                 ["Tutorial_Platform_10"] = pos => new TutorialPlatform(10, pos, 174, 70),
-                ["Background_1"]  = pos => new Background(1, pos),
-                ["Background_2"] = pos => new Background(2, pos),
+                ["Background_1"]         = pos => new Background(1, pos),
+                ["Background_1_Front"]   = pos => new Background(1, pos),
+                ["Background_2"]         = pos => new Background(2, pos),
+                ["Background_2_Flipped"]      = pos => new Background(2, pos, flipped: true),
+                ["Background_2_Flipped_Back"] = pos => new Background(2, pos, flipped: true),
+                ["Background_Main"]           = pos => new Background(3, pos),
+                ["Transition_Light"]          = pos => new Background(4, pos),
+                ["Transition_Light_Flipped"]  = pos => new Background(5, pos),
                 // <Region name="Path_1" x="265" y="223" width="1060" height="83" />
                 ["Path_1"]               = pos => new Path(1, pos, 1050, 32, hitOffsetY: 15),
+                ["Path_1_Flipped"]       = pos => new Path(1, pos, 1050, 32, hitOffsetY: 15, flipped: true),
                 ["Path_2"]               = pos => new Path(2, pos, 940, 32, hitOffsetY: 40),
                 ["Path_ledge"]           = pos => new PathLedge(pos),
                 ["Spike_Floor_1"]        = pos => new Spike(SpikeVariant.Floor1, pos),
@@ -116,11 +124,14 @@ namespace HollowKnight.Levels
                 new Rectangle((int)pos.X, (int)pos.Y, GameConstants.TransitionZoneWidth, 80),
                 ParseDestinationRoom(name))),
 
-                ["Respawn"] = (name, pos) => RespawnPoint = pos,
+                ["Respawn"]      = (name, pos) => RespawnPoint = pos,
+                ["ParallaxBG"]   = (name, pos) => HasParallaxBackground = true,
             };
         }
 
         public void SetGame(Game1 game) { _game = game; }
+
+        private string _levelName = "";
 
         public void Load(string xmlFilePath)
         {
@@ -135,10 +146,12 @@ namespace HollowKnight.Levels
             KnightSpawn = Vector2.Zero;
             RespawnPoint = null;
             BossFight = null;
+            HasParallaxBackground = false;
 
             XDocument doc  = XDocument.Load(xmlFilePath);
             XElement  root = doc.Root
                 ?? throw new Exception($"[LevelLoader] Bad XML root in {xmlFilePath}");
+            _levelName = root.Attribute("name")?.Value ?? xmlFilePath;
 
             foreach (XElement item in root.Elements("Item"))
             {
@@ -205,8 +218,14 @@ namespace HollowKnight.Levels
         // Anything absent falls through to the default logic (collision goes to Platforms).
         private static readonly Dictionary<string, DecorationLayer> DecorationLayers = new()
         {
-            ["Background_1"]   = DecorationLayer.BackgroundFar,
-            ["Background_2"]   = DecorationLayer.BackgroundFar,
+            ["Background_1"]         = DecorationLayer.BackgroundFar,
+            ["Background_1_Front"]   = DecorationLayer.Foreground,
+            ["Background_2"]         = DecorationLayer.Foreground,
+            ["Background_2_Flipped"]      = DecorationLayer.Foreground,
+            ["Background_2_Flipped_Back"] = DecorationLayer.BackgroundFar,
+            ["Background_Main"]         = DecorationLayer.BackgroundFar,
+            ["Transition_Light"]         = DecorationLayer.Foreground,
+            ["Transition_Light_Flipped"] = DecorationLayer.Foreground,
 
             ["Village_1"]      = DecorationLayer.BackgroundMid,
             ["Village_2"]      = DecorationLayer.BackgroundMid,
@@ -220,6 +239,9 @@ namespace HollowKnight.Levels
             ["Flag_4"]         = DecorationLayer.Foreground,
         };
 
+        private string DestroyedKey(string name, Vector2 position)
+            => $"{_levelName}_{name}_{(int)position.X}_{(int)position.Y}";
+
         private void SpawnPlatform(string name, Vector2 position)
         {
             if (!_platformMap.TryGetValue(name, out var create))
@@ -228,7 +250,15 @@ namespace HollowKnight.Levels
                 return;
             }
 
+            string key = DestroyedKey(name, position);
+            if (_game != null && _game.IsDestroyed(key)) return;
+
             IObject obj = create(position);
+
+            if (obj is Door door)
+                door.SetDestroyedCallback(() => _game?.RegisterDestroyed(key));
+            else if (obj is BreakableWall wall)
+                wall.SetDestroyedCallback(() => _game?.RegisterDestroyed(key));
 
             if (DecorationLayers.TryGetValue(name, out var layer))
             {

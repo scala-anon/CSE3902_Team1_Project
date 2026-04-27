@@ -10,6 +10,7 @@ namespace HollowKnight.Shared
         public const double EnemyDamagedDuration = 0.4;
         public const int EnemyHurtboxGrow = 6;
         public const int EnemyDefaultHealth = 3;
+        public const int EnemyDeadGroundSink = 50;
 
         // Crawlid
         public const float CrawlidPatrolSpeed = 175f;

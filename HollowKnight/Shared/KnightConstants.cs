@@ -6,8 +6,8 @@ namespace HollowKnight.Shared
         public const float KnightMoveSpeed = 250f;
         public const float KnightJumpSpeed = -700f;
         public const float KnightGravity = 900f;
-        public const float KnightKnockbackSpeed = 250f;
-        public const float KnightKnockbackUpwards = -300f;
+        public const float KnightKnockbackSpeed = 400f;
+        public const float KnightKnockbackUpwards = -450f;
         public const float KnightKnockbackDuration = 0.3f;
         public const float KnightKnockbackTimer = 0f;
 
@@ -36,6 +36,14 @@ namespace HollowKnight.Shared
         public const double KnightHealPostDuration = 0.2;
         public const double KnightHealCooldown = 2.0;
         public const double KnightHealStartUp = 0.25;
+
+        // Dash Effect Visual Offsets
+        public const float DashEffectOffsetLeftX = -90f;
+        public const float DashEffectOffsetRightX = -145f;
+        public const float DashEffectOffsetY = -40f;
+
+        // Low Health Effect Visual Offsets
+        public const float LowHealthEffectXOffsetFactor = 0.75f;
 
         // Slash Effect Positioning (visual offsets, not hitbox — hitbox dims are in CollisionConstants)
         public const float SlashEffectRightDivisor = 7f;

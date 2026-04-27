@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using HollowKnight.Controllers;
@@ -28,6 +29,8 @@ public partial class Game1
     private void InitializeSharedResources()
     {
         SpriteFactory.Instance.LoadAllTextures(Content);
+        _parallaxBackground = new ParallaxBackground(SpriteFactory.Instance.GetMainBackgroundTexture());
+
     }
 
     private void InitializeAudio()
@@ -91,6 +94,8 @@ public partial class Game1
         _knight = new TheKnight(sprites, _level.KnightSpawn);
         _knightProjectile = new KnightProjectile(_knight, _projectileSpawner);
         _knight.Projectiles = _knightProjectile;
+        _knight.Dash.SetProjectileManager(_projectileManager);
+        _knight.SetProjectileManager(_projectileManager);
     }
 
     private void InitializeCameraAndRooms()
@@ -179,6 +184,27 @@ public void TransitionToRoom(int roomNumber)
     DebugLogger.LogRoomTransition($"TransitionToRoom: room {roomNumber} loaded, knight at {_knight.position}");
 }
 
+internal void CheckBenchRespawnTransition()
+{
+    if (!_knight.NeedsBenchRoomTransition) return;
+    _knight.ConsumeBenchRoomTransition();
+    int benchRoom = _knight.BenchSpawnRoom;
+    _fader.StartFadeOut(() =>
+    {
+        if (benchRoom != _currentRoom)
+            TransitionToRoom(benchRoom);
+        _knight.SetPosition(_knight.BenchSpawnPoint);
+        Camera.Instance.SnapTo(_knight.BenchSpawnPoint);
+        _knight.StartSittingIdle();
+        DebugLogger.LogRoomTransition($"Bench respawn to room {benchRoom} at {_knight.BenchSpawnPoint}");
+    });
+}
+
+internal void UpdateFade(GameTime gameTime)
+{
+    _fader.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+}
+
 private void ApplyRoomRespawnPoint()
 {
     if (_knight == null) return;
@@ -191,7 +217,9 @@ private void ApplyRoomRespawnPoint()
 private void RestartGame()
 {
     _roomEntryPoints.Clear();
-    _currentRoom = 1; // reset room on restart
+    _destroyedObjects.Clear();
+    _currentRoom = 1;
+    _fader.Reset();
     InitializeNavigationGrid();
     _projectileManager.Clear();
     InitializeItems();

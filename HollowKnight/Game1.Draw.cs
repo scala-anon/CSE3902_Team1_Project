@@ -19,6 +19,18 @@ public partial class Game1
 
     private void DrawWorld()
     {
+        if (_level.HasParallaxBackground)
+        {
+            _spriteBatch.Begin();
+            _parallaxBackground.Draw(
+                _spriteBatch,
+                Camera.Instance.Position,
+                _graphics.PreferredBackBufferWidth,
+                _graphics.PreferredBackBufferHeight,
+                new Color(234, 255, 255)); // 220, 251, 255 RGB tint for background - change if needed
+            _spriteBatch.End();
+        }
+
         // Single world-space batch. FrontToBack sort:
         // layerDepth 0.0 = farthest back, 1.0 = frontmost.
         _spriteBatch.Begin(
@@ -46,7 +58,7 @@ public partial class Game1
         int i = 0;
         foreach (IInteractable interactable in _level.Interactables)
         {
-            if(interactable != null)
+            if (interactable != null && interactable.IsActive)
             {
                 interactable.Draw(_spriteBatch, SpriteEffects.None, layerDepth + i * GameConstants.LayerDepthEpsilon);
                 i++;
@@ -94,7 +106,7 @@ public partial class Game1
         int i = 0;
         foreach (IObject obj in _level.Platforms)
         {
-            if (obj != null)
+            if (obj != null && obj.IsActive)
             {
                 obj.Draw(_spriteBatch, SpriteEffects.None, layerDepth + i * GameConstants.LayerDepthEpsilon);
                 i++;
@@ -166,6 +178,14 @@ public partial class Game1
         _spriteBatch.Begin();
         _gameState.DrawOverlay(this, _spriteBatch);
 
+        _spriteBatch.End();
+    }
+
+    private void DrawFadeOverlay()
+    {
+        if (!_fader.IsActive) return;
+        _spriteBatch.Begin();
+        _fader.Draw(_spriteBatch, _overlayPixel, GetOverlayBounds());
         _spriteBatch.End();
     }
 

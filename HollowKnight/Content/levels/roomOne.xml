@@ -1,25 +1,54 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Level name="roomOne">
 
+<Item><ObjectType>ParallaxBG</ObjectType><ObjectName>main</ObjectName><Location>0 0</Location></Item>
+
+<Item><ObjectType>Respawn</ObjectType><ObjectName>Respawn</ObjectName><Location>4125 1850</Location></Item>
+
+
 <Item>
     <ObjectType>Knight</ObjectType>
     <ObjectName>Knight</ObjectName>
     <Location>250 1800</Location>
 </Item>
 
+
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Plant1_Idle</ObjectName>
-    <Location>1600 1850</Location>
+    <Location>50 1853</Location>
 </Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Plant2_Idle</ObjectName>
+    <Location>1200 1853</Location>
+</Item>
+
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Plant1_Idle</ObjectName>
+    <Location>1600 1853</Location>
+</Item>
+
+<!-- Backgrounds underneath first Path_1 row (8px overlap, stops at Wall_3 x=4197) -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>-10 2047</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>838 2047</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>1686 2047</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>2534 2047</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3382 2047</Location></Item>
+
+<!-- Backgrounds underneath second Path_1 row (8px overlap, starts after Wall_3 x=4258) -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4235 2245</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5085 2245</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5935 2245</Location></Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Path_1</ObjectName>
-    <Location>0 2000</Location>
+    <Location>-35 2000</Location>
 </Item>
-
-
 
 <Item>
     <ObjectType>Platform</ObjectType>
@@ -30,7 +59,23 @@
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Path_1</ObjectName>
+    <Location>500 2000</Location>
+</Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>1500 2000</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
     <Location>2000 2000</Location>
+</Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Path_1</ObjectName>
+    <Location>2500 2000</Location>
 </Item>
 
 <Item>
@@ -38,20 +83,26 @@
     <ObjectName>Path_1</ObjectName>
     <Location>3000 2000</Location>
 </Item>
-
 <Item>
     <ObjectType>Platform</ObjectType>
-    <ObjectName>Wall_3</ObjectName>
-    <Location>4197 2010</Location>
+    <ObjectName>Path_1</ObjectName>
+    <Location>3200 2000</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Wall_3</ObjectName>
-    <Location>4197 2121</Location>
+    <Location>4197 2020</Location>
 </Item>
 
-<!-- Wall_3 along right edge of backgrounds -->
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Wall_3</ObjectName>
+    <Location>4197 2131</Location>
+</Item>
+
+
+<!-- Wall_3 along left side of parkour section -->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>4197 753</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>4197 864</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>4197 975</Location></Item>
@@ -61,10 +112,31 @@
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>4197 1419</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_3</ObjectName><Location>4197 1530</Location></Item>
 
+<!-- Spike_Wall_1 along right Wall_2 column (5px overlap, x=5918) -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 1214</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 1308</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 1402</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 1496</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 1590</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 1684</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 1778</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 1872</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 1966</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 2060</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Spike_Wall_1</ObjectName><Location>5918 2154</Location></Item>
+
+
+
+<Item>
+    <ObjectType>Plant</ObjectType>
+    <ObjectName>Plant_1</ObjectName>
+    <Location>4305 2000</Location>
+</Item>
+
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Path_1</ObjectName>
-    <Location>4000 2200</Location>
+    <Location>4225 2200</Location>
 </Item>
 
 <Item>
@@ -82,37 +154,50 @@
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Background_1</ObjectName>
-    <Location>0 0</Location>
+    <Location>-10 0</Location>
 </Item>
 
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Background_1</ObjectName>
-    <Location>0 430</Location>
+    <Location>-10 430</Location>
 </Item>
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Background_1</ObjectName>
-    <Location>0 840</Location>
+    <Location>-10 840</Location>
 </Item>
 
+<!-- Ceiling background row 0 (top cap of wall column) -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>-10 302</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>838 302</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>1686 302</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>2534 302</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3382 302</Location></Item>
 <!-- Ceiling background row 1 -->
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>0 753</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>848 753</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>1696 753</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>2544 753</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3392 753</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>-10 753</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>838 753</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>1686 753</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>2534 753</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3382 753</Location></Item>
 <!-- Ceiling background row 2 -->
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>0 1202</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>848 1202</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>1696 1202</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>2544 1202</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3392 1202</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>-10 1202</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>838 1202</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>1686 1202</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>2534 1202</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>3382 1202</Location></Item>
+
+<!--Ceiling background row 3/parkour-->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4240 308</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5088 308</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5936 308</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>6784 308</Location></Item>
+
 
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Bench</ObjectName>
-    <Location>305 1930</Location>
+    <Location>308 1930</Location>
 </Item>
 
 <Item>
@@ -129,6 +214,11 @@
 </Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Wall_0_Flipped</ObjectName><Location>2982 1650</Location></Item>
 
+<Item>
+    <ObjectType>Enemy</ObjectType>
+    <ObjectName>Crawlid</ObjectName>
+    <Location>3480 1800</Location>
+</Item>
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Door_0</ObjectName>
@@ -185,11 +275,33 @@
 </Item>
 
 
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Background_1</ObjectName>
+    <Location>6100 750</Location>
+</Item>
 
 <Item>
   <ObjectType>TransitionV</ObjectType>
   <ObjectName>ToRoom2</ObjectName>
   <Location>6050 800</Location>
+</Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Transition_Light</ObjectName><Location>5620 605</Location></Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Background_1</ObjectName>
+    <Location>6050 1200</Location>
+</Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Background_1</ObjectName>
+    <Location>6050 1650</Location>
+</Item>
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Background_1</ObjectName>
+    <Location>6050 1800</Location>
 </Item>
 
 <Item>
@@ -204,48 +316,23 @@
     <Location>4550 1650</Location>
 </Item>
 
-<!-- TODO: Debug delay -->
-<!-- <Item>
+<Item>
     <ObjectType>Enemy</ObjectType>
     <ObjectName>Vengefly</ObjectName>
     <Location>5200 1800</Location>
-</Item> -->
-
-<Item>
-    <ObjectType>Platform</ObjectType>
-    <ObjectName>Wall_1</ObjectName>
-    <Location>6000 1900</Location>
 </Item>
 
-<!-- TODO: Fix -->
-<!-- <Item>
-    <ObjectType>Platform</ObjectType>
-    <ObjectName>Tutorial_Platform_10</ObjectName>
-    <Location>5400 1720</Location>
-</Item> -->
 
-<!-- <Item>
-    <ObjectType>Platform</ObjectType>
-    <ObjectName>Path_1</ObjectName>
-    <Location>5600 1100</Location>
-</Item>
 
-<Item>
-    <ObjectType>Platform</ObjectType>
-    <ObjectName>Tutorial_Platform_8</ObjectName>
-    <Location>7150 2050</Location>
-</Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6000 1214</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6000 1325</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6000 1436</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6000 1547</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6000 1658</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6000 1769</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6000 1880</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6000 1991</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Wall_2</ObjectName><Location>6000 2102</Location></Item>
 
-<Item>
-    <ObjectType>Platform</ObjectType>
-    <ObjectName>Tutorial_Platform_9</ObjectName>
-    <Location>6900 2200</Location>
-</Item>
-
-<Item>
-    <ObjectType>Platform</ObjectType>
-    <ObjectName>Tutorial_Platform_9</ObjectName>
-    <Location>7150 2400</Location>
-</Item> -->
 
 </Level>

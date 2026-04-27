@@ -34,7 +34,12 @@ public partial class Game1 : Game
     private RoomManager _roomManager;
     private LevelLoader _level;
     private Dictionary<int, Vector2> _roomEntryPoints = new();
+    private readonly HashSet<string> _destroyedObjects = new();
+    public void RegisterDestroyed(string key) => _destroyedObjects.Add(key);
+    public bool IsDestroyed(string key) => _destroyedObjects.Contains(key);
     private bool _isTransitioning = false;
+    private readonly ScreenFader _fader = new();
+    private ParallaxBackground _parallaxBackground;
 
 
     public Game1()
@@ -105,6 +110,7 @@ public partial class Game1 : Game
         }
 
         DrawOverlay();
+        DrawFadeOverlay();
 
         base.Draw(gameTime);
     }
