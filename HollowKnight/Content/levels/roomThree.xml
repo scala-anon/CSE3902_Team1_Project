@@ -276,6 +276,7 @@
     <ObjectName>ToRoom4</ObjectName>
     <Location>5470 4050</Location>
 </Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Transition_Light_Flipped</ObjectName><Location>5490 3975</Location></Item>
 
 
 
