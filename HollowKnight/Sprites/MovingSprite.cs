@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using HollowKnight.Interfaces;
+using HollowKnight.Shared;
 
 namespace HollowKnight.Sprites
 {
@@ -51,26 +52,26 @@ namespace HollowKnight.Sprites
             float delta = _speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             _position.Y += delta * _direction;
 
-            // Bounce off top and bottom
-            if (_position.Y + _spriteHeight >= _screenHeight)
-            {
-                _position.Y = _screenHeight - _spriteHeight;
-                _direction = -1;
-            }
-            else if (_position.Y <= 0)
-            {
-                _position.Y = 0;
-                _direction = 1;
-            }
+            // // Bounce off top and bottom
+            // if (_position.Y + _spriteHeight >= _screenHeight)
+            // {
+            //     _position.Y = _screenHeight - _spriteHeight;
+            //     _direction = -1;
+            // }
+            // else if (_position.Y <= 0)
+            // {
+            //     _position.Y = 0;
+            //     _direction = 1;
+            // }
         }
 
-        public void Draw(SpriteBatch spriteBatch, SpriteEffects effects, float layerDepth = 0f)
+        public void Draw(SpriteBatch spriteBatch, SpriteEffects effects, float layerDepth = 0f, float opacity = GameConstants.DefaultSpriteOpacity)
         {
             spriteBatch.Draw(
                 _texture,
                 _position,
                 _sourceRect,
-                Color.White,
+                Color.White * opacity,
                 0f,
                 Vector2.Zero,
                 _scale,

@@ -3,14 +3,15 @@ using HollowKnight.Commands;
 using HollowKnight.Interfaces;
 using HollowKnight.Player;
 using HollowKnight.Shared;
+using HollowKnight.Enemies;
 
 namespace HollowKnight.Controllers
 {
     public static class KeyboardBindings
     {
         private static ICommand Gameplay(Game1 game, ICommand command) => new GameplayOnlyCommand(game, command);
-
-        public static void BindGameplay(KeyboardController keyboard, TheKnight knight, Game1 game)
+ 
+        public static void BindGameplay(KeyboardController keyboard, TheKnight knight, Game1 game, BossFightController bossFight = null)
         {
             keyboard.RegisterPressedCommand(Keys.Enter, new StartGameCommand(game));
             keyboard.RegisterPressedCommand(Keys.Escape, new QuitCommand(game));
@@ -120,11 +121,38 @@ namespace HollowKnight.Controllers
             keyboard.RegisterPressedCommand(Keys.Up, Gameplay(game, new PlayerInteractCommand(game)));
             keyboard.RegisterPressedCommand(Keys.W, Gameplay(game, new PlayerInteractCommand(game)));
 
-            // Start Mantis Lord boss fight (debug / trigger key)
-            keyboard.RegisterPressedCommand(Keys.B, new StartMantisFightCommand(game));
+            //Start Mantis Lord boss fight (debug / trigger key)
+            keyboard.RegisterPressedCommand(Keys.L, new StartMantisFightCommand(game));
 
+            // After:
+            if (bossFight != null)
+            {
+                // keyboard.RegisterPressedCommand(Keys.V, new ToggleMantisStateCommand(bossFight.Left));
+                // keyboard.RegisterPressedCommand(Keys.B, new ToggleMantisStateCommand(bossFight.Middle));
+                // keyboard.RegisterPressedCommand(Keys.N, new ToggleMantisStateCommand(bossFight.Right));
+
+                // keyboard.RegisterComboPressedCommand(Keys.V, Keys.LeftShift, new KillMantisCommand(bossFight.Left));
+                // keyboard.RegisterComboPressedCommand(Keys.B, Keys.LeftShift, new KillMantisCommand(bossFight.Middle));
+                // keyboard.RegisterComboPressedCommand(Keys.N, Keys.LeftShift, new KillMantisCommand(bossFight.Right));
+                keyboard.RegisterPressedCommand(Keys.V, new ToggleMantisStateCommand(bossFight.Left));
+                keyboard.RegisterPressedCommand(Keys.B, new ToggleMantisStateCommand(bossFight.Middle));
+                keyboard.RegisterPressedCommand(Keys.N, new ToggleMantisStateCommand(bossFight.Right));
+
+                keyboard.RegisterComboPressedCommand(Keys.V, Keys.LeftShift, new KillMantisCommand(bossFight.Left));
+                keyboard.RegisterComboPressedCommand(Keys.B, Keys.LeftShift, new KillMantisCommand(bossFight.Middle));
+                keyboard.RegisterComboPressedCommand(Keys.N, Keys.LeftShift, new KillMantisCommand(bossFight.Right));
+
+                keyboard.RegisterComboPressedCommand(Keys.V, Keys.LeftControl, new FreezeMantisCommand(bossFight.Left));
+                keyboard.RegisterComboPressedCommand(Keys.B, Keys.LeftControl, new FreezeMantisCommand(bossFight.Middle));
+                keyboard.RegisterComboPressedCommand(Keys.N, Keys.LeftControl, new FreezeMantisCommand(bossFight.Right));
+
+                keyboard.RegisterComboPressedCommand(Keys.F, Keys.LeftShift, new ToggleFightPauseCommand(bossFight));
+                keyboard.RegisterComboPressedCommand(Keys.F, Keys.LeftShift, new ToggleFightPauseCommand(bossFight));
+            }
             // Quit
             keyboard.RegisterPressedCommand(Keys.Q, new QuitCommand(game));
+
+
         }
     }
 }

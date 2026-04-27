@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas>
+    <Texture>sprites/layersSpriteSheet</Texture>
+    <Regions>
+        <Region name="Right_Rock_1" x="20" y="31" width="152" height="264" />
+        <Region name="Right_Rock_2" x="284" y="90" width="117" height="141" />
+        <Region name="Right_Rock_3" x="824" y="34" width="110" height="198" />
+        <Region name="Right_Rock_4" x="1064" y="54" width="95" height="176" />
+        <Region name="Right_Rock_5" x="1271" y="33" width="107" height="246" />
+        <Region name="Right_Rock_6" x="446" y="893" width="230" height="199" />
+        <Region name="Right_Rock_7" x="1583" y="183" width="145" height="188" />
+
+        <Region name="Left_Rock_1" x="419" y="514" width="193" height="188" />
+        <Region name="Left_Rock_2" x="738" y="545" width="150" height="158" />
+        <Region name="Left_Rock_3" x="1005" y="521" width="187" height="229" />
+        <Region name="Left_Rock_4" x="1281" y="532" width="91" height="187" />
+        <Region name="Left_Rock_5" x="83" y="898" width="189" height="221" />
+        <Region name="Left_Rock_6" x="801" y="856" width="305" height="292" />
+        <Region name="Left_Rock_7" x="642" y="1314" width="313" height="196" />
+        <Region name="Left_Rock_8" x="155" y="2396" width="350" height="225" />
+        <Region name="Left_Rock_9" x="857" y="293" width="110" height="198" />
+        <Region name="Left_Rock_10" x="1070" y="292" width="113" height="176" />
+    </Regions>
+</TextureAtlas>

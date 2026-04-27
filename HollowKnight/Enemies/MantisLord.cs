@@ -4,11 +4,18 @@ using HollowKnight.Interfaces;
 using HollowKnight.Shared;
 using HollowKnight.Collision;
 using Microsoft.Xna.Framework;
+using System;
+using HollowKnight.Projectiles;
+using System.Data;
+
 
 namespace HollowKnight.Enemies
 {
     public enum MantisLordState
     {
+        DStabStart,
+        WallStart,
+        DashStart,
         IdleOnThrone,
         ThroneStand,
         ThroneLeave,
@@ -22,16 +29,20 @@ namespace HollowKnight.Enemies
         DashRecover,
         DashLeave,
         DStabArrive,
+        DStabOffset,
         DStab,
+        DStabLandOffset,
         DStabLand,
         DStabLeave,
         WallArrive,
         WallReady,
-        WallLeave,
+        WallLeave1,
+        WallLeave2,
         Death,
         DeathLeaveOne,
         DeathLeaveTwo,
-        Dormant
+        Dormant,
+        GracePeriod
     }
 
     public class MantisLord : BaseEnemy
@@ -43,7 +54,6 @@ namespace HollowKnight.Enemies
         // Once activated the lord stays drawn even when HP hits zero (wounded/bow phases).
         // _activated tracks whether the fight has started for this lord.
         private bool _activated;
-
         public override bool IsActive => !Dead || _activated;
 
         private readonly Dictionary<MantisLordState, ISprite> _sprites;
@@ -52,6 +62,12 @@ namespace HollowKnight.Enemies
         // Expose the state machine so BossFightController can command it.
         public MantisLordStateMachine StateMachine => _stateMachine;
 
+        public Direction _direction;
+
+        public EnemyProjectile Projectiles { get; set; }
+        
+        public ProjectileSpawner _projectileSpawner;
+
         public MantisLord(Vector2 position, MantisLordSlot slot)
         {
             this.position = position;
@@ -59,7 +75,19 @@ namespace HollowKnight.Enemies
             IsGrounded = false;
 
             // Left lord faces right (toward center) — use the existing FacingDirection flip in BaseEnemy.Draw.
-            FacingDirection = slot == MantisLordSlot.Left ? Direction.Right : Direction.Left;
+            if (slot == MantisLordSlot.Left)
+            {
+                FacingDirection = Direction.Right;
+            } else if (slot == MantisLordSlot.Right)
+            {
+                FacingDirection = Direction.Left;
+            } 
+            else
+            {
+                FacingDirection = Direction.Left;
+            }
+
+            _direction = FacingDirection;
 
             Health = slot == MantisLordSlot.Middle
                 ? EnemyConstants.MantisLordMiddleHealth
@@ -85,7 +113,8 @@ namespace HollowKnight.Enemies
                 [MantisLordState.DStabLeave]     = SpriteFactory.Instance.CreateMantisDStabLeave(position),
                 [MantisLordState.WallArrive]     = SpriteFactory.Instance.CreateWallArrive(position),
                 [MantisLordState.WallReady]      = SpriteFactory.Instance.CreateWallReady(position),
-                [MantisLordState.WallLeave]      = SpriteFactory.Instance.CreateWallLeave(position),
+                [MantisLordState.WallLeave1]      = SpriteFactory.Instance.CreateWallLeave1(position),
+                [MantisLordState.WallLeave2]     = SpriteFactory.Instance.CreateWallLeave2(position),
                 [MantisLordState.Death]          = SpriteFactory.Instance.CreateMantisDeath(position),
                 [MantisLordState.DeathLeaveOne]  = SpriteFactory.Instance.CreateMantisDeathLeaveOne(position),
                 [MantisLordState.DeathLeaveTwo]  = SpriteFactory.Instance.CreateMantisDeathLeaveTwo(position),
@@ -94,13 +123,23 @@ namespace HollowKnight.Enemies
 
             Sprite = _sprites[MantisLordState.IdleOnThrone];
             _stateMachine = new MantisLordStateMachine(this);
+            
         }
 
         public void SetState(MantisLordState newState)
         {
+            // State = newState;
+            // if (newState != MantisLordState.DStabStart && newState != MantisLordState.GracePeriod && newState != MantisLordState.DStabOffset && newState != MantisLordState.DStabLandOffset){
+            //     Sprite = _sprites[newState];
+            //     Sprite.Reset();
+            // }
             State = newState;
-            Sprite = _sprites[newState];
-            Sprite.Reset();
+            if (newState != MantisLordState.DStabStart && newState != MantisLordState.GracePeriod && newState != MantisLordState.DStabOffset && newState != MantisLordState.DStabLandOffset && newState != MantisLordState.DashStart && newState != MantisLordState.WallStart)
+            {
+                Sprite = _sprites[newState];
+                Sprite.Reset();
+            }
+            
         }
 
         public void Activate()
@@ -130,8 +169,13 @@ namespace HollowKnight.Enemies
             // TODO: contact-damage hitbox logic would be checked here
             return base.TakeDamage(side);
         }
-
         protected override void UpdateAlive(GameTime gameTime, float dt)
             => _stateMachine.Update(gameTime, dt);
+
+        public override Rectangle[] GetBounds()
+        {
+            hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, EnemyConstants.mantisLordHitBoxes[State].Width, EnemyConstants.mantisLordHitBoxes[State].Height);
+            return hitBoxes;
+        }
     }
 }

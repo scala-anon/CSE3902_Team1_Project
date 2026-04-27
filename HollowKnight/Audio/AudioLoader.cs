@@ -123,6 +123,64 @@ namespace HollowKnight.Audio
         {
             return sfx[SoundId.GrassCut];
         }
+
+        public SoundEffect Get_Mantis_Land_Ground()
+        {
+            return sfx[SoundId.MantisLandOnGround];
+        }
+
+        public SoundEffect Get_Mantis_Land_Cage()
+        {
+            return sfx[SoundId.MantisLandOnCage];
+        }
+
+        public SoundEffect Get_Mantis_Jump_Ground()
+        {
+            return sfx[SoundId.MantisJumpOffGround];
+        }
+
+        public SoundEffect Get_Mantis_Jump_Cage()
+        {
+            return sfx[SoundId.MantisJumpOffCage];
+        }
+
+        public SoundEffect Get_Mantis_Dash()
+        {
+            return sfx[SoundId.MantisDash];
+        }
+
+        public SoundEffect Get_Mantis_Slash()
+        {
+            return sfx[SoundId.MantisSlash];
+        }
+
+        public SoundEffect Get_Mantis_Slash_Impact()
+        {
+            return sfx[SoundId.MantisSlashImpact];
+        }
+
+        public SoundEffect Get_Mantis_Death1()
+        {
+            return sfx[SoundId.MantisDeath1];
+        }
+         public SoundEffect Get_Mantis_Death2()
+        {
+            return sfx[SoundId.MantisDeath2];
+        }
+         public SoundEffect Get_Mantis_Death3()
+        {
+            return sfx[SoundId.MantisDeath3];
+        }
+
+        public SoundEffect Get_Mantis_Throw()
+        {
+            return sfx[SoundId.MantisThrow];
+        } 
+
+        public SoundEffect Get_Mantis_Projectile()
+        {
+            return sfx[SoundId.MantisProjectile];
+        }
         #endregion Get SFX
 
     }

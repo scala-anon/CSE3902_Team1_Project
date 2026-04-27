@@ -67,12 +67,12 @@ namespace HollowKnight.Enemies
             return true;
         }
 
-        public void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects, float layerDepth = 0f)
+        public void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects, float layerDepth = 0f, float opacity = GameConstants.DefaultSpriteOpacity)
         {
             SpriteEffects effects = FacingDirection == Direction.Right
                 ? SpriteEffects.FlipHorizontally
                 : SpriteEffects.None;
-            Sprite.Draw(spriteBatch, effects, layerDepth);
+            Sprite.Draw(spriteBatch, effects, layerDepth, opacity);
         }
 
         public virtual Rectangle[] GetBounds()

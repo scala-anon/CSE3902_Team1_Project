@@ -15,6 +15,7 @@ namespace HollowKnight.Levels
         public List<IEnemy> Enemies        { get; } = new();
         public List<IObject> Backgrounds   { get; } = new();
         public List<IObject> BackgroundMid   { get; } = new();
+        public List<IObject> Foregrounds    {get;} = new();
         public List<IObject> Platforms     { get; } = new();
         public List<IObject> Foreground    { get; } = new();
         public List<IObject> ForegroundParallax { get; } = new();
@@ -90,6 +91,8 @@ namespace HollowKnight.Levels
                 ["Brick_6"] = pos => new Brick(6, pos, 197, 127),
                 ["Brick_7"] = pos => new Brick(7, pos, 81, 302),
                 ["Brick_8"] = pos => new Brick(8, pos, 78, 280),
+                ["Brick_9"] = pos => new Brick(9, pos, 302, 81),
+                ["Brick_10"] = pos => new Brick(10, pos, 280, 78),
 
                 ["MantisThrone_1"] = pos => new MantisThrone(1, pos, 119, 613),
                 ["MantisThrone_2"] = pos => new MantisThrone(2, pos, 112, 374),
@@ -106,6 +109,37 @@ namespace HollowKnight.Levels
                 ["Village_1"] = pos => new Village(1, pos, 243, 507),
                 ["Village_2"] = pos => new Village(2, pos, 262, 511),
                 ["Village_3"] = pos => new Village(3, pos, 161, 520),
+                ["Village_4"] = pos => new Village(4, pos, 511, 189),
+                ["Village_5"] = pos => new Village(5, pos, 119, 515),
+
+                ["Cage_1"] = pos => new Middleground(1,pos),
+                ["Cage_2"] = pos => new Middleground(2,pos),
+                ["Pole_1"] = pos => new Pole(1,pos,69,477),
+                ["Pole_2"] = pos => new Pole(2,pos,69,477),
+
+                ["Floor_Spike"] = pos => new BossSpike(pos),
+
+                // TODO: Figure out which rocks need to stay in background/foreground 
+                ["Right_Rock_1"] = pos => new Layer(1,pos),
+                ["Right_Rock_2"] = pos => new Layer(2,pos),
+                ["Right_Rock_3"] = pos => new Layer(3,pos),
+                ["Right_Rock_4"] = pos => new Layer(4,pos),
+                ["Right_Rock_5"] = pos => new Layer(5,pos),
+                ["Right_Rock_6"] = pos => new Layer(6,pos),
+                ["Right_Rock_7"] = pos => new Layer(7,pos),
+
+                ["Left_Rock_1"] = pos => new Layer(8,pos),
+                ["Left_Rock_2"] = pos => new Layer(9,pos),
+                ["Left_Rock_3"] = pos => new Layer(10,pos),
+                ["Left_Rock_4"] = pos => new Layer(11,pos),
+                ["Left_Rock_5"] = pos => new Layer(12,pos),
+                ["Left_Rock_6"] = pos => new Layer(13,pos),
+                ["Left_Rock_7"] = pos => new Layer(14,pos),
+                ["Left_Rock_8"] = pos => new Layer(15,pos),
+                ["Left_Rock_9"] = pos => new Layer(16,pos),
+                ["Left_Rock_10"] = pos => new Layer(17,pos),
+
+                
             };
 
             _enemyMap = new Dictionary<string, Func<Vector2, IEnemy>>
@@ -241,6 +275,9 @@ namespace HollowKnight.Levels
             ["Village_1"]      = DecorationLayer.BackgroundMid,
             ["Village_2"]      = DecorationLayer.BackgroundMid,
             ["Village_3"]      = DecorationLayer.BackgroundMid,
+            ["Village_4"]     = DecorationLayer.BackgroundFar,
+            ["Village_5"]      = DecorationLayer.BackgroundFar, 
+
             ["MantisThrone_1"] = DecorationLayer.BackgroundMid,
             ["MantisThrone_2"] = DecorationLayer.BackgroundMid,
 
@@ -248,7 +285,13 @@ namespace HollowKnight.Levels
             ["Flag_2"]         = DecorationLayer.Foreground,
             ["Flag_3"]         = DecorationLayer.Foreground,
             ["Flag_4"]         = DecorationLayer.Foreground,
+
+            ["Brick_9"] = DecorationLayer.BackgroundMid,
+            ["Brick_10"] = DecorationLayer.BackgroundMid,
         };
+
+        // TODO: Add the rocks that need to be inside the foreground!
+        private static readonly HashSet<string> foregroundNames = new();
 
         private string DestroyedKey(string name, Vector2 position)
             => $"{_levelName}_{name}_{(int)position.X}_{(int)position.Y}";
@@ -308,11 +351,11 @@ namespace HollowKnight.Levels
         private void SpawnMantisBossGroup(Vector2 anchor)
         {
             Vector2 leftPos   = new Vector2(anchor.X + EnemyConstants.MantisThroneLeftOffsetX,
-                                            anchor.Y + EnemyConstants.MantisThroneY);
+                                            anchor.Y + EnemyConstants.MantisSecondaryThroneOffsetY);
             Vector2 middlePos = new Vector2(anchor.X + EnemyConstants.MantisThroneMiddleOffsetX,
-                                            anchor.Y + EnemyConstants.MantisThroneY);
+                                            anchor.Y + EnemyConstants.MantisPrimaryThroneOffsetY);
             Vector2 rightPos  = new Vector2(anchor.X + EnemyConstants.MantisThroneRightOffsetX,
-                                            anchor.Y + EnemyConstants.MantisThroneY);
+                                            anchor.Y + EnemyConstants.MantisSecondaryThroneOffsetY);
 
             var left   = new MantisLord(leftPos,   MantisLordSlot.Left);
             var middle = new MantisLord(middlePos, MantisLordSlot.Middle);

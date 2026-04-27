@@ -23,6 +23,7 @@ namespace HollowKnight.Factories
         public Texture2D GetMainBackgroundTexture() => mainBackgroundTexture;
         private Texture2D mantisLordSpriteSheet;
         private Texture2D mantisVillageSpriteSheet;
+        private Texture2D layersSpriteSheet;
         private Texture2D spriteEffectsSheet;
 
         private SpriteFont defaultFont;
@@ -40,8 +41,11 @@ namespace HollowKnight.Factories
 
         private readonly Dictionary<string, Rectangle> backgroundFrames;
 
+        private readonly Dictionary<string, Rectangle> layerFrames;
+
         private readonly Dictionary<string, Rectangle> mantisLordFrames;
         private readonly Dictionary<string, Rectangle[]> mantisLordAnimations;
+        private readonly Dictionary<string,Rectangle[]> bossSpikeAnimations;
         private readonly Dictionary<string, Rectangle> mantisVillageFrames;
         private readonly Dictionary<string, Rectangle> spriteEffectsSingleFrames;
         private readonly Dictionary<string, Rectangle[]> spriteEffectsAnimations;
@@ -68,6 +72,8 @@ namespace HollowKnight.Factories
             mantisLordFrames = new Dictionary<string, Rectangle>();
             mantisLordAnimations = new Dictionary<string, Rectangle[]>();
             mantisVillageFrames = new Dictionary<string, Rectangle>();
+            layerFrames = new Dictionary<string, Rectangle>();
+            bossSpikeAnimations = new Dictionary<string, Rectangle[]>();
             spriteEffectsSingleFrames = new Dictionary<string, Rectangle>();
             spriteEffectsAnimations = new Dictionary<string, Rectangle[]>();
         }
@@ -86,6 +92,7 @@ namespace HollowKnight.Factories
             mainBackgroundTexture = content.Load<Texture2D>("sprites/main-background");
             TextureAtlas mantisLordAtlas = TextureAtlas.FromFile(content, "sprites/mantisLords-atlas.xml");
             TextureAtlas mantisVillageAtlas = TextureAtlas.FromFile(content,"sprites/village-atlas.xml");
+            TextureAtlas layersAtlas = TextureAtlas.FromFile(content, "sprites/layers-atlas.xml");
             enemySpriteSheet = enemyAtlas.Texture;
             platformSpriteSheet = platformAtlas.Texture;
             tutorialPlatformSpriteSheet = tutorialPlatformAtlas.Texture;
@@ -93,6 +100,7 @@ namespace HollowKnight.Factories
             backgroundSpriteSheet = backgroundAtlas.Texture;
             mantisLordSpriteSheet = mantisLordAtlas.Texture;
             mantisVillageSpriteSheet = mantisVillageAtlas.Texture;
+            layersSpriteSheet = layersAtlas.Texture;
             // Knight movement frames
             knightSingleFrames.Add("Damaged", knightAtlas.GetRegion("Damaged").SourceRectangle);
             knightSingleFrames.Add("Sitting_Idle_0", knightAtlas.GetRegion("Sitting_Idle_0").SourceRectangle);
@@ -169,6 +177,8 @@ namespace HollowKnight.Factories
             plantSingleFrames.Add("Plant1_Frame0", backgroundAtlas.GetRegion("Plant1_Frame0").SourceRectangle);
             plantSingleFrames.Add("Plant2_Frame0", backgroundAtlas.GetRegion("Plant2_Frame0").SourceRectangle);
 
+            bossSpikeAnimations.Add("Floor_Spike", mantisVillageAtlas.GetAnimationFrames("Floor_Spike"));
+
             // Mantis Lord frames
             mantisLordFrames.Add("Throne_Idle", mantisLordAtlas.GetRegion("Throne_Idle").SourceRectangle);
             mantisLordAnimations.Add("Throne_Gesture", mantisLordAtlas.GetAnimationFrames("Throne_Gesture"));
@@ -180,7 +190,8 @@ namespace HollowKnight.Factories
             mantisLordAnimations.Add("Wall_Arrive", mantisLordAtlas.GetAnimationFrames("Wall_Arrive"));
             mantisLordAnimations.Add("Wall_Ready", mantisLordAtlas.GetAnimationFrames("Wall_Ready"));
             mantisLordAnimations.Add("Throw", mantisLordAtlas.GetAnimationFrames("Throw"));
-            mantisLordAnimations.Add("Wall_Leave", mantisLordAtlas.GetAnimationFrames("Wall_Leave"));
+            mantisLordAnimations.Add("Wall_Leave1", mantisLordAtlas.GetAnimationFrames("Wall_Leave1"));
+            mantisLordAnimations.Add("Wall_Leave2", mantisLordAtlas.GetAnimationFrames("Wall_Leave2"));
             mantisLordAnimations.Add("Dash_Arrive", mantisLordAtlas.GetAnimationFrames("Dash_Arrive"));
             mantisLordAnimations.Add("Dash_Anticipate", mantisLordAtlas.GetAnimationFrames("Dash_Anticipate"));
             mantisLordAnimations.Add("Dash", mantisLordAtlas.GetAnimationFrames("Dash"));
@@ -193,8 +204,9 @@ namespace HollowKnight.Factories
             mantisLordAnimations.Add("Death", mantisLordAtlas.GetAnimationFrames("Death"));
             mantisLordAnimations.Add("Death_Leave_One", mantisLordAtlas.GetAnimationFrames("Death_Leave_One"));
             mantisLordAnimations.Add("Death_Leave_Two", mantisLordAtlas.GetAnimationFrames("Death_Leave_Two"));
+            mantisLordAnimations.Add("Air_Projectile", mantisLordAtlas.GetAnimationFrames("Air_Projectile"));
 
-            for (int i = 1; i <= 8; i++)
+            for (int i = 1; i <= 10; i++)
             {
                 string key = $"Brick_{i}";
                 mantisVillageFrames.Add(key, mantisVillageAtlas.GetRegion(key).SourceRectangle);
@@ -214,9 +226,33 @@ namespace HollowKnight.Factories
                 string key = $"Flag_{i}";
                 mantisVillageFrames.Add(key, mantisVillageAtlas.GetRegion(key).SourceRectangle);
             }
-            for (int i = 1; i <= 3; i++)
+            for (int i = 1; i <= 5; i++)
             {
                 string key = $"Village_{i}";
+                mantisVillageFrames.Add(key, mantisVillageAtlas.GetRegion(key).SourceRectangle);
+            }
+
+            for (int i = 1; i <= 7; i++)
+            {
+                string key = $"Right_Rock_{i}";
+                layerFrames.Add(key, layersAtlas.GetRegion(key).SourceRectangle);
+            }
+
+            for (int i = 1; i <= 10; i++)
+            {
+                string key = $"Left_Rock_{i}";
+                layerFrames.Add(key, layersAtlas.GetRegion(key).SourceRectangle);
+            }
+
+            for (int i = 1; i <= 2; i++)
+            {
+                string key = $"Cage_{i}";
+                mantisVillageFrames.Add(key, mantisVillageAtlas.GetRegion(key).SourceRectangle);
+            }
+
+            for (int i = 1; i <= 2; i++)
+            {
+                string key = $"Pole_{i}";
                 mantisVillageFrames.Add(key, mantisVillageAtlas.GetRegion(key).SourceRectangle);
             }
 
@@ -501,6 +537,11 @@ namespace HollowKnight.Factories
         }
 
         // Mantis Lord factory methods
+
+        public ISprite CreateMantisProjectile(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Air_Projectile"], position, .1, 1.0f);
+        }
         public ISprite CreateMantisThroneIdle(Vector2 position)
         {
             return new StaticSprite(mantisLordSpriteSheet, mantisLordFrames["Throne_Idle"], position, 1.00f);
@@ -527,7 +568,7 @@ namespace HollowKnight.Factories
         }
         public ISprite CreateThroneWounded(Vector2 position)
         {
-            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Throne_Wounded"], position, 0.1, 1.0f);
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Throne_Wounded"], position, 0.1, 1.0f, loop:false);
         }
         public ISprite CreateThroneBow(Vector2 position)
         {
@@ -539,15 +580,19 @@ namespace HollowKnight.Factories
         }
         public ISprite CreateWallReady(Vector2 position)
         {
-            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Wall_Ready"], position, 0.1, 1.0f);
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Wall_Ready"], position, 0.1, 1.0f, loop:false);
         }
         public ISprite CreateMantisThrow(Vector2 position)
         {
             return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Throw"], position, 0.1, 1.0f, loop: false);
         }
-        public ISprite CreateWallLeave(Vector2 position)
+        public ISprite CreateWallLeave1(Vector2 position)
         {
-            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Wall_Leave"], position, 0.1, 1.0f, loop: false);
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Wall_Leave1"], position, 0.1, 1.0f, loop: false);
+        }
+        public ISprite CreateWallLeave2(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Wall_Leave2"], position, 0.1, 1.0f, loop: false);
         }
         public ISprite CreateMantisDashArrive(Vector2 position)
         {
@@ -599,6 +644,7 @@ namespace HollowKnight.Factories
         }
         public ISprite CreateBrickSprite(int variant, Vector2 position)
         {
+            float scale =1.0f;
             string key = variant switch
             {
                 1 => "Brick_1",
@@ -609,9 +655,15 @@ namespace HollowKnight.Factories
                 6 => "Brick_6",
                 7 => "Brick_7",
                 8 => "Brick_8",
+                9 => "Brick_9",
+                10 => "Brick_10",
                 _ => "Brick_1"
             };
-            return new StaticSprite(mantisVillageSpriteSheet, mantisVillageFrames[key], position, 1.0f);
+            if(variant ==9 || variant == 10)
+            {
+                scale = .5f;
+            }
+            return new StaticSprite(mantisVillageSpriteSheet, mantisVillageFrames[key], position, scale);
         }
         public ISprite CreateMantisThroneSprite(int variant, Vector2 position)
         {
@@ -636,6 +688,7 @@ namespace HollowKnight.Factories
         }
         public ISprite CreateFlagSprite(int variant, Vector2 position)
         {
+            float scale = 1.0f;
             string key = variant switch
             {
                 1 => "Flag_1",
@@ -644,18 +697,92 @@ namespace HollowKnight.Factories
                 4 => "Flag_4",
                 _ => "Flag_1"
             };
-            return new StaticSprite(mantisVillageSpriteSheet, mantisVillageFrames[key], position, 1.0f);
+            if(variant == 3)
+            {
+                scale = .75f;
+            }
+            if(variant == 2)
+            {
+                scale = .9f;
+            }
+            return new StaticSprite(mantisVillageSpriteSheet, mantisVillageFrames[key], position, scale);
         }
         public ISprite CreateVillageSprite(int variant, Vector2 position)
         {
+            float scale = 1.0f;
+            Color? color = null;
             string key = variant switch
             {
                 1 => "Village_1",
                 2 => "Village_2",
                 3 => "Village_3",
+                4 => "Village_4",
+                5 => "Village_5",
                 _ => "Village_1"
             };
+            if(variant == 4)
+            {
+                scale = 1.5f;
+                color = Color.White*.5f;
+            }
+            if(variant == 5)
+            {
+                scale = 1.25f;
+            }
+            return new StaticSprite(mantisVillageSpriteSheet, mantisVillageFrames[key], position, scale,0,color);
+        }
+
+        public ISprite CreateLayerSprite(int variant, Vector2 position)
+        {
+            // TODO: Fix constants
+            string key = variant switch
+            {
+                1 => "Right_Rock_1",
+                2 => "Right_Rock_2",
+                3 => "Right_Rock_3",
+                4 => "Right_Rock_4",
+                5 => "Right_Rock_5",
+                6 => "Right_Rock_6",
+                7 => "Right_Rock_7",
+                8 => "Left_Rock_1",
+                9 => "Left_Rock_2",
+                10 => "Left_Rock_3",
+                11 => "Left_Rock_4",
+                12 => "Left_Rock_5",
+                13 => "Left_Rock_6",
+                14 => "Left_Rock_7",
+                15 => "Left_Rock_8",
+                16 => "Left_Rock_9",
+                17 => "Left_Rock_10",
+                _ => "Right_Rock_1" 
+
+            };
+            return new StaticSprite(layersSpriteSheet, layerFrames[key], position, 2.0f, .75f,Color.White);
+        }
+
+        public ISprite CreateBossMiddlegroundSprite(int variant, Vector2 position)
+        {
+            string key = variant switch
+            {
+                1 => "Cage_1",
+                2 => "Cage_2",
+                _ => "Cage_1"
+            };
             return new StaticSprite(mantisVillageSpriteSheet, mantisVillageFrames[key], position, 1.0f);
+        }
+        public ISprite CreatePoleSprite(int variant, Vector2 position)
+        {
+            string key = variant switch
+            {
+                1 => "Pole_1",
+                2 => "Pole_2",
+                _ => "Pole_1",
+            };
+            return new StaticSprite(mantisVillageSpriteSheet,mantisVillageFrames[key],position,1.0f);
+        }
+        public ISprite CreateBossSpikeIdle(Vector2 position)
+        {
+            return new AnimatedSprite(mantisVillageSpriteSheet, bossSpikeAnimations["Floor_Spike"], position, 0.5, 1.5f);
         }
 
         // Sprite effects factory methods

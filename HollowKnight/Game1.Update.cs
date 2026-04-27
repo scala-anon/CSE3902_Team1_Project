@@ -3,6 +3,7 @@ using HollowKnight.Environment;
 using HollowKnight.Interfaces;
 using HollowKnight.Audio;
 using HollowKnight.Shared;
+using System.Security.Cryptography;
 
 namespace HollowKnight;
 
@@ -107,6 +108,13 @@ internal void CheckTransitions()
     internal void UpdateProjectiles(GameTime gameTime)
     {
         _projectileManager.Update(gameTime);
+    }
+
+    internal void UpdateEnemyProjectiles(GameTime gameTime)
+    {
+        _mantisProjectileLeft.Update(gameTime);
+        _mantisProjectileMiddle.Update(gameTime);
+        _mantisProjectileRight.Update(gameTime);
     }
 
 

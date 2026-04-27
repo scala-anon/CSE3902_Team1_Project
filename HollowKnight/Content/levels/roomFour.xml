@@ -7,16 +7,11 @@
     <Location>6772 5200</Location>
 </Item>
 
-<Item>
-    <ObjectType>Knight</ObjectType>
-    <ObjectName>Knight</ObjectName>
-    <Location>6500 5500</Location>
-</Item>
 
 <Item>
     <ObjectType>Enemy</ObjectType>
     <ObjectName>MantisLord</ObjectName>
-    <Location>4900 5400</Location>
+    <Location>4518 4900</Location>
 </Item>
 
 <Item>
@@ -97,4 +92,352 @@
     <ObjectName>Brick_1</ObjectName>
     <Location>3380 5600</Location>
 </Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>MantisThrone_2</ObjectName>
+    <Location>4518 4810</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>MantisThrone_2</ObjectName>
+    <Location>4264 4910</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>MantisThrone_2</ObjectName>
+    <Location>4772 4910</Location>
+</Item>
+
+
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Village_4</ObjectName>
+    <Location>3600 5350</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Village_5</ObjectName>
+    <Location>5035 5260</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Flag_3</ObjectName>
+    <Location>4030 5060</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Flag_2</ObjectName>
+    <Location>3700 5040</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>MantisThrone_1</ObjectName>
+    <Location>4518 5040</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>MantisThrone_1</ObjectName>
+    <Location>4264 5140</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>MantisThrone_1</ObjectName>
+    <Location>4772 5140</Location>
+</Item>
+
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3764 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>3850 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3850 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3764 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>3850 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3850 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3764 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>3850 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3850 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3764 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>3850 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3850 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3764 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>3850 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3850 5570</Location></Item>
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3864 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>3950 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3950 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3864 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>3950 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3950 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3864 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>3950 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3950 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3864 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>3950 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3950 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3864 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>3950 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3950 5570</Location></Item>
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3964 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4050 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4050 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3964 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4050 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4050 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3964 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4050 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4050 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3964 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4050 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4050 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>3964 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4050 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4050 5570</Location></Item>
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4064 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4150 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4150 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4064 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4150 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4150 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4064 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4150 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4150 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4064 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4150 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4150 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4064 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4150 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4150 5570</Location></Item>
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4164 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4250 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4250 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4164 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4250 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4250 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4164 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4250 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4250 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4164 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4250 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4250 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4164 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4250 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4250 5570</Location></Item>
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4264 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4350 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4350 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4264 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4350 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4350 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4264 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4350 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4350 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4264 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4350 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4350 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4264 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4350 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4350 5570</Location></Item>
+
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4364 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4450 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4450 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4364 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4450 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4450 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4364 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4450 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4450 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4364 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4450 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4450 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4364 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4450 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4450 5570</Location></Item>
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4464 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4550 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4550 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4464 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4550 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4550 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4464 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4550 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4550 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4464 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4550 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4550 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4464 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4550 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4550 5570</Location></Item>
+
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4564 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4650 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4650 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4564 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4650 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4650 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4564 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4650 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4650 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4564 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4650 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4650 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4564 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4650 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4650 5570</Location></Item>
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4664 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4750 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4750 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4664 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4750 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4750 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4664 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4750 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4750 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4664 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4750 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4750 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4664 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4750 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4750 5570</Location></Item>
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4764 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4850 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4850 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4764 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4850 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4850 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4764 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4850 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4850 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4764 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4850 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4850 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4764 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4850 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4850 5570</Location></Item>
+
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4864 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4950 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4950 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4864 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4950 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4950 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4864 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4950 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4950 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4864 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4950 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4950 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4864 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>4950 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4950 5570</Location></Item>
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4964 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>5050 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>5050 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4964 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>5050 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>5050 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4964 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>5050 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>5050 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4964 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>5050 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>5050 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>4964 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>5050 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>5050 5570</Location></Item>
+
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>5064 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>5150 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>5150 5490</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>5064 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>5150 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>5150 5510</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>5064 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>5150 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>5150 5530</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>5064 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>5150 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>5150 5550</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>5064 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_10</ObjectName><Location>5150 5570</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Brick_9</ObjectName><Location>5150 5570</Location></Item>
+
+
+
+
+<!-- <Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Flag_2</ObjectName>
+    <Location>4000 5010</Location>
+</Item>
+
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Village_3</ObjectName>
+    <Location>4000 5010</Location>
+</Item> -->
+
+
+
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Pole_1</ObjectName><Location>5440 4246</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Pole_1</ObjectName><Location>5440 4688</Location></Item>
+
+<!-- <Item><ObjectType>Platform</ObjectType><ObjectName>Pole_1</ObjectName><Location>5440 5130</Location></Item> -->
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Pole_2</ObjectName><Location>3600 4246</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Pole_2</ObjectName><Location>3600 4688</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Pole_2</ObjectName><Location>3600 5130</Location></Item>
+
+<!-- 
+<Item>
+    <ObjectType>Platform</ObjectType>
+    <ObjectName>Floor_Spike</ObjectName>
+    <Location>5200 5600</Location>
+</Item> -->
+
+
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Cage_1</ObjectName><Location>5300 4382</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Cage_1</ObjectName><Location>5300 4791</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Cage_1</ObjectName><Location>5300 5200</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Cage_1</ObjectName><Location>5163 4382</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Cage_1</ObjectName><Location>5163 4791</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Cage_1</ObjectName><Location>5163 5200</Location></Item>
+
+<Item><ObjectType>Platform</ObjectType><ObjectName>Cage_2</ObjectName><Location>3650 4382</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Cage_2</ObjectName><Location>3650 4791</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Cage_2</ObjectName><Location>3650 5200</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Cage_2</ObjectName><Location>3787 4382</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Cage_2</ObjectName><Location>3787 4791</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Cage_2</ObjectName><Location>3787 5200</Location></Item>
+
+<Item>
+    <ObjectType>Knight</ObjectType>
+    <ObjectName>Knight</ObjectName>
+    <Location>6500 5500</Location>
+</Item>
+
 </Level>

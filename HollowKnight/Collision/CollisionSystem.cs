@@ -28,6 +28,7 @@ namespace HollowKnight.Collision
                 // Enemy contact damages knight
                 _handler.Register<Crawlid, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
                 _handler.Register<Vengefly, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
+                // _handler.Register<MantisLord, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
 
                 // Spike contact: TakeDamage handles fatal-hit respawn via OnDeath; for surviving hits, respawn at checkpoint here
                 _handler.Register<Spike, TheKnight>(side, (a, b) => {
@@ -46,6 +47,7 @@ namespace HollowKnight.Collision
                 // Sword damages enemies
                 _handler.Register<SwordHitbox, Crawlid>(side, (a, b) => { if (((Crawlid)b).TakeDamage(side) && _currentKnight != null) _currentKnight.GainSoul(); });
                 _handler.Register<SwordHitbox, Vengefly>(side, (a, b) => { if (((Vengefly)b).TakeDamage(side) && _currentKnight != null) _currentKnight.GainSoul(); });
+                _handler.Register<SwordHitbox, MantisLord>(side, (a, b) => { if (((MantisLord)b).TakeDamage(side) && _currentKnight != null) _currentKnight.GainSoul(); });
 
                 // Item pickup
                 _handler.Register<Spirit, TheKnight>(side, (a, b) => ((TheKnight)b).Collect(side));

@@ -23,5 +23,18 @@ namespace HollowKnight.Audio
         // Environment
         // SpikeHit,
 
-    }
+
+        public const string MantisLandOnGround = "Audio/sfx/Mantis Lord Land On Ground";
+        public const string MantisLandOnCage = "Audio/sfx/Mantis Lord Land Cage";
+        public const string MantisJumpOffGround = "Audio/sfx/Mantis Lord Jump Off Ground";
+        public const string MantisJumpOffCage = "Audio/sfx/Mantis Lord Jump Off Cage";
+        public const string MantisDash = "Audio/sfx/Mantis Lord Horizontal Dash";
+        public const string MantisSlashImpact = "Audio/sfx/Mantis Lord Down Slash Impact";
+        public const string MantisSlash = "Audio/sfx/Mantis Lord Down Slash";
+        public const string MantisDeath1 = "Audio/sfx/Mantis Lord Death 01";
+        public const string MantisDeath2 = "Audio/sfx/Mantis Lord Death 02";
+        public const string MantisDeath3 = "Audio/sfx/Mantis Lord Death 03";
+        public const string MantisThrow = "Audio/sfx/Mantis Sword";
+        public const string MantisProjectile = "Audio/sfx/Mantis Heavy Flyer Projectile Fly Loop";
+    }   
 }

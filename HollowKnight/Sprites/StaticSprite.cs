@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using HollowKnight.Interfaces;
+using HollowKnight.Shared;
 
 namespace HollowKnight.Sprites
 {
@@ -37,6 +38,12 @@ namespace HollowKnight.Sprites
             _defaultEffects = defaultEffects;
         }
 
+        // Compat overload from feature/boss-background. layerDepth and color are accepted for
+        // source compatibility but currently dropped — use the opacity parameter on Draw() for
+        // fade effects instead of pre-multiplying color.
+        public StaticSprite(Texture2D texture, Rectangle sourceRect, Vector2 position, float scale, float layerDepth, Color? color = null)
+            : this(texture, sourceRect, position, new Vector2(scale, scale), SpriteEffects.None) { }
+
         public void Update(GameTime gameTime)
         {
             // No update needed for static sprite
@@ -52,13 +59,13 @@ namespace HollowKnight.Sprites
             _position = position;
         }
 
-        public void Draw(SpriteBatch spriteBatch, SpriteEffects effects, float layerDepth = 0f)
+        public void Draw(SpriteBatch spriteBatch, SpriteEffects effects, float layerDepth = 0f, float opacity = GameConstants.DefaultSpriteOpacity)
         {
             spriteBatch.Draw(
                 _texture,
                 _position,
                 _sourceRect,
-                _tint,
+                _tint * opacity,
                 0f,
                 Vector2.Zero,
                 _scale,

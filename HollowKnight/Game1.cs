@@ -11,6 +11,7 @@ using HollowKnight.Shared;
 using HollowKnight.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using HollowKnight.Abilities;
+using HollowKnight.Enemies;
 
 namespace HollowKnight;
 
@@ -31,6 +32,9 @@ public partial class Game1 : Game
     private readonly ProjectileManager _projectileManager = new();
     private ProjectileSpawner _projectileSpawner;
     private KnightProjectile _knightProjectile;
+    private EnemyProjectile _mantisProjectileLeft;
+    private EnemyProjectile _mantisProjectileMiddle;
+    private EnemyProjectile _mantisProjectileRight;
     private RoomManager _roomManager;
     private LevelLoader _level;
     private Dictionary<int, Vector2> _roomEntryPoints = new();
@@ -38,6 +42,7 @@ public partial class Game1 : Game
     public void RegisterDestroyed(string key) => _destroyedObjects.Add(key);
     public bool IsDestroyed(string key) => _destroyedObjects.Contains(key);
     private bool _isTransitioning = false;
+    private bool _pendingControllerInit = false;
     private readonly ScreenFader _fader = new();
     private ParallaxBackground _parallaxBackground;
 
@@ -73,12 +78,11 @@ public partial class Game1 : Game
         ApplyRoomRespawnPoint();
         InitializeCameraAndRooms();
         InitializeControllers();
-        
+        InitializeFullScreen();
     }
 
     protected override void Update(GameTime gameTime)
     {
-        // Collisions first so IsGrounded is current when input checks it
         if (_gameState is PlayingState)
         {
             UpdateCollisions();
@@ -96,6 +100,13 @@ public partial class Game1 : Game
 
         _gameState.Update(this, gameTime);
         UpdateAudio();
+
+        if (_pendingControllerInit)
+        {
+            _pendingControllerInit = false;
+            InitializeControllers();
+        }
+
         base.Update(gameTime);
     }
 

@@ -290,14 +290,14 @@ namespace HollowKnight.Player
         public int Soul => health.Soul;
         public void GainSoul() => health.GainSoul();
 
-        public void Draw(SpriteBatch spriteBatch, float layerDepth = 0f)
+        public void Draw(SpriteBatch spriteBatch, float layerDepth = 0f, float opacity = GameConstants.DefaultSpriteOpacity)
         {
             SpriteEffects effects = Facing == Direction.Right
                 ? SpriteEffects.None
                 : SpriteEffects.FlipHorizontally;
-            currentSprite.Draw(spriteBatch, effects, layerDepth);
-            combat.DrawSlashEffect(spriteBatch, Facing, GameConstants.LayerDepthKnightEffects);
-            combat.DrawCastPulseEffect(spriteBatch, Facing, GameConstants.LayerDepthKnightEffects);
+            currentSprite.Draw(spriteBatch, effects, layerDepth, opacity);
+            combat.DrawSlashEffect(spriteBatch, Facing, GameConstants.LayerDepthKnightEffects, opacity);
+            combat.DrawCastPulseEffect(spriteBatch, Facing, GameConstants.LayerDepthKnightEffects, opacity);
         }
 
         // --- Movement ---

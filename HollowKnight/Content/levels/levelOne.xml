@@ -8,6 +8,7 @@
     <Location>100 550</Location>
 </Item>
 
+
 <!-- Test vengeflies near spawn -->
 <Item>
     <ObjectType>Enemy</ObjectType>
