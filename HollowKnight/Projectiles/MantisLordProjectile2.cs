@@ -74,8 +74,6 @@ namespace HollowKnight.Projectiles
                 Position = new Vector2(StartPosition.X + localX, StartPosition.Y + localY);
             }
 
-            
-
             _currentSprite.SetPosition(Position);
             _currentSprite.Update(gameTime);
 
@@ -88,16 +86,6 @@ namespace HollowKnight.Projectiles
             if (_state == State.Moving && !HasMoved) return;
 
             SpriteEffects effects = SpriteEffects.None;
-            //if (_state == State.Moving)
-            //{
-            //    effects = _facing == Direction.Right ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            //}
-            //else
-            //{
-            //    // If moving left, use right-facing explosion. If moving right, use left-facing explosion.
-            //    effects = _facing == Direction.Left ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            //}
-
             _currentSprite.Draw(spriteBatch, effects, layerDepth);
         }
 
