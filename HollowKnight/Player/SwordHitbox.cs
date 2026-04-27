@@ -31,7 +31,7 @@ namespace HollowKnight.Player
       switch (attackType)
       {
         case KnightSpriteType.SideSlash:
-          width = CollisionConstants.SideSlashWidth;
+          width = facing == Direction.Right ? CollisionConstants.SideSlashWidthRight : CollisionConstants.SideSlashWidthLeft;
           height = CollisionConstants.SideSlashHeight;
           xOffset = facing == Direction.Right ? knightBounds.Width : -width;
           yOffset = (knightBounds.Height - height) / 2 + CollisionConstants.SideSlashOffsetY;

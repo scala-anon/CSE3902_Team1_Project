@@ -29,10 +29,11 @@ namespace HollowKnight.Shared
         public const int KnightHitboxHeightShrink = 10;
 
         // Sword Hitbox Dimensions
-        public const int SideSlashWidth = 193;
+        public const int SideSlashWidthRight = 173;
+        public const int SideSlashWidthLeft = 153;
         public const int SideSlashHeight = 83;
         public const int SideSlashOffsetY = -15;
-        public const int UpSlashWidth = 143;
+        public const int UpSlashWidth = 123;
         public const int UpSlashHeight = 146;
         public const int DownSlashWidth = 90;
         public const int DownSlashHeight = 120;
