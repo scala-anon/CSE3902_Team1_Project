@@ -324,11 +324,11 @@ namespace HollowKnight.Enemies
                 case MantisLordState.DStabStart:
                     if(_owner.FacingDirection == Direction.Right)
                     {
-                        _owner.position = new Vector2(_owner.knightPosition.X-765/2+35 , _owner.knightPosition.Y - 950);
+                        _owner.position = new Vector2(_owner.knightPosition.X-765/2+35 , 5550 - 950);
                     }
                     else
                     {
-                        _owner.position = new Vector2(_owner.knightPosition.X-765/2-35 , _owner.knightPosition.Y - 950);
+                        _owner.position = new Vector2(_owner.knightPosition.X-765/2-35 , 5550 - 950);
                     }
                      EnterState(MantisLordState.DStabArrive);
                      break;
