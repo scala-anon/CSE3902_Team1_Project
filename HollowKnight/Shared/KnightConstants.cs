@@ -4,7 +4,7 @@ namespace HollowKnight.Shared
     {
         // Physics
         public const float KnightMoveSpeed = 250f;
-        public const float KnightJumpSpeed = -700f;
+        public const float KnightJumpSpeed = -750f;
         public const float KnightGravity = 800f;
         public const float KnightKnockbackSpeed = 250f;
         public const float KnightKnockbackUpwards = -300f;
