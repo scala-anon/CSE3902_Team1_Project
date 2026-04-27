@@ -29,7 +29,7 @@ namespace HollowKnight.Collision
                 _handler.Register<Crawlid, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
                 _handler.Register<Vengefly, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
 
-                // Hitting spikes damages the knight; respawn at checkpoint only if knight survived
+                // Spike contact: TakeDamage handles fatal-hit respawn via OnDeath; for surviving hits, respawn at checkpoint here
                 _handler.Register<Spike, TheKnight>(side, (a, b) => {
                     var knight = (TheKnight)b;
                     knight.TakeDamage(side);

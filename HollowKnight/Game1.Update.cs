@@ -69,8 +69,6 @@ internal void CheckTransitions()
         );
     }
 
-    internal bool KnightIsDead() => _knight.IsDead();
-
     internal void UpdateEnemies(GameTime gameTime)
     {
         foreach (IEnemy enemy in _level.Enemies)

@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using HollowKnight.Interfaces;
 using HollowKnight.Collision;
 using HollowKnight.Pathfinding;
-using HollowKnight.Levels;
 using HollowKnight.Audio;
 using HollowKnight.Player;
 using HollowKnight.Shared;
@@ -65,36 +64,6 @@ namespace HollowKnight.Commands
         public void Execute()
         {
             _game.ToggleInventory();
-        }
-    }
-
-    public class SetGameOverCommand : ICommand
-    {
-        private Game1 _game;
-
-        public SetGameOverCommand(Game1 game)
-        {
-            _game = game;
-        }
-
-        public void Execute()
-        {
-            _game.SetGameOver();
-        }
-    }
-
-    public class SetWinCommand : ICommand
-    {
-        private Game1 _game;
-
-        public SetWinCommand(Game1 game)
-        {
-            _game = game;
-        }
-
-        public void Execute()
-        {
-            _game.SetWin();
         }
     }
 
