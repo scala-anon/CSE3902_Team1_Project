@@ -13,7 +13,11 @@
 <!-- Ceiling (bottom at y=2000, 20px horizontal overlap) -->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5500 1559</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>6336 1559</Location></Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>7172 1559</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>7172 1959</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5500 1959</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>6336 1959</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>7172 1959</Location></Item>
+
 
 
 <!-- Left side of left wall (20px vertical overlap, +10px right to close seam) -->
@@ -51,6 +55,10 @@
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>8317 2896</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>8317 3327</Location></Item>
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1_Front</ObjectName><Location>8317 3758</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>8617 2450</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>8617 2896</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>8617 3327</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Background_1_Front</ObjectName><Location>8617 3758</Location></Item>
 
 <Item>
     <ObjectType>Knight</ObjectType>
