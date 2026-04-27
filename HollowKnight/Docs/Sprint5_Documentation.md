@@ -18,15 +18,21 @@
 
 ### Zach
 - **What went well?**
+Communication went well and working with others
 - **What can be improved?**
+I think in general, waiting to develop till the end of the sprint is something I need to get better at personally. 
 
 ### Thomas
 - **What went well?**
+Communication went well and also I think my understanding of the various different interfaces improved throughout the sprint.
 - **What can be improved?**
+I think I needed to get better at managing my time and producing quality code. I think I struggled time wise with this sprint and also with that could've communicated my struggles better with PM.
 
 ### Sri
 - **What went well?**
+I was able to produced the code that was needed.
 - **What can be improved?**
+I feel like I could communicate with the team more about what I am producing and also get background information on what they are making as well.
 
 ### Sudhish
 - **What went well?**
@@ -36,7 +42,9 @@
 
 ### Niko
 - **What went well?**
+I think I was able to be more on top of things in terms of checking in on the work people have done during the sprint
 - **What can be improved?**
+I think maintaining the branches and merging ahead of time is something I can always be working on.
 
 ### Action Plan
 
