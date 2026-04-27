@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas>
+	<Texture>sprites/NickPainterSpriteSheet</Texture>
+	<Regions>
+    
+    <!--Frames for nail/sword attack - specifically the sword swinging-->
+    <Region name="Projectile_0" x="1520" y="2339" width="175" height="212" />
+    <Region name="Projectile_1" x="1742" y="2339" width="172" height="212" />
+    <Region name="Projectile_2" x="1949" y="2339" width="184" height="212" />
+    <Region name="Projectile_3" x="2155" y="2339" width="204" height="212" />
+	</Regions>
+</TextureAtlas>
