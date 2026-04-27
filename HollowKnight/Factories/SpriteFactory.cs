@@ -25,6 +25,7 @@ namespace HollowKnight.Factories
         private Texture2D mantisVillageSpriteSheet;
         private Texture2D layersSpriteSheet;
         private Texture2D spriteEffectsSheet;
+        private Texture2D NickPainterSpriteSheet;
 
         private SpriteFont defaultFont;
 
@@ -49,6 +50,8 @@ namespace HollowKnight.Factories
         private readonly Dictionary<string, Rectangle> mantisVillageFrames;
         private readonly Dictionary<string, Rectangle> spriteEffectsSingleFrames;
         private readonly Dictionary<string, Rectangle[]> spriteEffectsAnimations;
+        private readonly Dictionary<string, Rectangle> NickPainterSingleFrames;
+        private readonly Dictionary<string, Rectangle[]> NickPainterAnimations;
 
         private static SpriteFactory instance = new SpriteFactory();
 
@@ -76,6 +79,8 @@ namespace HollowKnight.Factories
             bossSpikeAnimations = new Dictionary<string, Rectangle[]>();
             spriteEffectsSingleFrames = new Dictionary<string, Rectangle>();
             spriteEffectsAnimations = new Dictionary<string, Rectangle[]>();
+            NickPainterSingleFrames = new Dictionary<string, Rectangle>();
+            NickPainterAnimations = new Dictionary<string, Rectangle[]>();
         }
 
         public void LoadAllTextures(ContentManager content)
@@ -93,6 +98,7 @@ namespace HollowKnight.Factories
             TextureAtlas mantisLordAtlas = TextureAtlas.FromFile(content, "sprites/mantisLords-atlas.xml");
             TextureAtlas mantisVillageAtlas = TextureAtlas.FromFile(content,"sprites/village-atlas.xml");
             TextureAtlas layersAtlas = TextureAtlas.FromFile(content, "sprites/layers-atlas.xml");
+            TextureAtlas NickPainterAtlas = TextureAtlas.FromFile(content, "sprites/NickPainter-atlas.xml");
             enemySpriteSheet = enemyAtlas.Texture;
             platformSpriteSheet = platformAtlas.Texture;
             tutorialPlatformSpriteSheet = tutorialPlatformAtlas.Texture;
@@ -101,6 +107,7 @@ namespace HollowKnight.Factories
             mantisLordSpriteSheet = mantisLordAtlas.Texture;
             mantisVillageSpriteSheet = mantisVillageAtlas.Texture;
             layersSpriteSheet = layersAtlas.Texture;
+            NickPainterSpriteSheet = NickPainterAtlas.Texture;
             // Knight movement frames
             knightSingleFrames.Add("Damaged", knightAtlas.GetRegion("Damaged").SourceRectangle);
             knightSingleFrames.Add("Sitting_Idle_0", knightAtlas.GetRegion("Sitting_Idle_0").SourceRectangle);
@@ -206,6 +213,8 @@ namespace HollowKnight.Factories
             mantisLordAnimations.Add("Death_Leave_Two", mantisLordAtlas.GetAnimationFrames("Death_Leave_Two"));
             mantisLordAnimations.Add("Air_Projectile", mantisLordAtlas.GetAnimationFrames("Air_Projectile"));
 
+            NickPainterAnimations.Add("Projectile", NickPainterAtlas.GetAnimationFrames("Projectile"));
+
             for (int i = 1; i <= 10; i++)
             {
                 string key = $"Brick_{i}";
@@ -255,6 +264,7 @@ namespace HollowKnight.Factories
                 string key = $"Pole_{i}";
                 mantisVillageFrames.Add(key, mantisVillageAtlas.GetRegion(key).SourceRectangle);
             }
+
 
             // Sprite effects sheet
             TextureAtlas spriteEffectsAtlas = TextureAtlas.FromFile(content, "sprites/sprite_effects.xml");
@@ -804,6 +814,10 @@ namespace HollowKnight.Factories
         public ISprite CreateTransitionLightFlipped(Vector2 position)
         {
             return new StaticSprite(spriteEffectsSheet, spriteEffectsSingleFrames["transition_light"], position, new Vector2(1.0f, 2.25f), SpriteEffects.FlipHorizontally);
+        }
+        public ISprite CreateNickPainterProjectile(Vector2 position)
+        {
+            return new AnimatedSprite(spriteEffectsSheet, spriteEffectsAnimations["Projectile"], position, 0.1, 1.0f, loop: false);
         }
     }
 }

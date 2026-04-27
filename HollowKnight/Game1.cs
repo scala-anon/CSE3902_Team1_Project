@@ -113,7 +113,7 @@ public partial class Game1 : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
+        GraphicsDevice.Clear(Color.Navy);
 
         if (!IsTitleScreenOpen())
         {
