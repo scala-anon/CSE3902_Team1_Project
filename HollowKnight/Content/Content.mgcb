@@ -72,6 +72,66 @@
 /processorParam:Quality=Best
 /build:Audio/sfx/Crawler.mp3
 
+#begin Audio/GoofySFX/GoofyTakeDamage.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/GoofySFX/GoofyTakeDamage.mp3
+
+#begin Audio/GoofySFX/GoofyDamage1.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/GoofySFX/GoofyDamage1.mp3
+
+#begin Audio/GoofySFX/GoofyFoundVengeFly.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/GoofySFX/GoofyFoundVengeFly.mp3
+
+#begin Audio/GoofySFX/GoofyFoundCrawlid.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/GoofySFX/GoofyFoundCrawlid.mp3
+
+#begin Audio/GoofySFX/GoofyFoundMantisLords.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/GoofySFX/GoofyFoundMantisLords.mp3
+
+#begin Audio/GoofySFX/GoofyDeath.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/GoofySFX/GoofyDeath.mp3
+
+#begin Audio/GoofySFX/GoofyTouchSpikes.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/GoofySFX/GoofyTouchSpikes.mp3
+
+#begin Audio/GoofySFX/GoofyWin.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/GoofySFX/GoofyWin.mp3
+
+#begin Audio/GoofySFX/GoofyOnKill.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/GoofySFX/GoofyOnKill.mp3
+
+#begin Audio/GoofySFX/GoofySpirit.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/GoofySFX/GoofySpirit.mp3
+
 #begin Audio/sfx/Enemy Damage.mp3
 /importer:Mp3Importer
 /processor:SoundEffectProcessor

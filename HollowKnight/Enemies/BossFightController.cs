@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using HollowKnight.Audio;
 using HollowKnight.Interfaces;
 using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
@@ -84,6 +85,7 @@ namespace HollowKnight.Enemies
             if (_phase != BossFightPhase.Dormant) return;
             // TODO: lock room exit here
             _phase = BossFightPhase.Phase1_Middle;
+            AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_Mantis_Lords());
             _middle.StateMachine.CommandActivate();
         }
 
@@ -296,6 +298,7 @@ namespace HollowKnight.Enemies
                 _middle.StateMachine.IsBowComplete &&
                 _right.StateMachine.IsBowComplete)
             {
+                AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_Win());
                 _phase = BossFightPhase.Done;
                 _game.SetWin();
             }

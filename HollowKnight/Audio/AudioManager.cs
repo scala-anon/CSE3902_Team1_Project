@@ -25,6 +25,8 @@ namespace HollowKnight.Audio
     //Tracks the volume for sound effect playback when mutting and unmutting
     private float _previousSoundEffectVolume;
 
+    private bool GoofySFX = false;
+
     /// <summary>
     /// gets a value that indicates if audio is muted
     /// </summary>
@@ -194,6 +196,14 @@ namespace HollowKnight.Audio
             soundEffect.Stop();
         }
 
+        public void TryPlayGoofy(SoundEffect soundEffect)
+        {
+            if (GoofySFX == true)
+            {
+                PlaySoundEffect(soundEffect);
+            }
+        }
+
         /// <summary>
         /// Plays the gvien song
         /// </summary>
@@ -272,6 +282,11 @@ namespace HollowKnight.Audio
             {
                 MuteAudio();
             }
+        }
+
+        public void ToggleGoofy()
+        {
+            GoofySFX = !GoofySFX;
         }
 
 

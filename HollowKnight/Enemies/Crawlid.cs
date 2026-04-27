@@ -4,6 +4,7 @@ using HollowKnight.Interfaces;
 using HollowKnight.Shared;
 using HollowKnight.Collision;
 using Microsoft.Xna.Framework;
+using HollowKnight.Audio;
 
 namespace HollowKnight.Enemies
 {
@@ -63,6 +64,7 @@ namespace HollowKnight.Enemies
         public void Kill()
         {
             if (!Alive) return;
+            
             Health = 0;
             Alive = false;
             _isDamaged = false;

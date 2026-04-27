@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using HollowKnight.Shared;
+using HollowKnight.Audio;
 
 namespace HollowKnight.Player
 {
@@ -12,6 +13,7 @@ namespace HollowKnight.Player
         public int Soul { get; private set; } = KnightConstants.KnightStartSoul;
         public int MaxSoul { get; } = KnightConstants.KnightMaxSoul;
 
+        private bool AudioPlayed = false;
         public bool IsDamaged { get; private set; }
         public bool IsHealing { get; private set; }
 
@@ -47,11 +49,21 @@ namespace HollowKnight.Player
         {
             if (IsDamaged)
             {
+                AudioPlayed = false;
                 damagedTimer += gameTime.ElapsedGameTime.TotalSeconds;
                 if (damagedTimer >= KnightConstants.KnightInvincibilityDuration)
                 {
                     IsDamaged = false;
                     damagedTimer = 0;
+                }
+            }
+
+            if (Health == 0)
+            {
+                if (AudioPlayed == false)
+                {
+                    AudioPlayed = true;
+                    AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_Death());
                 }
             }
         }
@@ -63,6 +75,7 @@ namespace HollowKnight.Player
             damagedTimer = 0;
             Health = Math.Max(0, Health - 1);
             CancelHeal();
+            AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_Take_Damage());
             return true;
         }
 

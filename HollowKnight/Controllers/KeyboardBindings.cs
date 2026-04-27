@@ -153,6 +153,10 @@ namespace HollowKnight.Controllers
             keyboard.RegisterPressedCommand(Keys.Q, new QuitCommand(game));
 
 
+            //Toggle Goofy SFX
+            keyboard.RegisterPressedCommand(Keys.OemTilde, new ToggleGoofyCommand());
+
+
         }
     }
 }

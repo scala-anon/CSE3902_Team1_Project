@@ -15,6 +15,7 @@ namespace HollowKnight.Enemies
         private bool _isTurning = false;
         private float _turnTimer = 0f;
         private float _velocityY = 0f;
+        private bool found = false;
         private List<IObject> _platforms = new List<IObject>();
 
         public CrawlidStateMachine(Crawlid enemy)
@@ -38,10 +39,12 @@ namespace HollowKnight.Enemies
         {
             CurrentCrawlid.Health--;
             AudioManager.Instance.PlaySoundEffectIfInView(AudioLoader.Instance.Get_Enemy_Damage(), CurrentCrawlid.position);
+            AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_Damage());
             if (CurrentCrawlid.Health <= 0)
             {
                 _isTurning = false;
                 _turnTimer = 0f;
+                AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_On_Kill());
                 CurrentCrawlid.Alive = false;
                 CurrentCrawlid.SetState(CurrentCrawlid.IsGrounded
                     ? CrawlidState.DeathLand
@@ -61,6 +64,14 @@ namespace HollowKnight.Enemies
                 CurrentCrawlid.UpdateSpritePosition();
                 return;
             }
+
+            found = AudioManager.Instance.TryPlaySoundEffect(CurrentCrawlid.position);
+            if (found == true)
+            {
+                AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_Crawlid());
+                found = false;
+            }
+
             _velocityY = 0f;
 
             if (frameCounter % 180 == 0)

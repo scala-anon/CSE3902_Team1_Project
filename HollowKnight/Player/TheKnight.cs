@@ -338,7 +338,6 @@ namespace HollowKnight.Player
         public void StartDash()
         {
             health.CancelHeal();
-            AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Hero_Dash());
             dash.StartDash(Facing, physics.IsGrounded, position);
         }
 

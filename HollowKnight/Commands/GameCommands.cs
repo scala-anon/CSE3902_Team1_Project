@@ -158,4 +158,9 @@ namespace HollowKnight.Commands
     {
         public void Execute() => AudioManager.Instance.ToggleMute();
     }
+
+    public class ToggleGoofyCommand : ICommand
+    {
+        public void Execute() => AudioManager.Instance.ToggleGoofy();
+    }
 }

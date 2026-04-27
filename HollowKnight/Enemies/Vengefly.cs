@@ -5,6 +5,7 @@ using HollowKnight.Shared;
 using HollowKnight.Collision;
 using HollowKnight.Pathfinding;
 using Microsoft.Xna.Framework;
+using HollowKnight.Audio;
 
 namespace HollowKnight.Enemies
 {

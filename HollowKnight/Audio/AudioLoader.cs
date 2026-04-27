@@ -183,5 +183,58 @@ namespace HollowKnight.Audio
         }
         #endregion Get SFX
 
+        #region Get GoodySFX
+
+        public SoundEffect Get_Goofy_Take_Damage()
+        {
+            return sfx[SoundId.GoofyTakeDamage];
+        }
+
+        public SoundEffect Get_Goofy_Damage()
+        {
+            return sfx[SoundId.GoofyDealDamage];
+        }
+
+        public SoundEffect Get_Goofy_VengeFly()
+        {
+            return sfx[SoundId.GoofyVengeFly];
+        }
+
+        public SoundEffect Get_Goofy_Crawlid()
+        {
+            return sfx[SoundId.GoofyCrawlid];
+        }
+
+        public SoundEffect Get_Goofy_Mantis_Lords()
+        {
+            return sfx[SoundId.GoofyMantisLords];
+        }
+
+        public SoundEffect Get_Goofy_Death()
+        {
+            return sfx[SoundId.GoofyDeath];
+        }
+
+        public SoundEffect Get_Goofy_Spikes()
+        {
+            return sfx[SoundId.GoofySpikes];
+        }
+
+        public SoundEffect Get_Goofy_Win()
+        {
+            return sfx[SoundId.GoofyWin];
+        }
+
+        public SoundEffect Get_Goofy_On_Kill()
+        {
+            return sfx[SoundId.GoofyWin];
+        }
+
+        public SoundEffect Get_Goofy_Spirit()
+        {
+            return sfx[SoundId.GoofySpirit];
+        }
+
+        #endregion Get GoofySFX
     }
 }

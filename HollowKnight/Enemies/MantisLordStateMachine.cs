@@ -106,6 +106,7 @@ namespace HollowKnight.Enemies
             if (_healthDepleted) return;
             _healthDepleted = true;
             IsAttacking = false;
+            AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_On_Kill());
             // TODO: audio hook — play death sound
             EnterState(MantisLordState.Death);
         }

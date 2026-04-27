@@ -8,6 +8,7 @@ using HollowKnight.Projectiles;
 using HollowKnight.Abilities;
 using HollowKnight.Pathfinding;
 using HollowKnight.Shared;
+using HollowKnight.Audio;
 
 namespace HollowKnight.Collision
 {
@@ -28,12 +29,13 @@ namespace HollowKnight.Collision
                 // Enemy contact damages knight
                 _handler.Register<Crawlid, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
                 _handler.Register<Vengefly, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
-                // _handler.Register<MantisLord, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
+                _handler.Register<MantisLord, TheKnight>(side, (a, b) => ((TheKnight)b).TakeDamage(side));
 
                 // Spike contact: TakeDamage handles fatal-hit respawn via OnDeath; for surviving hits, respawn at checkpoint here
                 _handler.Register<Spike, TheKnight>(side, (a, b) => {
                     var knight = (TheKnight)b;
                     knight.TakeDamage(side);
+                    AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_Spikes());
                     if (knight.HasRespawnPoint && !knight.JustDied && !knight.DeathAnimPlaying) knight.Respawn();
                     knight.ConsumeJustDied();
                 });
