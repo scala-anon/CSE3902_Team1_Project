@@ -67,6 +67,16 @@ namespace HollowKnight.Audio
             return songs[SoundId.EnterHollownest];
         }
 
+        public Song Get_1001_Nights()
+        {
+            return songs [SoundId.Nights];
+        }
+
+        public Song Get_Axel_F()
+        {
+            return songs [SoundId.AxelF];
+        }
+
         #endregion Get Music
 
         #region Get SFX

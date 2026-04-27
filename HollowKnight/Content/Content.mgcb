@@ -228,6 +228,18 @@
 /processorParam:Quality=Best
 /build:Audio/Music/EnterHollownest.mp3
 
+#begin Audio/Music/1001 Nights.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/1001 Nights.mp3
+
+#begin Audio/Music/Crazy Frog - Axel F (Official Video) 4.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/Crazy Frog - Axel F (Official Video) 4.mp3
+
 #begin Audio/AudioFiles.xml
 /copy:Audio/AudioFiles.xml
 

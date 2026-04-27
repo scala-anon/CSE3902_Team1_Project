@@ -222,6 +222,14 @@ namespace HollowKnight.Audio
 
         }
 
+        public void TryPlayGoofySong(Song song)
+        {
+            if (GoofySFX == true)
+            {
+                PlaySong(song);
+            }
+        }
+
         /// <summary>
         /// Pauses all audio
         /// </summary>
@@ -287,6 +295,13 @@ namespace HollowKnight.Audio
         public void ToggleGoofy()
         {
             GoofySFX = !GoofySFX;
+            if (GoofySFX == true)
+            {
+                PlaySong(AudioLoader.Instance.Get_Axel_F());
+            } else
+            {
+                PlaySong(AudioLoader.Instance.Get_Enter_Hollownest());
+            }
         }
 
 

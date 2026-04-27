@@ -65,12 +65,17 @@ namespace HollowKnight.Enemies
                 return;
             }
 
-            found = AudioManager.Instance.TryPlaySoundEffect(CurrentCrawlid.position);
-            if (found == true)
+            if (found == false)
             {
-                AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_Crawlid());
-                found = false;
+                bool onScreen = AudioManager.Instance.TryPlaySoundEffect(CurrentCrawlid.position);
+                if (onScreen == true)
+                {
+                    found = true;
+                    AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_Crawlid());
+                
+                }
             }
+            
 
             _velocityY = 0f;
 

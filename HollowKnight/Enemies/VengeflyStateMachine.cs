@@ -59,13 +59,17 @@ namespace HollowKnight.Enemies
             }
             frameCounter++;
 
-
-            found = AudioManager.Instance.TryPlaySoundEffect(CurrentVengeFly.position);
-            if (found == true)
+            if (found == false)
             {
-                AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_VengeFly());
-                found = true;
+                bool onScreen = AudioManager.Instance.TryPlaySoundEffect(CurrentVengeFly.position);
+                if (onScreen == true)
+                {
+                    AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_VengeFly());
+                    found = true;
+                }
             }
+            
+            
             
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             Vector2 enemyCenter = CurrentVengeFly.GetCenter();
