@@ -214,7 +214,11 @@ namespace HollowKnight.Factories
             mantisLordAnimations.Add("Air_Projectile", mantisLordAtlas.GetAnimationFrames("Air_Projectile"));
 
             NickPainterAnimations.Add("Projectile", NickPainterAtlas.GetAnimationFrames("Projectile"));
-
+            NickPainterAnimations.Add("Idle", NickPainterAtlas.GetAnimationFrames("Idle"));
+            NickPainterAnimations.Add("Attack", NickPainterAtlas.GetAnimationFrames("Attack"));
+            NickPainterAnimations.Add("Walking", NickPainterAtlas.GetAnimationFrames("Walking"));
+            NickPainterAnimations.Add("Dash", NickPainterAtlas.GetAnimationFrames("Dash"));
+            NickPainterSingleFrames.Add("Damage_Frame", NickPainterAtlas.GetRegion("Damage_Frame").SourceRectangle);
             for (int i = 1; i <= 10; i++)
             {
                 string key = $"Brick_{i}";
@@ -818,6 +822,26 @@ namespace HollowKnight.Factories
         public ISprite CreateNickPainterProjectile(Vector2 position)
         {
             return new AnimatedSprite(spriteEffectsSheet, spriteEffectsAnimations["Projectile"], position, 0.1, 1.0f, loop: false);
+        }
+        public ISprite CreateNickPainterIdle(Vector2 position)
+        {
+            return new AnimatedSprite(NickPainterSpriteSheet, NickPainterAnimations["Idle"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateNickPainterAttack(Vector2 position)
+        {
+            return new AnimatedSprite(NickPainterSpriteSheet, NickPainterAnimations["Attack"], position, 0.1, 1.0f, loop: false);
+        }
+        public ISprite CreateNickPainterWalking(Vector2 position)
+        {
+            return new AnimatedSprite(NickPainterSpriteSheet, NickPainterAnimations["Walking"], position, 0.1, 1.0f);
+        }
+        public ISprite CreateNickPainterDash(Vector2 position)
+        {
+            return new AnimatedSprite(NickPainterSpriteSheet, NickPainterAnimations["Dash"], position, 0.1, 1.0f, loop: false);
+        }
+        public ISprite CreateNickPainterDamageFrame(Vector2 position)
+        {
+            return new StaticSprite(NickPainterSpriteSheet, NickPainterSingleFrames["Damage_Frame"], position, 1.0f);
         }
     }
 }

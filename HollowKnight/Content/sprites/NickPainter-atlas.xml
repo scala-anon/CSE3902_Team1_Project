@@ -3,10 +3,37 @@
 	<Texture>sprites/NickPainterSpriteSheet</Texture>
 	<Regions>
     
+    <!-- Dash -->
+    <Region name="Dash_0" x="115" y="1007" width="213" height="246" />
+    <Region name="Dash_1" x="346" y="1013" width="247" height="254" />
+    <Region name="Dash_2" x="629" y="1007" width="251" height="249" />
+    <Region name="Dash_3" x="951" y="1019" width="246" height="238" />
+
+    <!-- Attack -->
+    <Region name="Attack_0" x="81" y="1415" width="964" height="281" />
+    <Region name="Attack_1" x="584" y="1437" width="964" height="281" />
+
+    <!-- Walking -->
+    <Region name="Walking_0" x="107" y="572" width="145" height="309" />
+    <Region name="Walking_1" x="252" y="572" width="135" height="309" />
+    <Region name="Walking_2" x="387" y="572" width="151" height="308" />
+    <Region name="Walking_3" x="1138" y="572" width="144" height="311" />
+    <Region name="Walking_4" x="679" y="572" width="137" height="309" />
+    <Region name="Walking_5" x="819" y="572" width="144" height="311" />
+
+    <!-- Damage -->
+    <Region name="Damage_Frame" x="411" y="1829" width="141" height="284" />
+
+    <!-- Idle -->
+    <Region name="Idle_0" x="130" y="185" width="166" height="298" />
+    <Region name="Idle_1" x="344" y="185" width="166" height="298" />
+    <Region name="Idle_2" x="560" y="185" width="166" height="298" />
+    <Region name="Idle_3" x="776" y="185" width="166" height="298" />
     <!--Frames for nail/sword attack - specifically the sword swinging-->
     <Region name="Projectile_0" x="1520" y="2339" width="175" height="212" />
     <Region name="Projectile_1" x="1742" y="2339" width="172" height="212" />
     <Region name="Projectile_2" x="1949" y="2339" width="184" height="212" />
     <Region name="Projectile_3" x="2155" y="2339" width="204" height="212" />
+    
 	</Regions>
 </TextureAtlas>
