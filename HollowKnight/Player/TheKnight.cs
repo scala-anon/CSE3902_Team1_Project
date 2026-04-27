@@ -73,6 +73,8 @@ namespace HollowKnight.Player
         public bool JustDied => _justDied;
         public void ConsumeJustDied() => _justDied = false;
         public bool DeathAnimPlaying => _deathAnimPlaying;
+        public bool IsDownSlashing => combat.IsAttacking && combat.AttackType == KnightSpriteType.DownSlash;
+        public void ApplyPogoBounce() => physics.ApplyPogoBounce();
         public void SetBenchSpawnPoint(Vector2 pos) => benchSpawnPoint = pos;
         public bool IsSitting => _isSitting;
         public void StartSitting(Vector2 benchPosition)

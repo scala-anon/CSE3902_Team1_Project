@@ -146,6 +146,12 @@ namespace HollowKnight.Player
             : -KnightConstants.KnightDashSpeed;
         }
 
+        public void ApplyPogoBounce()
+        {
+            Velocity.Y = KnightConstants.KnightPogoVelocity;
+            IsGrounded = false;
+        }
+
         public void ApplyKnockback(CollisionSide side)
         {
             knockbackTimer = KnightConstants.KnightKnockbackDuration;

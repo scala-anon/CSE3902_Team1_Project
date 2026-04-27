@@ -43,9 +43,15 @@ namespace HollowKnight.Collision
                 // Spikes instantly kill crawlid
                 _handler.Register<Spike, Crawlid>(side, (a, b) => ((Crawlid)b).Kill());
 
-                // Sword damages enemies
-                _handler.Register<SwordHitbox, Crawlid>(side, (a, b) => { if (((Crawlid)b).TakeDamage(side) && _currentKnight != null) _currentKnight.GainSoul(); });
-                _handler.Register<SwordHitbox, Vengefly>(side, (a, b) => { if (((Vengefly)b).TakeDamage(side) && _currentKnight != null) _currentKnight.GainSoul(); });
+                // Sword damages enemies; pogo bounce if down-slashing
+                _handler.Register<SwordHitbox, Crawlid>(side, (a, b) => {
+                    if (((Crawlid)b).TakeDamage(side) && _currentKnight != null) _currentKnight.GainSoul();
+                    if (_currentKnight != null && _currentKnight.IsDownSlashing) _currentKnight.ApplyPogoBounce();
+                });
+                _handler.Register<SwordHitbox, Vengefly>(side, (a, b) => {
+                    if (((Vengefly)b).TakeDamage(side) && _currentKnight != null) _currentKnight.GainSoul();
+                    if (_currentKnight != null && _currentKnight.IsDownSlashing) _currentKnight.ApplyPogoBounce();
+                });
 
                 // Item pickup
                 _handler.Register<Spirit, TheKnight>(side, (a, b) => ((TheKnight)b).Collect(side));
@@ -120,6 +126,16 @@ namespace HollowKnight.Collision
                     if (side != CollisionSide.None)
                         DebugLogger.LogCollision($"SwordHitbox vs {enemy.GetType().Name} side={side}");
                     _handler.HandleCollision(swordHitbox, enemy, side);
+                }
+
+                // Sword vs Spike: pogo bounce when down-slashing
+                foreach (IObject obj in platforms)
+                {
+                    if (obj == null || !obj.IsActive || obj is not Spike spike) continue;
+                    if (!CollisionLayerMatrix.ShouldCollide(swordHitbox, spike)) continue;
+                    CollisionSide side = CollisionDetector.Detect(swordHitbox, spike);
+                    if (side != CollisionSide.None && _currentKnight.IsDownSlashing)
+                        _currentKnight.ApplyPogoBounce();
                 }
 
                 // Sword vs BreakableTerrain: process IBreakable objects here via the
