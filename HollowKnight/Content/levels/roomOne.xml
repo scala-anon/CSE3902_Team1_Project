@@ -200,6 +200,24 @@
     <Location>308 1930</Location>
 </Item>
 
+<!-- Foreground pillars on beginning path -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Pillar_0</ObjectName><Location>600 2588</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Pillar_1_Flipped</ObjectName><Location>1900 2587</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Pillar_1</ObjectName><Location>3450 2588</Location></Item>
+
+<!-- Grass on parkour path row (y=2200) -->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Plant1_Idle</ObjectName><Location>4350 2053</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Plant2_Idle</ObjectName><Location>4750 2053</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Plant2_Idle</ObjectName><Location>4825 2053</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Plant1_Idle</ObjectName><Location>5100 2053</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Plant2_Idle</ObjectName><Location>5250 2053</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Plant1_Idle</ObjectName><Location>5555 2053</Location></Item>
+
+
+<!-- Foreground pillars on parkour path section-->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Pillar_0</ObjectName><Location>6400 2887</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Pillar_1_Flipped</ObjectName><Location>7900 2887</Location></Item>
+
 <Item>
     <ObjectType>Platform</ObjectType>
     <ObjectName>Door_0</ObjectName>

@@ -104,7 +104,8 @@ namespace HollowKnight.Player
                     slashPosition.Y -= _slashEffectFixedSize.Y - _knightFixedSize.Y / KnightConstants.UpSlashEffectYDivisor;
                     break;
                 case KnightSpriteType.DownSlash:
-                    slashPosition.X += (_knightFixedSize.X - _slashEffectFixedSize.X) / 2 - _knightFixedSize.X / KnightConstants.DownSlashEffectXDivisor;
+                    slashPosition.X += (_knightFixedSize.X - _slashEffectFixedSize.X) / 2 - _knightFixedSize.X / KnightConstants.DownSlashEffectXDivisor
+                        + (facing == Direction.Left ? KnightConstants.DownSlashEffectLeftOffsetX : 0);
                     slashPosition.Y += _knightFixedSize.Y - _knightFixedSize.Y / KnightConstants.DownSlashEffectYDivisor;
                     break;
             }

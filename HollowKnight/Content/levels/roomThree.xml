@@ -271,11 +271,18 @@
 
 <Item><ObjectType>Platform</ObjectType><ObjectName>Bench</ObjectName><Location>5790 4480</Location></Item>
 
+<!--pillar foreground paralax objects-->
+<Item><ObjectType>Platform</ObjectType><ObjectName>Pillar_0</ObjectName><Location>8285 6430</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Pillar_1_Flipped</ObjectName><Location>9485 6430</Location></Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Pillar_1</ObjectName><Location>11000 6430</Location></Item>
+
+
 <Item>
     <ObjectType>TransitionV</ObjectType>
     <ObjectName>ToRoom4</ObjectName>
     <Location>5470 4050</Location>
 </Item>
+<Item><ObjectType>Platform</ObjectType><ObjectName>Transition_Light_Flipped</ObjectName><Location>5490 3975</Location></Item>
 
 
 

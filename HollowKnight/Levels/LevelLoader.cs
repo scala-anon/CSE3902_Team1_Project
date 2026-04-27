@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using HollowKnight.Interfaces;
 using HollowKnight.Environment;
 using HollowKnight.Enemies;
@@ -16,6 +17,7 @@ namespace HollowKnight.Levels
         public List<IObject> BackgroundMid   { get; } = new();
         public List<IObject> Platforms     { get; } = new();
         public List<IObject> Foreground    { get; } = new();
+        public List<IObject> ForegroundParallax { get; } = new();
         public List<IInteractable> Interactables { get; } = new();
         public List<TransitionZone> Transitions { get; } = new();
         public Vector2 KnightSpawn { get; private set; } = Vector2.Zero;
@@ -50,6 +52,10 @@ namespace HollowKnight.Levels
                 ["Background_Main"]           = pos => new Background(3, pos),
                 ["Transition_Light"]          = pos => new Background(4, pos),
                 ["Transition_Light_Flipped"]  = pos => new Background(5, pos),
+                ["Pillar_0"]                  = pos => new Background(6, pos, tint: new Color(EnvironmentConstants.PillarForegroundTint, EnvironmentConstants.PillarForegroundTint, EnvironmentConstants.PillarForegroundTint)),
+                ["Pillar_1"]                  = pos => new Background(7, pos, tint: new Color(EnvironmentConstants.PillarForegroundTint, EnvironmentConstants.PillarForegroundTint, EnvironmentConstants.PillarForegroundTint)),
+                ["Pillar_0_Flipped"]          = pos => new Background(8, pos, tint: new Color(EnvironmentConstants.PillarForegroundTint, EnvironmentConstants.PillarForegroundTint, EnvironmentConstants.PillarForegroundTint)),
+                ["Pillar_1_Flipped"]          = pos => new Background(9, pos, tint: new Color(EnvironmentConstants.PillarForegroundTint, EnvironmentConstants.PillarForegroundTint, EnvironmentConstants.PillarForegroundTint)),
                 // <Region name="Path_1" x="265" y="223" width="1060" height="83" />
                 ["Path_1"]               = pos => new Path(1, pos, 1050, 32, hitOffsetY: 15),
                 ["Path_1_Flipped"]       = pos => new Path(1, pos, 1050, 32, hitOffsetY: 15, flipped: true),
@@ -141,6 +147,7 @@ namespace HollowKnight.Levels
             BackgroundMid.Clear();
             Platforms.Clear();
             Foreground.Clear();
+            ForegroundParallax.Clear();
             Interactables.Clear();
             Transitions.Clear();
             KnightSpawn = Vector2.Zero;
@@ -212,7 +219,7 @@ namespace HollowKnight.Levels
             }
         }
 
-        private enum DecorationLayer { BackgroundFar, BackgroundMid, Foreground }
+        private enum DecorationLayer { BackgroundFar, BackgroundMid, Foreground, ForegroundParallax }
 
         // Name → visual layer for non-collidable decorations.
         // Anything absent falls through to the default logic (collision goes to Platforms).
@@ -226,6 +233,10 @@ namespace HollowKnight.Levels
             ["Background_Main"]         = DecorationLayer.BackgroundFar,
             ["Transition_Light"]         = DecorationLayer.Foreground,
             ["Transition_Light_Flipped"] = DecorationLayer.Foreground,
+            ["Pillar_0"]                 = DecorationLayer.ForegroundParallax,
+            ["Pillar_1"]                 = DecorationLayer.ForegroundParallax,
+            ["Pillar_0_Flipped"]         = DecorationLayer.ForegroundParallax,
+            ["Pillar_1_Flipped"]         = DecorationLayer.ForegroundParallax,
 
             ["Village_1"]      = DecorationLayer.BackgroundMid,
             ["Village_2"]      = DecorationLayer.BackgroundMid,
@@ -264,9 +275,10 @@ namespace HollowKnight.Levels
             {
                 switch (layer)
                 {
-                    case DecorationLayer.BackgroundFar: Backgrounds.Add(obj);   return;
-                    case DecorationLayer.BackgroundMid: BackgroundMid.Add(obj); return;
-                    case DecorationLayer.Foreground:    Foreground.Add(obj);    return;
+                    case DecorationLayer.BackgroundFar:      Backgrounds.Add(obj);          return;
+                    case DecorationLayer.BackgroundMid:      BackgroundMid.Add(obj);        return;
+                    case DecorationLayer.Foreground:         Foreground.Add(obj);           return;
+                    case DecorationLayer.ForegroundParallax: ForegroundParallax.Add(obj);   return;
                 }
             }
 

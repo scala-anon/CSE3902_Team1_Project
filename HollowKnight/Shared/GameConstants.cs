@@ -150,6 +150,9 @@ namespace HollowKnight.Shared
         public const float LayerDepthKnight = 0.80f;
         public const float LayerDepthKnightEffects = 0.85f;
         public const float LayerDepthForeground = 0.90f;
+
+        // Foreground parallax — how many times faster foreground scrolls vs the camera
+        public const float ForegroundParallaxFactor = 1.5f;
         public const float LayerDepthDebug = 1.00f;
 
         // Per-instance sub-depth offset used to break ties within a layer.

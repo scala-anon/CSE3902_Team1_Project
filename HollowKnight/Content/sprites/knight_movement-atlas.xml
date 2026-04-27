@@ -19,11 +19,13 @@
 		<Region name="Walking_6" x="1990" y="61" width="71" height="124" />
 		<Region name="Walking_7" x="2135" y="60" width="73" height="125" />
 
+		<!--jumping frames animation-->
 		<Region name="Jumping_0" x="995" y="1349" width="74" height="123" />
 		<Region name="Jumping_1" x="1137" y="1349" width="70" height="123" />
 		<Region name="Jumping_2" x="1269" y="1342" width="82" height="125" />
 		<Region name="Jumping_3" x="1419" y="1338" width="78" height="125" />
 		<Region name="Jumping_4" x="1561" y="1338" width="77" height="124" />
+		
 		<Region name="Jumping_5" x="1687" y="1343" width="102" height="125" />
 		<Region name="Jumping_6" x="1825" y="1345" width="107" height="125" />
 		<Region name="Jumping_7" x="1972" y="1343" width="101" height="127" />
