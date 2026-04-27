@@ -1,4 +1,5 @@
 using HollowKnight.Factories;
+using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -22,10 +23,10 @@ namespace HollowKnight.Environment
             sprite = SpriteFactory.Instance.CreatePathSprite(variant, position);
         }
 
-        public override void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects, float layerDepth = 0f)
+        public override void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects, float layerDepth = 0f, float opacity = GameConstants.DefaultSpriteOpacity)
         {
             var effects = _flipped ? SpriteEffects.FlipHorizontally : spriteEffects;
-            sprite.Draw(spriteBatch, effects, layerDepth);
+            sprite.Draw(spriteBatch, effects, layerDepth, opacity);
         }
     }
 }

@@ -52,12 +52,12 @@ namespace HollowKnight.Environment
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects, float layerDepth = 0f)
+        public override void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects, float layerDepth = 0f, float opacity = GameConstants.DefaultSpriteOpacity)
         {
             if (_isPlayingBreakAnim)
-                sprite.Draw(spriteBatch, SpriteEffects.FlipHorizontally, layerDepth);
+                sprite.Draw(spriteBatch, SpriteEffects.FlipHorizontally, layerDepth, opacity);
             else
-                base.Draw(spriteBatch, spriteEffects, layerDepth);
+                base.Draw(spriteBatch, spriteEffects, layerDepth, opacity);
         }
 
         public override Rectangle[] GetInteractionBounds()
