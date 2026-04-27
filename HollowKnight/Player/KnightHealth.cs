@@ -57,15 +57,6 @@ namespace HollowKnight.Player
                     damagedTimer = 0;
                 }
             }
-
-            if (Health == 0)
-            {
-                if (AudioPlayed == false)
-                {
-                    AudioPlayed = true;
-                    AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_Death());
-                }
-            }
         }
 
         public bool TakeDamage()
@@ -76,6 +67,10 @@ namespace HollowKnight.Player
             Health = Math.Max(0, Health - 1);
             CancelHeal();
             AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_Take_Damage());
+            if (Health <= 0)
+            {
+                AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_Death());
+            }
             return true;
         }
 

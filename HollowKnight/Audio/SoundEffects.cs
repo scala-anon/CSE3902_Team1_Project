@@ -47,5 +47,7 @@ namespace HollowKnight.Audio
         public const string GoofySpikes = "Audio/GoofySFX/GoofyTouchSpikes";
         public const string GoofyWin = "Audio/GoofySFX/GoofyOnKill";
         public const string GoofySpirit = "Audio/GoofySFX/GoofySpirit";
+        public const string Nights = "Audio/Music/1001 Nights";
+        public const string AxelF = "Audio/Music/Crazy Frog - Axel F (Official Video) 4";
     }   
 }

@@ -215,6 +215,7 @@ public void TransitionToRoom(int roomNumber)
             _level.BossFight.Right.Projectiles = _mantisProjectileRight; 
 
             AudioManager.Instance.PlaySong(AudioLoader.Instance.Get_Mantis_Lords_Music());
+            AudioManager.Instance.TryPlayGoofySong(AudioLoader.Instance.Get_1001_Nights());
         }
 }
 

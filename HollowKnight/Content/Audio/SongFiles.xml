@@ -6,4 +6,11 @@
     <Item>
         <FilePath>Audio/Music/EnterHollownest</FilePath>
     </Item>
+    <Item>
+        <FilePath>Audio/Music/1001 Nights</FilePath>
+    </Item>
+    <Item>
+        <FilePath>Audio/Music/Crazy Frog - Axel F (Official Video) 4</FilePath>
+    </Item>
+
 </XnaContent>
