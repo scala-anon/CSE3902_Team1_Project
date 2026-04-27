@@ -821,7 +821,7 @@ namespace HollowKnight.Factories
         }
         public ISprite CreateNickPainterProjectile(Vector2 position)
         {
-            return new AnimatedSprite(spriteEffectsSheet, spriteEffectsAnimations["Projectile"], position, 0.1, 1.0f, loop: false);
+            return new AnimatedSprite(NickPainterSpriteSheet, NickPainterAnimations["Projectile"], position, 0.1, .5f, loop: false);
         }
         public ISprite CreateNickPainterIdle(Vector2 position)
         {

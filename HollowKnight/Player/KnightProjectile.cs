@@ -1,4 +1,5 @@
 using HollowKnight.Audio;
+using HollowKnight.Commands;
 using HollowKnight.Player;
 using HollowKnight.Projectiles;
 using HollowKnight.Shared;
@@ -24,7 +25,7 @@ namespace HollowKnight.Player
             // Projectiles now fired with the Fire() method
         }
 
-        public void Fire()
+        public void Fire(bool goofy)
         {
             AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Hero_Fireball());
             Vector2 direction = _knight.Facing == Direction.Right
@@ -35,7 +36,15 @@ namespace HollowKnight.Player
                 ? new Vector2(_knight.Bounds.Right - KnightConstants.KnightProjectileSpawnOffsetRight, _knight.Bounds.Top + _knight.Bounds.Height / 2f)
                 : new Vector2(_knight.Bounds.Left - KnightConstants.KnightProjectileSpawnOffsetLeft, _knight.Bounds.Top + _knight.Bounds.Height / 2f);
 
-            _spawner.Spawn(spawn, direction, KnightConstants.KnightProjectileSpeed, ProjectileFaction.Player);
+
+            if (goofy == true)
+            {
+                _spawner.SpawnGoofy(spawn, direction, KnightConstants.KnightProjectileSpeed, ProjectileFaction.Player);
+            } else
+            {
+                _spawner.Spawn(spawn, direction, KnightConstants.KnightProjectileSpeed, ProjectileFaction.Player);
+            }
+           
             AudioManager.Instance.TryPlayGoofy(AudioLoader.Instance.Get_Goofy_Spirit());
         }
     }
