@@ -176,7 +176,8 @@ namespace HollowKnight.Factories
             mantisLordAnimations.Add("Wall_Arrive", mantisLordAtlas.GetAnimationFrames("Wall_Arrive"));
             mantisLordAnimations.Add("Wall_Ready", mantisLordAtlas.GetAnimationFrames("Wall_Ready"));
             mantisLordAnimations.Add("Throw", mantisLordAtlas.GetAnimationFrames("Throw"));
-            mantisLordAnimations.Add("Wall_Leave", mantisLordAtlas.GetAnimationFrames("Wall_Leave"));
+            mantisLordAnimations.Add("Wall_Leave1", mantisLordAtlas.GetAnimationFrames("Wall_Leave1"));
+            mantisLordAnimations.Add("Wall_Leave2", mantisLordAtlas.GetAnimationFrames("Wall_Leave2"));
             mantisLordAnimations.Add("Dash_Arrive", mantisLordAtlas.GetAnimationFrames("Dash_Arrive"));
             mantisLordAnimations.Add("Dash_Anticipate", mantisLordAtlas.GetAnimationFrames("Dash_Anticipate"));
             mantisLordAnimations.Add("Dash", mantisLordAtlas.GetAnimationFrames("Dash"));
@@ -544,9 +545,13 @@ namespace HollowKnight.Factories
         {
             return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Throw"], position, 0.1, 1.0f, loop: false);
         }
-        public ISprite CreateWallLeave(Vector2 position)
+        public ISprite CreateWallLeave1(Vector2 position)
         {
-            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Wall_Leave"], position, 0.1, 1.0f, loop: false);
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Wall_Leave1"], position, 0.1, 1.0f, loop: false);
+        }
+        public ISprite CreateWallLeave2(Vector2 position)
+        {
+            return new AnimatedSprite(mantisLordSpriteSheet, mantisLordAnimations["Wall_Leave2"], position, 0.1, 1.0f, loop: false);
         }
         public ISprite CreateMantisDashArrive(Vector2 position)
         {

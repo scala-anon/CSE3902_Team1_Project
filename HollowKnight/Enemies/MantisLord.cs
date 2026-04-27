@@ -29,12 +29,15 @@ namespace HollowKnight.Enemies
         DashRecover,
         DashLeave,
         DStabArrive,
+        DStabOffset,
         DStab,
+        DStabLandOffset,
         DStabLand,
         DStabLeave,
         WallArrive,
         WallReady,
-        WallLeave,
+        WallLeave1,
+        WallLeave2,
         Death,
         DeathLeaveOne,
         DeathLeaveTwo,
@@ -78,7 +81,8 @@ namespace HollowKnight.Enemies
             } else if (slot == MantisLordSlot.Right)
             {
                 FacingDirection = Direction.Left;
-            } else
+            } 
+            else
             {
                 FacingDirection = Direction.Left;
             }
@@ -109,7 +113,8 @@ namespace HollowKnight.Enemies
                 [MantisLordState.DStabLeave]     = SpriteFactory.Instance.CreateMantisDStabLeave(position),
                 [MantisLordState.WallArrive]     = SpriteFactory.Instance.CreateWallArrive(position),
                 [MantisLordState.WallReady]      = SpriteFactory.Instance.CreateWallReady(position),
-                [MantisLordState.WallLeave]      = SpriteFactory.Instance.CreateWallLeave(position),
+                [MantisLordState.WallLeave1]      = SpriteFactory.Instance.CreateWallLeave1(position),
+                [MantisLordState.WallLeave2]     = SpriteFactory.Instance.CreateWallLeave2(position),
                 [MantisLordState.Death]          = SpriteFactory.Instance.CreateMantisDeath(position),
                 [MantisLordState.DeathLeaveOne]  = SpriteFactory.Instance.CreateMantisDeathLeaveOne(position),
                 [MantisLordState.DeathLeaveTwo]  = SpriteFactory.Instance.CreateMantisDeathLeaveTwo(position),
@@ -123,7 +128,14 @@ namespace HollowKnight.Enemies
 
         public void SetState(MantisLordState newState)
         {
+            // State = newState;
+            // if (newState != MantisLordState.DStabStart && newState != MantisLordState.GracePeriod && newState != MantisLordState.DStabOffset && newState != MantisLordState.DStabLandOffset){
+            //     Sprite = _sprites[newState];
+            //     Sprite.Reset();
+            // }
             State = newState;
+            if (newState != MantisLordState.DStabStart && newState != MantisLordState.GracePeriod && newState != MantisLordState.DStabOffset && newState != MantisLordState.DStabLandOffset)
+            {
             if (newState != MantisLordState.DStabStart && newState != MantisLordState.GracePeriod && newState != MantisLordState.DashStart && newState != MantisLordState.WallStart){
                 Sprite = _sprites[newState];
                 Sprite.Reset();

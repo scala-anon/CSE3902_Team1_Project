@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using HollowKnight.Audio;
 using HollowKnight.Player;
@@ -39,6 +40,17 @@ namespace HollowKnight.Enemies
 
         private bool target_knight = false;
 
+        // Public state observation — needed for the controller
+        public MantisLordState CurrentState => _owner.State;
+        public bool IsInLeavePhase =>
+            _owner.State == MantisLordState.DashLeave ||
+            _owner.State == MantisLordState.DStabLeave ||
+            _owner.State == MantisLordState.WallLeave1 ||
+            _owner.State == MantisLordState.WallLeave2;
+
+        // Categorize attacks so the controller can pick the opposite
+        public enum AttackKind { None, Wall, Dash, DStab }
+
         public MantisLordStateMachine(MantisLord owner)
         {
             _owner = owner;
@@ -63,10 +75,15 @@ namespace HollowKnight.Enemies
         /// <summary>Force an immediate wall attack (used by BossFightController for simultaneous throws).</summary>
         public void CommandForceWallAttack()
         {
-            if (_healthDepleted) return;  // do not interrupt death sequence
+            // if (_healthDepleted) return;  // do not interrupt death sequence
+            // IsAttacking = true;
+            // // TODO: audio hook — play wall-arrive sound
+            // EnterState(MantisLordState.WallArrive);
+            Console.WriteLine($"[{_owner.Slot}] CommandForceWallAttack called. _healthDepleted={_healthDepleted}, current state={_owner.State}");
+            if (_healthDepleted) return;
             IsAttacking = true;
-            // TODO: audio hook — play wall-arrive sound
             EnterState(MantisLordState.WallArrive);
+            Console.WriteLine($"[{_owner.Slot}] After EnterState(WallArrive). Position={_owner.position}");
         }
 
         /// <summary>Called when sibling / middle has been defeated and this lord should return wounded.</summary>
@@ -183,11 +200,17 @@ namespace HollowKnight.Enemies
                         EnterState(MantisLordState.ThroneWounded);
                     }
                     break;
-
-                // ---- Throw sequence ----
                 case MantisLordState.Throw:
+                    
                     if (_owner.Sprite.IsFinished)
                     {
+                        // TODO: spawn projectile here
+                        EnterState(MantisLordState.WallLeave1);
+                    }
+                    break;
+
+                case MantisLordState.WallArrive:
+                    if (_owner.Sprite.IsFinished)
                         _owner.Projectiles?.Fire(lowAttack);
                         lowAttack = !lowAttack;
 
@@ -218,33 +241,35 @@ namespace HollowKnight.Enemies
                     }
                     break;
 
-
-
                 case MantisLordState.WallReady:
-                    _owner.position.Y = EnemyConstants.MantisWallHangY + EnemyConstants.MantisWallHangOffset;
                     // Loops until controller forces a throw or duration elapses.
                     // TODO: spawn projectile here (when WallReady times out)
                     if(_owner.Sprite.IsFinished){
                         AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Mantis_Throw());
                         EnterState(MantisLordState.Throw);
-                    }
                     break;
 
-                case MantisLordState.WallLeave:
-                    if (_owner.Sprite.IsFinished){
-                            StartAttackCooldown();
-                    }
+                case MantisLordState.WallLeave1:
+                    if (_owner.Sprite.IsFinished)
+                        EnterState(MantisLordState.WallLeave2);
                     break;
+
+                case MantisLordState.WallLeave2:
+                    if (_owner.Sprite.IsFinished)
+                        StartAttackCooldown();
+                    break;
+                    
 
                 // ---- Dash sequence ----
                 case MantisLordState.DashStart:
                     if(_owner.FacingDirection == Direction.Right)
                     {
-                        _owner.position = new Vector2(EnemyConstants.MantisDashArriveRightX, EnemyConstants.MantisDashY);
-                    } 
-                    else
+                        
+                        _owner.position = new Vector2(EnemyConstants.MantisDashArriveRightX,  EnemyConstants.MantisDashY);
+                    } else
                     {
-                        _owner.position = new Vector2(EnemyConstants.MantisDashArriveLeftX, EnemyConstants.MantisDashY);
+                    
+                        _owner.position = new Vector2(EnemyConstants.MantisDashArriveLeftX,  EnemyConstants.MantisDashY);
                     }
                     AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Mantis_Land_Ground());
                     EnterState(MantisLordState.DashArrive);
@@ -267,7 +292,7 @@ namespace HollowKnight.Enemies
                     break;
 
                 case MantisLordState.Dash:
-                    _owner.position.Y = EnemyConstants.MantisDashY + EnemyConstants.MantisDashAnticipateSpriteHeightOffset + 100;
+                    _owner.position.Y = EnemyConstants.MantisDashY + EnemyConstants.MantisDashAnticipateSpriteHeightOffset + 120;
                     if(_owner.FacingDirection == Direction.Right)
                     {
                        _owner.position.X -= EnemyConstants.MantisDashSpeed * elapsedTime;
@@ -295,19 +320,51 @@ namespace HollowKnight.Enemies
 
                 // ---- DStab sequence ----
                 case MantisLordState.DStabStart:
-                     _owner.position = new Vector2(_owner.knightPosition.X - (765/2), _owner.knightPosition.Y - 950);
+                //- (765/2)
+                    if(_owner.FacingDirection == Direction.Right)
+                    {
+                        _owner.position = new Vector2(_owner.knightPosition.X-765/2+35 , _owner.knightPosition.Y - 950);
+                    }
+                    else
+                    {
+                        _owner.position = new Vector2(_owner.knightPosition.X-765/2-35 , _owner.knightPosition.Y - 950);
+                    }
                      EnterState(MantisLordState.DStabArrive);
                      break;
                 case MantisLordState.DStabArrive:
+                    // _owner.position.X = _owner.knightPosition.X - 60;
                     if (_owner.Sprite.IsFinished)
                     {
                         // TODO: damage hitbox — activate DStab contact damage here
-                        EnterState(MantisLordState.DStab);
+                        EnterState(MantisLordState.DStabOffset);
                     }
                     break;
-
+                case MantisLordState.DStabOffset:
+                    if(_owner.FacingDirection == Direction.Right)
+                    {
+                        _owner.position.X += 250;
+                    }
+                    else
+                    {
+                        _owner.position.X += 400;
+                    }
+                    EnterState(MantisLordState.DStab);
+                    break;
                 case MantisLordState.DStab:
                     _owner.position.Y += EnemyConstants.MantisStabSpeed * elapsedTime;
+                    if (_owner.Sprite.IsFinished)
+                        EnterState(MantisLordState.DStabLandOffset);
+                    break;
+                case MantisLordState.DStabLandOffset:
+                    if(_owner.FacingDirection == Direction.Right)
+                    {
+                        _owner.position.X-= 120;
+                    }
+                    else
+                    {
+                        _owner.position.X -= 240;
+                    }
+                    EnterState(MantisLordState.DStabLand);
                     
                     if (_owner.Sprite.IsFinished){
                         AudioManager.Instance.PlaySoundEffect(AudioLoader.Instance.Get_Mantis_Land_Ground());
@@ -403,13 +460,102 @@ namespace HollowKnight.Enemies
             }
         }
 
-        // ---- Private helpers ----
-
         private void EnterState(MantisLordState state)
         {
-            _stateTimer = 0f;
+            _stateTimer = 0f;          // keep this
             _owner.SetState(state);
+            ApplyStateEntryPosition(state);
         }
+        private void ApplyStateEntryPosition(MantisLordState s)
+        {
+            switch (s)
+            {
+                case MantisLordState.DStabStart:
+                    if (_owner.FacingDirection == Direction.Right)
+                        _owner.position = new Vector2(_owner.knightPosition.X - 765/2 + 35, _owner.knightPosition.Y - 950);
+                    else
+                        _owner.position = new Vector2(_owner.knightPosition.X - 765/2 - 35, _owner.knightPosition.Y - 950);
+                    break;
+                case MantisLordState.DashArrive:
+                    _owner.position.Y = EnemyConstants.MantisDashY;
+                    break;
+                case MantisLordState.DashAnticipate:
+                    _owner.position.Y = EnemyConstants.MantisDashY + (556 - 297);
+                    break;
+                case MantisLordState.Dash:
+                    _owner.position.Y = EnemyConstants.MantisDashY + (556 - 187);
+                    break;
+                case MantisLordState.DashRecover:
+                    _owner.position.Y = EnemyConstants.MantisDashY + (556 - 256);
+                    break;
+                case MantisLordState.DashLeave:
+                    _owner.position.Y = EnemyConstants.MantisDashY;
+                    break;
+                
+                // Working
+                case MantisLordState.WallArrive:
+                    if (_owner.FacingDirection == Direction.Right)
+                        _owner.position = new Vector2(EnemyConstants.MantisWallHangLeftX,
+                                                    EnemyConstants.MantisWallHangY);
+                    else
+                        _owner.position = new Vector2(EnemyConstants.MantisWallHangRightX,
+                                                    EnemyConstants.MantisWallHangY);
+                    break;
+
+                case MantisLordState.WallReady:
+                    if (_owner.FacingDirection == Direction.Right)
+                    {
+                        _owner.position.Y = EnemyConstants.MantisWallHangY + 30;
+                    }
+                    else
+                    {
+                        _owner.position.X = EnemyConstants.MantisWallHangRightX - 30;
+                        _owner.position.Y = EnemyConstants.MantisWallHangY + 30;
+                    }
+                    break;
+                case MantisLordState.Throw:
+                    if (_owner.FacingDirection == Direction.Left)
+                    {
+                        _owner.position.Y = EnemyConstants.MantisWallHangY + 190;
+                        _owner.position.X = EnemyConstants.MantisWallHangRightX - 170;
+                    }
+                    // added
+                    else
+                    {
+                        _owner.position.Y = EnemyConstants.MantisWallHangY
+                          + EnemyConstants.MantisWallHangOffset;  // 199
+                    }
+                    break;
+
+                case MantisLordState.WallLeave1:
+                    if (_owner.FacingDirection == Direction.Left)
+                    {
+                        _owner.position.X = EnemyConstants.MantisWallHangRightX + 160;
+                        _owner.position.Y = EnemyConstants.MantisWallHangY + 200;
+                    }
+                    else
+                    {
+                        _owner.position.Y = EnemyConstants.MantisWallHangY
+                          + EnemyConstants.MantisWallHangOffset;  // 199
+                    }
+                    break;
+
+                case MantisLordState.WallLeave2:
+                    if (_owner.FacingDirection == Direction.Left)
+                    {
+                        _owner.position.X = EnemyConstants.MantisWallHangRightX - 150;
+                        _owner.position.Y = EnemyConstants.MantisWallHangY + 80 + 23;
+                    }
+                    else
+                    {
+                        _owner.position.Y = EnemyConstants.MantisWallHangY
+                          + EnemyConstants.MantisWallHangOffset;
+                    }
+                    break;
+            }
+        }
+
+
 
         /// <summary>Starts the cooldown pause before the next attack.</summary>
         private void StartAttackCooldown()
@@ -422,33 +568,74 @@ namespace HollowKnight.Enemies
         /// <summary>
         /// Randomly selects the next attack from {Throw (via Wall), Dash, DStab}.
         /// </summary>
+        // private bool _suppressAutoPick;
+        // public void SetAutoPickSuppressed(bool suppressed) => _suppressAutoPick = suppressed;
+        // private void PickNextAttack()
+        // {
+        //     if (_suppressAutoPick)
+        //     {
+        //         // Don't roll an attack, but enter the proper idle state
+        //         // so the controller has a clean "ready" signal to work with.
+        //         IsAttacking = false;
+        //         _attackCooldownTimer = 0f;
+        //         _owner.SetState(MantisLordState.GracePeriod);
+        //         return;
+        //     }
+         
+        //     IsAttacking = true;
+        //     int roll = _rng.Next(10);
+            
+        //     switch (roll)
+        //     {
+        //         case 0:
+        //         case 1:
+        //             EnterState(MantisLordState.WallArrive);
+        //             break;
+        //         case 2:
+        //         case 3:
+        //         case 4:
+        //         case 5:
+        //             EnterState(MantisLordState.DashArrive);
+        //             break;
+        //         case 6:
+        //         case 7:
+        //         case 8:
+        //         case 9:
+        //             EnterState(MantisLordState.DStabStart);
+        //             break;
+        //     }
+
+
+
+        // }
+
+        // Add field (somewhere with the other private fields, e.g. near _attackCooldownTimer)
+        private bool _suppressAutoPick;
+
+        // Add public setter (somewhere in the public methods region)
+        public void SetAutoPickSuppressed(bool suppressed) => _suppressAutoPick = suppressed;
+
+        // And modify PickNextAttack:
         private void PickNextAttack()
         {
-            IsAttacking = true;
-            int roll = _rng.Next(10);
-            
-            switch (roll)
+            if (_suppressAutoPick)
             {
-                case 0:
-                case 1:
-                    EnterState(MantisLordState.WallStart);
-                    break;
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                    EnterState(MantisLordState.DashStart);
-                    break;
-                case 6:
-                case 7:
-                case 8:
-                case 9:
-                    EnterState(MantisLordState.DStabStart);
-                    break;
+                // Don't roll an attack, but enter the proper idle state
+                // so the controller has a clean "ready" signal to work with.
+                IsAttacking = false;
+                _attackCooldownTimer = 0f;
+                _owner.SetState(MantisLordState.GracePeriod);
+                return;
             }
 
-
-
+            IsAttacking = true;
+            int roll = _rng.Next(10);
+            switch (roll)
+            {
+                case 0: case 1: EnterState(MantisLordState.WallArrive); break;
+                case 2: case 3: case 4: case 5: EnterState(MantisLordState.DashArrive); break;
+                case 6: case 7: case 8: case 9: EnterState(MantisLordState.DStabStart); break;
+            }
         }
         // Add this field at the top with the other fields
         private bool _frozen = false;
@@ -575,9 +762,11 @@ namespace HollowKnight.Enemies
                 case MantisLordState.WallArrive:
                 case MantisLordState.WallReady:
                 case MantisLordState.Throw:
-                case MantisLordState.WallLeave:
+                case MantisLordState.WallLeave1:
+                case MantisLordState.WallLeave2:
                     _owner.position = new Vector2(3600, 4546);
                     break;
+                
 
                 case MantisLordState.DashArrive:
                 case MantisLordState.DashAnticipate:
@@ -597,6 +786,39 @@ namespace HollowKnight.Enemies
                     _owner.position = new Vector2(_owner.knightPosition.X, _owner.knightPosition.Y - 800);
                     break;
             }
+        }
+        public AttackKind CurrentAttackKind
+        {
+            get
+            {
+                var s = _owner.State;
+                if (s == MantisLordState.WallArrive || s == MantisLordState.WallReady ||
+                    s == MantisLordState.Throw || s == MantisLordState.WallLeave1 ||
+                    s == MantisLordState.WallLeave2) return AttackKind.Wall;
+                if (s == MantisLordState.DashArrive || s == MantisLordState.DashAnticipate ||
+                    s == MantisLordState.Dash || s == MantisLordState.DashRecover ||
+                    s == MantisLordState.DashLeave) return AttackKind.Dash;
+                if (s == MantisLordState.DStabStart || s == MantisLordState.DStabArrive ||
+                    s == MantisLordState.DStabOffset || s == MantisLordState.DStab ||
+                    s == MantisLordState.DStabLandOffset || s == MantisLordState.DStabLand ||
+                    s == MantisLordState.DStabLeave) return AttackKind.DStab;
+                return AttackKind.None;
+            }
+        }
+
+        // Force-attack commands — controller uses these
+        public void CommandForceDashAttack()
+        {
+            if (_healthDepleted) return;
+            IsAttacking = true;
+            EnterState(MantisLordState.DashArrive);
+        }
+
+        public void CommandForceDStabAttack()
+        {
+            if (_healthDepleted) return;
+            IsAttacking = true;
+            EnterState(MantisLordState.DStabStart);
         }
 
         // Guard the update loop with the freeze check — replace the top of Update:

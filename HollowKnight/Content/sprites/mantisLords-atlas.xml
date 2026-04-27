@@ -68,11 +68,12 @@
         <Region name="Air_Projectile_1" x="305" y="3938" width="298" height="98" />
         <Region name="Air_Projectile_2" x="607" y="3938" width="298" height="98" />
 
-        <Region name="Wall_Leave_0" x="3" y="4059" width="233" height="507" />
-        <Region name="Wall_Leave_1" x="240" y="4059" width="233" height="507" />
-        <Region name="Wall_Leave_2" x="509" y="4059" width="616" height="484" />
-        <Region name="Wall_Leave_3" x="1129" y="4059" width="616" height="484" />
-        <Region name="Wall_Leave_4" x="1749" y="4059" width="616" height="484" />
+        <Region name="Wall_Leave1_0" x="3" y="4059" width="233" height="507" />
+        <Region name="Wall_Leave1_1" x="240" y="4059" width="233" height="507" />
+
+        <Region name="Wall_Leave2_0" x="509" y="4059" width="616" height="484" />
+        <Region name="Wall_Leave2_1" x="1129" y="4059" width="616" height="484" />
+        <Region name="Wall_Leave2_2" x="1749" y="4059" width="616" height="484" />
 
         <Region name="Dash_Arrive_0" x="3" y="4589" width="516" height="556" />
         <Region name="Dash_Arrive_1" x="523" y="4589" width="516" height="556" />
