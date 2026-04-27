@@ -8,6 +8,18 @@ using HollowKnight.Shared;
 
 namespace HollowKnight.Commands
 {
+    public class StartGameCommand : ICommand
+    {
+        private readonly Game1 _game;
+
+        public StartGameCommand(Game1 game)
+        {
+            _game = game;
+        }
+
+        public void Execute() => _game.StartGame();
+    }
+
     public class QuitCommand : ICommand
     {
         private readonly Game _game;

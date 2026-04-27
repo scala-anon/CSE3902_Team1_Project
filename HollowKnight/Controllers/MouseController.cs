@@ -25,6 +25,18 @@ namespace HollowKnight.Controllers
 
             if (leftClickPressed)
             {
+                if (_game.TryActivateTitleButton(new Point(currentState.X, currentState.Y)))
+                {
+                    _previousState = currentState;
+                    return;
+                }
+
+                if (_game.TryActivatePauseButton(new Point(currentState.X, currentState.Y)))
+                {
+                    _previousState = currentState;
+                    return;
+                }
+
                 if (_game.TrySelectInventoryItem(new Point(currentState.X, currentState.Y)))
                 {
                     _previousState = currentState;

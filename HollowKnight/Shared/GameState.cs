@@ -11,6 +11,17 @@ namespace HollowKnight.Shared
         public abstract void DrawOverlay(Game1 game, SpriteBatch spriteBatch);
     }
 
+    public sealed class TitleState : GameState
+    {
+        public override bool ShowsHealthHud => false;
+
+        public override void Update(Game1 game, GameTime gameTime)
+        {
+        }
+
+        public override void DrawOverlay(Game1 game, SpriteBatch spriteBatch) => game.DrawTitleStateOverlay();
+    }
+
     public sealed class PlayingState : GameState
     {
         public override void Update(Game1 game, GameTime gameTime)

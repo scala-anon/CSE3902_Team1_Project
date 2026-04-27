@@ -7,13 +7,11 @@ namespace HollowKnight.Graphics
 {
     public class HealthHud
     {
-        private readonly Texture2D texture;
-        private readonly Rectangle emptyMaskSource;
+        private readonly Texture2D pipTexture;
 
-        public HealthHud(TextureAtlas atlas)
+        public HealthHud(Texture2D pipTexture)
         {
-            texture = atlas.Texture;
-            emptyMaskSource = atlas.GetRegion("HealthMaskEmpty").SourceRectangle;
+            this.pipTexture = pipTexture;
         }
 
         public void Draw(SpriteBatch spriteBatch, int currentHealth, int maxHealth)
@@ -25,7 +23,7 @@ namespace HollowKnight.Graphics
                 int x = HudConstants.HealthPipStartX + i * (HudConstants.HealthPipWidth + HudConstants.HealthPipSpacing);
                 Rectangle pipTarget = new(x, HudConstants.HealthPipStartY, HudConstants.HealthPipWidth, HudConstants.HealthPipHeight);
                 Color pipColor = i < safeHealth ? Color.White : HudConstants.InactiveHealthPipColor;
-                spriteBatch.Draw(texture, pipTarget, emptyMaskSource, pipColor); // layerDepth inert: HUD batch uses default SpriteSortMode.Deferred
+                spriteBatch.Draw(pipTexture, pipTarget, null, pipColor); // layerDepth inert: HUD batch uses default SpriteSortMode.Deferred
             }
         }
     }
