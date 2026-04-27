@@ -48,12 +48,13 @@ namespace HollowKnight.Player
         private int _benchSpawnRoom = 1;
         private bool _justDied;
         private bool _needsBenchRoomTransition;
+        private bool _deathAnimPlaying;
 
         public int BenchSpawnRoom => _benchSpawnRoom;
         public Vector2 BenchSpawnPoint => benchSpawnPoint;
         public void SetBenchRoom(int room) => _benchSpawnRoom = room;
         public bool NeedsBenchRoomTransition => _needsBenchRoomTransition;
-        public void ConsumeBenchRoomTransition() => _needsBenchRoomTransition = false;
+        public void ConsumeBenchRoomTransition() { _needsBenchRoomTransition = false; _deathAnimPlaying = false; }
 
         private bool _isSitting;
         private double _sittingTimer;
@@ -71,6 +72,7 @@ namespace HollowKnight.Player
         private ISprite _standingUpSprite;
         public bool JustDied => _justDied;
         public void ConsumeJustDied() => _justDied = false;
+        public bool DeathAnimPlaying => _deathAnimPlaying;
         public void SetBenchSpawnPoint(Vector2 pos) => benchSpawnPoint = pos;
         public bool IsSitting => _isSitting;
         public void StartSitting(Vector2 benchPosition)
@@ -398,6 +400,7 @@ namespace HollowKnight.Player
             if (health.Health == 0)
             {
                 _justDied = true;
+                _deathAnimPlaying = true;
                 DebugLogger.LogGeneral($"Knight died. Respawning at {benchSpawnPoint} (room {_benchSpawnRoom}).");
                 health.ResetHealth();
                 if (_projectileManager != null)

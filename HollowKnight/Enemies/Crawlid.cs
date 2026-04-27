@@ -43,12 +43,6 @@ namespace HollowKnight.Enemies
 
         public override Rectangle[] GetBounds()
         {
-            if (!Alive)
-            {
-                hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, 1, 1);
-                hitBoxes[1] = new Rectangle((int)position.X, (int)position.Y, 1, 1);
-                return hitBoxes;
-            }
             Vector2 size = Sprite.GetSize();
             hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
             int feetWidth = (int)size.X - CollisionConstants.CrawlidFeetWidthShrink;
@@ -78,20 +72,19 @@ namespace HollowKnight.Enemies
         public override void Land()
         {
             IsGrounded = true;
-            _knockbackVelocity.Y = 0f;
+            _knockbackVelocity = Vector2.Zero;
             stateMachine.ResetVerticalVelocity();
         }
-
-        private const float CrawlidKnockbackDistance = 80f;
 
         protected override void ApplyKnockback(CollisionSide side)
         {
             switch (side)
             {
-                case CollisionSide.Left:  position.X -= CrawlidKnockbackDistance; break;
-                case CollisionSide.Right: position.X += CrawlidKnockbackDistance; break;
-                default:                  break;
+                case CollisionSide.Left: _knockbackVelocity = new Vector2(-EnemyConstants.EnemyKnockbackSpeed, 0f); break;
+                case CollisionSide.Right: _knockbackVelocity = new Vector2(EnemyConstants.EnemyKnockbackSpeed, 0f); break;
+                default: _knockbackVelocity = Vector2.Zero; break;
             }
+            if (_knockbackVelocity.Y < 0) IsGrounded = false;
         }
 
         protected override void OnDeath(bool grounded) => SetState(grounded ? CrawlidState.DeathLand : CrawlidState.DeathAir);

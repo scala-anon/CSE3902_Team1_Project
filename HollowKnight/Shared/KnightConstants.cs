@@ -37,6 +37,14 @@ namespace HollowKnight.Shared
         public const double KnightHealCooldown = 2.0;
         public const double KnightHealStartUp = 0.25;
 
+        // Dash Effect Visual Offsets
+        public const float DashEffectOffsetLeftX = -90f;
+        public const float DashEffectOffsetRightX = -145f;
+        public const float DashEffectOffsetY = -40f;
+
+        // Low Health Effect Visual Offsets
+        public const float LowHealthEffectXOffsetFactor = 0.75f;
+
         // Slash Effect Positioning (visual offsets, not hitbox — hitbox dims are in CollisionConstants)
         public const float SlashEffectRightDivisor = 7f;
         public const float SlashEffectLeftDivisor = 5f;

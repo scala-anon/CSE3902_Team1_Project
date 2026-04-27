@@ -15,8 +15,6 @@ namespace HollowKnight.Environment
         private Vector2 _animSpritePos;
         private float _breakAnimTimer;
         private Action _onDestroyed;
-        private const float BreakDriftSpeed = 400f;
-        private const float BreakAnimDuration = 0.3f;
 
         public void SetDestroyedCallback(Action onDestroyed) => _onDestroyed = onDestroyed;
 
@@ -41,11 +39,11 @@ namespace HollowKnight.Environment
             if (_isPlayingBreakAnim)
             {
                 float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-                _animSpritePos.X -= BreakDriftSpeed * dt;
+                _animSpritePos.X -= EnvironmentConstants.BreakableBreakDriftSpeed * dt;
                 sprite.SetPosition(_animSpritePos);
 
                 _breakAnimTimer += dt;
-                if (_breakAnimTimer >= BreakAnimDuration)
+                if (_breakAnimTimer >= EnvironmentConstants.BreakableBreakAnimDuration)
                 {
                     _broken = true;
                     _isPlayingBreakAnim = false;

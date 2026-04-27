@@ -33,7 +33,7 @@ namespace HollowKnight.Collision
                 _handler.Register<Spike, TheKnight>(side, (a, b) => {
                     var knight = (TheKnight)b;
                     knight.TakeDamage(side);
-                    if (knight.HasRespawnPoint && !knight.JustDied) knight.Respawn();
+                    if (knight.HasRespawnPoint && !knight.JustDied && !knight.DeathAnimPlaying) knight.Respawn();
                     knight.ConsumeJustDied();
                 });
 

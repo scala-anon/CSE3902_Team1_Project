@@ -8,9 +8,8 @@ using HollowKnight.Shared;
 
 namespace HollowKnight.Projectiles
 {
-    public class LowHealthEffect : Projectile
+    public class LowHealthEffect : Projectile, ICollidable
     {
-        private const float XOffsetFactor = 0.75f; // increase to move further left
 
         private readonly ISprite _sprite;
         private readonly Action _onComplete;
@@ -20,7 +19,7 @@ namespace HollowKnight.Projectiles
         {
             _sprite = SpriteFactory.Instance.CreateLowHealthEffect(position);
             Vector2 size = _sprite.GetSize();
-            _sprite.SetPosition(new Vector2(position.X - size.X * XOffsetFactor, position.Y - size.Y / 2f));
+            _sprite.SetPosition(new Vector2(position.X - size.X * KnightConstants.LowHealthEffectXOffsetFactor, position.Y - size.Y / 2f));
             _onComplete = onComplete;
             Damage = 0;
         }
