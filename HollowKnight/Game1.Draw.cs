@@ -46,9 +46,17 @@ public partial class Game1
         DrawEnemies(GameConstants.LayerDepthEnemy);
         DrawProjectiles(GameConstants.LayerDepthProjectile);
         DrawKnight(GameConstants.LayerDepthKnight);
-        DrawForeground(GameConstants.LayerDepthForeground);
         DrawDebugOverlay();
 
+        _spriteBatch.End();
+
+        // Foreground drawn in a separate batch with a 1.5x parallax transform so it scrolls faster
+        _spriteBatch.Begin(
+            sortMode: SpriteSortMode.FrontToBack,
+            blendState: BlendState.AlphaBlend,
+            samplerState: SamplerState.PointClamp,
+            transformMatrix: Camera.Instance.GetParallaxTransform(GameConstants.ForegroundParallaxFactor));
+        DrawForeground(GameConstants.LayerDepthForeground);
         _spriteBatch.End();
     }
 

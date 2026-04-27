@@ -132,6 +132,8 @@ namespace HollowKnight.Factories
             platformFrames.Add("Bench", backgroundAtlas.GetRegion("Bench").SourceRectangle);
             backgroundFrames.Add("Background_1", backgroundAtlas.GetRegion("Background_1").SourceRectangle);
             backgroundFrames.Add("Background_2", backgroundAtlas.GetRegion("Background_2").SourceRectangle);
+            backgroundFrames.Add("Pillar_0", backgroundAtlas.GetRegion("Pillar_0").SourceRectangle);
+            backgroundFrames.Add("Pillar_1", backgroundAtlas.GetRegion("Pillar_1").SourceRectangle);
             backgroundFrames.Add("Wall_0", backgroundAtlas.GetRegion("Wall_0").SourceRectangle);
             backgroundFrames.Add("Wall_1", backgroundAtlas.GetRegion("Wall_1").SourceRectangle);
             backgroundFrames.Add("Wall_2", backgroundAtlas.GetRegion("Wall_2").SourceRectangle);
@@ -445,6 +447,10 @@ namespace HollowKnight.Factories
             }
             if (variant == 4) return CreateTransitionLight(position);
             if (variant == 5) return CreateTransitionLightFlipped(position);
+            if (variant == 6) return new StaticSprite(backgroundSpriteSheet, backgroundFrames["Pillar_0"], position, 3.0f);
+            if (variant == 7) return new StaticSprite(backgroundSpriteSheet, backgroundFrames["Pillar_1"], position, 3.0f);
+            if (variant == 8) return new StaticSprite(backgroundSpriteSheet, backgroundFrames["Pillar_0"], position, 3.0f, SpriteEffects.FlipHorizontally);
+            if (variant == 9) return new StaticSprite(backgroundSpriteSheet, backgroundFrames["Pillar_1"], position, 3.0f, SpriteEffects.FlipHorizontally);
             string key = variant switch
             {
                 1 => "Background_1",

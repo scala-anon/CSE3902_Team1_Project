@@ -41,6 +41,11 @@ namespace HollowKnight
             return Matrix.CreateTranslation(-position.X, -position.Y,0);
         }
 
+        public Matrix GetParallaxTransform(float factor)
+        {
+            return Matrix.CreateTranslation(-position.X * factor, -position.Y * factor, 0);
+        }
+
         private Vector2 ComputeClampedTarget(Vector2 target)
         {
             float x = target.X - _screenWidth / 2f;
