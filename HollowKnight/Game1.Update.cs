@@ -141,7 +141,10 @@ internal void CheckTransitions()
                 DebugLogger.LogInteraction(interactable.GetType().Name, "ButtonPress", "Up/W");
                 interactable.OnInteract(_knight);
                 if (interactable is Bench)
+                {
                     _knight.SetBenchRoom(_currentRoom);
+                    if (_currentRoom == 1) _room1BenchUsed = true;
+                }
                 return;
             }
         }

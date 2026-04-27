@@ -58,6 +58,7 @@ public partial class Game1
     public void StartMantisFight()
     {
         _level.BossFight?.Activate();
+        _room4FightStarted = true;
     }
 
     public bool IsInventoryOpen()

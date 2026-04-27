@@ -205,7 +205,6 @@ public void TransitionToRoom(int roomNumber)
     Camera.Instance.SnapTo(_knight.GetPosition());
 
     LoadObstacles();
-    _isTransitioning = false;
     _pendingControllerInit = true; // replaces InitializeControllers()
     DebugLogger.LogRoomTransition($"TransitionToRoom: room {roomNumber} loaded, knight at {_knight.position}");
 
@@ -231,10 +230,22 @@ internal void CheckBenchRespawnTransition()
     if (!_knight.NeedsBenchRoomTransition) return;
     _knight.ConsumeBenchRoomTransition();
     int benchRoom = _knight.BenchSpawnRoom;
+    _isTransitioning = true; // prevent CheckTransitions from overwriting the bench fade callback
     _fader.StartFadeOut(() =>
     {
-        if (benchRoom != _currentRoom)
-            TransitionToRoom(benchRoom);
+        // Remove any stale room-entry point for benchRoom so TransitionToRoom does not
+        // snap the knight to the old door/zone position instead of the bench spawn.
+        _roomEntryPoints.Remove(benchRoom);
+
+        Camera.Instance.ExitBossClamp();
+        TransitionToRoom(benchRoom); // always reload the room to reset enemy/interactable state
+
+        // TransitionToRoom unconditionally sets _isTransitioning = false, but the fader
+        // is still in FadingIn state.  Re-assert true so CheckTransitions cannot fire a
+        // second spurious room load during the remainder of the fade-in, which would
+        // replace _level with a different room's data and empty platforms/enemies.
+        _isTransitioning = true;
+
         _knight.SetPosition(_knight.BenchSpawnPoint);
         Camera.Instance.SnapTo(_knight.BenchSpawnPoint);
         _knight.StartSittingIdle();
@@ -245,6 +256,12 @@ internal void CheckBenchRespawnTransition()
 internal void UpdateFade(GameTime gameTime)
 {
     _fader.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+    // Once the fader fully completes (fade-in finished), release the transition lock so
+    // the player can trigger room transitions again.  This covers the bench-respawn path
+    // where _isTransitioning is kept true through the fade-in to prevent CheckTransitions
+    // from firing a spurious second load while the screen is fading back in.
+    if (!_fader.IsActive)
+        _isTransitioning = false;
 }
 
 private void ApplyRoomRespawnPoint()

@@ -122,6 +122,7 @@ namespace HollowKnight.Shared
         // Projectile — Base
         public const int ProjectileDefaultSize = 12;
         public const int ProjectileDefaultDamage = 1;
+        public const int SpiritProjectileDamage = 2;
         public const float ProjectileAntiTunnelingStep = 5f;
 
         // Audio
