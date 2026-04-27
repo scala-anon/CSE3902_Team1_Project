@@ -14,7 +14,7 @@ namespace HollowKnight.Shared
 
         // Combat
         public const double KnightAttackDuration = 0.25;
-        public const double KnightAttackCooldown = 0.41;
+        public const double KnightAttackCooldown = 0.67;
         public const int KnightDamage = 1;
 
         // Dash
