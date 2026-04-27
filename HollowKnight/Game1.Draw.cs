@@ -57,7 +57,7 @@ public partial class Game1
         int i = 0;
         foreach (IInteractable interactable in _level.Interactables)
         {
-            if(interactable != null)
+            if (interactable != null && interactable.IsActive)
             {
                 interactable.Draw(_spriteBatch, SpriteEffects.None, layerDepth + i * GameConstants.LayerDepthEpsilon);
                 i++;
@@ -105,7 +105,7 @@ public partial class Game1
         int i = 0;
         foreach (IObject obj in _level.Platforms)
         {
-            if (obj != null)
+            if (obj != null && obj.IsActive)
             {
                 obj.Draw(_spriteBatch, SpriteEffects.None, layerDepth + i * GameConstants.LayerDepthEpsilon);
                 i++;

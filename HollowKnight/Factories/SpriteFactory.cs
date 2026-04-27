@@ -140,6 +140,8 @@ namespace HollowKnight.Factories
             backgroundFrames.Add("Wall_5",backgroundAtlas.GetRegion("Wall_5").SourceRectangle);
             backgroundFrames.Add("Door_0", backgroundAtlas.GetRegion("Door_0").SourceRectangle);
             backgroundFrames.Add("Door_1", backgroundAtlas.GetRegion("Door_1").SourceRectangle);
+            backgroundFrames.Add("Broken_Door_0", backgroundAtlas.GetRegion("Broken_Door_0").SourceRectangle);
+            backgroundFrames.Add("Broken_Door_1", backgroundAtlas.GetRegion("Broken_Door_1").SourceRectangle);
             for (int i = 1; i <= 10; i++)
             {
                 string key = $"Tutorial_Platform_{i}";
@@ -471,26 +473,9 @@ namespace HollowKnight.Factories
 
         public ISprite CreateBrokenWallSprite(int variant, Vector2 position)
         {
-            // TODO: replace fallback with broken wall sprite once art assets are added to atlas
-            // Add to LoadAllTextures(): backgroundFrames.Add("Wall_0_Broken", backgroundAtlas.GetRegion("Wall_0_Broken").SourceRectangle); etc.
             float scale = 1.25f;
             if (variant == 4) scale = .8f;
-            string brokenKey = $"Wall_{variant}_Broken";
-            if (backgroundFrames.ContainsKey(brokenKey))
-            {
-                // Happy path: broken art asset exists — return the broken sprite.
-                return new StaticSprite(backgroundSpriteSheet, backgroundFrames[brokenKey], position, scale);
-            }
-
-            // Fallback: broken art asset is MISSING.
-            // StaticSprite does not accept a Color tint parameter, so we use a
-            // half-width source rectangle as a deliberately obvious placeholder so
-            // QA can see at a glance that the fallback fired (left half of the sprite).
-            DebugLogger.LogObject($"[SpriteFactory] MISSING BROKEN VARIANT for {brokenKey} — using placeholder");
-            string fallbackKey = variant switch { 0 => "Wall_0", 1 => "Wall_1", 2 => "Wall_2", 3 => "Wall_3", 4 => "Wall_4", 5 => "Wall_5", _ => "Wall_0" };
-            Rectangle src = backgroundFrames[fallbackKey];
-            Rectangle halfWidthSrc = new Rectangle(src.X, src.Y, Math.Max(1, src.Width / 2), src.Height);
-            return new StaticSprite(backgroundSpriteSheet, halfWidthSrc, position, scale);
+            return new StaticSprite(backgroundSpriteSheet, backgroundFrames["Broken_Door_1"], position, scale);
         }
 
         public ISprite CreateDoorSprite(Vector2 position)
@@ -501,6 +486,12 @@ namespace HollowKnight.Factories
         public ISprite CreateDoorHitSprite(Vector2 position)
         {
             return new StaticSprite(backgroundSpriteSheet, backgroundFrames["Door_1"], position, 1.25f);
+        }
+
+        public ISprite CreateDoorBreakAnimSprite(Vector2 position)
+        {
+            Rectangle[] frames = new[] { backgroundFrames["Broken_Door_0"], backgroundFrames["Broken_Door_1"] };
+            return new AnimatedSprite(backgroundSpriteSheet, frames, position, 0.15, 1.25f, loop: false);
         }
 
         // Mantis Lord factory methods

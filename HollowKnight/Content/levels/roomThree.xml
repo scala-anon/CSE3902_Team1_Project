@@ -9,7 +9,6 @@
     <ObjectName>ToRoom2</ObjectName>
     <Location>5550 2000</Location>
 </Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Transition_Light</ObjectName><Location>4739 2083</Location></Item>
 
 <!-- Ceiling (bottom at y=2000, 20px horizontal overlap) -->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>5500 1559</Location></Item>
@@ -277,7 +276,6 @@
     <ObjectName>ToRoom4</ObjectName>
     <Location>5470 4050</Location>
 </Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Transition_Light</ObjectName><Location>4659 4133</Location></Item>
 
 
 

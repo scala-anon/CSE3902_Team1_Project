@@ -10,9 +10,15 @@ namespace HollowKnight.Environment
 
     public class Door : BreakableEnvironmentObject
     {
-        public override string Label => "Door";
+        private bool _isPlayingBreakAnim;
+        private Vector2 _animSpritePos;
+        private float _breakAnimTimer;
+        private const float BreakDriftSpeed = 400f;
+        private const float BreakAnimDuration = 0.3f; // 2 frames × 0.15s
 
+        public override string Label => "Door";
         public override InteractionType InteractionType => InteractionType.SwordHit;
+        public override bool IsActive => !_broken;
 
         public Door(Vector2 position, int hitWidth, int hitHeight, int hitOffsetY = 0)
         {
@@ -22,6 +28,24 @@ namespace HollowKnight.Environment
             this.hitOffsetY = hitOffsetY;
             hitBoxes = new Rectangle[1];
             sprite = SpriteFactory.Instance.CreateDoorSprite(position);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            if (_isPlayingBreakAnim)
+            {
+                float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                _animSpritePos.X += BreakDriftSpeed * dt;
+                sprite.SetPosition(_animSpritePos);
+
+                _breakAnimTimer += dt;
+                if (_breakAnimTimer >= BreakAnimDuration)
+                {
+                    _broken = true;
+                    _isPlayingBreakAnim = false;
+                }
+            }
         }
 
         public override Rectangle[] GetInteractionBounds()
@@ -34,19 +58,30 @@ namespace HollowKnight.Environment
             };
         }
 
-        public override bool IsInteractable(TheKnight knight) => !_broken;
-
-        protected override void ApplyBrokenSprite()
-        {
-            // TODO: swap to broken door sprite once art asset exists; Door_1 used as placeholder
-            sprite = SpriteFactory.Instance.CreateDoorHitSprite(position);
-            DebugLogger.LogObject($"Door broken: {Label}");
-        }
+        public override bool IsInteractable(TheKnight knight) => !_broken && !_isPlayingBreakAnim;
 
         public override void OnInteract(TheKnight knight)
         {
-            DebugLogger.LogObject($"Door hit: {Label} ({_hitCount + 1}/{CollisionConstants.BreakableHitsToBreak})");
-            base.OnInteract(knight);
+            if (_broken || _cooldownActive || _isPlayingBreakAnim) return;
+            _hitCount++;
+            _cooldownActive = true;
+            _hitCooldownTimer = 0;
+
+            DebugLogger.LogObject($"Door hit: {Label} ({_hitCount}/2)");
+
+            if (_hitCount == 1)
+            {
+                sprite = SpriteFactory.Instance.CreateDoorHitSprite(position);
+            }
+            else if (_hitCount >= 2)
+            {
+                _isPlayingBreakAnim = true;
+                _animSpritePos = position;
+                _breakAnimTimer = 0;
+                sprite = SpriteFactory.Instance.CreateDoorBreakAnimSprite(position);
+            }
         }
+
+        protected override void ApplyBrokenSprite() { }
     }
 }

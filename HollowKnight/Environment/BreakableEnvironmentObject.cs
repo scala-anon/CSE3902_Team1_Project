@@ -10,8 +10,8 @@ namespace HollowKnight.Environment
     {
         protected int _hitCount;
         protected bool _broken;
-        private double _hitCooldownTimer;
-        private bool _cooldownActive;
+        protected double _hitCooldownTimer;
+        protected bool _cooldownActive;
 
         public override bool IsActive => !_broken;
         public int Health => CollisionConstants.BreakableHitsToBreak - _hitCount;

@@ -9,7 +9,6 @@
     <ObjectName>ToRoom1</ObjectName>
     <Location>6000 0</Location>
 </Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Transition_Light_Flipped</ObjectName><Location>5189 83</Location></Item>
 
 <!-- Background left of ToRoom1 transition (bottom at y=40) -->
 <Item><ObjectType>Platform</ObjectType><ObjectName>Background_1</ObjectName><Location>4700 -352</Location></Item>
@@ -148,7 +147,6 @@
     <ObjectName>ToRoom3</ObjectName>
     <Location>5550 1200</Location>
 </Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Transition_Light</ObjectName><Location>4739 1283</Location></Item>
 
 
 

@@ -6,7 +6,6 @@
     <ObjectName>ToRoom3</ObjectName>
     <Location>6772 5200</Location>
 </Item>
-<Item><ObjectType>Platform</ObjectType><ObjectName>Transition_Light_Flipped</ObjectName><Location>5961 5283</Location></Item>
 
 <Item>
     <ObjectType>Knight</ObjectType>
