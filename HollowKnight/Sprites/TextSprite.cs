@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using HollowKnight.Interfaces;
+using HollowKnight.Shared;
 
 namespace HollowKnight.Sprites
 {
@@ -41,9 +42,9 @@ namespace HollowKnight.Sprites
             // No update needed for static text
         }
 
-        public void Draw(SpriteBatch spriteBatch, SpriteEffects effects, float layerDepth = 0f)
+        public void Draw(SpriteBatch spriteBatch, SpriteEffects effects, float layerDepth = 0f, float opacity = GameConstants.DefaultSpriteOpacity)
         {
-            spriteBatch.DrawString(_font, _text, _position, _color, 0f, Vector2.Zero, 1f, effects, layerDepth);
+            spriteBatch.DrawString(_font, _text, _position, _color * opacity, 0f, Vector2.Zero, 1f, effects, layerDepth);
         }
 
         public void Reset()

@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using HollowKnight.Environment;
 using HollowKnight.Interfaces;
 using HollowKnight.Audio;
 using HollowKnight.Shared;
@@ -32,15 +33,15 @@ internal void CheckTransitions()
         {
             _isTransitioning = true;
 
-            // offset spawn away from the transition so we don't re-trigger it on return
             Vector2 safeSpawn = _knight.position;
-            if (zone.Bounds.Width > zone.Bounds.Height) // horizontal transition
-                safeSpawn.Y -= 100; // push up
-            else // vertical transition
-                safeSpawn.X += _knight.position.X < zone.Bounds.Center.X ? -100 : 100; // push away laterally
+            if (zone.Bounds.Width > zone.Bounds.Height)
+                safeSpawn.Y -= 100;
+            else
+                safeSpawn.X += _knight.position.X < zone.Bounds.Center.X ? -100 : 100;
 
             _roomEntryPoints[_currentRoom] = safeSpawn;
-            TransitionToRoom(zone.DestinationRoom);
+            int dest = zone.DestinationRoom;
+            _fader.StartFadeOut(() => TransitionToRoom(dest));
             return;
         }
     }
@@ -69,8 +70,6 @@ internal void CheckTransitions()
             _navigationGrid
         );
     }
-
-    internal bool KnightIsDead() => _knight.IsDead();
 
     internal void UpdateEnemies(GameTime gameTime)
     {
@@ -141,6 +140,8 @@ internal void CheckTransitions()
             {
                 DebugLogger.LogInteraction(interactable.GetType().Name, "ButtonPress", "Up/W");
                 interactable.OnInteract(_knight);
+                if (interactable is Bench)
+                    _knight.SetBenchRoom(_currentRoom);
                 return;
             }
         }

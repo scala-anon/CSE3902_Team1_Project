@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using HollowKnight.Interfaces;
+using HollowKnight.Shared;
 
 namespace HollowKnight.Sprites
 {
@@ -14,40 +15,31 @@ namespace HollowKnight.Sprites
         private Rectangle _sourceRect;
         private Vector2 _position;
         private Vector2 _startPosition;
-        private float _scale;
-        private float _layerDepth;
-        private Color _color;
+        private Vector2 _scale;
+        private readonly SpriteEffects _defaultEffects;
 
-        public int Width => (int)(_sourceRect.Width * _scale);
-        public int Height => (int)(_sourceRect.Height * _scale);
+        public int Width => (int)(_sourceRect.Width * _scale.X);
+        public int Height => (int)(_sourceRect.Height * _scale.Y);
         public bool IsFinished => true;
 
-        /// <summary>
-        /// Create a static sprite from a sprite sheet.
-        /// </summary>
-        /// <param name="texture">The sprite sheet texture</param>
-        /// <param name="sourceRect">Rectangle defining which part of the texture to draw</param>
-        /// <param name="position">Initial position in world coordinates</param>
-        /// <param name="scale">Scale multiplier (default 2.0)</param>
-        // public StaticSprite(Texture2D texture, Rectangle sourceRect, Vector2 position, float scale = 2.0f)
-        // {
-        //     _texture = texture;
-        //     _sourceRect = sourceRect;
-        //     _position = position;
-        //     _startPosition = position;
-        //     _scale = scale;
-        // }
+        public StaticSprite(Texture2D texture, Rectangle sourceRect, Vector2 position, float scale = 2.0f, SpriteEffects defaultEffects = SpriteEffects.None)
+            : this(texture, sourceRect, position, new Vector2(scale, scale), defaultEffects) { }
 
-        public StaticSprite(Texture2D texture, Rectangle sourceRect, Vector2 position, float scale = 2.0f, float layerDepth = 0f, Color? color = null)
+        public StaticSprite(Texture2D texture, Rectangle sourceRect, Vector2 position, Vector2 scale, SpriteEffects defaultEffects = SpriteEffects.None)
         {
             _texture = texture;
             _sourceRect = sourceRect;
             _position = position;
             _startPosition = position;
             _scale = scale;
-            _layerDepth = layerDepth;
-            _color = color ?? Color.White;
+            _defaultEffects = defaultEffects;
         }
+
+        // Compat overload from feature/boss-background. layerDepth and color are accepted for
+        // source compatibility but currently dropped — use the opacity parameter on Draw() for
+        // fade effects instead of pre-multiplying color.
+        public StaticSprite(Texture2D texture, Rectangle sourceRect, Vector2 position, float scale, float layerDepth, Color? color = null)
+            : this(texture, sourceRect, position, new Vector2(scale, scale), SpriteEffects.None) { }
 
         public void Update(GameTime gameTime)
         {
@@ -64,31 +56,17 @@ namespace HollowKnight.Sprites
             _position = position;
         }
 
-        public void Draw(SpriteBatch spriteBatch, SpriteEffects effects, float layerDepth = 0f)
+        public void Draw(SpriteBatch spriteBatch, SpriteEffects effects, float layerDepth = 0f, float opacity = GameConstants.DefaultSpriteOpacity)
         {
             spriteBatch.Draw(
                 _texture,
                 _position,
                 _sourceRect,
-                Color.White,
+                Color.White * opacity,
                 0f,
                 Vector2.Zero,
                 _scale,
-                effects,
-                layerDepth
-            );
-        }
-        public void Draw(SpriteBatch spriteBatch, SpriteEffects effects, float layerDepth = 0f, Color? color = null)
-        {
-            spriteBatch.Draw(
-                _texture,
-                _position,
-                _sourceRect,
-                color ?? Color.White,
-                0f,
-                Vector2.Zero,
-                _scale,
-                effects,
+                effects | _defaultEffects,
                 layerDepth
             );
         }
@@ -100,7 +78,7 @@ namespace HollowKnight.Sprites
 
         public Vector2 GetSize()
         {
-            return new Vector2(_sourceRect.Width * _scale, _sourceRect.Height * _scale);
+            return new Vector2(_sourceRect.Width * _scale.X, _sourceRect.Height * _scale.Y);
         }
     }
 }

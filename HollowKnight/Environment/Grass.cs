@@ -16,7 +16,7 @@ namespace HollowKnight.Environment
 
         public override string Label => $"Grass_{variant}";
         public InteractionType InteractionType => InteractionType.SwordHit;
-        public override bool IsActive => !_chopped;
+        public override bool IsActive => true;
 
         public Grass(int variant, Vector2 position, int hitWidth = 0, int hitHeight = 0, int hitOffsetY = 0)
         {

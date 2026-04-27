@@ -8,7 +8,6 @@ using HollowKnight.Environment;
 using HollowKnight.Shared;
 using System;
 using System.Collections.Generic;
-using HollowKnight.Shared;
 
 namespace HollowKnight.Factories
 {
@@ -20,9 +19,12 @@ namespace HollowKnight.Factories
         private Texture2D tutorialPlatformSpriteSheet;
         private Texture2D spellsSpriteSheet;
         private Texture2D backgroundSpriteSheet;
+        private Texture2D mainBackgroundTexture;
+        public Texture2D GetMainBackgroundTexture() => mainBackgroundTexture;
         private Texture2D mantisLordSpriteSheet;
         private Texture2D mantisVillageSpriteSheet;
         private Texture2D layersSpriteSheet;
+        private Texture2D spriteEffectsSheet;
 
         private SpriteFont defaultFont;
 
@@ -45,6 +47,8 @@ namespace HollowKnight.Factories
         private readonly Dictionary<string, Rectangle[]> mantisLordAnimations;
         private readonly Dictionary<string,Rectangle[]> bossSpikeAnimations;
         private readonly Dictionary<string, Rectangle> mantisVillageFrames;
+        private readonly Dictionary<string, Rectangle> spriteEffectsSingleFrames;
+        private readonly Dictionary<string, Rectangle[]> spriteEffectsAnimations;
 
         private static SpriteFactory instance = new SpriteFactory();
 
@@ -70,6 +74,8 @@ namespace HollowKnight.Factories
             mantisVillageFrames = new Dictionary<string, Rectangle>();
             layerFrames = new Dictionary<string, Rectangle>();
             bossSpikeAnimations = new Dictionary<string, Rectangle[]>();
+            spriteEffectsSingleFrames = new Dictionary<string, Rectangle>();
+            spriteEffectsAnimations = new Dictionary<string, Rectangle[]>();
         }
 
         public void LoadAllTextures(ContentManager content)
@@ -83,6 +89,7 @@ namespace HollowKnight.Factories
             TextureAtlas platformAtlas = TextureAtlas.FromFile(content, "sprites/platform-atlas.xml");
             TextureAtlas tutorialPlatformAtlas = TextureAtlas.FromFile(content, "sprites/tutorial-platform-atlas.xml");
             TextureAtlas backgroundAtlas = TextureAtlas.FromFile(content, "sprites/background-atlas.xml");
+            mainBackgroundTexture = content.Load<Texture2D>("sprites/main-background");
             TextureAtlas mantisLordAtlas = TextureAtlas.FromFile(content, "sprites/mantisLords-atlas.xml");
             TextureAtlas mantisVillageAtlas = TextureAtlas.FromFile(content,"sprites/village-atlas.xml");
             TextureAtlas layersAtlas = TextureAtlas.FromFile(content, "sprites/layers-atlas.xml");
@@ -96,10 +103,13 @@ namespace HollowKnight.Factories
             layersSpriteSheet = layersAtlas.Texture;
             // Knight movement frames
             knightSingleFrames.Add("Damaged", knightAtlas.GetRegion("Damaged").SourceRectangle);
-            
+            knightSingleFrames.Add("Sitting_Idle_0", knightAtlas.GetRegion("Sitting_Idle_0").SourceRectangle);
+            knightSingleFrames.Add("Sitting_Idle_1", knightAtlas.GetRegion("Sitting_Idle_1").SourceRectangle);
+
             knightAnimations.Add("Idle", knightAtlas.GetAnimationFrames("Idle"));
             knightAnimations.Add("Walking", knightAtlas.GetAnimationFrames("Walking"));
             knightAnimations.Add("Jumping", knightAtlas.GetAnimationFrames("Jumping"));
+            knightAnimations.Add("Sitting", knightAtlas.GetAnimationFrames("Sitting"));
 
             // Knight abilities frames
             knightAnimations.Add("UpSword", knightAttacksAtlas.GetAnimationFrames("UpSword"));
@@ -138,6 +148,8 @@ namespace HollowKnight.Factories
             backgroundFrames.Add("Wall_5",backgroundAtlas.GetRegion("Wall_5").SourceRectangle);
             backgroundFrames.Add("Door_0", backgroundAtlas.GetRegion("Door_0").SourceRectangle);
             backgroundFrames.Add("Door_1", backgroundAtlas.GetRegion("Door_1").SourceRectangle);
+            backgroundFrames.Add("Broken_Door_0", backgroundAtlas.GetRegion("Broken_Door_0").SourceRectangle);
+            backgroundFrames.Add("Broken_Door_1", backgroundAtlas.GetRegion("Broken_Door_1").SourceRectangle);
             for (int i = 1; i <= 10; i++)
             {
                 string key = $"Tutorial_Platform_{i}";
@@ -241,6 +253,13 @@ namespace HollowKnight.Factories
                 string key = $"Pole_{i}";
                 mantisVillageFrames.Add(key, mantisVillageAtlas.GetRegion(key).SourceRectangle);
             }
+
+            // Sprite effects sheet
+            TextureAtlas spriteEffectsAtlas = TextureAtlas.FromFile(content, "sprites/sprite_effects.xml");
+            spriteEffectsSheet = spriteEffectsAtlas.Texture;
+            spriteEffectsSingleFrames.Add("transition_light", spriteEffectsAtlas.GetRegion("transition_light").SourceRectangle);
+            spriteEffectsAnimations.Add("dash",       spriteEffectsAtlas.GetAnimationFrames("dash"));
+            spriteEffectsAnimations.Add("low_health", spriteEffectsAtlas.GetAnimationFrames("low_health"));
         }
 
         // Consolidated platform factory methods
@@ -296,6 +315,26 @@ namespace HollowKnight.Factories
         {
             return new AnimatedSprite(knightVarietySheet, knightAnimations["Jumping"], position, 0.1, 1.0f);
         }
+        public ISprite CreateKnightSittingSprite(Vector2 position)
+        {
+            return new AnimatedSprite(knightVarietySheet, knightAnimations["Sitting"], position, 0.15, 1.0f);
+        }
+        public ISprite CreateKnightStandingUpSprite(Vector2 position)
+        {
+            var frames = knightAnimations["Sitting"];
+            var reversed = new System.Collections.Generic.List<Microsoft.Xna.Framework.Rectangle>(frames);
+            reversed.Reverse();
+            return new AnimatedSprite(knightVarietySheet, reversed.ToArray(), position, 0.15, 1.0f, loop: false);
+        }
+        public ISprite CreateKnightSittingIdleSprite(Vector2 position)
+        {
+            return new StaticSprite(knightVarietySheet, knightSingleFrames["Sitting_Idle_0"], position, 1.0f);
+        }
+        public ISprite CreateKnightSittingIdleLongSprite(Vector2 position)
+        {
+            return new StaticSprite(knightVarietySheet, knightSingleFrames["Sitting_Idle_1"], position, 1.0f);
+        }
+
         public ISprite CreateKnightDashSprite(Vector2 position)
         {
             //TODO: Updated to dash animation once we have them
@@ -435,6 +474,13 @@ namespace HollowKnight.Factories
         public ISprite CreateBackgroundSprite(int variant, Vector2 position)
         {
             // TODO: Fix constants
+            if (variant == 3)
+            {
+                var fullRect = new Rectangle(0, 0, mainBackgroundTexture.Width, mainBackgroundTexture.Height);
+                return new StaticSprite(mainBackgroundTexture, fullRect, position, 1.0f);
+            }
+            if (variant == 4) return CreateTransitionLight(position);
+            if (variant == 5) return CreateTransitionLightFlipped(position);
             string key = variant switch
             {
                 1 => "Background_1",
@@ -463,26 +509,9 @@ namespace HollowKnight.Factories
 
         public ISprite CreateBrokenWallSprite(int variant, Vector2 position)
         {
-            // TODO: replace fallback with broken wall sprite once art assets are added to atlas
-            // Add to LoadAllTextures(): backgroundFrames.Add("Wall_0_Broken", backgroundAtlas.GetRegion("Wall_0_Broken").SourceRectangle); etc.
             float scale = 1.25f;
             if (variant == 4) scale = .8f;
-            string brokenKey = $"Wall_{variant}_Broken";
-            if (backgroundFrames.ContainsKey(brokenKey))
-            {
-                // Happy path: broken art asset exists — return the broken sprite.
-                return new StaticSprite(backgroundSpriteSheet, backgroundFrames[brokenKey], position, scale);
-            }
-
-            // Fallback: broken art asset is MISSING.
-            // StaticSprite does not accept a Color tint parameter, so we use a
-            // half-width source rectangle as a deliberately obvious placeholder so
-            // QA can see at a glance that the fallback fired (left half of the sprite).
-            DebugLogger.LogObject($"[SpriteFactory] MISSING BROKEN VARIANT for {brokenKey} — using placeholder");
-            string fallbackKey = variant switch { 0 => "Wall_0", 1 => "Wall_1", 2 => "Wall_2", 3 => "Wall_3", 4 => "Wall_4", 5 => "Wall_5", _ => "Wall_0" };
-            Rectangle src = backgroundFrames[fallbackKey];
-            Rectangle halfWidthSrc = new Rectangle(src.X, src.Y, Math.Max(1, src.Width / 2), src.Height);
-            return new StaticSprite(backgroundSpriteSheet, halfWidthSrc, position, scale);
+            return new StaticSprite(backgroundSpriteSheet, backgroundFrames["Broken_Door_1"], position, scale);
         }
 
         public ISprite CreateDoorSprite(Vector2 position)
@@ -493,6 +522,12 @@ namespace HollowKnight.Factories
         public ISprite CreateDoorHitSprite(Vector2 position)
         {
             return new StaticSprite(backgroundSpriteSheet, backgroundFrames["Door_1"], position, 1.25f);
+        }
+
+        public ISprite CreateDoorBreakAnimSprite(Vector2 position)
+        {
+            Rectangle[] frames = new[] { backgroundFrames["Broken_Door_0"], backgroundFrames["Broken_Door_1"] };
+            return new AnimatedSprite(backgroundSpriteSheet, frames, position, 0.15, 1.25f, loop: false);
         }
 
         // Mantis Lord factory methods
@@ -742,6 +777,27 @@ namespace HollowKnight.Factories
         public ISprite CreateBossSpikeIdle(Vector2 position)
         {
             return new AnimatedSprite(mantisVillageSpriteSheet, bossSpikeAnimations["Floor_Spike"], position, 0.5, 1.5f);
+        }
+
+        // Sprite effects factory methods
+        public ISprite CreateDashEffect(Vector2 position)
+        {
+            return new AnimatedSprite(spriteEffectsSheet, spriteEffectsAnimations["dash"], position, 0.08, 0.75f, loop: false);
+        }
+
+        public ISprite CreateLowHealthEffect(Vector2 position)
+        {
+            return new AnimatedSprite(spriteEffectsSheet, spriteEffectsAnimations["low_health"], position, 0.1, 1.0f, loop: false);
+        }
+
+        public ISprite CreateTransitionLight(Vector2 position)
+        {
+            return new StaticSprite(spriteEffectsSheet, spriteEffectsSingleFrames["transition_light"], position, new Vector2(1.0f, 2.25f));
+        }
+
+        public ISprite CreateTransitionLightFlipped(Vector2 position)
+        {
+            return new StaticSprite(spriteEffectsSheet, spriteEffectsSingleFrames["transition_light"], position, new Vector2(1.0f, 2.25f), SpriteEffects.FlipHorizontally);
         }
     }
 }

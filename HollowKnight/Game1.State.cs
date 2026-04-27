@@ -35,11 +35,6 @@ public partial class Game1
         }
     }
 
-    public void SetGameOver()
-    {
-        _gameState = new GameOverState();
-    }
-
     public void SetWin()
     {
         _gameState = new WinState();

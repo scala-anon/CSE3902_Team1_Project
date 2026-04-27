@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using HollowKnight.Shared;
 
 namespace HollowKnight.Interfaces
 {
@@ -20,7 +21,8 @@ namespace HollowKnight.Interfaces
         /// Called once per render frame.
         /// </summary>
         /// <param name="layerDepth">Depth in [0,1]; 0 = back, 1 = front. Used with SpriteSortMode.FrontToBack.</param>
-        void Draw(SpriteBatch spriteBatch, SpriteEffects effects, float layerDepth = 0f);
+        /// <param name="opacity">Normalized in [0,1]; multiplied into the sprite's color tint. 1.0 = fully opaque (default). Caller is responsible for staying in range.</param>
+        void Draw(SpriteBatch spriteBatch, SpriteEffects effects, float layerDepth = 0f, float opacity = GameConstants.DefaultSpriteOpacity);
 
         /// <summary>
         /// Reset sprite to initial state (position, animation frame, etc.)

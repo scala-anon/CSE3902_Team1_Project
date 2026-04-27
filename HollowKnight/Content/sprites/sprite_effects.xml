@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TextureAtlas>
+  <Texture>sprites/SpriteEffectsSheet</Texture>
+  <Regions>
+    <!--Dash frames-->
+    <Region name="dash_0" x="0" y="0" width="503" height="334"/>
+    <Region name="dash_1" x="503" y="0" width="503" height="334"/>
+    <Region name="dash_2" x="1006" y="0" width="503" height="334"/>
+    <Region name="dash_3" x="1509" y="0" width="503" height="334"/>
+    <Region name="dash_4" x="0" y="334" width="503" height="334"/>
+    
+
+    <!--Low health frames-->
+    <Region name="low_health_0" x="503" y="334" width="503" height="334"/>
+    <Region name="low_health_1" x="1006" y="334" width="503" height="334"/>
+    <Region name="low_health_2" x="1509" y="334" width="503" height="334"/>
+    <Region name="low_health_3" x="0" y="668" width="503" height="334"/>
+    <Region name="low_health_4" x="503" y="668" width="503" height="334"/>
+    <Region name="low_health_5" x="1006" y="668" width="503" height="334"/>
+    <Region name="low_health_6" x="1509" y="668" width="503" height="334"/>
+
+    <Region name="transition_light" x="0" y="1002" width="503" height="334"/>
+  </Regions>
+</TextureAtlas>

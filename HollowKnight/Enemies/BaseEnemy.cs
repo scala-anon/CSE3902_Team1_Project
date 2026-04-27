@@ -67,16 +67,21 @@ namespace HollowKnight.Enemies
             return true;
         }
 
-        public void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects, float layerDepth = 0f)
+        public void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects, float layerDepth = 0f, float opacity = GameConstants.DefaultSpriteOpacity)
         {
             SpriteEffects effects = FacingDirection == Direction.Right
                 ? SpriteEffects.FlipHorizontally
                 : SpriteEffects.None;
-            Sprite.Draw(spriteBatch, effects, layerDepth);
+            Sprite.Draw(spriteBatch, effects, layerDepth, opacity);
         }
 
         public virtual Rectangle[] GetBounds()
         {
+            if (!IsActive)
+            {
+                hitBoxes[0] = new Rectangle((int)position.X, (int)position.Y, 1, 1);
+                return hitBoxes;
+            }
             Vector2 size = Sprite.GetSize();
             hitBoxes[0] = new Rectangle(
                 (int)position.X, (int)position.Y, (int)size.X, (int)size.Y);

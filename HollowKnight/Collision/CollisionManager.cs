@@ -106,7 +106,8 @@ namespace HollowKnight.Collision
             // Probe touched but bounds don't actually overlap: crawlid is resting on top.
             if (overlapTop <= 0 && overlapBottom > 0 && enemyBounds.Right > blockBounds.Left && enemyBounds.Left < blockBounds.Right)
             {
-                crawlid.position.Y = blockBounds.Top - enemyBounds.Height;
+                int sink = crawlid.Alive ? 0 : EnemyConstants.EnemyDeadGroundSink;
+                crawlid.position.Y = blockBounds.Top - enemyBounds.Height + sink;
                 crawlid.Land();
                 return;
             }
@@ -125,7 +126,8 @@ namespace HollowKnight.Collision
             {
                 if (overlapTop < overlapBottom)
                 {
-                    crawlid.position.Y = blockBounds.Top - enemyBounds.Height;
+                    int sink = crawlid.Alive ? 0 : EnemyConstants.EnemyDeadGroundSink;
+                    crawlid.position.Y = blockBounds.Top - enemyBounds.Height + sink;
                     crawlid.Land();
                 }
                 else
@@ -160,7 +162,8 @@ namespace HollowKnight.Collision
             {
                 if (overlapTop < overlapBottom)
                 {
-                    vengefly.position.Y -= overlapTop;
+                    int sink = vengefly.Dead ? EnemyConstants.EnemyDeadGroundSink : 0;
+                    vengefly.position.Y -= overlapTop - sink;
                     if (vengefly.Dead)
                         vengefly.Land();
                 }

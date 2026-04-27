@@ -30,9 +30,9 @@ namespace HollowKnight.Environment
             sprite.Update(gameTime);
         }
 
-        public void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects, float layerDepth = 0f)
+        public void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects, float layerDepth = 0f, float opacity = GameConstants.DefaultSpriteOpacity)
         {
-            sprite.Draw(spriteBatch, spriteEffects, layerDepth);
+            sprite.Draw(spriteBatch, spriteEffects, layerDepth, opacity);
         }
 
         // TODO: REDO THR HITBOXES

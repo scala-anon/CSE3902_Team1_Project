@@ -1,4 +1,5 @@
 using HollowKnight.Interfaces;
+using HollowKnight.Shared;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -16,8 +17,8 @@ namespace HollowKnight.Environment
 
         public virtual void Update(GameTime gameTime) => sprite.Update(gameTime);
 
-        public virtual void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects, float layerDepth = 0f)
-            => sprite.Draw(spriteBatch, spriteEffects, layerDepth);
+        public virtual void Draw(SpriteBatch spriteBatch, SpriteEffects spriteEffects, float layerDepth = 0f, float opacity = GameConstants.DefaultSpriteOpacity)
+            => sprite.Draw(spriteBatch, spriteEffects, layerDepth, opacity);
 
         public abstract Rectangle[] GetBounds();
     }
