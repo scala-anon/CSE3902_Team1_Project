@@ -15,7 +15,7 @@ public partial class Game1
     internal void DrawTitleStateOverlay() => DrawTitleScreen();
     internal void DrawPausedStateOverlay() => DrawPauseScreen();
     internal void DrawInventoryStateOverlay() => DrawInventoryOverlay();
-    internal void DrawWinStateOverlay() => DrawCenteredOverlay(WinTitle, string.Empty, HudConstants.ScreenTint, Color.Yellow);
+    internal void DrawWinStateOverlay() => DrawCenteredOverlay(WinTitle, string.Empty, HudConstants.ScreenTint, Color.White);
 
     private void DrawWorld()
     {
@@ -27,7 +27,7 @@ public partial class Game1
                 Camera.Instance.Position,
                 _graphics.PreferredBackBufferWidth,
                 _graphics.PreferredBackBufferHeight,
-                new Color(234, 255, 255)); // 220, 251, 255 RGB tint for background - change if needed
+                _currentRoom == 4 ? new Color(46, 139, 87) : new Color(234, 255, 255));
             _spriteBatch.End();
         }
 
@@ -49,6 +49,7 @@ public partial class Game1
         DrawKnight(GameConstants.LayerDepthKnight);
         DrawForeground(GameConstants.LayerDepthForeground);
         DrawDebugOverlay();
+        DrawWorldHints();
 
         _spriteBatch.End();
 
@@ -163,6 +164,37 @@ public partial class Game1
         {
             p.Draw(_spriteBatch, Direction.Right, layerDepth + i * GameConstants.LayerDepthEpsilon);
             i++;
+        }
+    }
+
+    private void DrawWorldHints()
+    {
+        if (_currentRoom == 1 && !_room1BenchUsed)
+        {
+            const string hint = "Press Up Arrow / W to interact with bench";
+            const float scale = 1f;
+            const float benchCenterX = 308 + 95f;
+            const float hintY = 1870f;
+            Vector2 size = _hudFont.MeasureString(hint) * scale;
+            Vector2 pos = new Vector2(benchCenterX - size.X / 2f, hintY - size.Y);
+            _spriteBatch.DrawString(_hudFont, hint, pos, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, GameConstants.LayerDepthKnight + 0.01f);
+        }
+
+        if (_currentRoom == 4 && !_room4FightStarted)
+        {
+            const string line1 = "Challenge?";
+            const string line2 = "Press L";
+            const float scale = 1f;
+            // Middle Mantis Lord: anchor(4518,4900)+offsets(+2,-35)+(spriteW/2,spriteH/2) = (4573,5032)
+            const float centerX = 4573f;
+            const float spriteCenterY = 5152f;
+            Vector2 size1 = _hudFont.MeasureString(line1) * scale;
+            Vector2 size2 = _hudFont.MeasureString(line2) * scale;
+            float blockHeight = size1.Y + 4f + size2.Y;
+            float hintY = spriteCenterY - blockHeight / 2f;
+            float layer = GameConstants.LayerDepthKnight + 0.01f;
+            _spriteBatch.DrawString(_hudFont, line1, new Vector2(centerX - size1.X / 2f, hintY), Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, layer);
+            _spriteBatch.DrawString(_hudFont, line2, new Vector2(centerX - size2.X / 2f, hintY + size1.Y + 4f), Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, layer);
         }
     }
 

@@ -43,6 +43,8 @@ public partial class Game1 : Game
     public void RegisterDestroyed(string key) => _destroyedObjects.Add(key);
     public bool IsDestroyed(string key) => _destroyedObjects.Contains(key);
     private bool _isTransitioning = false;
+    private bool _room1BenchUsed = false;
+    private bool _room4FightStarted = false;
     private bool _pendingControllerInit = false;
     private readonly ScreenFader _fader = new();
     private ParallaxBackground _parallaxBackground;
@@ -113,7 +115,7 @@ public partial class Game1 : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.Navy);
+        GraphicsDevice.Clear(_currentRoom == 4 ? new Color(46, 139, 87) : Color.Navy);
 
         if (!IsTitleScreenOpen())
         {

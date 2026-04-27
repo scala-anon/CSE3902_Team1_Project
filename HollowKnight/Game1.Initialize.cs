@@ -205,7 +205,6 @@ public void TransitionToRoom(int roomNumber)
     Camera.Instance.SnapTo(_knight.GetPosition());
 
     LoadObstacles();
-    _isTransitioning = false;
     _pendingControllerInit = true; // replaces InitializeControllers()
     DebugLogger.LogRoomTransition($"TransitionToRoom: room {roomNumber} loaded, knight at {_knight.position}");
 
