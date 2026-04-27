@@ -16,6 +16,9 @@ namespace HollowKnight
         private int _levelWidth;
         private int _levelHeight;
 
+        private bool _bossClampActive;
+        private Vector2 _bossClampAnchor;
+
         private static Camera instance = new Camera();
 
         public Camera()
@@ -55,8 +58,20 @@ namespace HollowKnight
             return new Vector2(x, y);
         }
 
+        public void EnterBossClamp(Vector2 anchor)
+        {
+            _bossClampActive = true;
+            _bossClampAnchor = anchor;
+        }
+
+        public void ExitBossClamp()
+        {
+            _bossClampActive = false;
+        }
+
         public void Follow(Vector2 target)
         {
+            if (_bossClampActive) target = _bossClampAnchor;
             Vector2 desired = ComputeClampedTarget(target);
             position = Vector2.Lerp(position, desired, CameraConstants.cameraLerpFactor);
         }
@@ -85,6 +100,7 @@ namespace HollowKnight
         /// </summary>s
         public void SetTempBounds(Vector2 _position)
         {
+            if (_bossClampActive) return;
             float desiredY = _position.Y - _screenHeight / 2f - CameraConstants.yAxisCameraRaise;
             desiredY = MathHelper.Clamp(desiredY, 0, _levelHeight - _screenHeight);
             float newY = MathHelper.Lerp(position.Y, desiredY, CameraConstants.cameraLerpFactor);
