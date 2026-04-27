@@ -198,26 +198,9 @@ public void TransitionToRoom(int roomNumber)
     ApplyRoomRespawnPoint();
 
     if (_roomEntryPoints.TryGetValue(roomNumber, out Vector2 entryPoint))
-    {
         _knight.SetPosition(entryPoint);
-    }
     else
-    {
-        Vector2 spawnPos = _level.KnightSpawn;
-        foreach (var zone in _level.Transitions)
-        {
-            if (zone.DestinationRoom == previousRoom)
-            {
-                Rectangle b = zone.Bounds;
-                if (b.Width > b.Height)
-                    spawnPos = new Vector2(b.Center.X, b.Top - 100);
-                else
-                    spawnPos = new Vector2(b.Left - 100, b.Center.Y);
-                break;
-            }
-        }
-        _knight.SetPosition(spawnPos);
-    }
+        _knight.SetPosition(_level.KnightSpawn);
 
     Camera.Instance.SnapTo(_knight.GetPosition());
 
