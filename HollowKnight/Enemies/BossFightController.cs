@@ -323,7 +323,6 @@ namespace HollowKnight.Enemies
             _left.StateMachine.CommandBow();
             _middle.StateMachine.CommandBow();
             _right.StateMachine.CommandBow();
-            // TODO: health-bar UI — hide boss health bar here
         }
 
         private void UpdateVictoryBow()

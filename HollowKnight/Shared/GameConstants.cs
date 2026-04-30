@@ -167,5 +167,7 @@ namespace HollowKnight.Shared
         public const float DefaultSpriteOpacity = 1.0f;
         public const float MinSpriteOpacity = 0.0f;
         public const float MaxSpriteOpacity = 1.0f;
+        public const float DefaultSpriteScale = 1.0f;
+        public const float HalfDefaultSpriteScale = 0.5f;
     }
 }
