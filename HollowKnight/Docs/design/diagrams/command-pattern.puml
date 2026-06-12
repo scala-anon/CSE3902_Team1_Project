@@ -1,0 +1,67 @@
+@startuml command-pattern
+!include _style.puml
+title Input Pipeline — Command Pattern (Controller → Command → Receiver)
+
+interface IController <<interface>> {
+    + Update(gameTime) : void
+}
+interface ICommand <<interface>> {
+    + Execute() : void
+}
+
+class KeyboardController {
+    - _pressedMappings  : Dictionary<Keys, ICommand>
+    - _heldMappings     : Dictionary<Keys, ICommand>
+    - _releasedMappings : Dictionary<Keys, ICommand>
+    - _comboPressedMappings : Dictionary<...>
+    + Update(gameTime) : void
+    + RegisterPressed(key, cmd) : void
+}
+class MouseController {
+    + Update(gameTime) : void
+}
+class KeyboardBindings <<static>> {
+    + BindGameplay(game, knight, controller) : void
+}
+
+class GameplayOnlyCommand {
+    + Execute() : void
+}
+class PlayerMoveLeftCommand
+class PlayerMoveRightCommand
+class PlayerJumpCommand
+class PlayerSideSlashCommand
+class PlayerSpellCastCommand
+class StartGameCommand
+class TogglePauseCommand
+
+class TheKnight <<receiver>>
+class Game1 <<receiver>>
+
+KeyboardController ..|> IController
+MouseController   ..|> IController
+
+PlayerMoveLeftCommand  ..|> ICommand
+PlayerMoveRightCommand ..|> ICommand
+PlayerJumpCommand      ..|> ICommand
+PlayerSideSlashCommand ..|> ICommand
+PlayerSpellCastCommand ..|> ICommand
+StartGameCommand       ..|> ICommand
+TogglePauseCommand     ..|> ICommand
+GameplayOnlyCommand    ..|> ICommand
+
+KeyboardController o--> "*" ICommand : invokes
+KeyboardBindings ..> KeyboardController : wires keys
+
+' GameplayOnlyCommand decorates a gameplay command, gating it on game state
+GameplayOnlyCommand o--> "1" ICommand : wraps
+
+PlayerMoveLeftCommand  ..> TheKnight : MoveLeft()
+PlayerMoveRightCommand ..> TheKnight : MoveRight()
+PlayerJumpCommand      ..> TheKnight : Jump()
+PlayerSideSlashCommand ..> TheKnight : SideSlash()
+PlayerSpellCastCommand ..> TheKnight : CastSpell()
+StartGameCommand       ..> Game1 : StartGame()
+TogglePauseCommand     ..> Game1 : TogglePause()
+
+@enduml

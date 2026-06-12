@@ -1,0 +1,72 @@
+@startuml collision-sequence
+!include _style.puml
+title Collision — One Update Tick (CollisionSystem.Update)
+
+participant "Game1" as G
+participant "CollisionSystem" as CS
+participant "CollisionLayerMatrix" as M
+participant "CollisionDetector" as D
+participant "CollisionHandler" as H
+participant "CollisionManager" as CM
+participant "receiver\n(TheKnight / IEnemy / ...)" as R
+
+G -> CS ++ : Update(knight, platforms,\ninteractables, enemies, items, projMgr, navGrid)
+
+' ---- Trigger-style passes: matrix -> detect -> dispatch ----
+loop for each enemy in enemies
+    CS -> M ++ : ShouldCollide(enemy, knight)
+    return collidePermitted : bool
+    alt [collide permitted]
+        CS -> D ++ : Detect(enemy, knight)
+        return side : CollisionSide
+        alt [side != None]
+            CS -> H ++ : HandleCollision(enemy, knight, side)
+            H -> R ++ : registered response\n(e.g. knight.TakeDamage(side))
+            return
+            return
+        end
+    end
+end
+
+note over CS
+  Same matrix -> detect -> handler pattern repeats for:
+  platforms x knight, spikes x enemies,
+  sword x {enemies, spikes, breakables, interactables},
+  items x knight.
+end note
+
+' ---- Resolution passes: position correction via CollisionManager ----
+group Block resolution
+    CS -> R ++ : knight.SetAirborne()
+    return
+    loop for each block in platforms
+        CS -> M ++ : ShouldCollide(block, knight)
+        return ok
+        alt [ok]
+            CS -> CM ++ : ResolvePlayerBlockCollision(knight, block)
+            CM -> D ++ : Detect(block, knight)
+            return side
+            CM -> R ++ : knight.Land() / StopMoving*()\n+ position correction
+            return
+            return
+        end
+    end
+end
+
+' ---- Projectiles ----
+group Projectile resolution
+    CS -> CM ++ : ResolveProjectileCollisions(projMgr, knight,\nenemyCollidables, blockCollidables, onPlayerHit, onEnemyHit)
+    loop for each projectile
+        CM -> M ++ : ShouldCollide(projectile, target)
+        return ok
+        alt [hit enemy]
+            CM -> R : onEnemyHit(i)  ->  enemy.TakeDamage()
+        else [hit player]
+            CM -> R : onPlayerHit()  ->  knight.TakeDamage()
+        end
+    end
+    return
+end
+
+return
+@enduml

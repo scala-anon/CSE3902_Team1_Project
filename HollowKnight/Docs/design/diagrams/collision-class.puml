@@ -1,0 +1,94 @@
+@startuml collision-class
+!include _style.puml
+title Collision Subsystem — Class Structure
+
+interface ICollidable <<interface>> {
+    + Bounds : Rectangle <<get>>
+    + IsActive : bool <<get>>
+    + GetBounds() : Rectangle[]
+}
+
+class CollisionSystem {
+    - _handler : CollisionHandler
+    - _currentKnight : TheKnight
+    + CollisionSystem()
+    + Update(knight, platforms, interactables,\n  enemies, items, projMgr, navGrid) : void
+    - RegisterAll() : void
+}
+class CollisionHandler {
+    - _handlers : Dictionary<(Type,Type,CollisionSide),\n  Action<ICollidable,ICollidable>>
+    + Register<A,B>(side, response) : void
+    + HandleCollision(a, b, side) : void
+}
+class CollisionDetector <<static>> {
+    + {static} Detect(a, b) : CollisionSide
+}
+class CollisionGroupBuilder <<static>> {
+    + {static} GetCollidables<T>(items) : ICollidable[]
+}
+class CollisionLayerMatrix <<static>> {
+    - {static} _matrix : Dictionary<CollisionLayer, CollisionLayer>
+    + {static} ShouldCollide(a, b) : bool
+    - {static} GetLayer(c) : CollisionLayer
+    + {static} ValidateSymmetry() : void
+}
+class CollisionManager <<static>> {
+    + {static} ResolvePlayerBlockCollision(knight, block) : void
+    + {static} ResolveEnemyBlockCollision(vengefly, block) : void
+    + {static} ResolveCrawlidBlockCollision(crawlid, block) : void
+    + {static} ResolveProjectileCollisions(pm, player,\n  enemies, blocks, onPlayerHit, onEnemyHit) : void
+    + {static} ProjectileHitsCollidable(p, target) : bool
+}
+class DebugRenderer <<static>> {
+    + {static} hitboxEnabled : bool
+    + {static} DrawBounds(sb, obj, color) : void
+    + {static} DrawAll(sb, objects, color) : void
+}
+
+enum CollisionSide {
+    None
+    Left
+    Right
+    Top
+    Bottom
+}
+enum CollisionLayer <<Flags>> {
+    None
+    Player
+    PlayerAttack
+    Enemy
+    Hazard
+    Terrain
+    Interactable
+    PlayerProjectile
+    EnemyProjectile
+    Pickup
+    BreakableTerrain
+    BossArenaBarrier
+}
+
+' --- Composition / dependencies ---
+CollisionSystem *--> "1" CollisionHandler
+CollisionSystem ..> CollisionDetector
+CollisionSystem ..> CollisionGroupBuilder
+CollisionSystem ..> CollisionLayerMatrix
+CollisionSystem ..> CollisionManager
+
+CollisionDetector ..> ICollidable : reads GetBounds()
+CollisionDetector ..> CollisionSide : returns
+CollisionGroupBuilder ..> ICollidable : filters to
+CollisionHandler ..> CollisionSide : keyed by
+CollisionLayerMatrix ..> CollisionLayer : maps
+CollisionLayerMatrix ..> ICollidable : classifies
+CollisionManager ..> CollisionDetector
+CollisionManager ..> CollisionLayerMatrix
+DebugRenderer ..> ICollidable : draws
+
+note bottom of CollisionLayerMatrix
+  ShouldCollide(a,b):
+  layerA = GetLayer(a); layerB = GetLayer(b)
+  return (_matrix[layerA] & layerB) != 0
+  i.e. a bitmask test on the Flags enum.
+end note
+
+@enduml

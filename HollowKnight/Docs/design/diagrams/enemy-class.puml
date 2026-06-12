@@ -1,0 +1,117 @@
+@startuml enemy-class
+!include _style.puml
+title Enemy Subsystem — Hierarchy and State Machines
+
+interface ICollidable <<interface>>
+interface IEnemy <<interface>> {
+    + Update(gameTime) : void
+    + Draw(sb, fx, depth, opacity) : void
+    + GetStateName() : string
+    + SetKnightPosition(pos) : void
+    + SetNavigationGrid(grid) : void
+    + GetCurrentPath() : List<Vector2>
+    + GetHurtbox() : Rectangle
+    + GetDetectionRadius() : float
+    + GetChaseRadius() : float
+    + TakeDamage(side) : bool
+    + SetPlatform(obj) : void
+}
+IEnemy --|> ICollidable
+
+abstract class BaseEnemy {
+    # Health : int
+    # position : Vector2
+    # FacingDirection : Direction
+    # Sprite : ISprite
+    # IsGrounded : bool
+    # knightPosition : Vector2
+    + {abstract} IsActive : bool
+    --
+    + GetCenter() : Vector2
+    + GetBounds() : Rectangle[]
+    + GetHurtbox() : Rectangle
+    + TakeDamage(side) : bool
+    # UpdateDamageTimer(dt) : void
+    # UpdateKnockbackDecay(dt) : void
+    # UpdateDead(dt) : void
+    # {abstract} ApplyKnockback(side) : void
+    # {abstract} OnDeath(grounded) : void
+    # {abstract} OnHealthChanged() : void
+    # {abstract} UpdateAlive(gameTime, dt) : void
+    # {abstract} GetStateName() : string
+}
+BaseEnemy ..|> IEnemy
+
+class Crawlid {
+    + State : CrawlidState <<get>>
+    + OnWallHit() : void
+}
+class Vengefly {
+    + State : VengeflyState <<get>>
+}
+class MantisLord {
+    + State : MantisLordState <<get>>
+    + Slot : MantisLordSlot
+}
+Crawlid   --|> BaseEnemy
+Vengefly  --|> BaseEnemy
+MantisLord --|> BaseEnemy
+
+class CrawlidStateMachine
+class VengeflyStateMachine
+class MantisLordStateMachine
+Crawlid   *--> "1" CrawlidStateMachine
+Vengefly  *--> "1" VengeflyStateMachine
+MantisLord *--> "1" MantisLordStateMachine
+
+class BossFightController {
+    + Left / Middle / Right : MantisLord <<get>>
+    - _phase : BossFightPhase
+    + Update(gameTime) : void
+}
+BossFightController o--> "3" MantisLord : coordinates
+
+class EnemyProjectile {
+    + Fire(low : bool) : void
+}
+MantisLordStateMachine ..> EnemyProjectile : Throw state fires
+
+enum CrawlidState {
+    Idle
+    Turn
+    DeathAir
+    DeathLand
+}
+enum VengeflyState {
+    Idle
+    Startle
+    Chase
+    DeathAir
+    DeathLand
+}
+enum MantisLordSlot {
+    Left
+    Middle
+    Right
+}
+enum BossFightPhase {
+    Dormant
+    Phase1_Middle
+    Phase2_Transition
+    Phase2_Sides
+    Phase3_Solo
+    Victory_Bow
+    Done
+}
+
+Crawlid ..> CrawlidState
+Vengefly ..> VengeflyState
+MantisLord ..> MantisLordSlot
+BossFightController ..> BossFightPhase
+
+' Enemies use pathfinding + track the knight
+class NavigationGrid <<Pathfinding>>
+Vengefly ..> NavigationGrid : A* chase
+Crawlid ..> NavigationGrid : ground probe
+
+@enduml

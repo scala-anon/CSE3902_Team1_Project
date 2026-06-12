@@ -1,0 +1,144 @@
+@startuml player
+!include _style.puml
+title Player Subsystem — TheKnight and its Components
+
+interface ICollidable <<interface>> {
+    + Bounds : Rectangle <<get>>
+    + IsActive : bool <<get>>
+    + GetBounds() : Rectangle[]
+}
+interface IPlayer <<interface>> {
+    + Update(gameTime) : void
+    + Draw(sb, depth, opacity) : void
+    + MoveLeft() / MoveRight() : void
+    + MoveUp() / MoveDown() : void
+    + Jump() : void
+    + SideSlash() / UpSlash() / DownSlash() : void
+    + TakeDamage(side) : void
+    + GetHurtbox() : Rectangle
+}
+IPlayer --|> ICollidable
+
+class TheKnight {
+    + Facing : Direction <<get>>
+    + CurrentState : KnightState <<get>>
+    + position : Vector2
+    + IsActive : bool <<get>>
+    + Bounds : Rectangle <<get>>
+    --
+    + Update(gameTime) : void
+    + Draw(sb, depth, opacity) : void
+    + MoveLeft() / MoveRight() / Jump() : void
+    + StartDash() : void
+    + SideSlash() / UpSlash() / DownSlash() : void
+    + GetSwordHitbox() : SwordHitbox
+    + TakeDamage(side) : void
+    + CastSpell() / StartHeal() : void
+    + GetBounds() : Rectangle[]
+}
+TheKnight ..|> IPlayer
+
+class KnightPhysics {
+    + Velocity : Vector2
+    + IsGrounded : bool <<get>>
+    + MoveRight() / MoveLeft() : void
+    + Jump() : bool
+    + Land() / SetAirborne() : void
+    + ApplyDashVelocity(dir) : void
+    + ApplyKnockback(side) : void
+}
+class KnightCombat {
+    + AttackType : KnightSpriteType <<get>>
+    + IsAttacking : bool <<get>>
+    + TryStartAttack(type, pos, ...) : bool
+    + GetSwordHitbox(bounds, dir) : SwordHitbox
+    + TryStartCastPulse(pos) : bool
+}
+class KnightHealth {
+    + Health : int <<get>>
+    + Soul : int <<get>>
+    + TakeDamage() : bool
+    + StartHeal(...) : void
+    + GainSoul() / ConsumeSoul(n) : void
+}
+class KnightDash {
+    + IsDashing : bool <<get>>
+    + DashAvailable : bool <<get>>
+    + StartDash(dir, ...) : void
+    + OnJump() / OnLanded() : void
+}
+class KnightProjectile {
+    - _knight : TheKnight
+    + Update(gameTime) : void
+    + Fire(...) : void
+}
+class SwordHitbox {
+    + Bounds : Rectangle <<get>>
+    + IsActive : bool <<get>>
+    + GetBounds() : Rectangle[]
+}
+SwordHitbox ..|> ICollidable
+
+class KnightSpriteBuilder <<static>> {
+    + BuildKnightSprites(pos) : Dictionary<KnightSpriteType, ISprite>
+}
+class Camera <<singleton>> {
+    + Position : Vector2 <<get>>
+    + Follow(target) : void
+    + SnapTo(target) : void
+    + GetTransform() : Matrix
+    + EnterBossClamp(c) / ExitBossClamp() : void
+}
+
+enum KnightState {
+    Idle
+    Running
+    Jumping
+    Falling
+    Attacking
+    Spellcasting
+    Dashing
+    Healing
+    Damaged
+    Respawning
+    Sitting
+    Dead
+}
+enum KnightSpriteType {
+    Idle
+    Walking
+    Jumping
+    SideSlash
+    UpSlash
+    DownSlash
+    Damaged
+    HealPrep
+    HealPost
+    SpiritCast
+    Respawning
+    Sitting
+    Dashing
+}
+
+' --- TheKnight composes its behavioural components (parts die with it) ---
+TheKnight *--> "1" KnightPhysics
+TheKnight *--> "1" KnightCombat
+TheKnight *--> "1" KnightHealth
+TheKnight *--> "1" KnightDash
+TheKnight *--> "1" KnightProjectile
+TheKnight o--> "*" ISprite : sprites by\nKnightSpriteType
+
+' --- Sword hitbox is produced on demand by combat ---
+KnightCombat ..> SwordHitbox : creates
+TheKnight ..> SwordHitbox : exposes
+
+' --- Back-reference + collaborators ---
+KnightProjectile --> TheKnight : owner
+TheKnight ..> KnightState : reports
+KnightCombat ..> KnightSpriteType : selects
+TheKnight ..> KnightSpriteBuilder : builds sprites
+Camera ..> TheKnight : follows position
+
+interface ISprite <<interface>>
+
+@enduml

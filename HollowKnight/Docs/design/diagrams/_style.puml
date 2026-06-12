@@ -1,0 +1,42 @@
+' Shared styling for all Hollow Knight design diagrams.
+' Included via:  !include _style.puml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName "DejaVu Sans"
+skinparam defaultFontSize 12
+skinparam roundCorner 6
+
+skinparam class {
+    BackgroundColor #F7F9FC
+    BorderColor #34495E
+    ArrowColor #34495E
+    FontColor #1A2533
+    AttributeFontColor #4A5568
+    StereotypeFontColor #7D3C98
+}
+skinparam interface {
+    BackgroundColor #FCF3E6
+    BorderColor #B9770E
+}
+skinparam enum {
+    BackgroundColor #EAF7EE
+    BorderColor #1E8449
+}
+skinparam package {
+    BackgroundColor #F4F6F7
+    BorderColor #5D6D7E
+    FontColor #1A2533
+}
+skinparam state {
+    BackgroundColor #F7F9FC
+    BorderColor #2471A3
+    ArrowColor #2471A3
+    FontColor #1A2533
+}
+skinparam sequence {
+    ArrowColor #34495E
+    LifeLineBorderColor #5D6D7E
+    LifeLineBackgroundColor #EBF0F5
+    ParticipantBackgroundColor #F7F9FC
+    ParticipantBorderColor #34495E
+}

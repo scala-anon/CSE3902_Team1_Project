@@ -1,0 +1,28 @@
+@startuml bossfight-phase
+!include _style.puml
+title Mantis Lords Boss Fight — Phase Machine (BossFightController)
+
+[*] --> Dormant
+
+state Dormant : left/right asleep,\nmiddle on throne
+Dormant --> Phase1_Middle : fight engaged /\nEngageArenaLock()
+
+state Phase1_Middle : middle lord attacks solo
+Phase1_Middle --> Phase2_Transition : middle.IsInWoundedPose
+
+state Phase2_Transition : wait MantisSiblingStaggerDelay
+Phase2_Transition --> Phase2_Sides : delay done /\nLeft.CommandActivate(),\nRight.CommandActivate()
+
+state Phase2_Sides : left + right attack as\nleader/follower pairs (synchronised)
+Phase2_Sides --> Phase3_Solo : one lord wounded
+Phase2_Sides --> Victory_Bow : both lords wounded
+
+state Phase3_Solo : surviving lord attacks solo
+Phase3_Solo --> Victory_Bow : solo lord wounded
+
+state Victory_Bow : all survivors CommandBow()
+Victory_Bow --> Done : all IsBowComplete /\ndisengage arena lock
+
+Done --> [*]
+
+@enduml

@@ -1,0 +1,26 @@
+@startuml vengefly-state
+!include _style.puml
+title Vengefly — State Machine
+
+[*] --> Idle
+
+state Idle : do / random patrol\n(pick target 75-250px, fly at PatrolSpeed)
+state Startle : entry / _startleTimer = 0\ndo / play startle animation
+state Chase : do / A* path to knight\n(recompute every PathUpdateInterval,\nfly at ChaseSpeed; backoff on path fail)
+
+Idle --> Startle : knight within DetectionRadius
+Startle --> Chase : _startleTimer >= StartleDuration
+Chase --> Idle : knight beyond ChaseRadius / clear path
+
+state DeathAir : do / fall (gravity)
+state DeathLand : do / play death anim on ground
+
+Idle    --> DeathAir  : Health <= 0 [airborne]
+Idle    --> DeathLand : Health <= 0 [grounded]
+Startle --> DeathAir  : Health <= 0 [airborne]
+Chase   --> DeathAir  : Health <= 0 [airborne]
+DeathAir --> DeathLand : ground reached
+
+DeathLand --> [*]
+
+@enduml

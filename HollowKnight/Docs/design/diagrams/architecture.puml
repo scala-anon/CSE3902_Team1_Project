@@ -1,0 +1,79 @@
+@startuml architecture
+!include _style.puml
+title Hollow Knight Clone — Subsystem Package Dependencies
+
+' Game1 is the central orchestrator (a partial class spread across Game1.*.cs).
+' Arrows are dependencies (dashed, open) read as "depends on / drives".
+
+package "Game1\n(orchestrator)" as Game1 #FDEBD0 {
+}
+
+package "Controllers" as Controllers {
+}
+package "Commands" as Commands {
+}
+package "Player" as Player {
+}
+package "Enemies" as Enemies {
+}
+package "Collision" as Collision {
+}
+package "Levels" as Levels {
+}
+package "Projectiles" as Projectiles {
+}
+package "Environment" as Environment {
+}
+package "Pathfinding" as Pathfinding {
+}
+package "Graphics +\nSprites + Factories" as Render {
+}
+package "Audio" as Audio {
+}
+package "Storage" as Storage {
+}
+package "Interfaces +\nShared" as Core {
+}
+
+' --- Game1 drives every runtime subsystem each frame ---
+Game1 ..> Controllers
+Game1 ..> Player
+Game1 ..> Enemies
+Game1 ..> Collision
+Game1 ..> Levels
+Game1 ..> Projectiles
+Game1 ..> Render
+Game1 ..> Audio
+Game1 ..> Storage
+
+' --- Input pipeline ---
+Controllers ..> Commands : polls input,\nfires
+Commands ..> Player : acts on receiver
+Commands ..> Game1 : acts on receiver
+
+' --- Cross-subsystem dependencies ---
+Levels ..> Enemies : instantiates
+Levels ..> Environment : instantiates
+Levels ..> Pathfinding : seeds obstacle grid
+Enemies ..> Pathfinding : A* to knight
+Enemies ..> Projectiles : boss attacks
+Player ..> Projectiles : spells / dash fx
+Collision ..> Player : resolves
+Collision ..> Enemies : resolves
+Collision ..> Environment : resolves
+Collision ..> Projectiles : resolves
+
+' --- Everyone leans on the contracts + constants ---
+Player ..> Core
+Enemies ..> Core
+Collision ..> Core
+Environment ..> Core
+Render ..> Core
+Projectiles ..> Core
+
+' --- Rendering is used broadly ---
+Player ..> Render
+Enemies ..> Render
+Environment ..> Render
+
+@enduml

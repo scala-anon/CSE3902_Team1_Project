@@ -1,0 +1,79 @@
+@startuml mantislord-state
+!include _style.puml
+title MantisLord — State Machine (one lord)
+
+note as N
+  Unlabelled transitions inside the attack
+  composites fire on "sprite animation finished".
+  GracePeriod is the hub that picks the next attack.
+end note
+
+[*] --> IdleOnThrone
+
+IdleOnThrone --> ThroneStand : CommandActivate()
+ThroneStand --> ThroneLeave : anim done
+ThroneLeave --> GracePeriod : anim done /\nCommandBeginAttackLoop()
+
+state GracePeriod : entry / StartAttackCooldown()
+GracePeriod --> WallAttack  : cooldown done / PickNextAttack [20%]
+GracePeriod --> DashAttack  : cooldown done / PickNextAttack [40%]
+GracePeriod --> DStabAttack : cooldown done / PickNextAttack [40%]
+
+state WallAttack {
+    [*] --> WallStart : play land sound
+    WallStart --> WallArrive
+    WallArrive --> WallReady
+    WallReady --> Throw
+    state Throw : entry / fire projectiles\n(alternating low/high)
+    Throw --> WallLeave1
+    WallLeave1 --> WallLeave2
+    WallLeave2 --> [*]
+}
+WallAttack --> GracePeriod
+
+state DashAttack {
+    [*] --> DashStart : play land sound
+    DashStart --> DashArrive
+    DashArrive --> DashAnticipate
+    DashAnticipate --> Dash : activate contact damage
+    state Dash : do / move horizontally
+    Dash --> DashRecover
+    DashRecover --> DashLeave
+    DashLeave --> [*]
+}
+DashAttack --> GracePeriod
+
+state DStabAttack {
+    [*] --> DStabStart : position above knight
+    DStabStart --> DStabArrive
+    DStabArrive --> DStabOffset
+    DStabOffset --> DStab
+    state DStab : do / move down at MantisStabSpeed
+    DStab --> DStabLandOffset
+    DStabLandOffset --> DStabLand
+    DStabLand --> DStabLeave
+    DStabLeave --> [*]
+}
+DStabAttack --> GracePeriod
+
+' --- Death branch (can interrupt any active state) ---
+state Death {
+    [*] --> DeathHit : OnHealthDepleted()
+    DeathHit --> DeathLeaveOne
+    DeathLeaveOne --> DeathLeaveTwo
+    DeathLeaveTwo --> [*] : CommandReturnToThroneWounded()
+}
+GracePeriod --> Death : OnHealthDepleted()
+WallAttack  --> Death : OnHealthDepleted()
+DashAttack  --> Death : OnHealthDepleted()
+DStabAttack --> Death : OnHealthDepleted()
+
+state ThroneWounded : wounded pose held
+Death --> ThroneWounded : after\nMantisPostDeathToWoundedDelay
+
+' --- Victory bow (commanded by BossFightController) ---
+state ThroneBow : entry / set IsBowComplete on anim done
+ThroneWounded --> ThroneBow : CommandBow()
+ThroneBow --> [*]
+
+@enduml

@@ -1,0 +1,28 @@
+@startuml crawlid-state
+!include _style.puml
+title Crawlid — State Machine
+
+[*] --> Idle
+
+state Idle : entry / patrol at CrawlidPatrolSpeed
+state Turn : entry / flip facing,\n_isTurning = true, _turnTimer = 0\ndo / play turn animation (no move)
+
+Idle --> Turn : wall hit / OnWallHit()
+Idle --> Turn : spike ahead [collision probe]
+Idle --> Turn : edge ahead [no ground]
+Idle --> Turn : level boundary [x<=0 or x>=width] / clamp
+Turn --> Idle : _turnTimer >= CrawlidTurnDuration
+
+' Death: chosen by grounded flag at the moment health hits 0
+state "DeathLand" as DeathLand : do / play death anim,\napply gravity + knockback decay
+state "DeathAir" as DeathAir : do / fall (gravity),\nland -> DeathLand visuals
+
+Idle --> DeathLand : Health <= 0 [IsGrounded]
+Idle --> DeathAir  : Health <= 0 [airborne]
+Turn --> DeathLand : Health <= 0 [IsGrounded]
+Turn --> DeathAir  : Health <= 0 [airborne]
+DeathAir --> DeathLand : ground reached
+
+DeathLand --> [*]
+
+@enduml
