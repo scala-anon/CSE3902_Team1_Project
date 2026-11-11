@@ -5,12 +5,13 @@ namespace HollowKnight.Shared
 {
     public static class DebugLogger
     {
+        private static readonly bool Enabled = System.Environment.GetEnvironmentVariable("HOLLOWKNIGHT_DEBUG_LOG") == "1";
         private static readonly string LogFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "debug.log");
         private static readonly object _lock = new object();
 
         static DebugLogger()
         {
-            if (GameConstants.DEBUG_LOG_ENABLED != 1) return;
+            if (!Enabled) return;
 
             try
             {
@@ -21,7 +22,7 @@ namespace HollowKnight.Shared
 
         public static void Log(string category, string message)
         {
-            if (GameConstants.DEBUG_LOG_ENABLED != 1) return;
+            if (!Enabled) return;
 
             string line = $"[{DateTime.Now:HH:mm:ss.fff}][{category}] {message}\n";
             try

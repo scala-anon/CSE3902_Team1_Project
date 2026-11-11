@@ -77,6 +77,11 @@ namespace HollowKnight
                 position = ComputeClampedTarget(_bossClampAnchor);
                 return;
             }
+            // Keep the current horizontal center while the target is inside the dead zone.
+            float centerX = position.X + _screenWidth / 2f;
+            target.X = MathHelper.Clamp(centerX,
+                target.X - CameraConstants.cameraFollowKnightMax,
+                target.X - CameraConstants.cameraFollowKnightMin);
             Vector2 desired = ComputeClampedTarget(target);
             position = Vector2.Lerp(position, desired, CameraConstants.cameraLerpFactor);
         }
@@ -100,16 +105,5 @@ namespace HollowKnight
                 && worldPos.Y <= position.Y + _screenHeight;
         }
 
-        /// <summary>
-        /// Make the screen "clamp" temporarily
-        /// </summary>s
-        public void SetTempBounds(Vector2 _position)
-        {
-            if (_bossClampActive) return;
-            float desiredY = _position.Y - _screenHeight / 2f - CameraConstants.yAxisCameraRaise;
-            desiredY = MathHelper.Clamp(desiredY, 0, _levelHeight - _screenHeight);
-            float newY = MathHelper.Lerp(position.Y, desiredY, CameraConstants.cameraLerpFactor);
-            position = new Vector2(position.X, newY);
-        }
     }
 }

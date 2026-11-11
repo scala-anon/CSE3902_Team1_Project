@@ -137,8 +137,7 @@ namespace HollowKnight.Shared
         public const int AStarStraightMoveCost = 10;
         public const int AStarDiagonalMoveCost = 14;
 
-        // Debug Logging (1 = enabled, 0 = disabled)
-        public const int DEBUG_LOG_ENABLED = 1;
+        public const bool DebugHotkeysEnabled = true;
 
         // Rendering — Layer Depth (FrontToBack: 0.0 = back, 1.0 = front)
         public const float LayerDepthBackgroundFar = 0.00f;

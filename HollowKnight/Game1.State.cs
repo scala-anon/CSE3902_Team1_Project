@@ -87,7 +87,7 @@ public partial class Game1
     {
         if (direction == 0) return;
 
-        int screenWidth = _graphics.PreferredBackBufferWidth;
+        int screenWidth = GraphicsDevice.PresentationParameters.BackBufferWidth;
         Vector2 pos = _knight.GetPosition();
         float newX = pos.X + direction * screenWidth;
         newX = Math.Clamp(newX, 0, GameConstants.DefaultLevelWidth - screenWidth);

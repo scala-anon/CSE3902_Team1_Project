@@ -27,14 +27,6 @@ public partial class Game1
         _overlayPixel.SetData(new[] { Color.White });
     }
 
-    private void InitializeFullScreen()
-    {
-        _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-        _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-        _graphics.IsFullScreen = true;
-        _graphics.ApplyChanges();       
-    }
-
     private void InitializeSharedResources()
     {
         SpriteFactory.Instance.LoadAllTextures(Content);
@@ -109,8 +101,9 @@ public partial class Game1
 
     private void InitializeCameraAndRooms()
     {
-        int screenWidth = _graphics.PreferredBackBufferWidth;
-        int screenHeight = _graphics.PreferredBackBufferHeight;
+        var presentation = GraphicsDevice.PresentationParameters;
+        int screenWidth = presentation.BackBufferWidth;
+        int screenHeight = presentation.BackBufferHeight;
 
         Camera.Instance.Initialize(screenWidth, screenHeight);
         
@@ -126,7 +119,7 @@ public partial class Game1
     private void InitializeControllers()
     {
         _controllerList.Clear();
-        int screenWidth = _graphics.PreferredBackBufferWidth;
+        int screenWidth = GraphicsDevice.PresentationParameters.BackBufferWidth;
 
         KeyboardController keyboard = new KeyboardController();
         KeyboardBindings.BindGameplay(keyboard, _knight, this, _level.BossFight);

@@ -96,8 +96,8 @@ namespace HollowKnight.Controllers
             keyboard.RegisterPressedCommand(Keys.H, new ToggleHitboxesCommand(game));
             keyboard.RegisterPressedCommand(Keys.G, new ToggleGridCommand(game));
 
-            // Debug hotkeys (compile-time gated; eliminated when DEBUG_LOG_ENABLED != 1)
-            if (GameConstants.DEBUG_LOG_ENABLED == 1)
+            // Optional debug hotkeys
+            if (GameConstants.DebugHotkeysEnabled)
             {
                 // Ctrl+D1..D4 — direct room jump via Game1.TransitionToRoom
                 keyboard.RegisterComboPressedCommand(Keys.D1, Keys.LeftControl,  Gameplay(game, new DebugJumpToRoomCommand(game, 1)));

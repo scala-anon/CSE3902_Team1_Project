@@ -52,12 +52,17 @@ public partial class Game1 : Game
 
     public Game1()
     {
-        _graphics = new GraphicsDeviceManager(this);
+        DisplayMode displayMode = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode;
+        // Set borderless fullscreen before MonoGame creates the graphics device.
+        _graphics = new GraphicsDeviceManager(this)
+        {
+            PreferredBackBufferWidth = displayMode.Width,
+            PreferredBackBufferHeight = displayMode.Height,
+            IsFullScreen = true,
+            HardwareModeSwitch = false
+        };
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
-
-        _graphics.PreferredBackBufferWidth = GameConstants.ScreenWidth;
-        _graphics.PreferredBackBufferHeight = GameConstants.ScreenHeight;
     }
 
     protected override void Initialize()
@@ -81,7 +86,6 @@ public partial class Game1 : Game
         ApplyRoomRespawnPoint();
         InitializeCameraAndRooms();
         InitializeControllers();
-        InitializeFullScreen();
     }
 
     protected override void Update(GameTime gameTime)

@@ -32,31 +32,7 @@ namespace HollowKnight.Levels
         {
             ClampKnightToLevelBounds();
 
-            Vector2 knightPosition = _knight.GetPosition();
-            Vector2 cameraPosition = Camera.Instance.Position;
-            float xDifference = knightPosition.X - (cameraPosition.X + CameraConstants.cameraCenterOffset);
-
-            if (_knight.Facing == Direction.Right && xDifference >= CameraConstants.cameraFollowKnightMax)
-            {
-                cameraPosition.X = knightPosition.X - CameraConstants.cameraFollowKnightMax;
-                cameraPosition.Y = knightPosition.Y;
-                _camera.Follow(cameraPosition);
-            }
-            else if (_knight.Facing == Direction.Left && xDifference <= CameraConstants.cameraFollowKnightMin)
-            {
-                cameraPosition.X = knightPosition.X + CameraConstants.cameraKnightOffset;
-                cameraPosition.Y = knightPosition.Y;
-                _camera.Follow(cameraPosition);
-            }
-            else if (xDifference >= CameraConstants.cameraFollowKnightMin && xDifference <= -CameraConstants.cameraFollowKnightMin)
-            {
-                // Dead zone: knight near screen center — hold X, only lerp Y.
-                _camera.SetTempBounds(knightPosition);
-            }
-            else
-            {
-                _camera.Follow(knightPosition);
-            }
+            _camera.Follow(_knight.GetPosition());
         }
 
         private void ClampKnightToLevelBounds()

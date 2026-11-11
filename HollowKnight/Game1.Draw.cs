@@ -25,8 +25,8 @@ public partial class Game1
             _parallaxBackground.Draw(
                 _spriteBatch,
                 Camera.Instance.Position,
-                _graphics.PreferredBackBufferWidth,
-                _graphics.PreferredBackBufferHeight,
+                GraphicsDevice.PresentationParameters.BackBufferWidth,
+                GraphicsDevice.PresentationParameters.BackBufferHeight,
                 _currentRoom == 4 ? new Color(46, 139, 87) : new Color(234, 255, 255));
             _spriteBatch.End();
         }
